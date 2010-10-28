@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <h1>Import xml</h1>
+    {% if error %}
+      <p>{{ error }}</p>
+    {% else %}
+      <p>Paste your xml as text into the text box and click the "Import" button</p>
+      <form method="post" action="/import">
+        <label>Data:</label><br />
+        <textarea name="xml-file" rows="20" cols="80">XML data goes here...</textarea><br />
+        <input text="Import" type="submit" />
+      </form>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,9 @@
+#!/lusr/bin/bash
+
+# validate an xml file against the schema ASN1.xsd
+# eg 
+# > validate brian.xml
+for file in $*
+  do
+  xmllint --noout --schema ASN1.xsd $file
+done

@@ -1,0 +1,92 @@
+<students>
+    <student>
+        <id>bhujkiop</id>
+        <password>jonathan</password>
+        <class>
+            <unique>52540</unique>
+            <course_num>CS 373</course_num>
+            <course_name>Software Engineering</course_name>
+            <semester>Fall 2010</semester>
+            <instructor>Downing</instructor>
+            <rating>90</rating>
+            <comment>Enjoyable so far</comment>
+            <grade>B</grade>
+        </class>
+        <class>
+            <unique>52467</unique>
+            <course_num>CS 343</course_num>
+            <course_name>Artificial Intelligence</course_name>
+            <semester>Fall 2010</semester>
+            <instructor>Mooney</instructor>
+            <rating>85</rating>
+            <comment></comment>
+            <grade>B</grade>
+        </class>
+        <class>
+            <unique>87987</unique>
+            <course_num>CS 378</course_num>
+            <course_name>Software Design</course_name>
+            <semester>Spring 2010</semester>
+            <instructor>Batory</instructor>
+            <rating>80</rating>
+            <comment>A little too abstract for my tastes. Code examples could be better</comment>
+            <grade>B</grade>
+        </class>
+        <book>
+            <isbn>0136042597</isbn>
+            <title>Artificial Intelligence: A Modern Approach</title>
+            <author>Norvig</author>
+            <rating>76</rating>
+            <comment></comment>
+        </book>
+        <paper>
+            <paper_category>journal</paper_category>
+            <title>The New New Product Development Game</title>
+            <author>Hirotaka Takeuchi and Ikujiro Nanaka</author>
+            <rating>83</rating>
+            <comment></comment>
+        </paper>
+        <study_place>
+            <place_name>PCL</place_name>
+            <location>Inner Campus Drive</location>
+            <semester>Fall 2010</semester>
+            <rating>90</rating>
+            <comment></comment>
+        </study_place>
+        <live_place>
+            <place_name>Oak Hollow Apartements</place_name>
+            <location>Far West Dr</location>
+            <semester>Fall 2010</semester>
+            <rating>70</rating>
+            <comment>A little old</comment>
+        </live_place>
+        <eat_place>
+            <place_name>Abel's at the Lake</place_name>
+            <location>Lake Austin Dr</location>
+            <semester>Fall 2010</semester>
+            <rating>99</rating>
+            <comment>Great burgers, great place to watch a game. Gotta try the Texas Teas</comment>
+        </eat_place>
+        <eat_place>
+            <place_name>What-A-Burger</place_name>
+            <location>Anderson Ln</location>
+            <semester>Spring 2010</semester>
+            <rating>90</rating>
+            <comment>Great drunk food</comment>
+        </eat_place>    
+        <fun_place>
+            <place_name>Home Slice Pizza</place_name>
+            <location>South Congress Dr</location>
+            <semester>Fall 2010</semester>
+            <rating>95</rating>
+            <comment>Best pizza in Austin</comment>
+        </fun_place>            
+        <game>
+            <os>XBox 360</os>
+            <title>NCAA Football 2010</title>
+            <rating>85</rating>
+            <comment>Would be better, if the linebackers weren't all superfreaks</comment>
+        </game>
+    </student>
+</students>
+

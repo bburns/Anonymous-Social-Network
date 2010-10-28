@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_3Moz8NvvEd-xO8XN2cfy-Q" name="uml">
+  <elementImport xmi:id="_3OEXUNvvEd-xO8XN2cfy-Q">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_3Oo_ENvvEd-xO8XN2cfy-Q">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_3Oo_EdvvEd-xO8XN2cfy-Q">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <elementImport xmi:id="_3Oo_EtvvEd-xO8XN2cfy-Q">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_B6EnANvwEd-xO8XN2cfy-Q" name="Student">
+    <ownedAttribute xmi:id="_R9Ia8NvwEd-xO8XN2cfy-Q" name="id" aggregation="composite"/>
+    <ownedAttribute xmi:id="_S9lyYNvwEd-xO8XN2cfy-Q" name="password" aggregation="composite"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_JOU3wNvwEd-xO8XN2cfy-Q" name="Book">
+    <ownedAttribute xmi:id="_TtiooNvwEd-xO8XN2cfy-Q" name="title" aggregation="composite"/>
+    <ownedAttribute xmi:id="_U1dS8NvwEd-xO8XN2cfy-Q" name="isbn" aggregation="composite"/>
+    <ownedAttribute xmi:id="_Vl-J4NvwEd-xO8XN2cfy-Q" name="author" aggregation="composite"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_LHJakNvwEd-xO8XN2cfy-Q" name="books" memberEnd="_LHJakdvwEd-xO8XN2cfy-Q _LHJalNvwEd-xO8XN2cfy-Q">
+    <ownedEnd xmi:id="_LHJakdvwEd-xO8XN2cfy-Q" name="src" type="_B6EnANvwEd-xO8XN2cfy-Q" association="_LHJakNvwEd-xO8XN2cfy-Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LHJak9vwEd-xO8XN2cfy-Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LHJaktvwEd-xO8XN2cfy-Q" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_LHJalNvwEd-xO8XN2cfy-Q" name="dst" type="_JOU3wNvwEd-xO8XN2cfy-Q" association="_LHJakNvwEd-xO8XN2cfy-Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LHJaltvwEd-xO8XN2cfy-Q" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LHJaldvwEd-xO8XN2cfy-Q" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:AssociationClass" xmi:id="_OBMJ0NvwEd-xO8XN2cfy-Q" name="StudentBook">
+    <ownedAttribute xmi:id="_Qj7MUNvwEd-xO8XN2cfy-Q" name="rating" aggregation="composite"/>
+    <ownedAttribute xmi:id="_RRMiANvwEd-xO8XN2cfy-Q" name="comment" aggregation="composite"/>
+  </packagedElement>
+</uml:Package>

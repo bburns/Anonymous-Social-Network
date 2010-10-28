@@ -1,0 +1,159 @@
+<students>
+    <student>
+        <id>73162312</id>
+        <password>brian</password>
+        <class>
+            <unique>52540</unique>
+            <course_num>CS 373</course_num>
+            <course_name>Software Engineering</course_name>
+            <semester>Fall 2010</semester>
+            <instructor>Downing</instructor>
+            <rating>95</rating>
+            <comment></comment>
+            <grade></grade>
+        </class>
+        <class>
+            <unique>52467</unique>
+            <course_num>CS 343</course_num>
+            <course_name>Artificial Intelligence</course_name>
+            <semester>Fall 2010</semester>
+            <instructor>Mooney</instructor>
+            <rating>92</rating>
+            <comment></comment>
+            <grade></grade>
+        </class>
+        <class>
+            <unique>52485</unique>
+            <course_num>CS 352</course_num>
+            <course_name>Computer Systems Architecture</course_name>
+            <semester>Fall 2010</semester>
+            <instructor>Hunt</instructor>
+            <rating>80</rating>
+            <comment>seems like a duplication of cs310</comment>
+            <grade></grade>
+        </class>
+        <class>
+            <unique>99999</unique>
+            <course_num>CS 345</course_num>
+            <course_name>Programming Languages</course_name>
+            <semester>Spring 2010</semester>
+            <instructor>Cannata</instructor>
+            <rating>95</rating>
+            <comment>This class was great</comment>
+            <grade>A</grade>
+        </class>
+        <class>
+            <unique>99999</unique>
+            <course_num>CS 105</course_num>
+            <course_name>Computer Programming: Common Lisp</course_name>
+            <semester>Spring 2009</semester>
+            <instructor>Schrum</instructor>
+            <rating>95</rating>
+            <comment></comment>
+            <grade>A</grade>
+        </class>
+        <book>
+            <isbn>0679734465</isbn>
+            <title>Valis</title>
+            <author>Philip K. Dick</author>
+            <rating>95</rating>
+            <comment>crazy</comment>
+        </book>
+        <book>
+            <isbn>0679736646</isbn>
+            <title>Ubik</title>
+            <author>Philip K. Dick</author>
+            <rating>90</rating>
+            <comment></comment>
+        </book>
+        <book>
+            <isbn>0136042597</isbn>
+            <title>Artificial Intelligence: A Modern Approach</title>
+            <author>Stuart Russell and Peter Norvig</author>
+            <rating>95</rating>
+            <comment></comment>
+        </book>
+        <paper>
+            <paper_category>journal</paper_category>
+            <title>Cognitive Architectures: Research Issues and Challenges</title>
+            <author>Pat Langley, John E. Laird, and Seth Rogers</author>
+            <rating></rating>
+            <comment>2009. Gives a detailed overview of cognitive architectures.</comment>
+        </paper>
+        <paper>
+            <paper_category>journal</paper_category>
+            <title>The 1980 ACM Turing Award Lecture</title>
+            <author>C.A.R. (Tony) Hoare</author>
+            <rating>92</rating>
+            <comment>Interesting talk about his experience designing languages</comment>
+        </paper>
+        <paper>
+            <paper_category>journal</paper_category>
+            <title>The Evolution of Lisp</title>
+            <author>Guy L. Steele, Jr. and Richard P. Gabriel</author>
+            <rating>90</rating>
+            <comment>ACM 1993</comment>
+        </paper>
+        <study_place>
+            <place_name>Painter Lab</place_name>
+            <location>campus</location>
+            <semester>Fall 2010</semester>
+            <rating>90</rating>
+            <comment></comment>
+        </study_place>
+        <study_place>
+            <place_name>Architecture Library</place_name>
+            <location>campus</location>
+            <semester>Fall 2010</semester>
+            <rating>93</rating>
+            <comment>It's good when it's not too crowded</comment>
+        </study_place>
+        <study_place>
+            <place_name>PCL</place_name>
+            <location>campus</location>
+            <semester>Fall 2010</semester>
+            <rating>75</rating>
+            <comment>Bleh</comment>
+        </study_place>
+        <live_place>
+            <place_name>3203 Helms</place_name>
+            <location>north campus</location>
+            <semester>Fall 2010</semester>
+            <rating>70</rating>
+            <comment>ceiling is too thin and squeaky</comment>
+        </live_place>
+        <eat_place>
+            <place_name>Dirty Martin's</place_name>
+            <location>guadalupe</location>
+            <semester>Fall 2010</semester>
+            <rating>94</rating>
+            <comment>Awesome burgers and fries and shakes</comment>
+        </eat_place>
+        <eat_place>
+            <place_name>Madras Pavilion</place_name>
+            <location>9025 Research Blvd</location>
+            <semester>Fall 2010</semester>
+            <rating>92</rating>
+            <comment>Good Indian lunch buffet</comment>
+        </eat_place>
+        <fun_place>
+            <place_name>Bob Wentz Park</place_name>
+            <location>Lake Travis</location>
+            <semester>Fall 2010</semester>
+            <rating>91</rating>
+            <comment>It's almost like a beach. Almost.</comment>
+        </fun_place>
+        <game>
+            <os>Any</os>
+            <title>Zork II</title>
+            <rating>95</rating>
+            <comment>The best in the Zork series.</comment>
+        </game>
+        <game>
+            <os>Apple II</os>
+            <title>Ultima I</title>
+            <rating>95</rating>
+            <comment>I loved this game as a kid.</comment>
+        </game>
+    </student>
+</students>

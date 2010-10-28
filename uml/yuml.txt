@@ -1,0 +1,70 @@
+# uml diagrams for www.yuml.me
+
+# v1 - can't do association classes
+[Student|id;password]-[Class|unique]
+[Class]-[Course|course_number;course_name]
+[Class]-[Semester]
+[Class]-[Instructor]
+[Student]-[Book]
+[Book]-[Author]
+[Student]-[Paper]
+[Paper]-[Author]
+[Student]-[Internship]
+[Internship]-[Company]
+[Internship]-[Location]
+[Student]-[PlaceToStudy]
+[PlaceToStudy]-[Location]
+[Student]-[PlaceToLive]
+[PlaceToLive]-[Location]
+[Student]-[PlaceToEat]
+[PlaceToEat]-[Location]
+[Student]-[PlaceToHaveFun]
+[PlaceToHaveFun]-[Location]
+[Student]-[Game|os;title]
+
+# v2 - simpler
+[Student|id;password]-[Class|unique;semester;instructor]
+[Class]-[Course|course_number;course_name]
+[Student]-[Book|author;title;isbn;rating;comment]
+[Student]-[Paper|author;title;paperCategory;rating;comment]
+[Student]-[Internship|company;location;rating;comment]
+[Student]-[PlaceToStudy|location;rating;comment]
+[Student]-[PlaceToLive|location;rating;comment]
+[Student]-[PlaceToEat|location;rating;comment]
+[Student]-[PlaceToHaveFun|location;rating;comment]
+[Student]-[Game|title;os;rating;comment]
+
+# v3 - add in reverse order to display correctly
+[Student]-[Game|title;os;rating;comment]
+[Student]-[PlaceToHaveFun|location;rating;comment]
+[Student]-[PlaceToEat|location;rating;comment]
+[Student]-[PlaceToLive|location;rating;comment]
+[Student]-[PlaceToStudy|location;rating;comment]
+[Student]-[Internship|company;location;rating;comment]
+[Student]-[Paper|author;title;paperCategory;rating;comment]
+[Student]-[Book|author;title;isbn;rating;comment]
+[Student|id;password]-[Class|unique;semester;instructor]
+[Class]-[Course|course_number;course_name]
+
+
+# v4 - add cardinality
+[Student]1-0..*[Game|title;os;rating;comment]
+[Student]1-0..*[PlaceToHaveFun|location;rating;comment]
+[Student]1-0..*[PlaceToEat|location;rating;comment]
+[Student]1-0..*[PlaceToLive|location;rating;comment]
+[Student]1-0..*[PlaceToStudy|location;rating;comment]
+[Student]1-0..*[Internship|company;location;rating;comment]
+[Student]1-0..*[Paper|author;title;paperCategory;rating;comment]
+[Student]1-0..*[Book|author;title;isbn;rating;comment]
+[Student|id;password]1-0..*[Class|unique;semester;instructor]
+[Class]0..*-1[Course|course_number;course_name]
+
+
+# v5 - use inheritance
+# ThingThing is an association class between things
+[Thing]^[Paper|paperCategory;title;author]
+[Thing]^[Book|title;author;isbn]
+[Thing]^[Class|unique;courseNumber;courseName;professor]
+[Thing]^[Student|id;password]
+[Thing]->[ThingThing|rating;comment]
+[ThingThing]->[Thing]

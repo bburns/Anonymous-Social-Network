@@ -1,0 +1,24 @@
+body {
+  font-family: "Helvetica Neue",Verdana,Helvetica,sans-serif;
+} 
+
+#orangebar {
+  position: absolute;
+  background: #cc5500;
+  width: 100%;
+  height: 39px;
+  margin: auto;
+  z-index: -1;
+}
+
+#header h1 {
+  color: #ffffff;
+}
+
+#content {
+  background: #ccc;
+}
+
+#footer {
+  background: #ccc;
+}
