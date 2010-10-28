@@ -1,0 +1,8 @@
+tmp/**/*
+tmp/*
+*.swp
+*~
+.DS_store
+*.pyc
+.nfs*
+
