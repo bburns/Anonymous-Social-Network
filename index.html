@@ -1,25 +1,67 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhmtl1-strict.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>The Anonymous Social Network</title>
     <link rel="stylesheet" media="screen" href="static/screen.css" type="text/css"/>
     <link rel="stylesheet" media="print" href="static/print.css" type="text/css"/>
-    <link rel="stylesheet" media="screen"href="static/asn.css" type="text/css"/>
+    <link rel="stylesheet" media="screen" href="static/asn.css" type="text/css"/>
   </head>
   <body>
-    <div id="orangebar"></div>
-    <div class="container">
-      <div id="header">
-        <h1>The ASN</h1>
-        <ul class="navigation">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Sign In</a></li>
-          <li><a href="#">About</a></li>
-        </ul>
+      <div id="orangebar">
       </div>
-      <div id="content">
-        {% block content %}{% endblock %}
+    <div class="container">
+      <div class="span-24 round" id="header">
+        <h1>@SN</h1>
+      </div>
+      <div class="span-19 round" id="content">
+        <h2>Welcome to the @SN!</h2>  
+          <h3>This is what text will look like.</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vel nibh enim. Sed faucibus mattis purus in accumsan. Vivamus semper sagittis lacus. Fusce pulvinar mattis pharetra. Nam adipiscing malesuada convallis. Aliquam magna nulla, vestibulum quis congue sed, adipiscing eget felis. Ut aliquam malesuada magna. Mauris non urna tempor dui fringilla scelerisque. Curabitur nec laoreet nibh. Ut quis mi leo. Cras in magna id turpis suscipit interdum quis in enim. Nullam tempus, nulla sed elementum mollis, turpis massa sagittis felis, et sodales nisi odio a metus. Nunc vel enim sit amet leo mattis gravida. Phasellus ut hendrerit erat. Morbi adipiscing urna nec nulla malesuada accumsan. Phasellus semper, purus nec convallis porttitor, odio orci rhoncus sapien, vel semper lorem eros quis nulla. Donec vestibulum tellus eget neque sagittis faucibus.</p>
+          <h3>This is what a table will look like</h3>
+          <table>
+            <thead>
+                <tr><th>Days of the Week</th><th>Classes Per Day</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Monday</td><td>2</td></tr>
+                <tr><td>Tuesday</td><td>2</td></tr>
+                <tr><td>Wednesday</td><td>2</td></tr>
+                <tr><td>Thrusday</td><td>2</td></tr>
+                <tr><td>Friday</td><td>1</td></tr>
+                <tr><td>Saturday</td><td>0</td></tr>
+                <tr><td>Sunday</td><td>0</td></tr>
+            </tbody>
+          </table>
+          <h3>This is what a form will look like</h3>
+          <form method="post" action="/">
+            <fieldset>
+              <legend>This is a form</legend>
+              <p><label for="text1">Name: </label>
+                 <input id="text1" class="title" type="text" name="text1"/></p>
+              <p><label for="select1">Class:</label>
+                 <select id="select1" name="select1">
+                  <option value="1">CS373 Software Engineering</option>
+                  <option value="2">CS343 Artificial Intelligence</option>
+                  <option value="3">CS378 Software Design</option>
+                </select></p>
+                <p><input id="submit" type="submit"/ text="Submit Form" /></p>
+            </fieldset>
+          </form>
+          <h3>Some error messages</h3>
+          <div class="error round">This is an error message</div>
+          <div class="notice round">This is a warning message</div>
+          <div class="success round">This is a success message</div>
+      </div>
+      <div class="span-4 last round" id="sidecol">
+        <ul class="navigation">
+          <li><a href="#" class="round">Home</a></li>
+          <li><a href="#" class="round">Sign In</a></li>
+          <li><a href="#" class="round">About</a></li>
+          <li><a href="#" class="round">Help</a></li>
+        </ul>
       </div>
     </div>
   </body>
 </html>
+

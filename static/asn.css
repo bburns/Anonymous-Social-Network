@@ -1,54 +1,88 @@
-body {
-  font-family: "Helvetica Neue",Verdana,Helvetica,sans-serif;
-} 
+.container {
+  height: 400px;
+}
 
 #orangebar {
   position: absolute;
   background: #cc5500;
   width: 100%;
-  height: 39px;
+  height: 44px;
   margin: auto;
   z-index: -1;
 }
 
 #header h1 {
+  width: 200px;
   color: #ffffff;
 }
 
-#content {
-  background: #ccc;
-}
-
-#footer {
-  background: #ccc;
-}
-
-.navigaiton {
-  float: right;
-  background-color: white;
-  padding 0 0.7em;
-  white-space: nowrap;
+.navigation {
+  font-size: 1.2em;
 }
 
 ul.navigation {
-  margin: 0;
+  list-style: none outside none;
+  vertical-align: baseline;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
 }
 
 .navigation li {
-  list-style-type: none;
-  display: inline-block;
-  padding: 0.2em 0;
+
 }
 
 .navigation li a {
-  padding: 0 5px;
+  color: #000000;
+  text-decoration: none;
+  display: block;
   font-weight: bold;
-}
-
-.navigation li a:visited {
-  color: #fff;
+  margin-bottom: 10px;
+  padding: 5px;
 }
 
 .navigation li a:hover {
-  text-decoration: underline;
+  background: none repeat scroll 0 0 #cc5500;
+  color: #FFFFFF;
+}
+
+#content {
+  padding: 10px;
+  border: solid 1px #cc5500;
+}
+
+#leftcol {
+  background: #ccf;
+}
+
+#rightcol {
+  background: #fcc;
+}
+
+#sidecol {
+  border: solid 1px #cc5500;
+}
+
+#leftcol, #rightcol {
+  padding: 10px;
+}
+
+/* Corner rounding */
+.round {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#content table {
+  border: solid 1px #cc5500;
+}
+
+#content thead th {
+  background: #cc5500;
+  color: #ffffff;
+}
+
+#content label {
+  font-size: 120%;
 }
