@@ -25,12 +25,24 @@ pydoc := pydoc
 epydoc := /public/linux/graft/epydoc-2.1/bin/epydoc
 
 
+
 # run the unit tests in the console
-# (app needs to be running locally)
+# (app needs to be running locally - do make run in another console)
+# to test all modules, do
+# > make test
+# or 
+# > make
+# to test a single module, do something like this - 
+# > make test module=testExport 
+module := 
 test:
-	python testInConsole.py > ASN1.out
+	python testInConsole.py ${module} > ASN1.out
 	cat ASN1.out
 
+
+# run the app locally
+run:
+	../google_appengine/dev_appserver.py .
 
 
 # check using pychecker
@@ -53,10 +65,6 @@ check:
 #xml: xml/ben.xml xml/brian.xml xml/jonathan.xml xml/sang.xml xml/shanky.xml
 #	cat xml/ben.xml xml/brian.xml xml/jonathan.xml xml/sang.xml xml/shanky.xml > ASN1.xml
 
-
-# run the app locally
-run:
-	../google_appengine/dev_appserver.py .
 
 
 # publish the app to google appengine

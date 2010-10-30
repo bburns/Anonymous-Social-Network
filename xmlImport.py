@@ -24,6 +24,32 @@ def xmlImportString(s):
     return xmlImport(dom)
 
 
+
+# Looking at the XML in binary.xml, you might think that the grammar has only two child nodes, the two ref elements. But you're missing something: the carriage returns! After the '<grammar>' and before the first '<ref>' is a carriage return, and this text counts as a child node of the grammar element. Similarly, there is a carriage return after each '</ref>'; these also count as child nodes. So grammar.childNodes is actually a list of 5 objects: 3 Text objects and 2 Element objects.
+# ugh
+
+
+# change to iterate over child nodes, add to a dictionary, then pull out the values you want?
+
+# getElementsByTagName finds all children of a given name, no matter how deep, thus working recursively. This is usually good, but can cause problems if similar nodes exist at multiple levels and the intervening nodes are important. 
+
+
+# initially 
+# Ran 21 tests in 10.578s
+
+# transform1: iterate over rootNode.childNodes instead of gathering all student nodes
+# Ran 21 tests in 7.835s
+
+# transform2: iterate over student childnodes, instead of searching for them
+# Ran 21 tests in 7.681s
+
+# transform3: iterate over classes
+# Ran 21 tests in 
+
+
+
+
+
 def xmlImport(dom):
     """
     Imports an xml string to a google database
@@ -33,170 +59,209 @@ def xmlImport(dom):
     rootNode = dom.firstChild
 
     # iterate over all student nodes
-    for studentNode in rootNode.getElementsByTagName('student') :
 
-        # add the student to the database
-        s = Student()
-        s.id_ = getElementData(studentNode, "id")
-        s.password = getElementData(studentNode, "password")
-        s.put()
+    # transform1
+#    for studentNode in rootNode.getElementsByTagName('student') :
+    for n in rootNode.childNodes:
+        if n.nodeName == "student":
+            studentNode = n
 
-        # now look for child elements and add them also
 
-        #class tag handler
-        for node in studentNode.getElementsByTagName('class'):
+            # transform2
+            # add the student to the database
+            # s = Student()
+            # s.id_ = getElementData(studentNode, "id")
+            # s.password = getElementData(studentNode, "password")
+            # s.put()
 
-            c = Class()
-            c.unique = getElementData(node, 'unique')
-            c.course_num = getElementData(node, 'course_num')
-            c.course_name = getElementData(node, 'course_name')
-            c.semester = getElementData(node, 'semester')
-            c.instructor = getElementData(node, 'instructor')
-            c.put()
+            s = Student()
+            for node in n.childNodes:
+                name = node.nodeName
+                if name == "id": 
+                    s.id_ = getData(node)
+                elif name == "password": 
+                    s.password = getData(node)
+                    s.put()
 
-	    #create a studentClass association class
-            sc = StudentClass()
-            sc.student = s
-            sc.class_ = c
-            sc.grade = getElementData(node, 'grade')
-            sc.rating = getElementData(node, 'rating')
-            sc.comment = getElementData(node, 'comment')
-            sc.put()                    
-        
-        #books
-        for node in studentNode.getElementsByTagName('book'):
+                # transform3
+                elif name == "class": 
+                    c = Class()
+                    sc = StudentClass()
+                    sc.student = s
+                    sc.class_ = c #. bombs
+                    for node2 in node.childNodes:
+                        name2 = node2.nodeName
 
-	    #create a book object
-            b = Book()
-            b.isbn = getElementData(node, 'isbn')
-            b.author = getElementData(node, 'author')
-            b.title = getElementData(node, 'title')
-            b.put()
+                        if name2 == "unique": c.unique = getData(node2)
+                        elif name2 == "course_num": c.course_num = getData(node2)
+                        elif name2 == "course_name": c.course_name = getData(node2)
+                        elif name2 == "semester": c.semester = getData(node2)
+                        elif name2 == "instructor": c.instructor = getData(node2)
 
-	    #create a studentBook association class
-            sb = StudentBook()
-            sb.student = s
-            sb.book = b
-            sb.rating = getElementData(node, 'rating')
-            sb.comment = getElementData(node, 'comment')
-            sb.put()    
-        
-        #papers
-        for node in studentNode.getElementsByTagName('paper'):                
-                
-            p = Paper()
-            p.paper_category = getElementData(node, 'paper_category')
-            p.author = getElementData(node, 'author')
-            p.title = getElementData(node, 'title')
-            p.put()
-                
-            sp = StudentPaper()
-            sp.student = s
-            sp.paper = p
-            sp.rating = getElementData(node, 'rating')
-            sp.comment = getElementData(node, 'comment')
-            sp.put()
+                        elif name2 == "grade": sc.grade = getData(node2)
+                        elif name2 == "rating": sc.rating = getData(node2)
+                        elif name2 == "comment": sc.comment = getData(node2)
+                    c.put()
+                    sc.put()
+                    
+            #s.put()
+            
 
-        #internship
-        for node in studentNode.getElementsByTagName('internship'):           
-                
-            i = Internship()
-            i.place_name = getElementData(node, 'place_name')             
-            i.location = getElementData(node, 'location')
-            i.semester = getElementData(node, 'semester')
-            i.put()
-                
-            si = StudentInternship()
-            si.student = s
-            si.internship = i
-            si.rating = getElementData(node, 'rating')
-            si.comment = getElementData(node, 'comment')
+            # now look for child elements and add them also
 
-            si.put()
-        
-        #studyPlace
-        for node in studentNode.getElementsByTagName('study_place'):          
-                
-            sp = Place()
-            sp.place_type = "study_place"
-            sp.place_name = getElementData(node, 'place_name')
-            sp.location = getElementData(node, 'location')
-            sp.semester = getElementData(node, 'semester')
-            sp.put()
-                
-            ssp = StudentPlace()
-            ssp.student = s
-            ssp.place = sp
-            ssp.rating = getElementData(node, 'rating')
-            ssp.comment = getElementData(node, 'comment')
-            ssp.put()
-        
-        #livePlace
-        for node in studentNode.getElementsByTagName('live_place'):           
-                
-            lp = Place()
-            lp.place_type = "live_place"
-            lp.place_name = getElementData(node, 'place_name')
-            lp.location = getElementData(node, 'location')
-            lp.semester = getElementData(node, 'semester')
-            lp.put()
-                
-            slp = StudentPlace()
-            slp.student = s
-            slp.place = lp
-            slp.rating = getElementData(node, 'rating')
-            slp.comment = getElementData(node, 'comment')
-            slp.put()
+            #class tag handler
+            # for node in studentNode
+            #     c = Class()
+            #     c.unique = getElementData(node, 'unique')
+            #     c.course_num = getElementData(node, 'course_num')
+            #     c.course_name = getElementData(node, 'course_name')
+            #     c.semester = getElementData(node, 'semester')
+            #     c.instructor = getElementData(node, 'instructor')
+            #     c.put()
 
-        #eatPlace
-        for node in studentNode.getElementsByTagName('eat_place'):            
-                
-            ep = Place()
-            ep.place_type = "eat_place"
-            ep.place_name = getElementData(node, 'place_name')
-            ep.location = getElementData(node, 'location')
-            ep.semester = getElementData(node, 'semester')
-            ep.put()
-                
-            sep = StudentPlace()
-            sep.student = s
-            sep.place = ep
-            sep.rating = getElementData(node, 'rating')
-            sep.comment = getElementData(node, 'comment')
-            sep.put()
+            #     #create a studentClass association class
+            #     sc = StudentClass()
+            #     sc.student = s
+            #     sc.class_ = c
+            #     sc.grade = getElementData(node, 'grade')
+            #     sc.rating = getElementData(node, 'rating')
+            #     sc.comment = getElementData(node, 'comment')
+            #     sc.put()                    
 
-        #funPlace
-        for node in studentNode.getElementsByTagName('fun_place'):            
-                
-            fp = Place()
-            fp.place_type = "fun_place"
-            fp.place_name = getElementData(node, 'place_name')
-            fp.location = getElementData(node, 'location')
-            fp.semester = getElementData(node, 'semester')
-            fp.put()
+            #books
+            for node in studentNode.getElementsByTagName('book'):
 
-            sfp = StudentPlace()
-            sfp.student = s
-            sfp.place = fp
-            sfp.rating = getElementData(node, 'rating')
-            sfp.comment = getElementData(node, 'comment')
-            sfp.put()
+                #create a book object
+                b = Book()
+                b.isbn = getElementData(node, 'isbn')
+                b.author = getElementData(node, 'author')
+                b.title = getElementData(node, 'title')
+                b.put()
 
-        #game
-        for node in studentNode.getElementsByTagName('game'):                 
-                
-            g = Game()
-            g.os = getElementData(node, 'os')
-            g.title = getElementData(node, 'title')
-            g.put()
-                
-            sg = StudentGame()
-            sg.student = s
-            sg.game = g
-            sg.rating = getElementData(node, 'rating')
-            sg.comment = getElementData(node, 'comment')
-            sg.put()
+                #create a studentBook association class
+                sb = StudentBook()
+                sb.student = s
+                sb.book = b
+                sb.rating = getElementData(node, 'rating')
+                sb.comment = getElementData(node, 'comment')
+                sb.put()    
 
+            #papers
+            for node in studentNode.getElementsByTagName('paper'):                
+
+                p = Paper()
+                p.paper_category = getElementData(node, 'paper_category')
+                p.author = getElementData(node, 'author')
+                p.title = getElementData(node, 'title')
+                p.put()
+
+                sp = StudentPaper()
+                sp.student = s
+                sp.paper = p
+                sp.rating = getElementData(node, 'rating')
+                sp.comment = getElementData(node, 'comment')
+                sp.put()
+
+            #internship
+            for node in studentNode.getElementsByTagName('internship'):           
+
+                i = Internship()
+                i.place_name = getElementData(node, 'place_name')             
+                i.location = getElementData(node, 'location')
+                i.semester = getElementData(node, 'semester')
+                i.put()
+
+                si = StudentInternship()
+                si.student = s
+                si.internship = i
+                si.rating = getElementData(node, 'rating')
+                si.comment = getElementData(node, 'comment')
+
+                si.put()
+
+            #studyPlace
+            for node in studentNode.getElementsByTagName('study_place'):          
+
+                sp = Place()
+                sp.place_type = "study_place"
+                sp.place_name = getElementData(node, 'place_name')
+                sp.location = getElementData(node, 'location')
+                sp.semester = getElementData(node, 'semester')
+                sp.put()
+
+                ssp = StudentPlace()
+                ssp.student = s
+                ssp.place = sp
+                ssp.rating = getElementData(node, 'rating')
+                ssp.comment = getElementData(node, 'comment')
+                ssp.put()
+
+            #livePlace
+            for node in studentNode.getElementsByTagName('live_place'):           
+
+                lp = Place()
+                lp.place_type = "live_place"
+                lp.place_name = getElementData(node, 'place_name')
+                lp.location = getElementData(node, 'location')
+                lp.semester = getElementData(node, 'semester')
+                lp.put()
+
+                slp = StudentPlace()
+                slp.student = s
+                slp.place = lp
+                slp.rating = getElementData(node, 'rating')
+                slp.comment = getElementData(node, 'comment')
+                slp.put()
+
+            #eatPlace
+            for node in studentNode.getElementsByTagName('eat_place'):            
+
+                ep = Place()
+                ep.place_type = "eat_place"
+                ep.place_name = getElementData(node, 'place_name')
+                ep.location = getElementData(node, 'location')
+                ep.semester = getElementData(node, 'semester')
+                ep.put()
+
+                sep = StudentPlace()
+                sep.student = s
+                sep.place = ep
+                sep.rating = getElementData(node, 'rating')
+                sep.comment = getElementData(node, 'comment')
+                sep.put()
+
+            #funPlace
+            for node in studentNode.getElementsByTagName('fun_place'):            
+
+                fp = Place()
+                fp.place_type = "fun_place"
+                fp.place_name = getElementData(node, 'place_name')
+                fp.location = getElementData(node, 'location')
+                fp.semester = getElementData(node, 'semester')
+                fp.put()
+
+                sfp = StudentPlace()
+                sfp.student = s
+                sfp.place = fp
+                sfp.rating = getElementData(node, 'rating')
+                sfp.comment = getElementData(node, 'comment')
+                sfp.put()
+
+            #game
+            for node in studentNode.getElementsByTagName('game'):                 
+
+                g = Game()
+                g.os = getElementData(node, 'os')
+                g.title = getElementData(node, 'title')
+                g.put()
+
+                sg = StudentGame()
+                sg.student = s
+                sg.game = g
+                sg.rating = getElementData(node, 'rating')
+                sg.comment = getElementData(node, 'comment')
+                sg.put()
+            
 
 def getElementData(node, tagname) :
     """
@@ -215,3 +280,12 @@ def getElementData(node, tagname) :
             return e.data
     else:
         return ""
+
+
+def getData(node):
+    """
+    """
+    e = node.firstChild
+    if e is None:
+        return ""
+    return e.data

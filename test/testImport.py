@@ -51,6 +51,9 @@ class testImport (unittest.TestCase) :
         self.assert_(len(students) == 0)
 
 
+    #.. do some tests with line feeds between elements, because it actually changes the dom structure!!
+
+
     #. fails - need to catch exception?
     # def testImportNothing2(self):
     #     self.dbClear()
