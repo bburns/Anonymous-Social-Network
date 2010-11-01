@@ -16,7 +16,10 @@
       </div>
       <div class="span-19 round" id="content">
 	<h2>Please Complete the following form to add a class</h2>
-        <form method="post" action="/class/add"><table>{{ form.as_table}}</table><input type="submit"/></form>
+        <form method="post" action={% if id %}"/class/edit"{%else %}"/class/add"{%endif%}>
+	<table>{{ form.as_table}}</table>
+	<input type="hidden" name="_id" value="{{ id }}"/>
+	<input type="submit"/></form>
       </div>
 
       <div class="span-4 last round" id="sidecol">

@@ -15,32 +15,20 @@
         <h1>@SN</h1>
       </div>
       <div class="span-19 round" id="content">
-	<h2>Current Classes</h2>
+	<h2>Are you sure you want to Delete this class?</h2>
+        <form method="post" action="/class/delete">
 	<table>
-		<thead>
-		<tr>
-			<th>Unique</th>
-			<th>Course Num</th>
-			<th>Semester</th>
-			<th>Instructor</th>
-			<th>Course Name</th>
-			<th></th>
-		</tr>
-		</thead>
-        	{% for class in classes %}
-		<tr>
-		<td>{{class.unique}}</td>
-		<td>{{class.course_num}}</td>
-		<td>{{class.semester}}</td>
-		<td>{{class.instructor}}</td>
-		<td>{{class.course_name}}</td>
-		<td><a href='/class/edit?id={{class.key.id}}'>Edit</a></td>
-		<td><a method="post" href='/class/delete?id={{class.key.id}}'>Delete</a></td>
-		</tr>
-		{% endfor %}
+		<tr><td>Unique = {{ cl.unique}}</td></tr>
+		<tr><td>Course Number = {{ cl.course_num}}</td></tr>
+		<tr><td>Semester = {{ cl.semester}}</td></tr>
+		<tr><td>Instructor = {{ cl.instructor}}</td></tr>
+		<tr><td>Course Name = {{ cl.course_name}}</td></tr>
 	</table>
-	<p><a href="/class/add">Add a Class</a><p>	
+	<input type="hidden" name="_id" value="{{ id }}"/>
+	<input type="submit" value="Yes"/></form>
+	<form method="get" action="/class/list"><input type="submit" value = "No"></form>
       </div>
+
       <div class="span-4 last round" id="sidecol">
         <ul class="navigation">
           <li><a href="#" class="round">Home</a></li>

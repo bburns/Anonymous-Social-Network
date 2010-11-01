@@ -98,10 +98,31 @@ class EditClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         cl = Class.get(db.Key.from_path('Class', id))
-	template_values = {'form':ClassForm(instance=cl)}
+	template_values = {'form':ClassForm(instance=cl),'id':id}
         directory = os.path.dirname(__file__)
         path = os.path.join(directory, 'templates/class/add.html')
         self.response.out.write(template.render(path, template_values, True))
+
+    def post(self):
+	id = int(self.request.get('_id'))
+	cl = Class.get(db.Key.from_path('Class', id))
+        form = ClassForm(data = self.request.POST, instance = cl)            
+	form.save()
+      	self.redirect("/class/list")
+
+class DeleteClass(webapp.RequestHandler):
+    def get(self):
+	id = int(self.request.get('id'))
+        cl = Class.get(db.Key.from_path('Class', id))
+	template_values = {'cl':cl,'id':id}
+        directory = os.path.dirname(__file__)
+        path = os.path.join(directory, 'templates/class/delete.html')
+        self.response.out.write(template.render(path, template_values, True))
+
+    def post(self):
+	id = int(self.request.get('_id'))
+	cl = Class.get(db.Key.from_path('Class', id)).delete()
+        self.redirect("/class/list")
 
 _URLS = (
      ('/', MainPage),
@@ -110,6 +131,7 @@ _URLS = (
      ('/dbclear',ClearData),
      ('/class/add', AddClass),
      ('/class/edit', EditClass),
+     ('/class/delete', DeleteClass),
      ('/class/list',ListClass))
 
 def main():
