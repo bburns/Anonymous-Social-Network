@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>The Anonymous Social Network</title>
+    <link rel="stylesheet" media="screen" href="/static/screen.css" type="text/css"/>
+    <link rel="stylesheet" media="print" href="/static/print.css" type="text/css"/>
+    <link rel="stylesheet" media="screen" href="/static/asn.css" type="text/css"/>
+</head>
+
+<body>
+  <div id="orangebar">
+      </div>
+    <div class="container">
+      <div class="span-24 round" id="header">
+        <h1>@SN</h1>
+      </div>
+      <div class="span-19 round" id="content">
+        <h2>Welcome to the @SN!</h2>  
+          <h3>List of Books</h3>
+<table>
+
+<thead>
+<th>Title</th><th>ISBN</th><th>Author</th><th>Id</th><th></th><th></th>
+</thead>
+
+<tbody>
+
+{% for book in books %}
+
+<tr>
+<td> {{ book.title }} </td>
+<td> {{ book.isbn }} </td>
+<td> {{ book.author }} </td>
+<td> {{ book.key.id }} </td>
+<td> <a href="/book/edit?id={{ book.key.id }}">edit</a> </td> 
+<td> <a href="/book/delete?id={{ book.key.id }}">delete</a> </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+<a href="/book/add">Add a Book</a>
+</div>
+      <div class="span-4 last round" id="sidecol">
+        <ul class="navigation">
+          <li><a href="#" class="round">Home</a></li>
+          <li><a href="#" class="round">Sign In</a></li>
+          <li><a href="#" class="round">About</a></li>
+          <li><a href="#" class="round">Help</a></li>
+        </ul>
+      </div>
+</div>
+
+
+</body>
+</html>
