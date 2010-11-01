@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<table>
+
+<thead>
+<th>title</th><th>isbn</th><th>author</th>
+<th>id</th>
+</thead>
+
+{% for book in books %}
+
+<tr>
+<td> {{ book.title }} </td>
+<td> {{ book.isbn }} </td>
+<td> {{ book.author }} </td>
+<td> {{ book.key.id }} </td>
+</tr>
+
+{% endfor %}
+
+</table>
+</body>
+</html>
