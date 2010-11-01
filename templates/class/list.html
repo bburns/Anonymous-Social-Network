@@ -15,10 +15,31 @@
         <h1>@SN</h1>
       </div>
       <div class="span-19 round" id="content">
-	<h2>Please Complete the following form to add a class</h2>
-        <form method="post" action="/class/add"><table>{{ form.as_table}}</table><input type="submit"/></form>
+	<h2>Current Classes</h2>
+	<table>
+		<thead>
+		<tr>
+			<th>Unique</th>
+			<th>Course Num</th>
+			<th>Semester</th>
+			<th>Instructor</th>
+			<th>Course Name</th>
+			<th></th>
+		</tr>
+		</thead>
+        	{% for class in classes %}
+		<tr>
+		<td>{{class.unique}}</td>
+		<td>{{class.course_num}}</td>
+		<td>{{class.semester}}</td>
+		<td>{{class.instructor}}</td>
+		<td>{{class.course_name}}</td>
+		<td><a href='/class/edit?id={{class.key.id}}'>Edit</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	<p><a href="/class/add">Add a Class</a><p>	
       </div>
-
       <div class="span-4 last round" id="sidecol">
         <ul class="navigation">
           <li><a href="#" class="round">Home</a></li>
@@ -30,5 +51,3 @@
     </div>
   </body>
 </html>
-
-

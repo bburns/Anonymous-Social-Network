@@ -9,7 +9,7 @@ from google.appengine.ext import db
 from xml.dom import minidom
 from xmlExport import xmlExport
 from xmlImport import xmlImportString
-from models import Student, ClassForm
+from models import *
     
 """
 ASN1
@@ -73,6 +73,15 @@ class ClearData(webapp.RequestHandler):
         db.delete(query)
         self.redirect("/")
 
+class ListClass(webapp.RequestHandler):
+    def get(self):
+	classes = Class.all()
+        classes.fetch(100)
+        template_values = {'classes':classes}
+        directory = os.path.dirname(__file__)
+        path = os.path.join(directory, 'templates/class/list.html')
+        self.response.out.write(template.render(path, template_values, True))
+
 class AddClass(webapp.RequestHandler):
     def get(self):
         template_values = {'form':ClassForm()} 
@@ -81,16 +90,27 @@ class AddClass(webapp.RequestHandler):
         self.response.out.write(template.render(path, template_values, True))
 
     def post(self):
-            template_values = { 'error' : e.args }
-            directory = os.path.dirname(__file__)
-            path = os.path.join(directory, 'import.html')
-            self.response.out.write(template.render(path, template_values, True))
+        form = ClassForm(self.request.POST)            
+        form.save()
+      	self.redirect("/class/list")
+
+class EditClass(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        cl = Class.get(db.Key.from_path('Class', id))
+	template_values = {'form':ClassForm(instance=cl)}
+        directory = os.path.dirname(__file__)
+        path = os.path.join(directory, 'templates/class/add.html')
+        self.response.out.write(template.render(path, template_values, True))
+
 _URLS = (
      ('/', MainPage),
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
-     ('/class/add', AddClass))
+     ('/class/add', AddClass),
+     ('/class/edit', EditClass),
+     ('/class/list',ListClass))
 
 def main():
     "Run the webapp"
