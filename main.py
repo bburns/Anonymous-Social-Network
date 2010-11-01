@@ -11,12 +11,11 @@ from google.appengine.ext.db import djangoforms
 from xml.dom import minidom
 from xmlExport import xmlExport
 from xmlImport import xmlImportString
-#from models import Student
 from models import *
     
 """
-ASN1
-Anonymous Social Network phase 1
+ASN2
+Anonymous Social Network phase 2
 """   
 
 class MainPage(webapp.RequestHandler):
@@ -85,53 +84,36 @@ class BookForm(djangoforms.ModelForm):
 
 class BookList(webapp.RequestHandler):
     def get(self):
-        """
-        Return the book page (import.html).
-        """
-        books = Book.all()
-        
+        books = Book.all()        
         template_values = {'books': books}
         directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'booklist.html')
+        path = os.path.join(directory, 'templates/booklist.html')
         self.response.out.write(template.render(path, template_values, True))
-
-        #self.response.out.write('<html><body>')
-        #self.response.out.write('<table>')
-
-        #for book in books:
-        #    self.response.out.write(book.title + " " )
-        #self.response.out.write('</table>')
-        #self.response.out.write('</body></html>')
-
 
 
 class BookAdd(webapp.RequestHandler):
     def get(self):
-        self.response.out.write("add")
         self.response.out.write('<html><body>'
                                 '<form method="post" '
                                 'action="/book/add">'
                                 '<table>')
-        # This generates our shopping list form and writes it in the response
+        # This generates the book form and writes it in the response
         self.response.out.write(BookForm())
         self.response.out.write('</table>'
                                 '<input type="submit">'
                                 '</form></body></html>')
+
     def post(self):
-        self.response.out.write("eriwrueiru")
         data = BookForm(data=self.request.POST)
         if data.is_valid():
             self.response.out.write("valid data")
-            # Save the data, and redirect to the view page
+            # Save the data, and redirect to the list page
             book = data.save() #(commit=False)
             #book.added_by = users.get_current_user()
             book.put()
-            self.response.out.write("hello")
-            self.response.out.write("   id is '%s'" % book.key().id())
             self.redirect('/book/list')
-            # self.response.out.write("Successfully Added:" + book.title)
         else:
-            # Reprint the form
+            # Reprint the form, showing errors (?)
             self.response.out.write('<html><body>'
                                     '<form method="post" '
                                     'action="/book/add">'
@@ -144,10 +126,10 @@ class BookAdd(webapp.RequestHandler):
 
 class BookEdit(webapp.RequestHandler):
     def get(self):
-        id = int(self.request.get('id'))
-        key = db.Key.from_path('Book', id)
-       
+        id = int(self.request.get('id')) # get id from "?id=" in url
         book = Book.get_by_id(id)
+        #key = db.Key.from_path('Book', id)
+        #book = Book.get(key)
         self.response.out.write('<html><body>'
                                 '<form method="POST" '
                                 'action="/book/edit">'
@@ -159,26 +141,28 @@ class BookEdit(webapp.RequestHandler):
                                 '</form></body></html>' % id)
 
     def post(self):
-      id = int(self.request.get('_id'))
-      book = Book.get(db.Key.from_path('Book', id))
-      data = BookForm(data=self.request.POST, instance=book)
-      if data.is_valid():
-          # Save the data, and redirect to the view page
-          entity = data.save(commit=False)
-          # entity.added_by = users.get_current_user()
-          entity.put()
-          self.redirect('/book/list')
-      else:
-          # Reprint the form
-          self.response.out.write('<html><body>'
-                                  '<form method="POST" '
-                                  'action="/book/edit">'
-                                  '<table>')
-          self.response.out.write(data)
-          self.response.out.write('</table>'
-                                  '<input type="hidden" name="_id" value="%s">'
-                                  '<input type="submit">'
-                                  '</form></body></html>' % id)
+        #. so we don't use the hidden field value?
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        #book = Book.get(db.Key.from_path('Book', id))
+        book = Book.get_by_id(id)
+        data = BookForm(data=self.request.POST, instance=book)
+        if data.is_valid():
+            # Save the data, and redirect to the view page
+            entity = data.save(commit=False)
+            # entity.added_by = users.get_current_user()
+            entity.put()
+            self.redirect('/book/list')
+        else:
+            # Reprint the form
+            self.response.out.write('<html><body>'
+                                    '<form method="POST" '
+                                    'action="/book/edit">'
+                                    '<table>')
+            self.response.out.write(data)
+            self.response.out.write('</table>'
+                                    '<input type="hidden" name="_id" value="%s">'
+                                    '<input type="submit">'
+                                    '</form></body></html>' % id)
 
 class BookDelete(webapp.RequestHandler):
     def get(self):
