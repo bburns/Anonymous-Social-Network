@@ -1,4 +1,5 @@
 from google.appengine.ext import db
+from google.appengine.ext.db import djangoforms
 
 class Student(db.Model):
 
@@ -27,6 +28,10 @@ class Class(db.Model):
     semester = db.StringProperty()
     instructor = db.StringProperty()
     course_name = db.StringProperty()
+
+class ClassForm(djangoforms.ModelForm):
+    class Meta:
+	model = Class
 
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)

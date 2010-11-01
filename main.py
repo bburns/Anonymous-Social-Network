@@ -9,7 +9,7 @@ from google.appengine.ext import db
 from xml.dom import minidom
 from xmlExport import xmlExport
 from xmlImport import xmlImportString
-from models import Student
+from models import Student, ClassForm
     
 """
 ASN1
@@ -73,11 +73,24 @@ class ClearData(webapp.RequestHandler):
         db.delete(query)
         self.redirect("/")
 
+class AddClass(webapp.RequestHandler):
+    def get(self):
+        template_values = {'form':ClassForm()} 
+        directory = os.path.dirname(__file__)
+        path = os.path.join(directory, 'templates/class/add.html')
+        self.response.out.write(template.render(path, template_values, True))
+
+    def post(self):
+            template_values = { 'error' : e.args }
+            directory = os.path.dirname(__file__)
+            path = os.path.join(directory, 'import.html')
+            self.response.out.write(template.render(path, template_values, True))
 _URLS = (
      ('/', MainPage),
      ('/export',ExportData),
      ('/import',ImportData),
-     ('/dbclear',ClearData))
+     ('/dbclear',ClearData),
+     ('/class/add', AddClass))
 
 def main():
     "Run the webapp"
