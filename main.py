@@ -145,13 +145,9 @@ class BookAdd(webapp.RequestHandler):
 class BookEdit(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
-        self.response.out.write("id is: '%s'" % id)
         key = db.Key.from_path('Book', id)
-        self.response.out.write("key is: '%s'" % key)
-        
-        #book = Book.get(key)
+       
         book = Book.get_by_id(id)
-        self.response.out.write("book is '%s'" % book.title)
         self.response.out.write('<html><body>'
                                 '<form method="POST" '
                                 'action="/book/edit">'
@@ -184,31 +180,13 @@ class BookEdit(webapp.RequestHandler):
                                   '<input type="submit">'
                                   '</form></body></html>' % id)
 
-    # def post(self):
-    #     data = BookForm(data=self.request.POST)
-    #     if data.is_valid():
-    #         self.response.out.write("valid data")
-    #         # Save the data, and redirect to the view page
-    #         book = data.save(commit=False)
-    #         #book.added_by = users.get_current_user()
-    #         id = book.key().id()
-    #         key = db.Key.from_path('Book', id)
-    #         book.key
-    #         book.put()
-    #         self.response.out.write("   id is '%s'" % book.key().id())
-    #         self.redirect('/book/list')
-    #         # self.response.out.write("Successfully Added:" + book.title)
-    #     else:
-    #         # Reprint the form
-    #         self.response.out.write('<html><body>'
-    #                                 '<form method="post" '
-    #                                 'action="/book/edit">'
-    #                                 '<table>')
-    #         self.response.out.write(data)
-    #         self.response.out.write('</table>'
-    #                                 '<input type="submit">'
-    #                                 '</form></body></html>')
-
+class BookDelete(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        #key = db.Key.from_path('Book', id)
+        book = Book.get_by_id(id)
+        book.delete()
+        self.redirect('/book/list')
 
 
 
@@ -219,6 +197,7 @@ _URLS = (
      ('/book/list', BookList),
      ('/book/add', BookAdd),
      ('/book/edit', BookEdit),
+     ('/book/delete', BookDelete),
      ('/dbclear',ClearData)
      )
 
