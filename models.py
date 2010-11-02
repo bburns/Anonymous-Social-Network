@@ -89,6 +89,10 @@ class Internship(db.Model):
     location = db.StringProperty()
     semester = db.StringProperty()
 
+class InternshipForm(djangoforms.ModelForm):
+    class Meta:
+        model = Internship
+
 class StudentInternship(db.Model):
     student = db.ReferenceProperty(Student)
     internship = db.ReferenceProperty(Internship)
@@ -101,6 +105,11 @@ class Place(db.Model):
     location = db.StringProperty()
     semester = db.StringProperty()
 
+class PlaceForm(djangoforms.ModelForm):
+    class Meta:
+        model = Place
+
+
 class StudentPlace(db.Model):
     student = db.ReferenceProperty(Student)
     place = db.ReferenceProperty(Place)
@@ -110,6 +119,10 @@ class StudentPlace(db.Model):
 class Game(db.Model):
     os = db.StringProperty()
     title = db.StringProperty()
+
+class GameForm(djangoforms.ModelForm):
+    class Meta:
+        model = Game
 
 class StudentGame(db.Model):
     student = db.ReferenceProperty(Student)

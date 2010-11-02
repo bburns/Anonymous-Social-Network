@@ -239,6 +239,152 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id).delete()
         self.redirect("/paper/list")
 
+#Place
+class ListPlace(webapp.RequestHandler):
+    def get(self):
+        places = Place.all()
+        places.fetch(100)
+        doRender(self,'place/list.html',{'places':places})
+
+class AddPlace(webapp.RequestHandler):
+    def get(self):
+        doRender(self,'place/add.html',{'form':PlaceForm()})
+
+    def post(self):
+        data = PlaceForm(data=self.request.POST)
+        if data.is_valid():
+            self.response.out.write("valid data")
+            place = data.save() #(commit=False)
+            place.put()
+            self.redirect('/place/list')
+        else:
+            doRender(self,'place/add.html',data)
+
+class EditPlace(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        place = Place.get_by_id(id)
+        doRender(self,'place/add.html',{'form':PlaceForm(instance=place),'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        place = Place.get_by_id(id)
+        data = PlaceForm(data=self.request.POST, instance=place)
+        if data.is_valid():
+            entity = data.save(commit=False)
+            entity.put()
+            self.redirect('/place/list')
+        else:
+            doRender(self,'place/add.html',data)
+
+class DeletePlace(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        place = Place.get_by_id(id)
+        doRender(self,'place/delete.html',{'place':place,'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        place = Place.get_by_id(id).delete()
+        self.redirect("/place/list")
+
+#Internship
+class ListInternship(webapp.RequestHandler):
+    def get(self):
+        internships = Internship.all()
+        internships.fetch(100)
+        doRender(self,'internship/list.html',{'internships':internships})
+
+class AddInternship(webapp.RequestHandler):
+    def get(self):
+        doRender(self,'internship/add.html',{'form':InternshipForm()})
+
+    def post(self):
+        data = InternshipForm(data=self.request.POST)
+        if data.is_valid():
+            self.response.out.write("valid data")
+            internship = data.save() #(commit=False)
+            internship.put()
+            self.redirect('/internship/list')
+        else:
+            doRender(self,'internship/add.html',data)
+
+class EditInternship(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        internship = Internship.get_by_id(id)
+        doRender(self,'internship/add.html',{'form':InternshipForm(instance=internship),'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        internship = Internship.get_by_id(id)
+        data = InternshipForm(data=self.request.POST, instance=internship)
+        if data.is_valid():
+            entity = data.save(commit=False)
+            entity.put()
+            self.redirect('/internship/list')
+        else:
+            doRender(self,'internship/add.html',data)
+
+class DeleteInternship(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        internship = Internship.get_by_id(id)
+        doRender(self,'internship/delete.html',{'internship':internship,'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        internship = Internship.get_by_id(id).delete()
+        self.redirect("/internship/list")
+
+#Game
+class ListGame(webapp.RequestHandler):
+    def get(self):
+        games = Game.all()
+        games.fetch(100)
+        doRender(self,'game/list.html',{'games':games})
+
+class AddGame(webapp.RequestHandler):
+    def get(self):
+        doRender(self,'game/add.html',{'form':GameForm()})
+
+    def post(self):
+        data = GameForm(data=self.request.POST)
+        if data.is_valid():
+            self.response.out.write("valid data")
+            game = data.save() #(commit=False)
+            game.put()
+            self.redirect('/game/list')
+        else:
+            doRender(self,'game/add.html',data)
+
+class EditGame(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        game = Game.get_by_id(id)
+        doRender(self,'game/add.html',{'form':GameForm(instance=game),'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        game = Game.get_by_id(id)
+        data = GameForm(data=self.request.POST, instance=game)
+        if data.is_valid():
+            entity = data.save(commit=False)
+            entity.put()
+            self.redirect('/game/list')
+        else:
+            doRender(self,'game/add.html',data)
+
+class DeleteGame(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        game = Game.get_by_id(id)
+        doRender(self,'game/delete.html',{'game':game,'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        game = Game.get_by_id(id).delete()
+        self.redirect("/game/list")
 
 
 _URLS = (
@@ -266,6 +412,21 @@ _URLS = (
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
      ('/paper/delete', DeletePaper),
+
+     ('/place/list', ListPlace),
+     ('/place/add', AddPlace),
+     ('/place/edit', EditPlace),
+     ('/place/delete', DeletePlace),
+
+     ('/internship/list', ListInternship),
+     ('/internship/add', AddInternship),
+     ('/internship/edit', EditInternship),
+     ('/internship/delete', DeleteInternship),
+
+     ('/game/list', ListGame),
+     ('/game/add', AddGame),
+     ('/game/edit', EditGame),
+     ('/game/delete', DeleteGame),
      )
 
 

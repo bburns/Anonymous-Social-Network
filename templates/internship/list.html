@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+{% block content %}
+<h2>Current Internships</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Place Name</th>
+      <th>Location</th>
+      <th>Semester</th>
+    </tr>
+  </thead>
+  {% for internship in internships %}
+    <tr>
+      <td>{{internship.place_name}}</td>
+      <td>{{internship.location}}</td>
+      <td>{{internship.semester}}</td>
+      <td><a href='/internship/edit?id={{internship.key.id}}'>Edit</a> |
+          <a href='/internship/delete?id={{internship.key.id}}'>Delete</a></td>
+    </tr>
+  {% endfor %}
+</table>
+<p><a href="/internship/add">Add an Internship</a><p>
+{% endblock %}
