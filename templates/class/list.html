@@ -19,10 +19,10 @@
       <td>{{class.semester}}</td>
       <td>{{class.instructor}}</td>
       <td>{{class.course_name}}</td>
-      <td><a href='/class/edit?id={{class.key.id}}'>Edit</a> |
-          <a href='/class/delete?id={{class.key.id}}'>Delete</a></td>
+      <td>{% if username %}<a href='/class/edit?id={{class.key.id}}'>Edit</a> |
+          <a href='/class/delete?id={{class.key.id}}'>Delete</a>{% endif %}</td>
     </tr>
   {% endfor %}
 </table>
-<p><a href="/class/add">Add a Class</a><p>
+{%if username %}<p><a href="/class/add">Add a Class</a><p>{% endif %}
 {% endblock %}

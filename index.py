@@ -61,6 +61,12 @@ class LogoutHandler(webapp.RequestHandler):
         self.session.delete_item('username')
         doRender(self,'index.html')
 
+class SignupHandler(webapp.RequestHandler):
+    def get(self):
+        self.session = Session()
+        self.session.delete_item('username')
+        doRender(self,'signup.html',{'form':UserForm()})
+
 class ImportData(webapp.RequestHandler):
     def get(self):
         doRender(self,'import.html')
@@ -375,6 +381,7 @@ _URLS = (
 
      ('/login',LoginHandler),
      ('/logout',LogoutHandler),
+     ('/signup',SignupHandler),
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),

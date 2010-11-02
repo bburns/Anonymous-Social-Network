@@ -1,11 +1,6 @@
 from google.appengine.ext import db
 from google.appengine.ext.db import djangoforms
 
-class User(db.Model):
-    email = db.StringProperty()
-    password = db.StringProperty()
-    isAdmin = db.BooleanProperty()
-
 class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python
     password = db.StringProperty()
@@ -25,6 +20,21 @@ class Student(db.Model):
         sb.rating = rating
         sb.comment = comment
         sb.put()
+
+class User(db.Model):
+    email = db.StringProperty()
+    password = db.StringProperty()
+    isAdmin = db.BooleanProperty()
+    student = db.ReferenceProperty(Student)
+
+    def authenticate(self):
+        pass
+
+class UserForm(djangoforms.ModelForm):
+    class Meta:
+        model = User
+        exclude = ['isAdmin','student']
+    
 
 class Class(db.Model):
     unique = db.StringProperty()

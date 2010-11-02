@@ -16,6 +16,11 @@
   color: #ffffff;
 }
 
+#header a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .navigation {
   font-size: 1.2em;
 }
@@ -65,6 +70,20 @@ ul.navigation {
 
 #leftcol, #rightcol {
   padding: 10px;
+}
+
+a.signup_button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 190px;
+  color: #ffffff;
+  background: #cc5500;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
+  text-decoration: none;
 }
 
 /* Corner rounding */

@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>{% block title %}The @nonymous Social Network{% endblock %}</title>
+    <title>The @nonymous Social Network | {% block title %}{% endblock %}</title>
     <link rel="stylesheet" media="screen" href="/static/screen.css" type="text/css"/>
     <link rel="stylesheet" media="print" href="/static/print.css" type="text/css"/>
     <link rel="stylesheet" media="screen" href="/static/asn.css" type="text/css"/>
@@ -12,7 +12,7 @@
       </div>
     <div class="container">
       <div class="span-24 round" id="header">
-        <h1>@SN</h1>
+        <h1><a href="/" >@SN</a></h1>
       </div>
       <div class="span-19 round" id="content">
         {% block content %}

@@ -15,10 +15,10 @@
       <td>{{paper.title}}</td>
       <td>{{paper.author}}</td>
       <td>{{paper.paper_category}}</td>
-      <td><a href='/paper/edit?id={{paper.key.id}}'>Edit</a> |
-          <a href='/paper/delete?id={{paper.key.id}}'>Delete</a></td>
+      <td>{% if username %}<a href='/paper/edit?id={{paper.key.id}}'>Edit</a> |
+          <a href='/paper/delete?id={{paper.key.id}}'>Delete</a>{% endif %}</td>
     </tr>
   {% endfor %}
 </table>
-<p><a href="/paper/add">Add a Class</a><p>
+{% if username %}<p><a href="/paper/add">Add a Class</a><p>{% endif %}
 {% endblock %}
