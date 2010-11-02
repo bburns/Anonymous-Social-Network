@@ -4,6 +4,7 @@ from google.appengine.ext.db import djangoforms
 class User(db.Model):
     email = db.StringProperty()
     password = db.StringProperty()
+    isAdmin = db.BooleanProperty()
 
 class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python

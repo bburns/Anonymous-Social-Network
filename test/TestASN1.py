@@ -13,8 +13,8 @@
 import unittest
 from google.appengine.ext import db
 from models import *
-from xmlImport import *
-from xmlExport import *
+from utils.xmlImport import *
+from utils.xmlExport import *
 
 
 

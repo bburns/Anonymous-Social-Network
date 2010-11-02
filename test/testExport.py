@@ -14,7 +14,7 @@ import unittest
 import StringIO
 from google.appengine.ext import db
 from models import *
-from xmlExport import *
+from utils.xmlExport import *
 
 
 # -------------
