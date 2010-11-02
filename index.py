@@ -1,13 +1,11 @@
 import os
 
-from google.appengine.ext.webapp import template
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
-
+from google.appengine.ext.webapp import template
+from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.db import djangoforms
 
-from xml.dom import minidom
 from xmlExport import xmlExport
 from xmlImport import xmlImportString
 from models import *
@@ -40,29 +38,16 @@ class MainPage(webapp.RequestHandler):
 
 class ImportData(webapp.RequestHandler):
     def get(self):
-        """
-        Return the import page (import.html).
-        """
-        template_values = None
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'templates/import.html')
-        self.response.out.write(template.render(path, template_values, True))
+        doRender(self,'import.html')
 
     def post(self):
-        """
-        Get xml data from the text box and import then redirect to export
-        """
         xml_file = self.request.get('xml-file')
         try:       
           xmlImportString(xml_file)
           self.redirect("/export")
         except Exception, e:
-            template_values = { 'error' : e.args }
-            directory = os.path.dirname(__file__)
-            path = os.path.join(directory, 'templates/import.html')
-            self.response.out.write(template.render(path, template_values, True))
+            doRender(self,'import.html',{ 'error' : e.args })
 
-         
 class ExportData(webapp.RequestHandler):
     def get(self):
         """
@@ -82,7 +67,6 @@ class ClearData(webapp.RequestHandler):
         db.delete(query)
         self.redirect("/")
 
-
 class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
@@ -91,10 +75,7 @@ class ListClass(webapp.RequestHandler):
         
 class AddClass(webapp.RequestHandler):
     def get(self):
-        template_values = {'form':ClassForm()} 
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'templates/class/add.html')
-        self.response.out.write(template.render(path, template_values, True))
+        doRender(self,'class/add.html',{'form':ClassForm()})
 
     def post(self):
         form = ClassForm(self.request.POST)            
@@ -105,10 +86,7 @@ class EditClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         cl = Class.get(db.Key.from_path('Class', id))
-	template_values = {'form':ClassForm(instance=cl),'id':id}
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'templates/class/add.html')
-        self.response.out.write(template.render(path, template_values, True))
+        doRender(self,'class/add.html',{'form':ClassForm(instance=cl),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
@@ -121,57 +99,31 @@ class DeleteClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         cl = Class.get(db.Key.from_path('Class', id))
-        template_values = {'cl':cl,'id':id}
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'templates/class/delete.html')
-        self.response.out.write(template.render(path, template_values, True))
+        doRender(self,'class/delete.html',{'cl':cl,'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get(db.Key.from_path('Class', id)).delete()
         self.redirect("/class/list")
 
-class BookList(webapp.RequestHandler):
+class ListBook(webapp.RequestHandler):
     def get(self):
-        books = Book.all()        
-        template_values = {'books': books}
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'templates/booklist.html')
-        self.response.out.write(template.render(path, template_values, True))
+        books = Book.all()
+        doRender(self,'book/list.html',{'books': books})
 
-
-class BookAdd(webapp.RequestHandler):
+class AddBook(webapp.RequestHandler):
     def get(self):
-        self.response.out.write('<html><body>'
-                                '<form method="post" '
-                                'action="/book/add">'
-                                '<table>')
-        # This generates the book form and writes it in the response
-        self.response.out.write(BookForm())
-        self.response.out.write('</table>'
-                                '<input type="submit">'
-                                '</form></body></html>')
+        doRender(self,'book/add.html',{'form':BookForm()})
 
     def post(self):
         data = BookForm(data=self.request.POST)
         if data.is_valid():
             self.response.out.write("valid data")
-            # Save the data, and redirect to the list page
             book = data.save() #(commit=False)
-            #book.added_by = users.get_current_user()
             book.put()
             self.redirect('/book/list')
         else:
-            # Reprint the form, showing errors (?)
-            self.response.out.write('<html><body>'
-                                    '<form method="post" '
-                                    'action="/book/add">'
-                                    '<table>')
-            self.response.out.write(data)
-            self.response.out.write('</table>'
-                                    '<input type="submit">'
-                                    '</form></body></html>')
-
+            doRender(self,'book/add.html',data)
 
 class BookEdit(webapp.RequestHandler):
     def get(self):
@@ -233,8 +185,8 @@ _URLS = (
      ('/class/delete', DeleteClass),
      ('/class/list',ListClass),
 
-     ('/book/list', BookList),
-     ('/book/add', BookAdd),
+     ('/book/list', ListBook),
+     ('/book/add', AddBook),
      ('/book/edit', BookEdit),
      ('/book/delete', BookDelete),
      )
