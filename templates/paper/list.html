@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+{% block content %}
+<h2>Current Papers</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Category</th>
+      <th></th>
+    </tr>
+  </thead>
+  {% for paper in papers %}
+    <tr>
+      <td>{{paper.title}}</td>
+      <td>{{paper.author}}</td>
+      <td>{{paper.paper_category}}</td>
+      <td><a href='/paper/edit?id={{paper.key.id}}'>Edit</a> |
+          <a href='/paper/delete?id={{paper.key.id}}'>Delete</a></td>
+    </tr>
+  {% endfor %}
+</table>
+<p><a href="/paper/add">Add a Class</a><p>
+{% endblock %}

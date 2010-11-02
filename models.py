@@ -60,6 +60,10 @@ class Paper(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
 
+class PaperForm(djangoforms.ModelForm):
+    class Meta:
+        model = Paper
+
 class StudentPaper(db.Model):
     student = db.ReferenceProperty(Student)
     paper = db.ReferenceProperty(Paper)

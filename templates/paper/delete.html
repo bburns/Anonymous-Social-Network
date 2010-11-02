@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% block content %}
+<h2>Are you sure you want to Delete this class?</h2>
+<form method="post" action="/paper/delete">
+	<table>
+		<tr><td>Title = {{ paper.title }}</td></tr>
+		<tr><td>Author = {{ paper.author }}</td></tr>
+		<tr><td>Category = {{ paper.paper_category }}</td></tr>
+	</table>
+	<input type="hidden" name="_id" value="{{ id }}"/>
+	<input type="submit" value="Yes"/>
+</form>
+<form method="get" action="/paper/list"><input type="submit" value = "No"></form>
+{% endblock %}

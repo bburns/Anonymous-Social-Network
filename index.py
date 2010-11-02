@@ -30,9 +30,6 @@ def doRender(handler,tname='index.html',values = {}):
     return True
 
 class MainPage(webapp.RequestHandler):
-    """
-    Request handler for main page (index.html). 
-    """
     def get(self):
         doRender(self,'index.html')
 
@@ -50,9 +47,6 @@ class ImportData(webapp.RequestHandler):
 
 class ExportData(webapp.RequestHandler):
     def get(self):
-        """
-        Return the export page (export.html)
-        """
         students = Student.all().fetch(1000)
         xml = xmlExport(students)
         self.response.headers['Content-Type'] = 'text/xml'
@@ -85,12 +79,12 @@ class AddClass(webapp.RequestHandler):
 class EditClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
-        cl = Class.get(db.Key.from_path('Class', id))
+        cl = Class.get_by_id(id)
         doRender(self,'class/add.html',{'form':ClassForm(instance=cl),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
-        cl = Class.get(db.Key.from_path('Class', id))
+        cl = Class.get_by_id(id)
         form = ClassForm(data = self.request.POST, instance = cl)
         form.save()
       	self.redirect("/class/list")
@@ -98,12 +92,12 @@ class EditClass(webapp.RequestHandler):
 class DeleteClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
-        cl = Class.get(db.Key.from_path('Class', id))
+        cl = Class.get_by_id(id)
         doRender(self,'class/delete.html',{'cl':cl,'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
-        cl = Class.get(db.Key.from_path('Class', id)).delete()
+        cl = Class.get_by_id(id).delete()
         self.redirect("/class/list")
 
 class ListBook(webapp.RequestHandler):
@@ -125,21 +119,11 @@ class AddBook(webapp.RequestHandler):
         else:
             doRender(self,'book/add.html',data)
 
-class BookEdit(webapp.RequestHandler):
+class EditBook(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         book = Book.get_by_id(id)
-        #key = db.Key.from_path('Book', id)
-        #book = Book.get(key)
-        self.response.out.write('<html><body>'
-                                '<form method="POST" '
-                                'action="/book/edit">'
-                                '<table>')
-        self.response.out.write(BookForm(instance=book))
-        self.response.out.write('</table>'
-                                '<input type="hidden" name="_id" value="%s">'
-                                '<input type="submit">'
-                                '</form></body></html>' % id)
+        doRender(self,'book/add.html',{'form':BookForm(instance=book),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
@@ -147,24 +131,13 @@ class BookEdit(webapp.RequestHandler):
         book = Book.get_by_id(id)
         data = BookForm(data=self.request.POST, instance=book)
         if data.is_valid():
-            # Save the data, and redirect to the view page
             entity = data.save(commit=False)
-            # entity.added_by = users.get_current_user()
             entity.put()
             self.redirect('/book/list')
         else:
-            # Reprint the form
-            self.response.out.write('<html><body>'
-                                    '<form method="POST" '
-                                    'action="/book/edit">'
-                                    '<table>')
-            self.response.out.write(data)
-            self.response.out.write('</table>'
-                                    '<input type="hidden" name="_id" value="%s">'
-                                    '<input type="submit">'
-                                    '</form></body></html>' % id)
+            doRender(self,'book/add.html',data)
 
-class BookDelete(webapp.RequestHandler):
+class DeleteBook(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         #key = db.Key.from_path('Book', id)
@@ -172,6 +145,56 @@ class BookDelete(webapp.RequestHandler):
         book = Book.get_by_id(id)
         book.delete()
         self.redirect('/book/list')
+
+class ListPaper(webapp.RequestHandler):
+    def get(self):
+        papers = Paper.all()
+        papers.fetch(100)
+        doRender(self,'paper/list.html',{'papers':papers})
+
+class AddPaper(webapp.RequestHandler):
+    def get(self):
+        doRender(self,'paper/add.html',{'form':PaperForm()})
+
+    def post(self):
+        data = PaperForm(data=self.request.POST)
+        if data.is_valid():
+            self.response.out.write("valid data")
+            paper = data.save() #(commit=False)
+            paper.put()
+            self.redirect('/paper/list')
+        else:
+            doRender(self,'paper/add.html',data)
+
+class EditPaper(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        paper = Paper.get_by_id(id)
+        doRender(self,'paper/add.html',{'form':PaperForm(instance=paper),'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        paper = Paper.get_by_id(id)
+        data = PaperForm(data=self.request.POST, instance=paper)
+        if data.is_valid():
+            entity = data.save(commit=False)
+            entity.put()
+            self.redirect('/paper/list')
+        else:
+            doRender(self,'paper/add.html',data)
+
+class DeletePaper(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        paper = Paper.get_by_id(id)
+        doRender(self,'paper/delete.html',{'paper':paper,'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        paper = Paper.get_by_id(id).delete()
+        self.redirect("/paper/list")
+
+
 
 _URLS = (
      ('/', MainPage),
@@ -187,13 +210,18 @@ _URLS = (
 
      ('/book/list', ListBook),
      ('/book/add', AddBook),
-     ('/book/edit', BookEdit),
-     ('/book/delete', BookDelete),
+     ('/book/edit', EditBook),
+     ('/book/delete', DeleteBook),
+
+
+     ('/paper/list', ListPaper),
+     ('/paper/add', AddPaper),
+     ('/paper/edit', EditPaper),
+     ('/paper/delete', DeletePaper),
      )
 
 
 def main():
-    "Run the webapp"
     application = webapp.WSGIApplication(_URLS)
     run_wsgi_app(application)
 
