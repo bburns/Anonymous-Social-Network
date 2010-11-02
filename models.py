@@ -1,8 +1,11 @@
 from google.appengine.ext import db
 from google.appengine.ext.db import djangoforms
 
-class Student(db.Model):
+class User(db.Model):
+    email = db.StringProperty()
+    password = db.StringProperty()
 
+class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python
     password = db.StringProperty()
 

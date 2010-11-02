@@ -43,12 +43,12 @@ class LoginHandler(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        acct = self.request.get('account')
+        acct = self.request.get('username')
         pw = self.request.get('password')
         self.session.delete_item('username')
 
         if pw == '' or acct == '':
-            doRender(self,'login.html',{'error':'Please specify Account and Password'})
+            doRender(self,'login.html',{'error':'Please specify Username and Password'})
         elif pw =='secret':
             self.session['username'] = acct
             doRender(self,'index.html',{})
