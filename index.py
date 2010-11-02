@@ -6,8 +6,9 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.db import djangoforms
 
-from xmlExport import xmlExport
-from xmlImport import xmlImportString
+from utils import xmlExport
+from utils.xmlImport import xmlImportString
+from utils.sessions import Session
 from models import *
     
 """
@@ -24,6 +25,9 @@ def doRender(handler,tname='index.html',values = {}):
 
     newval = dict(values)
     newval['path'] = handler.request.path
+    handler.session = Session()
+    if 'username' in handler.session:
+        newval['username'] = handler.session['username']
 
     outstr = template.render(temp,newval)
     handler.response.out.write(outstr)
@@ -31,6 +35,30 @@ def doRender(handler,tname='index.html',values = {}):
 
 class MainPage(webapp.RequestHandler):
     def get(self):
+        doRender(self,'index.html')
+
+class LoginHandler(webapp.RequestHandler):
+    def get(self):
+        doRender(self,'login.html')
+
+    def post(self):
+        self.session = Session()
+        acct = self.request.get('account')
+        pw = self.request.get('password')
+        self.session.delete_item('username')
+
+        if pw == '' or acct == '':
+            doRender(self,'login.html',{'error':'Please specify Account and Password'})
+        elif pw =='secret':
+            self.session['username'] = acct
+            doRender(self,'index.html',{})
+        else:
+            doRender(self,'login.html',{'error':'Incorrect password'})
+
+class LogoutHandler(webapp.RequestHandler):
+    def get(self):
+        self.session = Session()
+        self.session.delete_item('username')
         doRender(self,'index.html')
 
 class ImportData(webapp.RequestHandler):
@@ -199,6 +227,8 @@ class DeletePaper(webapp.RequestHandler):
 _URLS = (
      ('/', MainPage),
 
+     ('/login',LoginHandler),
+     ('/logout',LogoutHandler),
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
