@@ -28,8 +28,8 @@ class User(db.Model):
     isAdmin = db.BooleanProperty()
     student = db.ReferenceProperty(Student)
 
-    @classmethod
-    def get_by_email(self, email):
+    @staticmethod
+    def get_by_email(email):
         q = db.Query(User)
         q = q.filter('email', email)
         results = q.fetch(limit=1)

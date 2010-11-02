@@ -6,6 +6,8 @@
 # need this because 'make test' doesn't work otherwise (?)
 .PHONY: test
 
+
+
 # need this for pydoc and pychecker
 export PYTHONPATH := ../google_appengine/:../google_appengine/lib/webob
 
@@ -28,6 +30,7 @@ epydoc := /public/linux/graft/epydoc-2.1/bin/epydoc
 
 
 
+
 # run the unit tests in the console
 # (app needs to be running locally - do make run in another console)
 # to test all modules, do
@@ -35,16 +38,29 @@ epydoc := /public/linux/graft/epydoc-2.1/bin/epydoc
 # or 
 # > make
 # to test a single module, do something like this - 
-# > make test module=testExport 
-module := 
+# > make test name=testExport 
+# it will call
+# http://localhost:8080/test?name=<name>&format=plain
+# default of no name will run all test modules
+name := 
 test:
-	python testInConsole.py ${module} > ASN2.out
+	python testInConsole.py ${name} > ASN2.out
 	cat ASN2.out
 
 
 # run the app locally
 run:
 	../google_appengine/dev_appserver.py .
+
+
+
+# can do make pypath if you just need to set the PYTHONPATH environment variable,
+# as it is set up above. this just prints it out. 
+#. no, you can't - things set here don't make it into the calling environment. bleh. 
+# how can you do that?
+pypath:
+	@echo PYTHONPATH := ${PYTHONPATH}
+
 
 
 # check using pychecker
