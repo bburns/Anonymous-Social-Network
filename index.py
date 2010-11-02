@@ -66,6 +66,17 @@ class SignupHandler(webapp.RequestHandler):
         self.session = Session()
         self.session.delete_item('username')
         doRender(self,'signup.html',{'form':UserForm()})
+    def post(self):
+        self.session = Session()
+        form = UserForm(self.request.POST)
+        if form.is_valid():
+            self.response.out.write("valid data")
+            user = form.save()
+            self.session['username'] = user.email
+            self.redirect('/')
+        else:
+            doRender(self,'/signup', {'form': data, 'error': 'error!'})
+
 
 class ImportData(webapp.RequestHandler):
     def get(self):
@@ -148,7 +159,7 @@ class AddBook(webapp.RequestHandler):
         if data.is_valid():
             self.response.out.write("valid data")
             book = data.save() #(commit=False)
-            book.put()
+            #book.put()
             self.redirect('/book/list')
         else:
             doRender(self,'book/add.html',data)
@@ -166,7 +177,7 @@ class EditBook(webapp.RequestHandler):
         data = BookForm(data=self.request.POST, instance=book)
         if data.is_valid():
             entity = data.save(commit=False)
-            entity.put()
+            #entity.put()
             self.redirect('/book/list')
         else:
             doRender(self,'book/add.html',data)

@@ -1,5 +1,5 @@
 #---------------------------------------------------------------
-# makefile for ASN1 project
+# makefile for ASN project
 # assumes that google_appengine is located in parent folder
 #---------------------------------------------------------------
 
@@ -9,6 +9,8 @@
 # need this for pydoc and pychecker
 export PYTHONPATH := ../google_appengine/:../google_appengine/lib/webob
 
+# need this for twill (web site testing)
+export PYTHONPATH := ~/lib/python:${PYTHONPATH}
 
 
 
@@ -25,12 +27,24 @@ pydoc := pydoc
 epydoc := /public/linux/graft/epydoc-2.1/bin/epydoc
 
 
-# run the unit tests in the console
-# (app needs to be running locally)
-test:
-	python testInConsole.py > ASN1.out
-	cat ASN1.out
 
+# run the unit tests in the console
+# (app needs to be running locally - do make run in another console)
+# to test all modules, do
+# > make test
+# or 
+# > make
+# to test a single module, do something like this - 
+# > make test module=testExport 
+module := 
+test:
+	python testInConsole.py ${module} > ASN2.out
+	cat ASN2.out
+
+
+# run the app locally
+run:
+	../google_appengine/dev_appserver.py .
 
 
 # check using pychecker
@@ -54,10 +68,6 @@ check:
 #	cat xml/ben.xml xml/brian.xml xml/jonathan.xml xml/sang.xml xml/shanky.xml > ASN1.xml
 
 
-# run the app locally
-run:
-	../google_appengine/dev_appserver.py .
-
 
 # publish the app to google appengine
 publish:
@@ -74,31 +84,31 @@ validate:
 
 # get git log
 log:
-	git log > ASN1.log
-	cat ASN1.log
+	git log > ASN2.log
+	cat ASN2.log
 
 
 # generate html docs
 docs:
-#	pydoc ASN1
+#	pydoc ASN2
 	rm -rf html
 	mkdir html
-	pydoc -w ASN1
-	mv ASN1.html html
+	pydoc -w ASN2
+	mv ASN2.html html
 
 
 # epydoc
 # it works, but it does make a LOT of files
 edoc:
-	${epydoc} --html -o html2 ASN1.py
+	${epydoc} --html -o html2 ASN2.py
 
 
 # zip up files for turnin
 zip:
-	zip -r ASN1.zip ASN1.log test/*.py ASN1.py xmlImport.py xmlExport.py ASN1.xml ASN1.xsd ASN1.pdf html
+	zip -r ASN2.zip ASN2.log test/*.py ASN2.py xmlImport.py xmlExport.py html
 
 
 # do turnin
 turnin:
-	turnin --submit alexloh cs373pj5 ASN1.zip
-	turnin --list alexloh cs373pj5
+	turnin --submit alexloh cs373pj6 ASN2.zip
+	turnin --list alexloh cs373pj6
