@@ -21,6 +21,7 @@ def doRender(handler,tname='index.html',values = {}):
       os.path.dirname(__file__),
       'templates/' + tname)
     if not os.path.isfile(temp):
+        self.response.out.write("Invalid template file: " + tname)
         return False
 
     newval = dict(values)
@@ -33,9 +34,32 @@ def doRender(handler,tname='index.html',values = {}):
     handler.response.out.write(outstr)
     return True
 
+
 class MainPage(webapp.RequestHandler):
     def get(self):
         doRender(self,'index.html')
+
+class SignupHandler(webapp.RequestHandler):
+    def get(self):
+        self.session = Session()
+        self.session.delete_item('username')
+        doRender(self,'signup.html')
+    def post(self):
+        self.session = Session()
+        form = UserForm(self.request.POST)
+        if form.is_valid():
+            #self.response.out.write("valid data")
+            # check if username already exists
+            email = self.request.get('email')
+            #email = form.model.email
+            if User.get_by_email(email):
+                doRender(self,'signup.html',{'error': 'Error: email already exists in database'})
+                return
+            user = form.save()
+            self.session['username'] = user.email
+            self.redirect('/')
+        else:
+            doRender(self,'signup.html', {'error': 'Error in filling out form'})
 
 class LoginHandler(webapp.RequestHandler):
     def get(self):
@@ -43,39 +67,29 @@ class LoginHandler(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        acct = self.request.get('username')
+        email = self.request.get('username')
         pw = self.request.get('password')
         self.session.delete_item('username')
 
-        if pw == '' or acct == '':
+        if pw == '' or email == '':
             doRender(self,'login.html',{'error':'Please specify Username and Password'})
-        elif pw =='secret':
-            self.session['username'] = acct
-            doRender(self,'index.html',{})
+            return
+        
+        user = User.get_by_email(email)
+        if user is None:
+            doRender(self,'login.html',{'error':'Invalid username or password entered'})  
+        elif pw == user.password:
+            self.session['username'] = email
+            #doRender(self,'index.html',{})
+            self.redirect('/')
         else:
-            doRender(self,'login.html',{'error':'Incorrect password'})
+            doRender(self,'login.html',{'error':'Invalid username or password entered'})
 
 class LogoutHandler(webapp.RequestHandler):
     def get(self):
         self.session = Session()
         self.session.delete_item('username')
         doRender(self,'index.html')
-
-class SignupHandler(webapp.RequestHandler):
-    def get(self):
-        self.session = Session()
-        self.session.delete_item('username')
-        doRender(self,'signup.html',{'form':UserForm()})
-    def post(self):
-        self.session = Session()
-        form = UserForm(self.request.POST)
-        if form.is_valid():
-            self.response.out.write("valid data")
-            user = form.save()
-            self.session['username'] = user.email
-            self.redirect('/')
-        else:
-            doRender(self,'/signup', {'form': data, 'error': 'error!'})
 
 
 class ImportData(webapp.RequestHandler):
@@ -86,7 +100,7 @@ class ImportData(webapp.RequestHandler):
         xml_file = self.request.get('xml-file')
         try:       
           xmlImportString(xml_file)
-          self.redirect("/export")
+          self.redirect("/")
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
 

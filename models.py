@@ -1,4 +1,5 @@
 from google.appengine.ext import db
+from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
 
 class Student(db.Model):
@@ -26,6 +27,19 @@ class User(db.Model):
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
     student = db.ReferenceProperty(Student)
+
+    @classmethod
+    def get_by_email(self, email):
+        q = db.Query(User)
+        q = q.filter('email', email)
+        results = q.fetch(limit=1)
+        #logging.info(results)
+        if results:
+            user = results[0]
+        else:
+            user = None
+        return user
+
 
     def authenticate(self):
         pass
