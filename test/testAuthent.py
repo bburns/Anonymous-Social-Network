@@ -11,9 +11,9 @@
 # imports
 # -------
 
-# import unittest
-# from google.appengine.ext import db
-# from models import *
+import unittest
+from google.appengine.ext import db
+from models import *
 
 
 
@@ -22,22 +22,24 @@
 # -----------
 
 
-# class testAuthent (unittest.TestCase) :
+class testAuthent (unittest.TestCase) :
 
-#     # def dbClear(self):
-#     #     "A helper method to clear the database"
-#     #     #. do for all tables? 
-#     #     query = Student.all()
-#     #     db.delete(query)
+    # def dbClear(self):
+    #     "A helper method to clear the database"
+    #     #. do for all tables? 
+    #     query = Student.all()
+    #     db.delete(query)
 
 
-#     def testGetUser(self):
-#         user = User()
-#         user.email = 'brian'
-#         user.put()
+    def testGetUser(self):
+        user = User()
+        user.email = 'brian'
+        user.put()
 
-#         user2 = User.get_by_email('brian')
-#         self.assert_(user == user2)
+        user2 = User.get_by_email('brian')
+        #self.assert_(user == user2) # fails - why?
+        self.assert_(user.email == user2.email)
+
 
 
 

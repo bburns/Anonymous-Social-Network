@@ -1,4 +1,5 @@
 from google.appengine.ext import db
+from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
 
 class Student(db.Model):
