@@ -42,6 +42,7 @@ class Class(db.Model):
     semester = db.StringProperty()
     instructor = db.StringProperty()
     course_name = db.StringProperty()
+    submission_time = db.DateTimeProperty(auto_now=True)
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:
