@@ -100,7 +100,7 @@ class ImportData(webapp.RequestHandler):
         xml_file = self.request.get('xml-file')
         try:       
           xmlImportString(xml_file)
-          self.redirect("/export")
+          self.redirect("/")
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
 

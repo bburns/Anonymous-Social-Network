@@ -5,7 +5,11 @@ Books
 {% block content %}
   <h2>Welcome to the @nonymous Social Network</h2>
   <p>This site is dedicated to betterment of the University of Texas student by providing a qucik and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaing complete anonymity and thus ensuring an accurate score.</p>
-  <a class="signup_button round" href="/signup">Sign Up!</a>
+
+  {% if not username %}
+    <a class="signup_button round" href="/signup">Sign Up!</a>
+  {% endif %}
+
   <div style="align: center;">
       <p>Or...Click on one of the following to browse the current scores.</p>
       <ul>
