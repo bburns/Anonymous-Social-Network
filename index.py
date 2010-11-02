@@ -49,11 +49,17 @@ class LoginHandler(webapp.RequestHandler):
 
         if pw == '' or acct == '':
             doRender(self,'login.html',{'error':'Please specify Username and Password'})
-        elif pw =='secret':
+        
+        user = User.get_by_email(acct)
+        if user == None:
+            doRender(self,'login.html',{'error':'Invalid username or password entered'})
+            
+        if pw == user.password:
             self.session['username'] = acct
-            doRender(self,'index.html',{})
+            #doRender(self,'index.html',{})
+            self.redirect('/')
         else:
-            doRender(self,'login.html',{'error':'Incorrect password'})
+            doRender(self,'login.html',{'error':'Invalid username or password entered'})
 
 class LogoutHandler(webapp.RequestHandler):
     def get(self):
