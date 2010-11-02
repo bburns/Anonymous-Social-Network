@@ -31,7 +31,7 @@ class Class(db.Model):
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:
-	model = Class
+        model = Class
 
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)

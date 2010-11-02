@@ -1,4 +1,3 @@
-import cgi
 import os
 
 from google.appengine.ext.webapp import template
@@ -12,22 +11,30 @@ from xmlImport import xmlImportString
 from models import *
     
 """
-ASN1
-Anonymous Social Network phase 1
+ASN2
+Anonymous Social Network phase 2
 """   
+
+def doRender(handler,tname='index.html',values = {}):
+    temp = os.path.join(
+      os.path.dirname(__file__),
+      'templates/' + tname)
+    if not os.path.isfile(temp):
+        return False
+
+    newval = dict(values)
+    newval['path'] = handler.request.path
+
+    outstr = template.render(temp,newval)
+    handler.response.out.write(outstr)
+    return True
 
 class MainPage(webapp.RequestHandler):
     """
     Request handler for main page (index.html). 
     """
     def get(self):
-        """
-        Return the main page (index.html)
-        """
-        template_values = None
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'index.html')
-        self.response.out.write(template.render(path, template_values, True))
+        doRender(self,'index.html')
 
 class ImportData(webapp.RequestHandler):
     def get(self):
@@ -36,7 +43,7 @@ class ImportData(webapp.RequestHandler):
         """
         template_values = None
         directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'import.html')
+        path = os.path.join(directory, 'templates/import.html')
         self.response.out.write(template.render(path, template_values, True))
 
     def post(self):
@@ -50,7 +57,7 @@ class ImportData(webapp.RequestHandler):
         except Exception, e:
             template_values = { 'error' : e.args }
             directory = os.path.dirname(__file__)
-            path = os.path.join(directory, 'import.html')
+            path = os.path.join(directory, 'templates/import.html')
             self.response.out.write(template.render(path, template_values, True))
 
          
@@ -75,13 +82,10 @@ class ClearData(webapp.RequestHandler):
 
 class ListClass(webapp.RequestHandler):
     def get(self):
-	classes = Class.all()
+        classes = Class.all()
         classes.fetch(100)
-        template_values = {'classes':classes}
-        directory = os.path.dirname(__file__)
-        path = os.path.join(directory, 'templates/class/list.html')
-        self.response.out.write(template.render(path, template_values, True))
-
+        doRender(self,'class/list.html',{'classes':classes})
+        
 class AddClass(webapp.RequestHandler):
     def get(self):
         template_values = {'form':ClassForm()} 

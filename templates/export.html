@@ -1,11 +1,7 @@
-<html>
-  <body>
-    <h1>Exported data</h1>
+{% block content %}
     {% if xml %}
       <pre>{{ xml }}</pre>
     {% else %}
       <p>No data to display</p>
     {% endif %}
-  </body>
-</html>
-
+{% endblock %}
