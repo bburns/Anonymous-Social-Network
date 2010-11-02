@@ -11,11 +11,11 @@
       <td>{{ book.title }}</td>
       <td>{{ book.isbn }}</td>
       <td>{{ book.author }}</td>
-      <td><a href="/book/edit?id={{ book.key.id }}">Edit</a> |
-          <a href="/book/delete?id={{ book.key.id }}">Delete</a></td>
+      <td>{% if username %}<a href="/book/edit?id={{ book.key.id }}">Edit</a> |
+          <a href="/book/delete?id={{ book.key.id }}">Delete</a>{% endif %}</td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
-<a href="/book/add">Add a Book</a>
+{% if username %}<a href="/book/add">Add a Book</a>{% endif %}
 {% endblock %}

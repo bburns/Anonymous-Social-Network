@@ -5,6 +5,10 @@ class User(db.Model):
     email = db.StringProperty()
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
+    student = db.ReferenceProperty(Student)
+
+    def authenticate(self):
+        pass
 
 class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python
