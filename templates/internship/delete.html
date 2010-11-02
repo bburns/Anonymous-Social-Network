@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% block content %}
+<h2>Are you sure you want to Delete this intership?</h2>
+<form method="post" action="/internship/delete">
+	<table>
+		<tr><td>Place Name = {{ internship.place_name }}</td></tr>
+		<tr><td>Location = {{ internship.location }}</td></tr>
+		<tr><td>Semester = {{ internship.semester }}</td></tr>	
+	</table>
+	<input type="hidden" name="_id" value="{{ id }}"/>
+	<input type="submit" value="Yes"/>
+</form>
+<form method="get" action="/internship/list"><input type="submit" value = "No"></form>
+{% endblock %}

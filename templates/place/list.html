@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+{% block content %}
+<h2>Current Places</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Place Type</th>
+      <th>Place Name</th>
+      <th>Location</th>
+      <th>Semester</th>
+    </tr>
+  </thead>
+  {% for place in places %}
+    <tr>
+      <td>{{place.place_type}}</td>
+      <td>{{place.place_name}}</td>
+      <td>{{place.location}}</td>
+      <td>{{place.semester}}</td>
+      <td><a href='/place/edit?id={{place.key.id}}'>Edit</a> |
+          <a href='/place/delete?id={{place.key.id}}'>Delete</a></td>
+    </tr>
+  {% endfor %}
+</table>
+<p><a href="/place/add">Add a Place</a><p>
+{% endblock %}

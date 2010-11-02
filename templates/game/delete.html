@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% block content %}
+<h2>Are you sure you want to Delete this game?</h2>
+<form method="post" action="/game/delete">
+	<table>
+		<tr><td>OS = {{ game.os }}</td></tr>
+		<tr><td>Title = {{ game.title }}</td></tr>
+
+	</table>
+	<input type="hidden" name="_id" value="{{ id }}"/>
+	<input type="submit" value="Yes"/>
+</form>
+<form method="get" action="/game/list"><input type="submit" value = "No"></form>
+{% endblock %}
