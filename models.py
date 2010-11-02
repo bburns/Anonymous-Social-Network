@@ -45,6 +45,10 @@ class Book(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
 
+class BookForm(djangoforms.ModelForm):
+    class Meta:
+        model = Book
+
 class StudentBook(db.Model):
     student = db.ReferenceProperty(Student)
     book = db.ReferenceProperty(Book)

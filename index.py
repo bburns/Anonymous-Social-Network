@@ -5,6 +5,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 
+from google.appengine.ext.db import djangoforms
+
 from xml.dom import minidom
 from xmlExport import xmlExport
 from xmlImport import xmlImportString
@@ -80,6 +82,7 @@ class ClearData(webapp.RequestHandler):
         db.delete(query)
         self.redirect("/")
 
+
 class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
@@ -108,35 +111,134 @@ class EditClass(webapp.RequestHandler):
         self.response.out.write(template.render(path, template_values, True))
 
     def post(self):
-	id = int(self.request.get('_id'))
-	cl = Class.get(db.Key.from_path('Class', id))
-        form = ClassForm(data = self.request.POST, instance = cl)            
-	form.save()
+        id = int(self.request.get('_id'))
+        cl = Class.get(db.Key.from_path('Class', id))
+        form = ClassForm(data = self.request.POST, instance = cl)
+        form.save()
       	self.redirect("/class/list")
 
 class DeleteClass(webapp.RequestHandler):
     def get(self):
-	id = int(self.request.get('id'))
+        id = int(self.request.get('id'))
         cl = Class.get(db.Key.from_path('Class', id))
-	template_values = {'cl':cl,'id':id}
+        template_values = {'cl':cl,'id':id}
         directory = os.path.dirname(__file__)
         path = os.path.join(directory, 'templates/class/delete.html')
         self.response.out.write(template.render(path, template_values, True))
 
     def post(self):
-	id = int(self.request.get('_id'))
-	cl = Class.get(db.Key.from_path('Class', id)).delete()
+        id = int(self.request.get('_id'))
+        cl = Class.get(db.Key.from_path('Class', id)).delete()
         self.redirect("/class/list")
+
+class BookList(webapp.RequestHandler):
+    def get(self):
+        books = Book.all()        
+        template_values = {'books': books}
+        directory = os.path.dirname(__file__)
+        path = os.path.join(directory, 'templates/booklist.html')
+        self.response.out.write(template.render(path, template_values, True))
+
+
+class BookAdd(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write('<html><body>'
+                                '<form method="post" '
+                                'action="/book/add">'
+                                '<table>')
+        # This generates the book form and writes it in the response
+        self.response.out.write(BookForm())
+        self.response.out.write('</table>'
+                                '<input type="submit">'
+                                '</form></body></html>')
+
+    def post(self):
+        data = BookForm(data=self.request.POST)
+        if data.is_valid():
+            self.response.out.write("valid data")
+            # Save the data, and redirect to the list page
+            book = data.save() #(commit=False)
+            #book.added_by = users.get_current_user()
+            book.put()
+            self.redirect('/book/list')
+        else:
+            # Reprint the form, showing errors (?)
+            self.response.out.write('<html><body>'
+                                    '<form method="post" '
+                                    'action="/book/add">'
+                                    '<table>')
+            self.response.out.write(data)
+            self.response.out.write('</table>'
+                                    '<input type="submit">'
+                                    '</form></body></html>')
+
+
+class BookEdit(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        book = Book.get_by_id(id)
+        #key = db.Key.from_path('Book', id)
+        #book = Book.get(key)
+        self.response.out.write('<html><body>'
+                                '<form method="POST" '
+                                'action="/book/edit">'
+                                '<table>')
+        self.response.out.write(BookForm(instance=book))
+        self.response.out.write('</table>'
+                                '<input type="hidden" name="_id" value="%s">'
+                                '<input type="submit">'
+                                '</form></body></html>' % id)
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        #book = Book.get(db.Key.from_path('Book', id))
+        book = Book.get_by_id(id)
+        data = BookForm(data=self.request.POST, instance=book)
+        if data.is_valid():
+            # Save the data, and redirect to the view page
+            entity = data.save(commit=False)
+            # entity.added_by = users.get_current_user()
+            entity.put()
+            self.redirect('/book/list')
+        else:
+            # Reprint the form
+            self.response.out.write('<html><body>'
+                                    '<form method="POST" '
+                                    'action="/book/edit">'
+                                    '<table>')
+            self.response.out.write(data)
+            self.response.out.write('</table>'
+                                    '<input type="hidden" name="_id" value="%s">'
+                                    '<input type="submit">'
+                                    '</form></body></html>' % id)
+
+class BookDelete(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id'))
+        #key = db.Key.from_path('Book', id)
+        #book = Book.get(key)
+        book = Book.get_by_id(id)
+        book.delete()
+        self.redirect('/book/list')
 
 _URLS = (
      ('/', MainPage),
+
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
+
      ('/class/add', AddClass),
      ('/class/edit', EditClass),
      ('/class/delete', DeleteClass),
-     ('/class/list',ListClass))
+     ('/class/list',ListClass),
+
+     ('/book/list', BookList),
+     ('/book/add', BookAdd),
+     ('/book/edit', BookEdit),
+     ('/book/delete', BookDelete),
+     )
+
 
 def main():
     "Run the webapp"
