@@ -80,6 +80,15 @@ class Book(db.Model):
     isbn = db.StringProperty()
     title = db.StringProperty()
     author = db.StringProperty()
+    edit_time = db.DateTimeProperty(auto_now=True)
+
+    @staticmethod
+    def get_by_date(limit = 5):
+    	q = db.Query(Book)
+    	results = q.fetch(837548)
+    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+    	return results[0:5]
+
 
 class BookForm(djangoforms.ModelForm):
     class Meta:
@@ -95,6 +104,14 @@ class Paper(db.Model):
     paper_category = db.StringProperty(choices = ["journal", "conference"])
     title = db.StringProperty()
     author = db.StringProperty()
+    edit_time = db.DateTimeProperty(auto_now=True)
+
+    @staticmethod
+    def get_by_date(limit = 5):
+    	q = db.Query(Paper)
+    	results = q.fetch(837548)
+    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+    	return results[0:5]
 
 class PaperForm(djangoforms.ModelForm):
     class Meta:
@@ -110,6 +127,14 @@ class Internship(db.Model):
     place_name = db.StringProperty()
     location = db.StringProperty()
     semester = db.StringProperty()
+    edit_time = db.DateTimeProperty(auto_now=True)
+    
+    @staticmethod
+    def get_by_date(limit = 5):
+    	q = db.Query(Internship)
+    	results = q.fetch(837548)
+    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+    	return results[0:5]
 
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
@@ -126,6 +151,14 @@ class Place(db.Model):
     place_name = db.StringProperty()
     location = db.StringProperty()
     semester = db.StringProperty()
+    edit_time = db.DateTimeProperty(auto_now=True)
+
+    @staticmethod
+    def get_by_date(limit = 5):
+    	q = db.Query(Place)
+    	results = q.fetch(837548)
+    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+    	return results[0:5]
 
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
@@ -141,6 +174,14 @@ class StudentPlace(db.Model):
 class Game(db.Model):
     os = db.StringProperty()
     title = db.StringProperty()
+    edit_time = db.DateTimeProperty(auto_now=True)
+
+    @staticmethod
+    def get_by_date(limit = 5):
+    	q = db.Query(Game)
+    	results = q.fetch(837548)
+    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+    	return results[0:5]
 
 class GameForm(djangoforms.ModelForm):
     class Meta:

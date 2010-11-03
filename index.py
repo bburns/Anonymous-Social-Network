@@ -37,7 +37,7 @@ def doRender(handler,tname='index.html',values = {}):
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        doRender(self,'index.html', {'recents':Class.get_by_date()})
+        doRender(self,'index.html', {'recentClasses':Class.get_by_date(), 'recentBooks':Book.get_by_date(), 'recentPapers':Paper.get_by_date(), 'recentInternships':Internship.get_by_date(), 'recentGames':Game.get_by_date(), 'recentPlaces':Place.get_by_date()})
 
 class SignupHandler(webapp.RequestHandler):
     def get(self):
