@@ -8,14 +8,6 @@
 
 
 
-# need this for pydoc and pychecker
-export PYTHONPATH := ../google_appengine/:../google_appengine/lib/webob
-
-# need this for twill (web site testing)
-export PYTHONPATH := ~/lib/python:${PYTHONPATH}
-
-
-
 #pychecker := pychecker
 # this is v0.8.16:
 #pychecker := "/p/lib/python2.4/site-packages/pychecker/checker.py"
@@ -48,11 +40,35 @@ test:
 	cat ASN2.out
 
 
+# run twill tests 
+#. doesn't work from here yet - just run in shell
+# (app needs to be running locally)
+# runs all test scripts in the test/twill directory
+# no output means everything passed
+#. can also pass -u to twill to give it an initial url, 
+# so could test locally or the server version
+export PYTHONPATH := ~/lib/python
+twill:
+	twill-sh -q test/twill
+
+
 # run the app locally
+# by default gae puts the datastore in /tmp/dev_appserver.datastore
+# may need to put it somewhere else with --datastore_path=~/myapp_datastore 
+# that way your data will always be there
 run:
-	../google_appengine/dev_appserver.py .
+#	../google_appengine/dev_appserver.py .
+	../google_appengine/dev_appserver.py --datastore_path=datastore .
 
 
+# publish the app to google appengine
+publish:
+	../google_appengine/appcfg.py update .
+
+
+
+# need this for pydoc and pychecker
+export PYTHONPATH := ../google_appengine/:../google_appengine/lib/webob
 
 # can do make pypath if you just need to set the PYTHONPATH environment variable,
 # as it is set up above. this just prints it out. 
@@ -60,7 +76,6 @@ run:
 # how can you do that?
 pypath:
 	@echo PYTHONPATH := ${PYTHONPATH}
-
 
 
 # check using pychecker
@@ -85,9 +100,20 @@ check:
 
 
 
-# publish the app to google appengine
-publish:
-	../google_appengine/appcfg.py update .
+# generate html docs
+docs:
+#	pydoc ASN2
+	rm -rf html
+	mkdir html
+	pydoc -w ASN2
+	mv ASN2.html html
+
+
+# epydoc
+# it works, but it does make a LOT of files
+edoc:
+	${epydoc} --html -o html2 ASN2.py
+
 
 
 # validate xml against schema
@@ -103,20 +129,6 @@ log:
 	git log > ASN2.log
 	cat ASN2.log
 
-
-# generate html docs
-docs:
-#	pydoc ASN2
-	rm -rf html
-	mkdir html
-	pydoc -w ASN2
-	mv ASN2.html html
-
-
-# epydoc
-# it works, but it does make a LOT of files
-edoc:
-	${epydoc} --html -o html2 ASN2.py
 
 
 # zip up files for turnin

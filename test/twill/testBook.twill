@@ -1,0 +1,49 @@
+
+# a simple twill test script - will fail unless user brian with pw brian is in the db. 
+# run with 
+# > twill-sh testBook.twill
+
+
+# check home page
+go localhost:8080
+code 200
+find "@nonymous Social Network"
+
+# look at list of books
+follow Books
+code 200
+find "Current books"
+
+# try to login and fail
+follow Login
+fv 1 1 brian
+fv 1 2 wrongpw
+submit
+code 200
+find "Invalid"
+
+# login correctly
+follow Login
+fv 1 1 brian
+fv 1 2 brian
+submit
+code 200
+find "Logout"
+
+# add a book
+follow Books
+follow "Add a Book"
+fv 1 1 "123456789"
+fv 1 2 "Twill: The Book"
+fv 1 3 "Anonymous"
+submit
+code 200
+
+# see if it's in the list
+find "Twill: The Book"
+find "Anonymous"
+
+# logout
+follow Logout
+code 200
+
