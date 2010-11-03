@@ -32,7 +32,13 @@
         {% endblock %}
       </div>
       <div class="span-4 round last" id="sidecol">
-      Do stuff
+      <table>
+      {%for recent in recents%}
+	<tr><td>
+	 {{recent.course_name}}
+	</td></tr>
+      {%endfor%}
+      </table>
       </div>
     </div>
   </body>

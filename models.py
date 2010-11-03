@@ -56,7 +56,14 @@ class Class(db.Model):
     semester = db.StringProperty()
     instructor = db.StringProperty()
     course_name = db.StringProperty()
-    submission_time = db.DateTimeProperty(auto_now=True)
+    edit_time = db.DateTimeProperty(auto_now=True)
+  
+    @staticmethod
+    def get_by_date(limit = 5):
+    	q = db.Query(Class)
+    	results = q.fetch(837548)
+    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+    	return results[0:5]
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:
