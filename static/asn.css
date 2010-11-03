@@ -52,7 +52,7 @@ ul.navigation {
 }
 
 #content {
-  padding: 10px;
+  padding: 7px;
   border: solid 1px #cc5500;
 }
 
@@ -66,10 +66,11 @@ ul.navigation {
 
 #sidecol {
   border: solid 1px #cc5500;
+  padding: 5px;
 }
 
 #leftcol, #rightcol {
-  padding: 10px;
+  padding: 5px;
 }
 
 a.signup_button {
