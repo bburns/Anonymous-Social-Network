@@ -14,12 +14,7 @@
       <div class="span-24 round" id="header">
         <h1><a href="/" >@SN</a></h1>
       </div>
-      <div class="span-19 round" id="content">
-        {% block content %}
-          This will be replaced
-        {% endblock %}
-      </div>
-      <div class="span-4 last round" id="sidecol">
+       <div class="span-4 round" id="sidecol">
         <ul class="navigation">
           <li><a href="/" class="round">Home</a></li>
           {% if username %}
@@ -30,6 +25,14 @@
           <li><a href="#" class="round">About</a></li>
           <li><a href="#" class="round">Help</a></li>
         </ul>
+      </div>
+      <div class="span-15 round" id="content">
+        {% block content %}
+          This will be replaced
+        {% endblock %}
+      </div>
+      <div class="span-4 round last" id="sidecol">
+      Do stuff
       </div>
     </div>
   </body>

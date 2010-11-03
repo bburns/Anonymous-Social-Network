@@ -15,10 +15,10 @@
       <td>{{internship.place_name}}</td>
       <td>{{internship.location}}</td>
       <td>{{internship.semester}}</td>
-      <td><a href='/internship/edit?id={{internship.key.id}}'>Edit</a> |
-          <a href='/internship/delete?id={{internship.key.id}}'>Delete</a></td>
+      <td>{% if username %}<a href='/internship/edit?id={{internship.key.id}}'>Edit</a> |
+          <a href='/internship/delete?id={{internship.key.id}}'>Delete</a>{% endif %}</td>
     </tr>
   {% endfor %}
 </table>
-<p><a href="/internship/add">Add an Internship</a><p>
+{%if username %}<p><a href="/internship/add">Add an Internship</a><p>{% endif %}
 {% endblock %}
