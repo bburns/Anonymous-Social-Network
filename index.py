@@ -1,3 +1,9 @@
+
+"""
+ASN2
+Anonymous Social Network phase 2
+"""   
+
 import os
 
 from google.appengine.ext import webapp
@@ -6,60 +12,46 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.db import djangoforms
 
-from utils import xmlExport
+from utils.xmlExport import xmlExport
 from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
-    
-"""
-ASN2
-Anonymous Social Network phase 2
-"""   
 
-def doRender(handler,tname='index.html',values = {}):
-    temp = os.path.join(
-      os.path.dirname(__file__),
-      'templates/' + tname)
-    if not os.path.isfile(temp):
-        self.response.out.write("Invalid template file: " + tname)
-        return False
-
-    newval = dict(values)
-    newval['path'] = handler.request.path
-    handler.session = Session()
-    if 'username' in handler.session:
-        newval['username'] = handler.session['username']
-
-    outstr = template.render(temp,newval)
-    handler.response.out.write(outstr)
-    return True
 
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        doRender(self,'index.html', {'recentClasses':Class.get_by_date(), 'recentBooks':Book.get_by_date(), 'recentPapers':Paper.get_by_date(), 'recentInternships':Internship.get_by_date(), 'recentGames':Game.get_by_date(), 'recentPlaces':Place.get_by_date()})
+        values = {}
+        values['recentClasses'] = Class.get_by_date()
+        values['recentBooks'] = Book.get_by_date()
+        values['recentPapers'] = Paper.get_by_date()
+        values['recentInternships'] = Internship.get_by_date()
+        values['recentPlaces'] = Place.get_by_date()
+        values['recentGames'] = Game.get_by_date()
+        doRender(self,'index.html', values)
+
 
 class SignupHandler(webapp.RequestHandler):
     def get(self):
         self.session = Session()
         self.session.delete_item('username')
         doRender(self,'signup.html')
+        
     def post(self):
         self.session = Session()
         form = UserForm(self.request.POST)
         if form.is_valid():
-            #self.response.out.write("valid data")
             # check if username already exists
             email = self.request.get('email')
-            #email = form.model.email
             if User.get_by_email(email):
-                doRender(self,'signup.html',{'error': 'Error: email already exists in database'})
+                doRender(self,'signup.html',{'error': "Sorry, that username already exists. Please try another one."})
                 return
             user = form.save()
             self.session['username'] = user.email
             self.redirect('/')
         else:
             doRender(self,'signup.html', {'error': 'Error in filling out form'})
+
 
 class LoginHandler(webapp.RequestHandler):
     def get(self):
@@ -71,19 +63,22 @@ class LoginHandler(webapp.RequestHandler):
         pw = self.request.get('password')
         self.session.delete_item('username')
 
-        if pw == '' or email == '':
-            doRender(self,'login.html',{'error':'Please specify Username and Password'})
+        if email == '':
+            doRender(self, 'login.html', {'error':'Please specify a username.'})
+            return
+        if pw == '':
+            doRender(self, 'login.html', {'error':'Please specify a password.'})
             return
         
         user = User.get_by_email(email)
         if user is None:
-            doRender(self,'login.html',{'error':'Invalid username or password entered'})  
+            doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})  
         elif pw == user.password:
             self.session['username'] = email
-            #doRender(self,'index.html',{})
             self.redirect('/')
         else:
-            doRender(self,'login.html',{'error':'Invalid username or password entered'})
+            doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
+
 
 class LogoutHandler(webapp.RequestHandler):
     def get(self):
@@ -104,26 +99,41 @@ class ImportData(webapp.RequestHandler):
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
 
+
 class ExportData(webapp.RequestHandler):
     def get(self):
-        students = Student.all().fetch(1000)
+        students = Student.all()  #.fetch(1000)  can just iterate over all()
         xml = xmlExport(students)
         self.response.headers['Content-Type'] = 'text/xml'
         self.response.out.write(xml)
+
 
 class ClearData(webapp.RequestHandler):
     def get(self):
         """
         Clear the datastore
         """
-        query = Student.all()
-        db.delete(query)
+        # query = Student.all()
+        # db.delete(query)
+        # self.redirect("/")
+
+        #. move this to utils
+        # clear ALL the tables
+        tables = [Student, Class, Book, Paper, Internship, Place, Game]
+        tables += [StudentClass, StudentBook, StudentPaper, StudentInternship, StudentPlace, StudentGame]
+        for table in tables:
+            query = table.all()
+            db.delete(query)
+
         self.redirect("/")
+
+
+# Class
 
 class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
-        classes.fetch(100)
+        # classes.fetch(100)  # Class.all() can be iterated over. 
         doRender(self,'class/list.html',{'classes':classes})
         
 class AddClass(webapp.RequestHandler):
@@ -133,7 +143,7 @@ class AddClass(webapp.RequestHandler):
     def post(self):
         form = ClassForm(self.request.POST)            
         form.save()
-      	self.redirect("/class/list")
+        self.redirect("/class/list")
 
 class EditClass(webapp.RequestHandler):
     def get(self):
@@ -146,7 +156,7 @@ class EditClass(webapp.RequestHandler):
         cl = Class.get_by_id(id)
         form = ClassForm(data = self.request.POST, instance = cl)
         form.save()
-      	self.redirect("/class/list")
+        self.redirect("/class/list")
 
 class DeleteClass(webapp.RequestHandler):
     def get(self):
@@ -159,10 +169,26 @@ class DeleteClass(webapp.RequestHandler):
         cl = Class.get_by_id(id).delete()
         self.redirect("/class/list")
 
+
+# Book
+
+# also want to show ratings and comments.
+# maybe show avg rating, # of ratings in listing. 
+# click on a book to view it, and all associated ratings and comments
+
+
 class ListBook(webapp.RequestHandler):
     def get(self):
         books = Book.all()
         doRender(self,'book/list.html',{'books': books})
+
+class ViewBook(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        book = Book.get_by_id(id)
+        form = BookForm(instance=book)
+        assocs = book.studentbook_set
+        doRender(self,'book/view.html',{'form':form,'book':book,'assocs':assocs})
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -171,9 +197,7 @@ class AddBook(webapp.RequestHandler):
     def post(self):
         data = BookForm(data=self.request.POST)
         if data.is_valid():
-            self.response.out.write("valid data")
-            book = data.save() #(commit=False)
-            #book.put()
+            book = data.save()
             self.redirect('/book/list')
         else:
             doRender(self,'book/add.html',data)
@@ -186,7 +210,6 @@ class EditBook(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        #book = Book.get(db.Key.from_path('Book', id))
         book = Book.get_by_id(id)
         data = BookForm(data=self.request.POST, instance=book)
         if data.is_valid():
@@ -197,18 +220,30 @@ class EditBook(webapp.RequestHandler):
             doRender(self,'book/add.html',data)
 
 class DeleteBook(webapp.RequestHandler):
+    # def get(self):
+    #     id = int(self.request.get('id'))
+    #     book = Book.get_by_id(id)
+    #     book.delete()
+    #     self.redirect('/book/list')
+
     def get(self):
         id = int(self.request.get('id'))
-        #key = db.Key.from_path('Book', id)
-        #book = Book.get(key)
+        book = Book.get_by_id(id)
+        doRender(self,'book/delete.html',{'book':book,'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
         book = Book.get_by_id(id)
         book.delete()
-        self.redirect('/book/list')
+        self.redirect("/book/list")
+
+
+
+# Paper
 
 class ListPaper(webapp.RequestHandler):
     def get(self):
         papers = Paper.all()
-        papers.fetch(100)
         doRender(self,'paper/list.html',{'papers':papers})
 
 class AddPaper(webapp.RequestHandler):
@@ -219,11 +254,10 @@ class AddPaper(webapp.RequestHandler):
         data = PaperForm(data=self.request.POST)
         if data.is_valid():
             self.response.out.write("valid data")
-            paper = data.save() #(commit=False)
-            paper.put()
+            paper = data.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html',data)
+            doRender(self,'paper/add.html', data)
 
 class EditPaper(webapp.RequestHandler):
     def get(self):
@@ -236,11 +270,10 @@ class EditPaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         data = PaperForm(data=self.request.POST, instance=paper)
         if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+            paper = data.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html',data)
+            doRender(self,'paper/add.html', data)
 
 class DeletePaper(webapp.RequestHandler):
     def get(self):
@@ -253,11 +286,12 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id).delete()
         self.redirect("/paper/list")
 
-#Place
+
+# Place
+
 class ListPlace(webapp.RequestHandler):
     def get(self):
         places = Place.all()
-        places.fetch(100)
         doRender(self,'place/list.html',{'places':places})
 
 class AddPlace(webapp.RequestHandler):
@@ -306,7 +340,6 @@ class DeletePlace(webapp.RequestHandler):
 class ListInternship(webapp.RequestHandler):
     def get(self):
         internships = Internship.all()
-        internships.fetch(100)
         doRender(self,'internship/list.html',{'internships':internships})
 
 class AddInternship(webapp.RequestHandler):
@@ -355,7 +388,6 @@ class DeleteInternship(webapp.RequestHandler):
 class ListGame(webapp.RequestHandler):
     def get(self):
         games = Game.all()
-        games.fetch(100)
         doRender(self,'game/list.html',{'games':games})
 
 class AddGame(webapp.RequestHandler):
@@ -401,6 +433,36 @@ class DeleteGame(webapp.RequestHandler):
         self.redirect("/game/list")
 
 
+
+def doRender(handler, filename='index.html', values = {}):
+    """
+    Render an html template file with the given dictionary values.
+    The template file should be a Django html template file. 
+    Handles the Session cookie also. 
+    """
+    
+    filepath = os.path.join(os.path.dirname(__file__), 'templates/' + filename)
+    if not os.path.isfile(filepath):
+        self.response.out.write("Invalid template file: " + filename)
+        return False
+
+    # copy the dictionary, so we can add things to it
+    newdict = dict(values)
+    newdict['path'] = handler.request.path
+    handler.session = Session()
+    if 'username' in handler.session:
+        newdict['username'] = handler.session['username']
+
+    #.
+    newdict['admin'] = True
+
+    s = template.render(filepath, newdict)
+    handler.response.out.write(s)
+    return True
+
+
+
+
 _URLS = (
      ('/', MainPage),
 
@@ -411,31 +473,31 @@ _URLS = (
      ('/import',ImportData),
      ('/dbclear',ClearData),
 
+     ('/class/list',ListClass),
      ('/class/add', AddClass),
      ('/class/edit', EditClass),
      ('/class/delete', DeleteClass),
-     ('/class/list',ListClass),
 
      ('/book/list', ListBook),
+     ('/book/view', ViewBook),
      ('/book/add', AddBook),
      ('/book/edit', EditBook),
      ('/book/delete', DeleteBook),
-
 
      ('/paper/list', ListPaper),
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
      ('/paper/delete', DeletePaper),
 
-     ('/place/list', ListPlace),
-     ('/place/add', AddPlace),
-     ('/place/edit', EditPlace),
-     ('/place/delete', DeletePlace),
-
      ('/internship/list', ListInternship),
      ('/internship/add', AddInternship),
      ('/internship/edit', EditInternship),
      ('/internship/delete', DeleteInternship),
+
+     ('/place/list', ListPlace),
+     ('/place/add', AddPlace),
+     ('/place/edit', EditPlace),
+     ('/place/delete', DeletePlace),
 
      ('/game/list', ListGame),
      ('/game/add', AddGame),

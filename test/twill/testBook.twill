@@ -43,6 +43,19 @@ code 200
 find "Twill: The Book"
 find "Anonymous"
 
+# edit it
+
+# check that changes made it
+
+# view it
+
+
+# delete it (so won't mess up future tests)
+
+
+# make sure it's gone
+
+
 # logout
 follow Logout
 code 200

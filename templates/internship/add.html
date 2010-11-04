@@ -1,11 +1,16 @@
 {% extends "_base.html" %}
 {% block content %}
-<h2>Please Complete the following form to add an internship</h2>
+
+<h2>Please complete the following form to add an internship.</h2>
+
 <form method="post" action={% if id %}"/internship/edit"{%else %}"/internship/add"{%endif%} >
-  <table>{{ form.as_table}}</table>
+  <table>
+  {{ form.as_table }}
+  </table>
   <input type="hidden" name="_id" value="{{ id }}"/>
-  <input type="submit"/>
+  <input type="submit" value="Add Internship"/>
 </form>
+
 {% endblock %}
 
 

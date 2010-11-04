@@ -1,11 +1,46 @@
-<html>
-<head>Book View</head>
-<body>
-
 <!-- view a book and associated ratings and comments -->
 
+{% extends "_base.html" %}
+{% block content %}
+
+<h2>View Book</h2>
+
+<!-- no good way to make a form read-only?
+<form>
+<table>
+{{ form.as_table }}
+</table>
+</form>
+-->
+
+<table>
+  <tbody>
+  <tr><td>Title: {{ book.title }} </td></tr>
+  <tr><td>Author: {{ book.author }} </td></tr>
+  <tr><td>Isbn: {{ book.isbn }} </td></tr>
+  <tr><td>Rating: {{ book.ratingAvg }} out of 5 (from {{ book.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
 
 
-</body>
-</html>
+<table>
+  <thead>
+    <th>Rating</th>
+    <th>Comment</th>
+  </thead>
+  <tbody>
+  {% for assoc in assocs %}
+    <tr>
+      <td>{{ assoc.rating }}</td>
+      <td>{{ assoc.comment }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 
+{% if username %}
+  <a href="/book/edit?id={{ book.key.id }}">Edit</a>
+  <a href="/book/delete?id={{ book.key.id }}">Delete</a>
+{% endif %}
+        
+{% endblock %}

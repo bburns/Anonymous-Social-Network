@@ -60,7 +60,7 @@ class testASN1 (unittest.TestCase) :
     #     xml2 = xmlExport(students)
     #     self.assert_(xml == xml2, 'xml: ' + xml + '\nxml2: ' + xml2)
 
-	
+
     def testStudent(self) :
 
         self.dbClear()
@@ -80,7 +80,7 @@ class testASN1 (unittest.TestCase) :
 
 
     def testStudentBook(self) :
-	
+
         self.dbClear()
         s = Student()
         s.id_ = "TestStudent"
@@ -124,7 +124,7 @@ class testASN1 (unittest.TestCase) :
 
 
     # for phase 2
-
+    """
     def testFindAddBook(self):
         
         self.dbClear()
@@ -166,5 +166,5 @@ class testASN1 (unittest.TestCase) :
         titles = [sb.book.title for sb in s.studentbook_set]
         self.assert_(titles == ['Valis','Ubik','The Hobbit'], titles)
         self.assert_(s.studentbook_set[2].book.isbn == "12345")
-
+    """
 

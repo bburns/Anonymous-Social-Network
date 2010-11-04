@@ -1,42 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>The Anonymous Social Network</title>
-    <link rel="stylesheet" media="screen" href="../../static/screen.css" type="text/css"/>
-    <link rel="stylesheet" media="print" href="../../static/print.css" type="text/css"/>
-    <link rel="stylesheet" media="screen" href="../../static/asn.css" type="text/css"/>
-  </head>
-  <body>
-      <div id="orangebar">
-      </div>
-    <div class="container">
-      <div class="span-24 round" id="header">
-        <h1>@SN</h1>
-      </div>
-      <div class="span-19 round" id="content">
-	<h2>Are you sure you want to Delete this class?</h2>
-        <form method="post" action="/class/delete">
-	<table>
-		<tr><td>Unique = {{ cl.unique}}</td></tr>
-		<tr><td>Course Number = {{ cl.course_num}}</td></tr>
-		<tr><td>Semester = {{ cl.semester}}</td></tr>
-		<tr><td>Instructor = {{ cl.instructor}}</td></tr>
-		<tr><td>Course Name = {{ cl.course_name}}</td></tr>
-	</table>
-	<input type="hidden" name="_id" value="{{ id }}"/>
-	<input type="submit" value="Yes"/></form>
-	<form method="get" action="/class/list"><input type="submit" value = "No"></form>
-      </div>
+{% extends "_base.html" %}
+{% block content %}
 
-      <div class="span-4 last round" id="sidecol">
-        <ul class="navigation">
-          <li><a href="#" class="round">Home</a></li>
-          <li><a href="#" class="round">Sign In</a></li>
-          <li><a href="#" class="round">About</a></li>
-          <li><a href="#" class="round">Help</a></li>
-        </ul>
-      </div>
-    </div>
-  </body>
-</html>
+	<h2>Are you sure you want to delete this book?</h2>
+  
+  <form method="post" action="/book/delete">
+	  <table>
+		  <tr><td>Title: {{ book.title }}</td></tr>
+		  <tr><td>Author: {{ book.author }}</td></tr>
+		  <tr><td>Isbn: {{ book.isbn }}</td></tr>
+	  </table>
+	  <input type="hidden" name="_id" value="{{ id }}"/>
+	  <input type="submit" value="Yes"/>
+  </form>
+  
+	<form method="get" action="/book/list">
+    <input type="submit" value = "No">
+  </form>
+
+{% endblock %}

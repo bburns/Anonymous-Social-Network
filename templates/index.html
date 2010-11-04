@@ -1,10 +1,13 @@
 {% extends "_base.html" %}
+
 {% block title %}
-Books
+Home
 {% endblock %}
+
 {% block content %}
+
   <h2>Welcome to the @nonymous Social Network</h2>
-  <p>This site is dedicated to betterment of the University of Texas student by providing a qucik and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaing complete anonymity and thus ensuring an accurate score.</p>
+  <p>This site is dedicated to betterment of the University of Texas student by providing a quick and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaining complete anonymity and thus ensuring an accurate score.</p>
 
   {% if not username %}
     <a class="signup_button round" href="/signup">Sign Up!</a>
@@ -13,7 +16,9 @@ Books
   <div style="align: center;">
       <p>Or...Click on one of the following to browse the current scores.</p>
       <ul>
-        {% if admin %}<li><a href="student/list">Students</a></li>{% endif %}
+        {% if admin %}
+          <li><a href="student/list">Students</a></li>
+        {% endif %}
         <li><a href="class/list">Classes</a></li>
         <li><a href="paper/list">Papers</a></li>
         <li><a href="book/list">Books</a></li>
@@ -22,5 +27,6 @@ Books
         <li><a href="game/list">Games</a></li>
       </ul>
   </div>
+  
 {% endblock %}
 
