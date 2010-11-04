@@ -2,12 +2,16 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
 
+
+
+
 class Student(db.Model):
+    # this has to come before the User class, because it references Student. 
+    
     id_ = db.StringProperty()   # id is reserved in python
     password = db.StringProperty()
 
     #. init - generate random password
-
 
     # for phase 2
     def addBook(self, title, author='', isbn='', rating=None, comment=''):
@@ -21,6 +25,7 @@ class Student(db.Model):
         sb.rating = rating
         sb.comment = comment
         sb.put()
+
 
 class User(db.Model):
     email = db.StringProperty()
@@ -40,9 +45,9 @@ class User(db.Model):
             user = None
         return user
 
-
     def authenticate(self):
         pass
+
 
 class UserForm(djangoforms.ModelForm):
     class Meta:
@@ -50,12 +55,16 @@ class UserForm(djangoforms.ModelForm):
         exclude = ['isAdmin','student']
     
 
+
+
+
+#. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
 class Class(db.Model):
-    unique = db.StringProperty()
     course_num = db.StringProperty()
+    course_name = db.StringProperty()
+    unique = db.StringProperty()
     semester = db.StringProperty()
     instructor = db.StringProperty()
-    course_name = db.StringProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
   
     @staticmethod
@@ -76,10 +85,11 @@ class StudentClass(db.Model):
     comment = db.StringProperty()
     grade = db.StringProperty()
 
+
 class Book(db.Model):
-    isbn = db.StringProperty()
     title = db.StringProperty()
     author = db.StringProperty()
+    isbn = db.StringProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -99,7 +109,8 @@ class StudentBook(db.Model):
     book = db.ReferenceProperty(Book)
     rating = db.StringProperty()
     comment = db.TextProperty()
-        
+
+#. add more choices, journal name, year, etc
 class Paper(db.Model):
     paper_category = db.StringProperty(choices = ["journal", "conference"])
     title = db.StringProperty()
@@ -192,6 +203,8 @@ class StudentGame(db.Model):
     game = db.ReferenceProperty(Game)
     rating = db.StringProperty()
     comment = db.TextProperty()
+
+
 
 def findAddBook(title, author='', isbn=''):
     """

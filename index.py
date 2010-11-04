@@ -12,7 +12,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.db import djangoforms
 
-from utils import xmlExport
+from utils.xmlExport import xmlExport
 from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
@@ -21,7 +21,14 @@ from models import *
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        doRender(self,'index.html', {'recentClasses':Class.get_by_date(), 'recentBooks':Book.get_by_date(), 'recentPapers':Paper.get_by_date(), 'recentInternships':Internship.get_by_date(), 'recentGames':Game.get_by_date(), 'recentPlaces':Place.get_by_date()})
+        values = {}
+        values['recentClasses'] = Class.get_by_date()
+        values['recentBooks'] = Book.get_by_date()
+        values['recentPapers'] = Paper.get_by_date()
+        values['recentInternships'] = Internship.get_by_date()
+        values['recentPlaces'] = Place.get_by_date()
+        values['recentGames'] = Game.get_by_date()
+        doRender(self,'index.html', values)
 
 
 class SignupHandler(webapp.RequestHandler):
@@ -34,12 +41,10 @@ class SignupHandler(webapp.RequestHandler):
         self.session = Session()
         form = UserForm(self.request.POST)
         if form.is_valid():
-            #self.response.out.write("valid data")
             # check if username already exists
             email = self.request.get('email')
-            #email = form.model.email
             if User.get_by_email(email):
-                doRender(self,'signup.html',{'error': 'Error: email already exists in database'})
+                doRender(self,'signup.html',{'error': "Sorry, that username already exists. Please try another one."})
                 return
             user = form.save()
             self.session['username'] = user.email
@@ -430,19 +435,24 @@ def doRender(handler, filename='index.html', values = {}):
     The template file should be a Django html template file. 
     Handles the Session cookie also. 
     """
+    
     filepath = os.path.join(os.path.dirname(__file__), 'templates/' + filename)
     if not os.path.isfile(filepath):
         self.response.out.write("Invalid template file: " + filename)
         return False
 
+    # copy the dictionary, so we can add things to it
     newdict = dict(values)
     newdict['path'] = handler.request.path
     handler.session = Session()
     if 'username' in handler.session:
         newdict['username'] = handler.session['username']
 
-    outstr = template.render(filepath, newdict)
-    handler.response.out.write(outstr)
+    #.
+    newdict['admin'] = True
+
+    s = template.render(filepath, newdict)
+    handler.response.out.write(s)
     return True
 
 

@@ -9,7 +9,6 @@ def xmlExport(students):
     Input: iterable of Student objects (could be a list, or a query)
     Output: xml string
     """
-    #dom = parseString("<students></students>")
     dom = Document()
     dom.appendChild(dom.createElement("students"))
     rootNode = dom.childNodes[0]
