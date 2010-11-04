@@ -17,11 +17,17 @@ from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
 
-
-
 class MainPage(webapp.RequestHandler):
     def get(self):
         doRender(self,'index.html')
+
+class Help(webapp.RequestHandler):
+    def get(self):
+        doRender(self,"help.html")
+
+class About(webapp.RequestHandler):
+    def get(self):
+        doRender(self,"about.html")
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
@@ -82,6 +88,8 @@ class LoginHandler(webapp.RequestHandler):
             self.session['username'] = email
             if user.student != None:
                 self.session['student_id'] = user.student.key().id()
+            if user.isAdmin:
+                self.session['isAdmin'] = True
             self.redirect('/')
         else:
             doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
@@ -487,6 +495,8 @@ _URLS = (
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
+     ('/about',About),
+     ('/help',Help),
 
      ('/profile',StudentProfile),
 
