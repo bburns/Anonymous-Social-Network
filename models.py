@@ -86,10 +86,19 @@ class StudentClass(db.Model):
     grade = db.StringProperty()
 
 
+
+
+
 class Book(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     isbn = db.StringProperty()
+
+    # store aggregate info here, so don't have to do expensive joins
+    # update in StudentBook.put method
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
+    
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -109,6 +118,29 @@ class StudentBook(db.Model):
     book = db.ReferenceProperty(Book)
     rating = db.StringProperty()
     comment = db.TextProperty()
+
+    def put(self):
+        db.Model.put(self) # call superclass
+        
+        # now update avg and count properties for book.
+        book = self.book
+        
+        # get all the refs to this book - this is a list of assoc objects,
+        # each with a rating and comment. 
+        sbs = book.studentbook_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5
+        ratings = [int(sb.rating) for sb in sbs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        book.ratingAvg = ratingAvg
+        book.refCount = n
+        book.put()
+
 
 #. add more choices, journal name, year, etc
 class Paper(db.Model):

@@ -5,7 +5,11 @@
 
 <table>
   <thead>
-    <th>Title</th><th>Author</th><th>ISBN</th><th></th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>ISBN</th>
+    <th>Rating</th>
+    <th></th>
   </thead>
   <tbody>
   {% for book in books %}
@@ -13,10 +17,12 @@
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.isbn }}</td>
+      <td>{{ book.ratingAvg }}</td>
       <td>
+        <a href="/book/view?id={{ book.key.id }}">View</a>
         {% if username %}
-          <a href="/book/edit?id={{ book.key.id }}">Edit</a> |
-          <a href="/book/delete?id={{ book.key.id }}">Delete</a>
+          | <a href="/book/edit?id={{ book.key.id }}">Edit</a>
+          | <a href="/book/delete?id={{ book.key.id }}">Delete</a>
         {% endif %}
       </td>
     </tr>

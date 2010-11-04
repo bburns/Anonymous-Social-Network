@@ -183,7 +183,12 @@ class ListBook(webapp.RequestHandler):
         doRender(self,'book/list.html',{'books': books})
 
 class ViewBook(webapp.RequestHandler):
-    pass
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        book = Book.get_by_id(id)
+        form = BookForm(instance=book)
+        assocs = book.studentbook_set
+        doRender(self,'book/view.html',{'form':form,'book':book,'assocs':assocs})
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -474,6 +479,7 @@ _URLS = (
      ('/class/delete', DeleteClass),
 
      ('/book/list', ListBook),
+     ('/book/view', ViewBook),
      ('/book/add', AddBook),
      ('/book/edit', EditBook),
      ('/book/delete', DeleteBook),

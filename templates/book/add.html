@@ -3,9 +3,9 @@
 
 <h2>Please complete the following form to add a book.</h2>
 
-<form method="post" action={% if id %}"/book/edit"{%else %}"/book/add"{%endif%} >
+<form method="post" action={% if id %}"/book/edit"{% else %}"/book/add"{% endif %} >
   <table>
-  {{ form.as_table}}
+  {{ form.as_table }}
   </table>
   <input type="hidden" name="_id" value="{{ id }}"/>
   <input type="submit" value="Add Book"/>
