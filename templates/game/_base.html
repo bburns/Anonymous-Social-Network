@@ -7,8 +7,8 @@
     <link rel="stylesheet" media="print" href="/static/print.css" type="text/css"/>
     <link rel="stylesheet" media="screen" href="/static/asn.css" type="text/css"/>
     <link rel="stylesheet" href="/static/jquery-ui-1.8.6.custom.css" media="all" type="text/css">
-    <script src="static/jquery.js" type="text/javascript"></script>
-    <script src="static/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
+    <script src="/static/jquery.js" type="text/javascript"></script>
+    <script src="/static/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
 
   </head>
   <body>
@@ -80,8 +80,8 @@
           <h3><a href="#">Recent Places</a></h3>
 	  <div>
 	    <table>
-	      {%for paper in recentPapers%}
-	        <tr><td>{{paper.title}}</td></tr>
+	      {%for place in recentPlaces%}
+	        <tr><td>{{place.place_name}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
