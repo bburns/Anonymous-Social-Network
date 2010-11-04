@@ -1,3 +1,6 @@
+import string
+import random
+
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
@@ -25,6 +28,11 @@ class Student(db.Model):
         sb.rating = rating
         sb.comment = comment
         sb.put()
+
+    def generateID(self):
+        random.seed(8)
+        d = [random.choice(string.letters + string.digits) for x in xrange(8)]
+        self.id_ = "".join(d)
 
 
 class User(db.Model):
