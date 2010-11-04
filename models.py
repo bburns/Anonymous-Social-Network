@@ -140,7 +140,7 @@ class StudentBook(db.Model):
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
-        #. also could do scaling here - eg convert to 0-5
+        #. also could do scaling here - eg convert to 0-5?
         ratings = [int(sb.rating) for sb in sbs]
         n = len(ratings)
         ratingAvg = sum(ratings) / n

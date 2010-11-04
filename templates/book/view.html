@@ -1,6 +1,6 @@
 <!-- view a book and associated ratings and comments -->
 
-{% extends "_base.html" %}
+{% extends ".._base.html" %}
 {% block content %}
 
 <h2>View Book</h2>
@@ -49,7 +49,7 @@
   <tr>
     <td><label for="id_rating">Rating:</label></td>
     <td>
-      <select name="Rating">
+      <select name="rating" id="id_rating">
         <option value="0">0 stars</option>
         <option value="20">1 star</option>
         <option value="40">2 stars</option>
