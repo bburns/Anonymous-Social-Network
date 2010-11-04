@@ -19,14 +19,7 @@ from models import *
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        values = {}
-        values['recentClasses'] = Class.get_by_date()
-        values['recentBooks'] = Book.get_by_date()
-        values['recentPapers'] = Paper.get_by_date()
-        values['recentInternships'] = Internship.get_by_date()
-        values['recentPlaces'] = Place.get_by_date()
-        values['recentGames'] = Game.get_by_date()
-        doRender(self,'index.html', values)
+        doRender(self,'index.html')
 
 class Help(webapp.RequestHandler):
     def get(self):
@@ -161,7 +154,7 @@ class ListClass(webapp.RequestHandler):
         
 class AddClass(webapp.RequestHandler):
     def get(self):
-        doRender(self,'class/add.html',{'form':ClassForm()})
+        doRender(self,'class/add.html',{'form':classForm()})
 
     def post(self):
         form = ClassForm(self.request.POST)            
@@ -497,6 +490,12 @@ def doRender(handler, filename='index.html', values = {}):
     # copy the dictionary, so we can add things to it
     newdict = dict(values)
     newdict['path'] = handler.request.path
+    newdict['recentClasses'] = Class.get_by_date()
+    newdict['recentBooks'] = Book.get_by_date()
+    newdict['recentPapers'] = Paper.get_by_date()
+    newdict['recentInternships'] = Internship.get_by_date()
+    newdict['recentPlaces'] = Place.get_by_date()
+    newdict['recentGames'] = Game.get_by_date()
     handler.session = Session()
     if 'username' in handler.session:
         newdict['username'] = handler.session['username']
@@ -510,8 +509,6 @@ def doRender(handler, filename='index.html', values = {}):
     s = template.render(filepath, newdict)
     handler.response.out.write(s)
     return True
-
-
 
 
 _URLS = (
