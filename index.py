@@ -30,6 +30,10 @@ class MainPage(webapp.RequestHandler):
         values['recentGames'] = Game.get_by_date()
         doRender(self,'index.html', values)
 
+class StudentProfile(webapp.RequestHandler):
+    def get(self):
+        doRender(self,"profile.html")
+
 
 class SignupHandler(webapp.RequestHandler):
     def get(self):
@@ -46,8 +50,15 @@ class SignupHandler(webapp.RequestHandler):
             if User.get_by_email(email):
                 doRender(self,'signup.html',{'error': "Sorry, that username already exists. Please try another one."})
                 return
+            s = Student()
+            s.generateID()
+            s.password = self.request.get('password')
+            s.put()
             user = form.save()
+            user.student = s
+            user.put()
             self.session['username'] = user.email
+            self.session['student_id'] = s.key().id()
             self.redirect('/')
         else:
             doRender(self,'signup.html', {'error': 'Error in filling out form'})
@@ -71,10 +82,13 @@ class LoginHandler(webapp.RequestHandler):
             return
         
         user = User.get_by_email(email)
+    
         if user is None:
             doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})  
         elif pw == user.password:
             self.session['username'] = email
+            if user.student != None:
+                self.session['student_id'] = user.student.key().id()
             self.redirect('/')
         else:
             doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
@@ -84,6 +98,7 @@ class LogoutHandler(webapp.RequestHandler):
     def get(self):
         self.session = Session()
         self.session.delete_item('username')
+        self.session.delete_item('student_id')
         doRender(self,'index.html')
 
 
@@ -475,8 +490,11 @@ def doRender(handler, filename='index.html', values = {}):
     if 'username' in handler.session:
         newdict['username'] = handler.session['username']
 
+    if 'student_id' in handler.session:
+        newdict['student_id'] = handler.session['student_id']
     #.
     newdict['admin'] = True
+
 
     s = template.render(filepath, newdict)
     handler.response.out.write(s)
@@ -494,6 +512,8 @@ _URLS = (
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
+
+     ('/profile',StudentProfile),
 
      ('/class/list',ListClass),
      ('/class/add', AddClass),
