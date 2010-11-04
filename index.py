@@ -17,18 +17,17 @@ from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
 
-
-
 class MainPage(webapp.RequestHandler):
     def get(self):
-        values = {}
-        values['recentClasses'] = Class.get_by_date()
-        values['recentBooks'] = Book.get_by_date()
-        values['recentPapers'] = Paper.get_by_date()
-        values['recentInternships'] = Internship.get_by_date()
-        values['recentPlaces'] = Place.get_by_date()
-        values['recentGames'] = Game.get_by_date()
-        doRender(self,'index.html', values)
+        doRender(self,'index.html')
+
+class Help(webapp.RequestHandler):
+    def get(self):
+        doRender(self,"help.html")
+
+class About(webapp.RequestHandler):
+    def get(self):
+        doRender(self,"about.html")
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
@@ -89,6 +88,8 @@ class LoginHandler(webapp.RequestHandler):
             self.session['username'] = email
             if user.student != None:
                 self.session['student_id'] = user.student.key().id()
+            if user.isAdmin:
+                self.session['isAdmin'] = True
             self.redirect('/')
         else:
             doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
@@ -153,7 +154,7 @@ class ListClass(webapp.RequestHandler):
         
 class AddClass(webapp.RequestHandler):
     def get(self):
-        doRender(self,'class/add.html',{'form':ClassForm()})
+        doRender(self,'class/add.html',{'form':classForm()})
 
     def post(self):
         form = ClassForm(self.request.POST)
@@ -208,7 +209,32 @@ class ViewBook(webapp.RequestHandler):
         book = Book.get_by_id(id)
         form = BookForm(instance=book)
         assocs = book.studentbook_set
-        doRender(self,'book/view.html',{'form':form,'book':book,'assocs':assocs})
+        doRender(self,'book/view.html',{'form':form,'book':book,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        book_id = int(self.request.get('_id'))
+        book = Book.get_by_id(book_id)
+
+        rating = self.request.get('rating')
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+
+        assoc = StudentBook()
+        assoc.student = student
+        assoc.book = book
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put()
+        
+        self.redirect("/book/view?id=%d" % book_id)
+        
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -469,6 +495,12 @@ def doRender(handler, filename='index.html', values = {}):
     # copy the dictionary, so we can add things to it
     newdict = dict(values)
     newdict['path'] = handler.request.path
+    newdict['recentClasses'] = Class.get_by_date()
+    newdict['recentBooks'] = Book.get_by_date()
+    newdict['recentPapers'] = Paper.get_by_date()
+    newdict['recentInternships'] = Internship.get_by_date()
+    newdict['recentPlaces'] = Place.get_by_date()
+    newdict['recentGames'] = Game.get_by_date()
     handler.session = Session()
     if 'username' in handler.session:
         newdict['username'] = handler.session['username']
@@ -484,8 +516,6 @@ def doRender(handler, filename='index.html', values = {}):
     return True
 
 
-
-
 _URLS = (
      ('/', MainPage),
 
@@ -495,6 +525,8 @@ _URLS = (
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
+     ('/about',About),
+     ('/help',Help),
 
      ('/profile',StudentProfile),
 

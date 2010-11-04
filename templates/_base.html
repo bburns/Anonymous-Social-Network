@@ -7,8 +7,8 @@
     <link rel="stylesheet" media="print" href="/static/print.css" type="text/css"/>
     <link rel="stylesheet" media="screen" href="/static/asn.css" type="text/css"/>
     <link rel="stylesheet" href="/static/jquery-ui-1.8.6.custom.css" media="all" type="text/css">
-    <script src="static/jquery.js" type="text/javascript"></script>
-    <script src="static/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
+    <script src="/static/jquery.js" type="text/javascript"></script>
+    <script src="/static/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
 
   </head>
   <body>
@@ -36,14 +36,17 @@
             {% endif %}
             
             {% if admin %}
+            <hr/>
             <li><a href="/test" class="round">Run Tests</a></li>
             <li><a href="/import" class="round">Import</a></li>
             <li><a href="/export" class="round">Export</a></li>
             <li><a href="/dbclear" class="round">Clear Data</a></li>
+            <li><a href="/_ah/admin" class="round">Console</a></li>
+            <hr/>
             {% endif %}
             
-            <li><a href="#" class="round">About</a></li>
-            <li><a href="#" class="round">Help</a></li>
+            <li><a href="/about" class="round">About</a></li>
+            <li><a href="/help" class="round">Help</a></li>
           </ul>
         </div>
       <div class="span-15 round" id="content">
@@ -80,8 +83,8 @@
           <h3><a href="#">Recent Places</a></h3>
 	  <div>
 	    <table>
-	      {%for paper in recentPapers%}
-	        <tr><td>{{paper.title}}</td></tr>
+	      {%for place in recentPlaces%}
+	        <tr><td>{{place.place_name}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
