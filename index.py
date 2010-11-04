@@ -17,8 +17,6 @@ from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
 
-
-
 class MainPage(webapp.RequestHandler):
     def get(self):
         values = {}
@@ -33,6 +31,10 @@ class MainPage(webapp.RequestHandler):
 class Help(webapp.RequestHandler):
     def get(self):
         doRender(self,"help.html")
+
+class About(webapp.RequestHandler):
+    def get(self):
+        doRender(self,"about.html")
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
@@ -496,6 +498,7 @@ _URLS = (
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
+     ('/about',About),
      ('/help',Help),
 
      ('/profile',StudentProfile),
