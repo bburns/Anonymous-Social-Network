@@ -27,10 +27,7 @@ def validate_course_num(val):
 	raise db.BadValueError("This field is required.")
     regex = "[A-Z]([A-Z]|\s){0,2}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
     if re.match(regex, val) == None:
-        raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
-
-
-
+        raise db.BadValueError("Invalid value entered. eg: CS 345, CS 313K ")
 
 
 def validate_semester(semester):
