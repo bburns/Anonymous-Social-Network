@@ -1,3 +1,4 @@
+
 """
 ASN2
 Anonymous Social Network phase 2
@@ -22,11 +23,13 @@ class MainPage(webapp.RequestHandler):
     def get(self):
         doRender(self,'index.html', {'recentClasses':Class.get_by_date(), 'recentBooks':Book.get_by_date(), 'recentPapers':Paper.get_by_date(), 'recentInternships':Internship.get_by_date(), 'recentGames':Game.get_by_date(), 'recentPlaces':Place.get_by_date()})
 
+
 class SignupHandler(webapp.RequestHandler):
     def get(self):
         self.session = Session()
         self.session.delete_item('username')
         doRender(self,'signup.html')
+        
     def post(self):
         self.session = Session()
         form = UserForm(self.request.POST)
@@ -44,6 +47,7 @@ class SignupHandler(webapp.RequestHandler):
         else:
             doRender(self,'signup.html', {'error': 'Error in filling out form'})
 
+
 class LoginHandler(webapp.RequestHandler):
     def get(self):
         doRender(self,'login.html')
@@ -54,19 +58,22 @@ class LoginHandler(webapp.RequestHandler):
         pw = self.request.get('password')
         self.session.delete_item('username')
 
-        if pw == '' or email == '':
-            doRender(self,'login.html',{'error':'Please specify Username and Password'})
+        if email == '':
+            doRender(self, 'login.html', {'error':'Please specify a username.'})
+            return
+        if pw == '':
+            doRender(self, 'login.html', {'error':'Please specify a password.'})
             return
         
         user = User.get_by_email(email)
         if user is None:
-            doRender(self,'login.html',{'error':'Invalid username or password entered'})  
+            doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})  
         elif pw == user.password:
             self.session['username'] = email
-            #doRender(self,'index.html',{})
             self.redirect('/')
         else:
-            doRender(self,'login.html',{'error':'Invalid username or password entered'})
+            doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
+
 
 class LogoutHandler(webapp.RequestHandler):
     def get(self):
@@ -87,20 +94,32 @@ class ImportData(webapp.RequestHandler):
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
 
+
 class ExportData(webapp.RequestHandler):
     def get(self):
-        students = Student.all().fetch(1000)
+        students = Student.all()  #.fetch(1000)  can just iterate over all()
         xml = xmlExport(students)
         self.response.headers['Content-Type'] = 'text/xml'
         self.response.out.write(xml)
+
 
 class ClearData(webapp.RequestHandler):
     def get(self):
         """
         Clear the datastore
         """
-        query = Student.all()
-        db.delete(query)
+        # query = Student.all()
+        # db.delete(query)
+        # self.redirect("/")
+
+        #. move this to utils
+        # clear ALL the tables
+        tables = [Student, Class, Book, Paper, Internship, Place, Game]
+        tables += [StudentClass, StudentBook, StudentPaper, StudentInternship, StudentPlace, StudentGame]
+        for table in tables:
+            query = table.all()
+            db.delete(query)
+
         self.redirect("/")
 
 
@@ -109,7 +128,7 @@ class ClearData(webapp.RequestHandler):
 class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
-        classes.fetch(100)
+        # classes.fetch(100)  # Class.all() can be iterated over. 
         doRender(self,'class/list.html',{'classes':classes})
         
 class AddClass(webapp.RequestHandler):
@@ -119,7 +138,7 @@ class AddClass(webapp.RequestHandler):
     def post(self):
         form = ClassForm(self.request.POST)            
         form.save()
-      	self.redirect("/class/list")
+        self.redirect("/class/list")
 
 class EditClass(webapp.RequestHandler):
     def get(self):
@@ -132,7 +151,7 @@ class EditClass(webapp.RequestHandler):
         cl = Class.get_by_id(id)
         form = ClassForm(data = self.request.POST, instance = cl)
         form.save()
-      	self.redirect("/class/list")
+        self.redirect("/class/list")
 
 class DeleteClass(webapp.RequestHandler):
     def get(self):
@@ -148,10 +167,18 @@ class DeleteClass(webapp.RequestHandler):
 
 # Book
 
+# also want to show ratings and comments.
+# maybe show avg rating, # of ratings in listing. 
+# click on a book to view it, and all associated ratings and comments
+
+
 class ListBook(webapp.RequestHandler):
     def get(self):
         books = Book.all()
         doRender(self,'book/list.html',{'books': books})
+
+class ViewBook(webapp.RequestHandler):
+    pass
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -207,7 +234,6 @@ class DeleteBook(webapp.RequestHandler):
 class ListPaper(webapp.RequestHandler):
     def get(self):
         papers = Paper.all()
-        papers.fetch(100)
         doRender(self,'paper/list.html',{'papers':papers})
 
 class AddPaper(webapp.RequestHandler):
@@ -256,7 +282,6 @@ class DeletePaper(webapp.RequestHandler):
 class ListPlace(webapp.RequestHandler):
     def get(self):
         places = Place.all()
-        places.fetch(100)
         doRender(self,'place/list.html',{'places':places})
 
 class AddPlace(webapp.RequestHandler):
@@ -305,7 +330,6 @@ class DeletePlace(webapp.RequestHandler):
 class ListInternship(webapp.RequestHandler):
     def get(self):
         internships = Internship.all()
-        internships.fetch(100)
         doRender(self,'internship/list.html',{'internships':internships})
 
 class AddInternship(webapp.RequestHandler):
@@ -354,7 +378,6 @@ class DeleteInternship(webapp.RequestHandler):
 class ListGame(webapp.RequestHandler):
     def get(self):
         games = Game.all()
-        games.fetch(100)
         doRender(self,'game/list.html',{'games':games})
 
 class AddGame(webapp.RequestHandler):

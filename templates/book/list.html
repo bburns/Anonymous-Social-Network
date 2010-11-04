@@ -1,21 +1,29 @@
 {% extends "_base.html" %}
 {% block content %}
+
 <h2>Current books</h2>
+
 <table>
   <thead>
-    <th>Title</th><th>ISBN</th><th>Author</th><th></th>
+    <th>Title</th><th>Author</th><th>ISBN</th><th></th>
   </thead>
   <tbody>
   {% for book in books %}
     <tr>
       <td>{{ book.title }}</td>
-      <td>{{ book.isbn }}</td>
       <td>{{ book.author }}</td>
-      <td>{% if username %}<a href="/book/edit?id={{ book.key.id }}">Edit</a> |
-          <a href="/book/delete?id={{ book.key.id }}">Delete</a>{% endif %}</td>
+      <td>{{ book.isbn }}</td>
+      <td>
+        {% if username %}
+          <a href="/book/edit?id={{ book.key.id }}">Edit</a> |
+          <a href="/book/delete?id={{ book.key.id }}">Delete</a>
+        {% endif %}
+      </td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
+
 {% if username %}<a href="/book/add">Add a Book</a>{% endif %}
+
 {% endblock %}
