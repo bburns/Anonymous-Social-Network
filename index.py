@@ -156,9 +156,14 @@ class AddClass(webapp.RequestHandler):
         doRender(self,'class/add.html',{'form':ClassForm()})
 
     def post(self):
-        form = ClassForm(self.request.POST)            
-        form.save()
-        self.redirect("/class/list")
+        form = ClassForm(self.request.POST)
+	if form.is_valid() :
+	        form.save()
+        	self.redirect("/class/list")
+	else :
+		doRender(self,'class/add.html',{'form':form, 'error':'Invalid info entered.'})
+		
+
 
 class EditClass(webapp.RequestHandler):
     def get(self):

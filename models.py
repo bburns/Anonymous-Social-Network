@@ -7,12 +7,69 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
 
 
+
+
+
+
+
+# validation functions
+# can be used by passing it as a param in a Property  declaration
+#       eg:   course_num = db.StringProperty(validator=validate_course_num)
 def validate_email(email):
     if not email:
 	raise db.BadValueError
     regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
     if re.match(regex, email) == None:
+	raise db.BadValueError("Invalid value entered. eg: email@email.com")
+
+def validate_course_num(val):
+    if not val:
+	raise db.BadValueError("This field is required.")
+    regex = "[A-Z]([A-Z]|\s){0,2}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
+    if re.match(regex, val) == None:
+        raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
+
+
+
+
+
+def validate_semester(semester):
+    if semester :
+	regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
+	if re.match(regex, semester) == None:
+	   raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
+
+def validate_unique(unique):
+    if unique :
+	regex = "[0-9]{5}"
+	if re.match(regex, unique) == None:
+	   raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only")
+
+
+
+
+
+def validate_grade(val):
+    if not val:
 	raise db.BadValueError
+    regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
+    if re.match(regex, val) == None:
+	raise db.BadValueError
+
+def validate_isbn(val):
+    if not val:
+	raise db.BadValueError
+    regex = "\S{8}"
+    if re.match(regex, val)== None:
+	raise db.BadValueError
+
+def validate_rating(val):
+    if val:
+	if val < 0 :
+	    raise db.BadValueError
+	if val > 100 :
+	    raise db.BadValueError
+
 
 
 class Student(db.Model):
@@ -73,10 +130,10 @@ class UserForm(djangoforms.ModelForm):
 
 #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
 class Class(db.Model):
-    course_num = db.StringProperty()
+    course_num = db.StringProperty(validator=validate_course_num)
     course_name = db.StringProperty()
-    unique = db.StringProperty()
-    semester = db.StringProperty()
+    unique = db.StringProperty(validator=validate_unique)
+    semester = db.StringProperty(validator=validate_semester)
     instructor = db.StringProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
   
