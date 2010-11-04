@@ -190,6 +190,28 @@ class ViewBook(webapp.RequestHandler):
         assocs = book.studentbook_set
         doRender(self,'book/view.html',{'form':form,'book':book,'assocs':assocs})
 
+    def post(self):
+
+        book_id = int(self.request.get('id')) # get id from "?id=" in url
+        book = Book.get_by_id(book_id)
+
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        rating = self.request.get('rating')
+        comment = self.request.get('comment')
+
+        assoc = StudentBook()
+        assoc.book = book
+        assoc.student = student
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put()
+        
+        self.redirect("/book/view")
+        
+
 class AddBook(webapp.RequestHandler):
     def get(self):
         doRender(self,'book/add.html',{'form':BookForm()})

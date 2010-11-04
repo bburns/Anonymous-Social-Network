@@ -112,6 +112,7 @@ class Book(db.Model):
 class BookForm(djangoforms.ModelForm):
     class Meta:
         model = Book
+        exclude = ['ratingAvg', 'refCount']
 
 class StudentBook(db.Model):
     student = db.ReferenceProperty(Student)
