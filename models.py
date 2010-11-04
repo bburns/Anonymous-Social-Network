@@ -1,11 +1,18 @@
 import string
 import random
+import re
 
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
 
 
+def validate_email(email):
+    if not email:
+	raise db.BadValueError
+    regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
+    if re.match(regex, email) == None:
+	raise db.BadValueError
 
 
 class Student(db.Model):
@@ -36,7 +43,7 @@ class Student(db.Model):
 
 
 class User(db.Model):
-    email = db.StringProperty()
+    email = db.EmailProperty(validator=validate_email)
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
     student = db.ReferenceProperty(Student)
@@ -61,10 +68,8 @@ class UserForm(djangoforms.ModelForm):
     class Meta:
         model = User
         exclude = ['isAdmin','student']
-    
 
-
-
+		
 
 #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
 class Class(db.Model):
@@ -92,9 +97,6 @@ class StudentClass(db.Model):
     rating = db.StringProperty()
     comment = db.StringProperty()
     grade = db.StringProperty()
-
-
-
 
 
 class Book(db.Model):

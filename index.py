@@ -44,7 +44,7 @@ class SignupHandler(webapp.RequestHandler):
     def post(self):
         self.session = Session()
         form = UserForm(self.request.POST)
-        if form.is_valid():
+        if form.is_valid() :
             # check if username already exists
             email = self.request.get('email')
             if User.get_by_email(email):
@@ -61,7 +61,7 @@ class SignupHandler(webapp.RequestHandler):
             self.session['student_id'] = s.key().id()
             self.redirect('/')
         else:
-            doRender(self,'signup.html', {'error': 'Error in filling out form'})
+            doRender(self,'signup.html', {'error': "Could not process the information please check the following and try again: <br/>- all the fields are filled in. <br/>- valid email address entered."})
 
 
 class LoginHandler(webapp.RequestHandler):
