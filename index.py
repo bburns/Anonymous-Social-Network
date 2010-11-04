@@ -1,3 +1,8 @@
+"""
+ASN2
+Anonymous Social Network phase 2
+"""   
+
 import os
 
 from google.appengine.ext import webapp
@@ -10,29 +15,7 @@ from utils import xmlExport
 from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
-    
-"""
-ASN2
-Anonymous Social Network phase 2
-"""   
 
-def doRender(handler,tname='index.html',values = {}):
-    temp = os.path.join(
-      os.path.dirname(__file__),
-      'templates/' + tname)
-    if not os.path.isfile(temp):
-        self.response.out.write("Invalid template file: " + tname)
-        return False
-
-    newval = dict(values)
-    newval['path'] = handler.request.path
-    handler.session = Session()
-    if 'username' in handler.session:
-        newval['username'] = handler.session['username']
-
-    outstr = template.render(temp,newval)
-    handler.response.out.write(outstr)
-    return True
 
 
 class MainPage(webapp.RequestHandler):
@@ -120,6 +103,9 @@ class ClearData(webapp.RequestHandler):
         db.delete(query)
         self.redirect("/")
 
+
+# Class
+
 class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
@@ -159,6 +145,9 @@ class DeleteClass(webapp.RequestHandler):
         cl = Class.get_by_id(id).delete()
         self.redirect("/class/list")
 
+
+# Book
+
 class ListBook(webapp.RequestHandler):
     def get(self):
         books = Book.all()
@@ -171,9 +160,7 @@ class AddBook(webapp.RequestHandler):
     def post(self):
         data = BookForm(data=self.request.POST)
         if data.is_valid():
-            self.response.out.write("valid data")
-            book = data.save() #(commit=False)
-            #book.put()
+            book = data.save()
             self.redirect('/book/list')
         else:
             doRender(self,'book/add.html',data)
@@ -186,7 +173,6 @@ class EditBook(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        #book = Book.get(db.Key.from_path('Book', id))
         book = Book.get_by_id(id)
         data = BookForm(data=self.request.POST, instance=book)
         if data.is_valid():
@@ -197,13 +183,26 @@ class EditBook(webapp.RequestHandler):
             doRender(self,'book/add.html',data)
 
 class DeleteBook(webapp.RequestHandler):
+    # def get(self):
+    #     id = int(self.request.get('id'))
+    #     book = Book.get_by_id(id)
+    #     book.delete()
+    #     self.redirect('/book/list')
+
     def get(self):
         id = int(self.request.get('id'))
-        #key = db.Key.from_path('Book', id)
-        #book = Book.get(key)
+        book = Book.get_by_id(id)
+        doRender(self,'book/delete.html',{'book':book,'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
         book = Book.get_by_id(id)
         book.delete()
-        self.redirect('/book/list')
+        self.redirect("/book/list")
+
+
+
+# Paper
 
 class ListPaper(webapp.RequestHandler):
     def get(self):
@@ -219,11 +218,10 @@ class AddPaper(webapp.RequestHandler):
         data = PaperForm(data=self.request.POST)
         if data.is_valid():
             self.response.out.write("valid data")
-            paper = data.save() #(commit=False)
-            paper.put()
+            paper = data.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html',data)
+            doRender(self,'paper/add.html', data)
 
 class EditPaper(webapp.RequestHandler):
     def get(self):
@@ -236,11 +234,10 @@ class EditPaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         data = PaperForm(data=self.request.POST, instance=paper)
         if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+            paper = data.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html',data)
+            doRender(self,'paper/add.html', data)
 
 class DeletePaper(webapp.RequestHandler):
     def get(self):
@@ -253,7 +250,9 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id).delete()
         self.redirect("/paper/list")
 
-#Place
+
+# Place
+
 class ListPlace(webapp.RequestHandler):
     def get(self):
         places = Place.all()
@@ -401,6 +400,31 @@ class DeleteGame(webapp.RequestHandler):
         self.redirect("/game/list")
 
 
+
+def doRender(handler, filename='index.html', values = {}):
+    """
+    Render an html template file with the given dictionary values.
+    The template file should be a Django html template file. 
+    Handles the Session cookie also. 
+    """
+    filepath = os.path.join(os.path.dirname(__file__), 'templates/' + filename)
+    if not os.path.isfile(filepath):
+        self.response.out.write("Invalid template file: " + filename)
+        return False
+
+    newdict = dict(values)
+    newdict['path'] = handler.request.path
+    handler.session = Session()
+    if 'username' in handler.session:
+        newdict['username'] = handler.session['username']
+
+    outstr = template.render(filepath, newdict)
+    handler.response.out.write(outstr)
+    return True
+
+
+
+
 _URLS = (
      ('/', MainPage),
 
@@ -411,31 +435,30 @@ _URLS = (
      ('/import',ImportData),
      ('/dbclear',ClearData),
 
+     ('/class/list',ListClass),
      ('/class/add', AddClass),
      ('/class/edit', EditClass),
      ('/class/delete', DeleteClass),
-     ('/class/list',ListClass),
 
      ('/book/list', ListBook),
      ('/book/add', AddBook),
      ('/book/edit', EditBook),
      ('/book/delete', DeleteBook),
 
-
      ('/paper/list', ListPaper),
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
      ('/paper/delete', DeletePaper),
 
-     ('/place/list', ListPlace),
-     ('/place/add', AddPlace),
-     ('/place/edit', EditPlace),
-     ('/place/delete', DeletePlace),
-
      ('/internship/list', ListInternship),
      ('/internship/add', AddInternship),
      ('/internship/edit', EditInternship),
      ('/internship/delete', DeleteInternship),
+
+     ('/place/list', ListPlace),
+     ('/place/add', AddPlace),
+     ('/place/edit', EditPlace),
+     ('/place/delete', DeletePlace),
 
      ('/game/list', ListGame),
      ('/game/add', AddGame),
