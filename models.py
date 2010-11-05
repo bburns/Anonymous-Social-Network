@@ -247,10 +247,13 @@ class StudentPaper(db.Model):
     rating = db.StringProperty()
     comment = db.TextProperty()
 
+
 class Internship(db.Model):
     place_name = db.StringProperty()
     location = db.StringProperty()
     semester = db.StringProperty()
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
     @staticmethod
@@ -263,12 +266,26 @@ class Internship(db.Model):
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
         model = Internship
+        exclude = ['ratingAvg', 'refCount']
 
 class StudentInternship(db.Model):
     student = db.ReferenceProperty(Student)
     internship = db.ReferenceProperty(Internship)
     rating = db.StringProperty()
     comment = db.TextProperty()
+
+    def put(self):
+        db.Model.put(self) # call superclass
+        internship = self.internship
+        assocs = internship.studentinternship_set
+        ratings = [int(assoc.rating) for assoc in assocs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        internship.ratingAvg = ratingAvg
+        internship.refCount = n
+        internship.put()
+
+
 
 class Place(db.Model):
     place_type = db.StringProperty(choices = ["study_place", "live_place", "eat_place", "fun_place"])
