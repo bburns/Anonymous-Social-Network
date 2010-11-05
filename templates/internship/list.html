@@ -1,12 +1,15 @@
 {% extends "../_base.html" %}
 {% block content %}
+
 <h2>Current Internships</h2>
+
 <table>
   <thead>
     <tr>
       <th>Place Name</th>
       <th>Location</th>
       <th>Semester</th>
+      <th>Rating</th>
       <th></th>
     </tr>
   </thead>
@@ -15,10 +18,19 @@
       <td>{{internship.place_name}}</td>
       <td>{{internship.location}}</td>
       <td>{{internship.semester}}</td>
-      <td>{% if username %}<a href='/internship/edit?id={{internship.key.id}}'>Edit</a> |
-          <a href='/internship/delete?id={{internship.key.id}}'>Delete</a>{% endif %}</td>
+      <td>{{internship.ratingAvg}}</td>
+      <td>
+        <a href="/internship/view?id={{ internship.key.id }}">View</a>
+      
+        <!--
+        {% if admin %}<a href='/internship/edit?id={{internship.key.id}}'>Edit</a> |
+          <a href='/internship/delete?id={{internship.key.id}}'>Delete</a>{% endif %}
+        -->
+      </td>
     </tr>
   {% endfor %}
 </table>
+
 {%if username %}<p><a href="/internship/add">Add an Internship</a><p>{% endif %}
+
 {% endblock %}
