@@ -10,12 +10,13 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext.db import djangoforms
 
 from utils.xmlExport import xmlExport
 from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
+
+from google.appengine.ext.db import djangoforms
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -619,8 +620,8 @@ class AddGame(webapp.RequestHandler):
     def post(self):
         form = GameForm(data=self.request.POST)
         if form.is_valid():
-            game = data.save()
-            self.redirect('/game/list')
+            game = form.save()
+            self.redirect('/game/view?id=%d' % game.key().id())
         else:
             doRender(self,'game/add.html', form)
 
@@ -639,6 +640,39 @@ class EditGame(webapp.RequestHandler):
             self.redirect('/game/list')
         else:
             doRender(self,'game/add.html', form)
+
+class ViewGame(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        game = Game.get_by_id(id)
+        form = GameForm(instance=game)
+        assocs = game.studentgame_set
+        doRender(self,'game/view.html',{'form':form,'game':game,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        game_id = int(self.request.get('_id'))
+        game = Game.get_by_id(game_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, place, rating, comment
+        
+        # add the assocation object
+        assoc = StudentGame()
+        assoc.student = student
+        assoc.game = game
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        self.redirect("/game/list")
 
 class DeleteGame(webapp.RequestHandler):
     def get(self):
@@ -737,6 +771,7 @@ _URLS = (
      ('/game/add', AddGame),
      ('/game/edit', EditGame),
      ('/game/delete', DeleteGame),
+     ('/game/view', ViewGame),
      )
 
 
