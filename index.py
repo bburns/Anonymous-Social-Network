@@ -31,8 +31,26 @@ class About(webapp.RequestHandler):
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
-        doRender(self,"profile.html")
+	x = Session()        
+	if 'student_id' in x:
+		template = {}		
+		sb = StudentBook.all()
+		sc = StudentClass.all()		
+		
+		s = Student.get_by_id(x['student_id'])
+		
+		#books
+		sbooks = sb.filter("student =", s)
+		sbooks = sbooks.fetch(98988)		
+		template['sbooks'] = sbooks
 
+		#class
+		sclasses = sc.filter("student =", s)
+		sclasses = sclasses.fetch(98988)
+		template['sclasses'] = sclasses
+		doRender(self,"profile.html", template)
+	else:	 
+		doRender(self,"profile.html")
 
 class SignupHandler(webapp.RequestHandler):
     def get(self):
@@ -165,8 +183,9 @@ class AddClass(webapp.RequestHandler):
     def post(self):
         form = ClassForm(self.request.POST)
 	if form.is_valid() :
-	        form.save()
-        	self.redirect("/class/list")
+	        class_ = form.save()
+		id = class_.key().id()
+        	self.redirect('/class/view?id=%d' % id)
 	else :
 		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
 		
@@ -194,6 +213,40 @@ class DeleteClass(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id).delete()
+        self.redirect("/class/list")
+
+class ViewClass(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        class_ = Class.get_by_id(id)
+        form = ClassForm(instance=class_)
+        assocs = class_.studentclass_set
+        doRender(self,'class/view.html',{'form':form,'class':class_,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        class_id = int(self.request.get('_id'))
+        class_ = Class.get_by_id(class_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+        
+        # add the assocation object
+        assoc = StudentClass()
+        assoc.student = student
+        assoc.class_ = class_
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/class/list")
 
 
@@ -240,8 +293,8 @@ class ViewBook(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/book/view?id=%d" % book_id)
-        
+        #self.redirect("/book/view?id=%d" % book_id)
+        self.redirect("/book/list")
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -526,6 +579,7 @@ _URLS = (
 
      ('/class/list',ListClass),
      ('/class/add', AddClass),
+     ('/class/view', ViewClass),
      ('/class/edit', EditClass),
      ('/class/delete', DeleteClass),
 
