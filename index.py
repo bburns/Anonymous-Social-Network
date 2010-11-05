@@ -476,11 +476,46 @@ class DeletePlace(webapp.RequestHandler):
         place = Place.get_by_id(id).delete()
         self.redirect("/place/list")
 
-#Internship
+
+# Internship
 class ListInternship(webapp.RequestHandler):
     def get(self):
         internships = Internship.all()
         doRender(self,'internship/list.html',{'internships':internships})
+
+
+
+class ViewInternship(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        internship = Internship.get_by_id(id)
+        form = InternshipForm(instance=internship)
+        assocs = internship.studentinternship_set
+        doRender(self,'internship/view.html',{'form':form,'internship':internship,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        internship_id = int(self.request.get('_id'))
+        internship = Internship.get_by_id(internship_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        # add the assocation object
+        assoc = StudentInternship()
+        assoc.student = student
+        assoc.internship = internship
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/internship/view?id=%d" % internship_id)
+        self.redirect("/internship/list")
+
 
 class AddInternship(webapp.RequestHandler):
     def get(self):
@@ -490,7 +525,8 @@ class AddInternship(webapp.RequestHandler):
         form = InternshipForm(data=self.request.POST)
         if form.is_valid():
             internship = form.save()
-            self.redirect('/internship/list')
+            id = internship.key().id()
+            self.redirect('/internship/view?id=%d' % id)
         else:
             doRender(self,'internship/add.html',form)
 
@@ -498,17 +534,18 @@ class EditInternship(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         internship = Internship.get_by_id(id)
-        doRender(self,'internship/add.html',{'form':InternshipForm(instance=internship),'id':id})
+        doRender(self,'internship/edit.html',{'form':InternshipForm(instance=internship),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
         form = InternshipForm(data=self.request.POST, instance=internship)
         if form.is_valid():
-            entity = form.save()
-            self.redirect('/internship/list')
+            form.save()
+            #self.redirect('/internship/list')
+            self.redirect('/internship/view?id=%d' % id)
         else:
-            doRender(self,'internship/add.html', form)
+            doRender(self,'internship/edit.html', form)
 
 class DeleteInternship(webapp.RequestHandler):
     def get(self):
@@ -518,7 +555,8 @@ class DeleteInternship(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        internship = Internship.get_by_id(id).delete()
+        internship = Internship.get_by_id(id)
+        internship.delete()
         self.redirect("/internship/list")
 
 #Game
@@ -636,6 +674,7 @@ _URLS = (
      ('/paper/delete', DeletePaper),
 
      ('/internship/list', ListInternship),
+     ('/internship/view', ViewInternship),
      ('/internship/add', AddInternship),
      ('/internship/edit', EditInternship),
      ('/internship/delete', DeleteInternship),
