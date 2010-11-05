@@ -35,7 +35,8 @@ class StudentProfile(webapp.RequestHandler):
 	if 'student_id' in x:
 		template = {}		
 		sb = StudentBook.all()
-		sc = StudentClass.all()		
+		sc = StudentClass.all()
+		sp = StudentPlace.all()
 		
 		s = Student.get_by_id(x['student_id'])
 		
@@ -48,6 +49,12 @@ class StudentProfile(webapp.RequestHandler):
 		sclasses = sc.filter("student =", s)
 		sclasses = sclasses.fetch(98988)
 		template['sclasses'] = sclasses
+
+		#Place
+		splaces = sp.filter("student = ", s)
+		splaces = splaces.fetch(98988)
+		template['splaces'] = splaces
+		
 		doRender(self,"profile.html", template)
 	else:	 
 		doRender(self,"profile.html")
@@ -403,8 +410,9 @@ class AddPlace(webapp.RequestHandler):
     def post(self):
         form = PlaceForm(data=self.request.POST)
         if form.is_valid():
-            place = data.save()
-            self.redirect('/place/list')
+            place = form.save()
+	    id = place.key().id()
+            self.redirect('/place/view?id=%d' %id)
         else:
             doRender(self,'place/add.html', form)
 
@@ -455,7 +463,7 @@ class ViewPlace(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/place/view?id=%d" % place_id)
+        self.redirect("/place/list")
 
 class DeletePlace(webapp.RequestHandler):
     def get(self):

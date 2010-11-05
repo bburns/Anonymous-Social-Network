@@ -323,6 +323,7 @@ class Place(db.Model):
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
         model = Place
+	exclude = ['ratingAvg', 'refCount']
 
 
 class StudentPlace(db.Model):
