@@ -330,6 +330,8 @@ class StudentPlace(db.Model):
 class Game(db.Model):
     os = db.StringProperty()
     title = db.StringProperty()
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -348,6 +350,35 @@ class StudentGame(db.Model):
     game = db.ReferenceProperty(Game)
     rating = db.StringProperty()
     comment = db.TextProperty()
+    
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this book - sbs is a list of assoc objects, 
+        # each with a rating and comment. 
+        game = self.game
+        sgs = game.studentgame_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sg.rating) for sg in sgs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        game.ratingAvg = ratingAvg
+        game.refCount = n
+        game.put()
 
 
 
