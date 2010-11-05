@@ -274,6 +274,7 @@ class Paper(db.Model):
 class PaperForm(djangoforms.ModelForm):
     class Meta:
         model = Paper
+	exclude = ['ratingAvg', 'refCount']
 
 class StudentPaper(db.Model):
     student = db.ReferenceProperty(Student)

@@ -38,6 +38,7 @@ class StudentProfile(webapp.RequestHandler):
 		sc = StudentClass.all()
 		sp = StudentPlace.all()
 		si = StudentInternship.all()
+		spa = StudentPaper.all()
 		
 		s = Student.get_by_id(x['student_id'])
 		
@@ -60,6 +61,11 @@ class StudentProfile(webapp.RequestHandler):
 		sinternships = si.filter("student = ", s)
 		sinternships = sinternships.fetch(98988)
 		template['sinternships'] = sinternships
+
+		#Paper
+		spapers = spa.filter("student = ", s)
+		spapers = spapers.fetch(98988)
+		template['spapers'] = spapers
 		
 		doRender(self,"profile.html", template)
 	else:	 
@@ -370,7 +376,8 @@ class AddPaper(webapp.RequestHandler):
         if form.is_valid():
             #self.response.out.write("valid data")
             paper = form.save()
-            self.redirect('/paper/list')
+	    id = paper.key().id()
+            self.redirect('/paper/view?id=%d' %id)
         else:
             doRender(self,'paper/add.html', form)
 
@@ -399,6 +406,40 @@ class DeletePaper(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         paper = Paper.get_by_id(id).delete()
+        self.redirect("/paper/list")
+
+class ViewPaper(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        paper = Paper.get_by_id(id)
+        form = PaperForm(instance=paper)
+        assocs = paper.studentpaper_set
+        doRender(self,'paper/view.html',{'form':form,'paper':paper,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        paper_id = int(self.request.get('_id'))
+        paper = Paper.get_by_id(paper_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+        
+        # add the assocation object
+        assoc = StudentPaper()
+        assoc.student = student
+        assoc.paper = paper
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/paper/list")
 
 
@@ -678,6 +719,7 @@ _URLS = (
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
      ('/paper/delete', DeletePaper),
+     ('/paper/view', ViewPaper),
 
      ('/internship/list', ListInternship),
      ('/internship/view', ViewInternship),

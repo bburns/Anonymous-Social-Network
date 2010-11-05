@@ -59,6 +59,25 @@
 		</table>
 	</div>
 	<div id="tabs-3">
+	<table>
+		  <thead>
+		    <th>Paper Type</th>
+		    <th>Title</th>
+		    <th>Author</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for spaper in spapers%}
+		    <tr><td>{{spaper.paper.paper_category}}</td>
+		    <td>{{spaper.paper.title}}</td>
+		    <td>{{spaper.paper.author}}</td>
+		    <td>{{spaper.comment}}</td>
+		    <td>{{spaper.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
 		
 	</div>
 	<div id="tabs-4">
