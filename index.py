@@ -40,6 +40,7 @@ class StudentProfile(webapp.RequestHandler):
 		sp = StudentPlace.all()
 		si = StudentInternship.all()
 		spa = StudentPaper.all()
+		sg = StudentGame.all()
 		
 		s = Student.get_by_id(x['student_id'])
 		
@@ -67,6 +68,11 @@ class StudentProfile(webapp.RequestHandler):
 		spapers = spa.filter("student = ", s)
 		spapers = spapers.fetch(98988)
 		template['spapers'] = spapers
+
+		#Game
+		sgames = sg.filter("student = ", s)
+		sgames = sgames.fetch(98988)
+		template['sgames'] = sgames
 		
 		doRender(self,"profile.html", template)
 	else:	 

@@ -123,6 +123,23 @@
 		
 	</div>
 	<div id="tabs-6">
+	<table>
+	<thead>
+		    <th>Operating System</th>
+		    <th>Title</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for sgame in sgames%}
+		    <tr><td>{{sgame.game.os}}</td>
+		    <td>{{sgame.game.title}}</td>
+		    <td>{{sgame.comment}}</td>
+		    <td>{{sgame.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
 		
 	</div>
 </div>

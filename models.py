@@ -397,6 +397,7 @@ class Game(db.Model):
 class GameForm(djangoforms.ModelForm):
     class Meta:
         model = Game
+	exclude = ['ratingAvg', 'refCount']
 
 class StudentGame(db.Model):
     student = db.ReferenceProperty(Student)
