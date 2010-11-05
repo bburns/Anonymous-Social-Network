@@ -18,11 +18,13 @@ from google.appengine.ext.db import djangoforms
 
 # student validations
 def validate_email(email):
-    if not email:
-	raise db.BadValueError
-    regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
-    if re.match(regex, email) == None:
-	raise db.BadValueError("Invalid value entered. eg: email@email.com")
+#    if not email:
+#	raise db.BadValueError
+    if email: 
+	regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
+	#regex2 = "[a-zA-Z0-9]*"
+   	if re.match(regex, email) == None:
+		raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
 
 # rating valiation
 def validate_rating(val):
@@ -30,18 +32,18 @@ def validate_rating(val):
 	regex = "[0-9]*"
 	if re.match(regex, str(val)) == None:
 	    raise db.BadValueError("Invalid value entered. Rating must be an integer value")
-	elif val < 0 :
+	elif int(val) < 0 :
 	    raise db.BadValueError("Invalid value entered. Rating value cannot be negative")
-	elif val > 100 :
+	elif int(val) > 100 :
 	    raise db.BadValueError("Invalid value entered. Rating value cannot greater than 100")
 
 # class validations
+   
 def validate_course_num(val):
-    if not val:
-	raise db.BadValueError("This field is required.")
-    regex = "[A-Z]([A-Z]|\s){0,2}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
-    if re.match(regex, val) == None:
-        raise db.BadValueError("Invalid value entered. eg: CS 341, EE 316")
+    if val :    
+	regex = "[A-Z]([A-Z]|\s){0,3}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
+        if re.match(regex, val) == None:
+            raise db.BadValueError("Invalid value entered. eg: CS 341, EE 316")
 
 def validate_semester(semester):
     if semester :
@@ -129,6 +131,7 @@ class UserForm(djangoforms.ModelForm):
 
 #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
 class Class(db.Model):
+    #course_num = db.StringProperty(required = True, validator=validate_course_num)
     course_num = db.StringProperty(validator=validate_course_num)
     course_name = db.StringProperty()
     unique = db.StringProperty(validator=validate_unique)
@@ -142,6 +145,7 @@ class Class(db.Model):
     	results = q.fetch(837548)
     	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
     	return results[0:5]
+
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:

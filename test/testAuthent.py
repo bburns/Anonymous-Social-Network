@@ -33,10 +33,10 @@ class testAuthent (unittest.TestCase) :
 
     def testGetUser(self):
         user = User()
-        user.email = 'brian'
+        user.email = 'brian@google.com'
         user.put()
 
-        user2 = User.get_by_email('brian')
+        user2 = User.get_by_email('brian@google.com')
         #self.assert_(user == user2) # fails - why?
         self.assert_(user.email == user2.email)
 

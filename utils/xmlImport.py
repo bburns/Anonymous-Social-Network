@@ -45,15 +45,15 @@ def xmlImport(dom):
 
         #class tag handler
         for node in studentNode.getElementsByTagName('class'):
-
-            c = Class()
+	    
+	    c = Class()
             c.unique = getElementData(node, 'unique')
             c.course_num = getElementData(node, 'course_num')
             c.course_name = getElementData(node, 'course_name')
             c.semester = getElementData(node, 'semester')
             c.instructor = getElementData(node, 'instructor')
             c.put()
-
+            
 	    #create a studentClass association class
             sc = StudentClass()
             sc.student = s
@@ -62,6 +62,9 @@ def xmlImport(dom):
             sc.rating = getElementData(node, 'rating')
             sc.comment = getElementData(node, 'comment')
             sc.put()                    
+
+
+
         
         #books
         for node in studentNode.getElementsByTagName('book'):
@@ -207,9 +210,10 @@ def getElementData(node, tagname) :
     """
     #e = node.getElementsByTagName(tagname)[0].firstChild
     nodes = node.getElementsByTagName(tagname)
+
     if nodes:
         e = nodes[0].firstChild
-        if e is None:
+	if e is None:
             return ""
         else:
             return e.data

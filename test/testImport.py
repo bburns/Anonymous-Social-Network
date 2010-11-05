@@ -93,7 +93,7 @@ class testImport (unittest.TestCase) :
         # try importing a string
 
         self.dbClear()
-	xmlImportString('<students><student><class><unique>12345</unique> <course_name>AI</course_name><grade>A</grade><rating>93</rating><comment>cool</comment> </class></student></students>')
+	xmlImportString('<students><student><class><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment>cool</comment> </class></student></students>')
 	query = Student.all()
 	students = query.fetch(1)
 	student = students[0]
@@ -103,6 +103,7 @@ class testImport (unittest.TestCase) :
 	self.assert_(c.unique == "12345")
 	self.assert_(sc.grade == "A")
 	self.assert_(sc.rating == "93")
+	self.assert_(c.course_num == "CS 343")
 	self.assert_(sc.comment == "cool")
 
 
@@ -110,7 +111,7 @@ class testImport (unittest.TestCase) :
 
         self.dbClear()
 	#xmlImportFile('testImport.xml')
-	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique> <course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
+	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
 	query = Student.all()
 	students = query.fetch(1)
 	student = students[0]
