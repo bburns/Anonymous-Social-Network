@@ -37,6 +37,7 @@ class StudentProfile(webapp.RequestHandler):
 		sb = StudentBook.all()
 		sc = StudentClass.all()
 		sp = StudentPlace.all()
+		si = StudentInternship.all()
 		
 		s = Student.get_by_id(x['student_id'])
 		
@@ -54,6 +55,11 @@ class StudentProfile(webapp.RequestHandler):
 		splaces = sp.filter("student = ", s)
 		splaces = splaces.fetch(98988)
 		template['splaces'] = splaces
+
+		#Internship
+		sinternships = si.filter("student = ", s)
+		sinternships = sinternships.fetch(98988)
+		template['sinternships'] = sinternships
 		
 		doRender(self,"profile.html", template)
 	else:	 
