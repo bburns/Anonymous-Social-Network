@@ -1,0 +1,68 @@
+{% extends "../_base.html" %}
+{% block content %}
+<a href="/place/list">Back to place listings</a>
+<h2>View Place</h2>
+<table>
+  <tbody>
+  <tr><td>Place name: {{ place.place_name }}</td></tr>
+  <tr><td>Place type: {{ place.place_type }}</td></tr>
+  <tr><td>Location: {{ place.location }}</td></tr>
+  <tr><td>Semester: {{ place.semester }}</td></tr>
+  <tr><td>Rating: {{ place.ratingAvg }} out of 100 (from {{ place.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
+
+
+<table>
+  <thead>
+    <th>Rating</th>
+    <th>Comment</th>
+  </thead>
+  <tbody>
+  {% for assoc in assocs %}
+    <tr>
+      <td>{{ assoc.rating }}</td>
+      <td>{{ assoc.comment|escape|linebreaks }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% if username %}
+
+<div class="rating">
+
+<h3>Add your rating and comments for this place</h3>
+
+<form method="post" action="/place/view">
+  <table>
+  <tr>
+    <td><label for="id_rating">Rating:</label></td>
+    <td>
+      <select name="rating" id="id_rating">
+        <option value="0">0</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80">80</option>
+        <option value="90">90</option>
+        <option value="100">100</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label align="top" for="id_comment">Comment:</label></td>
+    <!--<td><input type="textarea" rows="4" name="comment" id="id_comment"/></td>   rows not working?-->
+    <td><textarea rows="4" name="comment" id="id_comment"></textarea></td>
+  </tr>
+  </table>
+  <input type="submit" value="Add Rating/Comment"/>
+  <input type="hidden" name="_id" value="{{ id }}"/>
+</form>
+</div>
+{% endif %}
+{% endblock %}
