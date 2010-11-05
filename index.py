@@ -10,12 +10,13 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext.db import djangoforms
 
 from utils.xmlExport import xmlExport
 from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
+
+from google.appengine.ext.db import djangoforms
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -89,7 +90,7 @@ class LoginHandler(webapp.RequestHandler):
             if user.student != None:
                 self.session['student_id'] = user.student.key().id()
             if user.isAdmin:
-                self.session['isAdmin'] = True
+                self.session['admin'] = True
             self.redirect('/')
         else:
             doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
@@ -108,12 +109,18 @@ class ImportData(webapp.RequestHandler):
         doRender(self,'import.html')
 
     def post(self):
-        xml_file = self.request.get('xml-file')
-        try:       
-          xmlImportString(xml_file)
-          self.redirect("/")
+        # xml_file = self.request.get('xml-file')
+        xml_string = self.request.get('xml-string')
+        # print self.request
+        try:
+            # if xml_file:
+                # xmlImportString(xml_file)
+            # else:
+                # xmlImportString(xml_string)
+            xmlImportString(xml_string)
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
+        self.redirect("/")
 
 
 class ExportData(webapp.RequestHandler):
@@ -162,7 +169,7 @@ class AddClass(webapp.RequestHandler):
 	        form.save()
         	self.redirect("/class/list")
 	else :
-		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please check the following and try again: '})
+		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
 		
 
 
@@ -221,18 +228,19 @@ class ViewBook(webapp.RequestHandler):
         book_id = int(self.request.get('_id'))
         book = Book.get_by_id(book_id)
 
-        rating = self.request.get('rating')
+        rating = self.request.get('rating') # 0-100
         comment = self.request.get('comment')
 
         #print student, book, rating, comment
-
+        
+        # add the assocation object
         assoc = StudentBook()
         assoc.student = student
         assoc.book = book
         assoc.rating = rating
         assoc.comment = comment
-        assoc.put()
-        
+        assoc.put() # this will update the average rating, etc
+
         self.redirect("/book/view?id=%d" % book_id)
         
 
@@ -241,41 +249,37 @@ class AddBook(webapp.RequestHandler):
         doRender(self,'book/add.html',{'form':BookForm()})
 
     def post(self):
-        data = BookForm(data=self.request.POST)
-        if data.is_valid():
-            book = data.save()
-            self.redirect('/book/list')
+        form = BookForm(data=self.request.POST)
+        if form.is_valid():
+            book = form.save()
+            id = book.key().id()
+            self.redirect('/book/view?id=%d' % id)
         else:
-            doRender(self,'book/add.html',{'form': data, 'error': 'ERROR: please check the following and try again'})
+            doRender(self,'book/add.html',{'form': form, 'error': 'ERROR: please check the following and try again'})
 
 class EditBook(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         book = Book.get_by_id(id)
-        doRender(self,'book/add.html',{'form':BookForm(instance=book),'id':id})
+        doRender(self,'book/edit.html',{'form':BookForm(instance=book),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
         book = Book.get_by_id(id)
-        data = BookForm(data=self.request.POST, instance=book)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            #entity.put()
-            self.redirect('/book/list')
+        form = BookForm(data=self.request.POST, instance=book)
+        if form.is_valid():
+            form.save
+            #self.redirect('/book/list')
+            self.redirect('/book/view?id=%d' % id)
         else:
-            doRender(self,'book/add.html',data)
+            doRender(self,'book/edit.html', form) # so presumably form acts as a dictionary...
 
 class DeleteBook(webapp.RequestHandler):
-    # def get(self):
-    #     id = int(self.request.get('id'))
-    #     book = Book.get_by_id(id)
-    #     book.delete()
-    #     self.redirect('/book/list')
-
+    
     def get(self):
         id = int(self.request.get('id'))
         book = Book.get_by_id(id)
-        doRender(self,'book/delete.html',{'book':book,'id':id})
+        doRender(self,'book/delete.html',{'book':book, 'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
@@ -297,13 +301,13 @@ class AddPaper(webapp.RequestHandler):
         doRender(self,'paper/add.html',{'form':PaperForm()})
 
     def post(self):
-        data = PaperForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            paper = data.save()
+        form = PaperForm(data=self.request.POST)
+        if form.is_valid():
+            #self.response.out.write("valid data")
+            paper = form.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html', data)
+            doRender(self,'paper/add.html', form)
 
 class EditPaper(webapp.RequestHandler):
     def get(self):
@@ -314,12 +318,12 @@ class EditPaper(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         paper = Paper.get_by_id(id)
-        data = PaperForm(data=self.request.POST, instance=paper)
-        if data.is_valid():
-            paper = data.save()
+        form = PaperForm(data=self.request.POST, instance=paper)
+        if form.is_valid():
+            paper = form.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html', data)
+            doRender(self,'paper/add.html', form)
 
 class DeletePaper(webapp.RequestHandler):
     def get(self):
@@ -345,14 +349,12 @@ class AddPlace(webapp.RequestHandler):
         doRender(self,'place/add.html',{'form':PlaceForm()})
 
     def post(self):
-        data = PlaceForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            place = data.save() #(commit=False)
-            place.put()
+        form = PlaceForm(data=self.request.POST)
+        if form.is_valid():
+            place = data.save()
             self.redirect('/place/list')
         else:
-            doRender(self,'place/add.html',{'form':data, 'error':'ERROR: please check the following and try again'})
+            doRender(self,'place/add.html',{'form':form, 'error':'ERROR: please check the following and try again'})
 
 class EditPlace(webapp.RequestHandler):
     def get(self):
@@ -363,13 +365,45 @@ class EditPlace(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         place = Place.get_by_id(id)
-        data = PlaceForm(data=self.request.POST, instance=place)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+        form = PlaceForm(data=self.request.POST, instance=place)
+        if form.is_valid():
+            entity = form.save()
             self.redirect('/place/list')
         else:
-            doRender(self,'place/add.html',data)
+            doRender(self,'place/add.html', form)
+
+class ViewPlace(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        place = Place.get_by_id(id)
+        form = PlaceForm(instance=place)
+        assocs = place.studentplace_set
+        doRender(self,'place/view.html',{'form':form,'place':place,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        place_id = int(self.request.get('_id'))
+        place = Place.get_by_id(place_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, place, rating, comment
+        
+        # add the assocation object
+        assoc = StudentPlace()
+        assoc.student = student
+        assoc.place = place
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        self.redirect("/place/view?id=%d" % place_id)
 
 class DeletePlace(webapp.RequestHandler):
     def get(self):
@@ -382,42 +416,76 @@ class DeletePlace(webapp.RequestHandler):
         place = Place.get_by_id(id).delete()
         self.redirect("/place/list")
 
-#Internship
+
+# Internship
 class ListInternship(webapp.RequestHandler):
     def get(self):
         internships = Internship.all()
         doRender(self,'internship/list.html',{'internships':internships})
+
+
+
+class ViewInternship(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        internship = Internship.get_by_id(id)
+        form = InternshipForm(instance=internship)
+        assocs = internship.studentinternship_set
+        doRender(self,'internship/view.html',{'form':form,'internship':internship,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        internship_id = int(self.request.get('_id'))
+        internship = Internship.get_by_id(internship_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        # add the assocation object
+        assoc = StudentInternship()
+        assoc.student = student
+        assoc.internship = internship
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/internship/view?id=%d" % internship_id)
+        self.redirect("/internship/list")
+
 
 class AddInternship(webapp.RequestHandler):
     def get(self):
         doRender(self,'internship/add.html',{'form':InternshipForm()})
 
     def post(self):
-        data = InternshipForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            internship = data.save() #(commit=False)
-            internship.put()
-            self.redirect('/internship/list')
+        form = InternshipForm(data=self.request.POST)
+        if form.is_valid():
+            internship = form.save()
+            id = internship.key().id()
+            self.redirect('/internship/view?id=%d' % id)
         else:
-            doRender(self,'internship/add.html',data)
+            doRender(self,'internship/add.html',form)
 
 class EditInternship(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         internship = Internship.get_by_id(id)
-        doRender(self,'internship/add.html',{'form':InternshipForm(instance=internship),'id':id})
+        doRender(self,'internship/edit.html',{'form':InternshipForm(instance=internship),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
-        data = InternshipForm(data=self.request.POST, instance=internship)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
-            self.redirect('/internship/list')
+        form = InternshipForm(data=self.request.POST, instance=internship)
+        if form.is_valid():
+            form.save()
+            #self.redirect('/internship/list')
+            self.redirect('/internship/view?id=%d' % id)
         else:
-            doRender(self,'internship/add.html',data)
+            doRender(self,'internship/edit.html', form)
 
 class DeleteInternship(webapp.RequestHandler):
     def get(self):
@@ -427,7 +495,8 @@ class DeleteInternship(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        internship = Internship.get_by_id(id).delete()
+        internship = Internship.get_by_id(id)
+        internship.delete()
         self.redirect("/internship/list")
 
 #Game
@@ -441,14 +510,12 @@ class AddGame(webapp.RequestHandler):
         doRender(self,'game/add.html',{'form':GameForm()})
 
     def post(self):
-        data = GameForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            game = data.save() #(commit=False)
-            game.put()
-            self.redirect('/game/list')
+        form = GameForm(data=self.request.POST)
+        if form.is_valid():
+            game = form.save()
+            self.redirect('/game/view?id=%d' % game.key().id())
         else:
-            doRender(self,'game/add.html',data)
+            doRender(self,'game/add.html', form)
 
 class EditGame(webapp.RequestHandler):
     def get(self):
@@ -459,13 +526,45 @@ class EditGame(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         game = Game.get_by_id(id)
-        data = GameForm(data=self.request.POST, instance=game)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+        form = GameForm(data=self.request.POST, instance=game)
+        if form.is_valid():
+            entity = form.save()
             self.redirect('/game/list')
         else:
-            doRender(self,'game/add.html',data)
+            doRender(self,'game/add.html', form)
+
+class ViewGame(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        game = Game.get_by_id(id)
+        form = GameForm(instance=game)
+        assocs = game.studentgame_set
+        doRender(self,'game/view.html',{'form':form,'game':game,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        game_id = int(self.request.get('_id'))
+        game = Game.get_by_id(game_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, place, rating, comment
+        
+        # add the assocation object
+        assoc = StudentGame()
+        assoc.student = student
+        assoc.game = game
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        self.redirect("/game/list")
 
 class DeleteGame(webapp.RequestHandler):
     def get(self):
@@ -547,6 +646,7 @@ _URLS = (
      ('/paper/delete', DeletePaper),
 
      ('/internship/list', ListInternship),
+     ('/internship/view', ViewInternship),
      ('/internship/add', AddInternship),
      ('/internship/edit', EditInternship),
      ('/internship/delete', DeleteInternship),
@@ -555,11 +655,13 @@ _URLS = (
      ('/place/add', AddPlace),
      ('/place/edit', EditPlace),
      ('/place/delete', DeletePlace),
+     ('/place/view', ViewPlace),
 
      ('/game/list', ListGame),
      ('/game/add', AddGame),
      ('/game/edit', EditGame),
      ('/game/delete', DeleteGame),
+     ('/game/view', ViewGame),
      )
 
 

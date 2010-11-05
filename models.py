@@ -1,3 +1,10 @@
+"""
+models.py
+Defines all the appengine model classes, with validation functions,
+and associated Django form classes. 
+"""
+
+
 import string
 import random
 import re
@@ -5,8 +12,6 @@ import re
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
-
-
 
 
 
@@ -46,11 +51,13 @@ def validate_course_num(val):
             raise db.BadValueError("Invalid value entered. eg: CS 341, EE 316")
 
 def validate_semester(semester):
-    if semester :
-	regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
-	if re.match(regex, semester) == None:
-	   raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
-
+    # if semester :
+	# regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
+	# if re.match(regex, semester) == None:
+        # print semester
+	   # raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
+    pass
+    
 def validate_unique(unique):
     if unique :
 	regex = "[0-9]{5}"
@@ -79,25 +86,23 @@ class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python
     password = db.StringProperty()
 
-    #. init - generate random password
-
-    # for phase 2
-    def addBook(self, title, author='', isbn='', rating=None, comment=''):
-        """
-        Add the given book as a related object for this student. 
-        Creates the book if it can't find it in the database.
-        """
-        sb = StudentBook()
-        sb.student = self
-        sb.book = findAddBook(title, author, isbn)
-        sb.rating = rating
-        sb.comment = comment
-        sb.put()
-
     def generateID(self):
         random.seed(8)
         d = [random.choice(string.letters + string.digits) for x in xrange(8)]
         self.id_ = "".join(d)
+
+    # for phase 3?
+    # def addBook(self, title, author='', isbn='', rating=None, comment=''):
+        # """
+        # Add the given book as a related object for this student. 
+        # Creates the book if it can't find it in the database.
+        # """
+        # sb = StudentBook()
+        # sb.student = self
+        # sb.book = findAddBook(title, author, isbn)
+        # sb.rating = rating
+        # sb.comment = comment
+        # sb.put()
 
 
 class User(db.Model):
@@ -130,6 +135,8 @@ class UserForm(djangoforms.ModelForm):
 		
 
 #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
+#. or maybe just put semester and unique into the association class,
+# so coursenum,name and instructor all get rated together
 class Class(db.Model):
     #course_num = db.StringProperty(required = True, validator=validate_course_num)
     course_num = db.StringProperty(validator=validate_course_num)
@@ -198,18 +205,25 @@ class StudentBook(db.Model):
     comment = db.TextProperty()
 
     def put(self):
-        db.Model.put(self) # call superclass
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
         
-        # now update avg and count properties for book.
-        book = self.book
+        # call superclass
+        db.Model.put(self) 
         
-        # get all the refs to this book - this is a list of assoc objects,
+        # get all the refs to this book - sbs is a list of assoc objects, 
         # each with a rating and comment. 
+        book = self.book
         sbs = book.studentbook_set
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
-        #. also could do scaling here - eg convert to 0-5?
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(sb.rating) for sb in sbs]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
@@ -244,10 +258,13 @@ class StudentPaper(db.Model):
     rating = db.StringProperty()
     comment = db.TextProperty()
 
+
 class Internship(db.Model):
     place_name = db.StringProperty()
     location = db.StringProperty()
     semester = db.StringProperty()
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
     @staticmethod
@@ -260,6 +277,7 @@ class Internship(db.Model):
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
         model = Internship
+        exclude = ['ratingAvg', 'refCount']
 
 class StudentInternship(db.Model):
     student = db.ReferenceProperty(Student)
@@ -267,11 +285,26 @@ class StudentInternship(db.Model):
     rating = db.StringProperty()
     comment = db.TextProperty()
 
+    def put(self):
+        db.Model.put(self) # call superclass
+        internship = self.internship
+        assocs = internship.studentinternship_set
+        ratings = [int(assoc.rating) for assoc in assocs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        internship.ratingAvg = ratingAvg
+        internship.refCount = n
+        internship.put()
+
+
+
 class Place(db.Model):
     place_type = db.StringProperty(choices = ["study_place", "live_place", "eat_place", "fun_place"])
     place_name = db.StringProperty()
     location = db.StringProperty()
     semester = db.StringProperty(validator=validate_semester)
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -291,10 +324,42 @@ class StudentPlace(db.Model):
     place = db.ReferenceProperty(Place)
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
+    
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this book - sbs is a list of assoc objects, 
+        # each with a rating and comment. 
+        place = self.place
+        sps = place.studentplace_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sp.rating) for sp in sps]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        place.ratingAvg = ratingAvg
+        place.refCount = n
+        place.put()
+
 
 class Game(db.Model):
     os = db.StringProperty()
     title = db.StringProperty()
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -313,30 +378,59 @@ class StudentGame(db.Model):
     game = db.ReferenceProperty(Game)
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
+    
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this book - sbs is a list of assoc objects, 
+        # each with a rating and comment. 
+        game = self.game
+        sgs = game.studentgame_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sg.rating) for sg in sgs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        game.ratingAvg = ratingAvg
+        game.refCount = n
+        game.put()
 
 
 
-def findAddBook(title, author='', isbn=''):
-    """
-    Find and return the given book, or create and add it to the database.
-    Returns the book object.
-    """
-    # may use in phase 2
-    #. though see get_or_insert - does something similar
+# def findAddBook(title, author='', isbn=''):
+    # """
+    # Find and return the given book, or create and add it to the database.
+    # Returns the book object.
+    # """
+    # # may use in phase 3?
+    # # . though see get_or_insert - does something similar
 
-    q = Book.all()
-    q.filter("title = ", title)
-    # q.filter("author = ", author)
-    # q.filter("isbn = ", isbn)
+    # q = Book.all()
+    # q.filter("title = ", title)
+    # # q.filter("author = ", author)
+    # # q.filter("isbn = ", isbn)
 
-    results = q.fetch(1)
-    if results:
-        book = results[0]
-    else:
-        book = Book()
-        book.title = title
-        book.author = author
-        book.isbn = isbn
-        book.put()
+    # results = q.fetch(1)
+    # if results:
+        # book = results[0]
+    # else:
+        # book = Book()
+        # book.title = title
+        # book.author = author
+        # book.isbn = isbn
+        # book.put()
 
-    return book
+    # return book

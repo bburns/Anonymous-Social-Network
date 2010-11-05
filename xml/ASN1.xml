@@ -285,7 +285,10 @@
 		<title>Artificial Intelligence: A Modern Approach</title>
 		<author>Stuart Russell and Peter Norvig</author>
 		<rating>95</rating>
-		<comment></comment>
+		<comment>[review stolen from amazon]
+    I didn't think that the first edition of this book was as bad as some of the reviewers said, but the second edition is definitely a vast improvement. It's not just some obligatory 2nd edition that some authors release to say that they are staying actively published. The first edition was somewhat confusing in its explanations and the exercises were really blurry on what was being asked. All of that has now been resolved.
+    
+The book is a comprehensive and insightful introduction to artificial intelligence with an academic tone. It provides a unified view of the field organized around the rational decision making paradigm, which focuses on the selection of the "best" solution to a problem. The book's overall theme is that the purpose of AI is to solve problems via intelligent agents, and then goes about specifying the features such an agent or agents should have. Pseudocode is provided for all of the major AI algorithms. Being about the broadest book in terms of coverage of AI, you should therefore not expect it to be the deepest in coverage. </comment>
 	</book>
 	<paper>
 		<paper_category>journal</paper_category>

@@ -17,8 +17,10 @@
       <td>{{place.place_name}}</td>
       <td>{{place.location}}</td>
       <td>{{place.semester}}</td>
-      <td><a href='/place/edit?id={{place.key.id}}'>Edit</a> |
-          <a href='/place/delete?id={{place.key.id}}'>Delete</a></td>
+      <td>
+          <a href="/place/view?id={{ place.key.id }}">View</a> |
+          <a href='/place/edit?id={{ place.key.id }}'>Edit</a> |
+          <a href='/place/delete?id={{ place.key.id }}'>Delete</a></td>
     </tr>
   {% endfor %}
 </table>

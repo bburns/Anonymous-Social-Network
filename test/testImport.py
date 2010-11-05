@@ -27,9 +27,9 @@ class testImport (unittest.TestCase) :
     #. move this to utils
     def dbClear(self):
         "A helper method to clear the database"
-        # query = Student.all()
-        # db.delete(query)    
 
+        # clear ALL the tables
+        # this adds roughly a tenth of a second per test
         # you actually have to clear the association tables also -
         # even if you delete all the related objects, the association objects
         # are still there!
@@ -41,10 +41,35 @@ class testImport (unittest.TestCase) :
             db.delete(query)
 
 
+    def testDbClear(self):
+        # make sure the db is actually getting cleared
+        self.dbClear()
+        student = Student()
+        student.id_ = "12345"
+        student.put()
+        book = Book()
+        book.title = 'hobbit'
+        book.put()
+        sb = StudentBook()
+        sb.student = student
+        sb.book = book
+        sb.rating = "92"
+        sb.put()
+        self.assert_(sb.book.title == 'hobbit')
+        self.assert_(student.studentbook_set[0].book.title == 'hobbit')
+        self.dbClear()
+        books = Book.all()
+        books = books.fetch(9)
+        self.assert_(len(books)==0)
+        sbs = StudentBook.all()
+        sbs = sbs.fetch(9)
+        self.assert_(len(sbs)==0)
+
+
     def testImportStudent(self):
 
         self.dbClear()
-        xmlImportString("<students><student><id>12345678</id><password>brian</password></student> </students>")
+        xmlImportString("<students><student><id>12345678</id><password>brian</password> </student></students>")
         query = Student.all()
         students = query.fetch(999)
         s = students[0]
@@ -61,6 +86,9 @@ class testImport (unittest.TestCase) :
         self.assert_(len(students) == 0)
 
 
+    # do some tests with line feeds between elements, because it actually changes the dom structure!!
+
+
     #. fails - need to catch exception?
     # def testImportNothing2(self):
     #     self.dbClear()
@@ -73,7 +101,45 @@ class testImport (unittest.TestCase) :
     def testImportStudentClass(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN1.xml')
+        xmlImportString("""
+<students>
+	<student>
+		<id>bkornfue</id>
+		<password>ben</password>
+		<class>
+			<unique>52540</unique>
+			<course_num>CS 373</course_num>
+			<course_name>Software Engineering</course_name>
+			<semester>Fall 2010</semester>
+			<instructor>Downing</instructor>
+			<rating>95</rating>
+			<comment>There were many new concepts</comment>
+			<grade></grade>
+		</class>
+		<class>
+			<unique>52568</unique>
+			<course_num>M340</course_num>
+			<course_name>Linear Algebra</course_name>
+			<semester>Fall 2010</semester>
+			<instructor>Lam</instructor>
+			<rating>55</rating>
+			<comment></comment>
+			<grade></grade>
+		</class>
+		<class>
+			<unique>52485</unique>
+			<course_num>CS 341</course_num>
+			<course_name>Automata Theory</course_name>
+			<semester>Fall 2010</semester>
+			<instructor>Rich</instructor>
+			<rating>80</rating>
+			<comment>Not fun</comment>
+			<grade></grade>
+		</class>
+</student>
+</students>
+""")
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]
@@ -89,7 +155,7 @@ class testImport (unittest.TestCase) :
 	self.assert_(c2.course_name == "Linear Algebra")
 
     
-    def testImportStudentClass3(self) :
+    def testImportStudentClass2(self) :
         # try importing a string
 
         self.dbClear()
@@ -107,7 +173,7 @@ class testImport (unittest.TestCase) :
 	self.assert_(sc.comment == "cool")
 
 
-    def testImportStudentClass2(self) :
+    def testImportStudentClass3(self) :
 
         # http://localhost:8080/test?format=plain&name=testImport.testImport.testImportStudentClass2
         self.dbClear()
@@ -130,7 +196,60 @@ class testImport (unittest.TestCase) :
     def testImportStudentBook(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN1.xml')
+	xmlImportString("""
+<students>
+	<student>
+		<id>bkornfue</id>
+		<password>ben</password>
+		<class>
+			<unique>52540</unique>
+			<course_num>CS 373</course_num>
+			<course_name>Software Engineering</course_name>
+			<semester>Fall 2010</semester>
+			<instructor>Downing</instructor>
+			<rating>95</rating>
+			<comment>There were many new concepts</comment>
+			<grade></grade>
+		</class>
+		<book>
+			<isbn>4356745290</isbn>
+			<title>Automata, Complexity, and Computability</title>
+			<author>Elaine Rich</author>
+			<rating>97</rating>
+			<comment>Long</comment>
+		</book>
+		<book>
+			<isbn>0679736646</isbn>
+			<title>Test</title>
+			<author>Ben Kornfuehrer</author>
+			<rating>90</rating>
+			<comment></comment>
+		</book>
+		<book>
+			<isbn>2398476354098</isbn>
+			<title>The Big Bang Theory</title>
+			<author>Albert Einstein</author>
+			<rating>95</rating>
+			<comment></comment>
+		</book>
+		<paper>
+			<paper_category>conference</paper_category>
+			<title>Cognitive Architectures: Research Issues and Challenges</title>
+			<author>Pat Langley, John E. Laird, and Seth Rogers</author>
+			<rating>67</rating>
+			<comment>2009. Gives a detailed overview of cognitive architectures.</comment>
+		</paper>
+		<game>
+			<os>Any</os>
+			<title>Call of Duty: Modern Warfare</title>
+			<rating>5</rating>
+			<comment>It's a crime to be this good</comment>
+		</game>
+   </student>
+</students>
+""")
+
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -157,14 +276,49 @@ class testImport (unittest.TestCase) :
     def testImportStudentBook2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN1.xml')
+        xmlImportString("""
+<students>
+   <student><id>12345678</id><password>foo</password></student>
+   <student>
+	<id>73162312</id>
+	<password>brian</password>
+	<book>
+		<isbn>0679734465</isbn>
+		<title>Valis</title>
+		<author>Philip K. Dick</author>
+		<rating>95</rating>
+		<comment>crazy</comment>
+	</book>
+	<book>
+		<isbn>0679736646</isbn>
+		<title>Ubik</title>
+		<author>Philip K. Dick</author>
+		<rating>90</rating>
+		<comment></comment>
+	</book>
+	<book>
+		<isbn>0136042597</isbn>
+		<title>Artificial Intelligence: A Modern Approach</title>
+		<author>Stuart Russell and Peter Norvig</author>
+		<rating>95</rating>
+		<comment></comment>
+	</book>
+	<game>
+		<os>Apple II</os>
+		<title>Ultima I</title>
+		<rating>95</rating>
+		<comment>I loved this game as a kid.</comment>
+	</game>
+    </student>
+</students>
+""")
 	query = Student.all()
 	students = query.fetch(5)
-	student = students[1]	
+	student = students[1]
 	sblist = student.studentbook_set.fetch(9857437)
 	
-	#test 1 Book		
-	
+	# test 1 Book	
 	sb = sblist[0]
 	b = sb.book
 	self.assert_(sb.rating == "95")
@@ -173,8 +327,7 @@ class testImport (unittest.TestCase) :
 	self.assert_(b.title == "Valis", b.title)
 	self.assert_(b.author == "Philip K. Dick")
 	
-	#test 2 books
-
+	# test 2 books
 	sb = sblist[1]
 	b = sb.book
 	self.assert_(sb.rating == "90")
@@ -186,7 +339,48 @@ class testImport (unittest.TestCase) :
     def testImportStudentPaper(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN1.xml')
+        xmlImportString("""
+<students>
+	<student>
+		<id>bkornfue</id>
+		<password>ben</password>
+		<book>
+			<isbn>2398476354098</isbn>
+			<title>The Big Bang Theory</title>
+			<author>Albert Einstein</author>
+			<rating>95</rating>
+			<comment></comment>
+		</book>
+		<paper>
+			<paper_category>conference</paper_category>
+			<title>Cognitive Architectures: Research Issues and Challenges</title>
+			<author>Pat Langley, John E. Laird, and Seth Rogers</author>
+			<rating>67</rating>
+			<comment>2009. Gives a detailed overview of cognitive architectures.</comment>
+		</paper>
+		<paper>
+			<paper_category>journal</paper_category>
+			<title>The 1980 ACM Turing Award Lecture</title>
+			<author>C.A.R. (Tony) Hoare</author>
+			<rating>92</rating>
+			<comment>Interesting talk about his experience designing languages</comment>
+		</paper>
+		<paper>
+			<paper_category>journal</paper_category>
+			<title>The Evolution of Lisp</title>
+			<author>Guy L. Steele, Jr. and Richard P. Gabriel</author>
+			<rating>90</rating>
+			<comment>ACM 1993</comment>
+		</paper>
+		<!--
+		    live_place
+		    eat_place
+		    fun_place
+		    -->
+   </student>
+</students>
+""")
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -221,10 +415,33 @@ class testImport (unittest.TestCase) :
     def testImportStudentPaper2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN1.xml')
+        xmlImportString("""
+<students>
+    <student>
+        <id>bhujkiop</id>
+        <password>jonathan</password>
+        <book>
+            <isbn>0136042597</isbn>
+            <title>Artificial Intelligence: A Modern Approach</title>
+            <author>Norvig</author>
+            <rating>76</rating>
+            <comment></comment>
+        </book>
+        <paper>
+            <paper_category>journal</paper_category>
+            <title>The New Product Development Game</title>
+            <author>Hirotaka Takeuchi and Ikujiro Nanaka</author>
+            <rating>83</rating>
+            <comment></comment>
+        </paper>
+</student>
+</students>
+""")
+
 	query = Student.all()
 	students = query.fetch(5)
-	student = students[2]	
+	student = students[0]
 	splist = student.studentpaper_set.fetch(9857437)
 	
 	#test 1 Paper	
@@ -235,6 +452,7 @@ class testImport (unittest.TestCase) :
 	self.assert_(p.paper_category == "journal")
 	self.assert_(p.title == "The New Product Development Game")
 	self.assert_(p.author == "Hirotaka Takeuchi and Ikujiro Nanaka")
+
 
     def testImportStudentInternship(self) :
 

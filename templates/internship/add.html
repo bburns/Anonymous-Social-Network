@@ -1,15 +1,17 @@
 {% extends "../_base.html" %}
 {% block content %}
 
+<a href="/internship/list">Back to internship listings</a>
+
 {% if error %}
 <div class="error">
 {{ error }}
 </div>
 {% endif %}
 
-<h3>Please complete the following form to add an internship.</h3>
+<h2>Please complete the following form to add an internship.</h2>
 
-<form method="post" action={% if id %}"/internship/edit"{%else %}"/internship/add"{%endif%} >
+<form method="post" action="/internship/add" >
   <table>
   {{ form.as_table }}
   </table>
