@@ -24,59 +24,58 @@ from google.appengine.ext.db import djangoforms
 # student validations
 def validate_email(email):
 #    if not email:
-#	raise db.BadValueError
+#       raise db.BadValueError
     if email: 
-	regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
-	#regex2 = "[a-zA-Z0-9]*"
-   	if re.match(regex, email) == None:
-		raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
+        regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
+        #regex2 = "[a-zA-Z0-9]*"
+        if re.match(regex, email) == None:
+                raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
 
 # rating valiation
 def validate_rating(val):
     if val:
-	regex = "[0-9]*"
-	if re.match(regex, str(val)) == None:
-	    raise db.BadValueError("Invalid value entered. Rating must be an integer value")
-	elif int(val) < 0 :
-	    raise db.BadValueError("Invalid value entered. Rating value cannot be negative")
-	elif int(val) > 100 :
-	    raise db.BadValueError("Invalid value entered. Rating value cannot greater than 100")
+        regex = "[0-9]*"
+        if re.match(regex, str(val)) == None:
+            raise db.BadValueError("Invalid value entered. Rating must be an integer value")
+        elif int(val) < 0 :
+            raise db.BadValueError("Invalid value entered. Rating value cannot be negative")
+        elif int(val) > 100 :
+            raise db.BadValueError("Invalid value entered. Rating value cannot greater than 100")
 
 # class validations
    
 def validate_course_num(val):
     if val :    
-	regex = "[A-Z]([A-Z]|\s){0,3}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
+        regex = "[A-Z]([A-Z]|\s){0,3}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
         if re.match(regex, val) == None:
             raise db.BadValueError("Invalid value entered. eg: CS 341, EE 316")
 
 def validate_semester(semester):
-    # if semester :
-	# regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
-	# if re.match(regex, semester) == None:
-        # print semester
-	   # raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
-    pass
+    if semester :
+        regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
+        if re.match(regex, semester) == None:
+            raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
     
 def validate_unique(unique):
     if unique :
-	regex = "[0-9]{5}"
-	if re.match(regex, unique) == None:
-	   raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only")
+        regex = "[0-9]{5}"
+        if re.match(regex, unique) == None:
+           raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only")
 
 def validate_grade(val):
     if val:
-	regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
-	if re.match(regex, val) == None:
-		raise db.BadValueError
+        regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
+        if re.match(regex, val) == None:
+                raise db.BadValueError
 
 # book validations
 
 def validate_isbn(val):
     if val:
-    	regex = "\S{8}"
-   	if re.match(regex, val)== None:
-		raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
+        regex = "\S{8}"
+        if re.match(regex, val)== None:
+                raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
+
 
 
 
@@ -132,7 +131,7 @@ class UserForm(djangoforms.ModelForm):
         model = User
         exclude = ['isAdmin','student']
 
-		
+                
 
 #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
 #. or maybe just put semester and unique into the association class,
@@ -148,10 +147,10 @@ class Class(db.Model):
   
     @staticmethod
     def get_by_date(limit = 5):
-    	q = db.Query(Class)
-    	results = q.fetch(837548)
-    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-    	return results[0:5]
+        q = db.Query(Class)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
     def put(self):
         "Override this so we can catch required fields"
@@ -187,10 +186,10 @@ class Book(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-    	q = db.Query(Book)
-    	results = q.fetch(837548)
-    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-    	return results[0:5]
+        q = db.Query(Book)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
 
 class BookForm(djangoforms.ModelForm):
@@ -243,10 +242,10 @@ class Paper(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-    	q = db.Query(Paper)
-    	results = q.fetch(837548)
-    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-    	return results[0:5]
+        q = db.Query(Paper)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
 class PaperForm(djangoforms.ModelForm):
     class Meta:
@@ -262,17 +261,17 @@ class StudentPaper(db.Model):
 class Internship(db.Model):
     place_name = db.StringProperty()
     location = db.StringProperty()
-    semester = db.StringProperty()
+    semester = db.StringProperty(validator=validate_semester)
     ratingAvg = db.IntegerProperty() # 0 to 100
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
     @staticmethod
     def get_by_date(limit = 5):
-    	q = db.Query(Internship)
-    	results = q.fetch(837548)
-    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-    	return results[0:5]
+        q = db.Query(Internship)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
@@ -309,10 +308,10 @@ class Place(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-    	q = db.Query(Place)
-    	results = q.fetch(837548)
-    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-    	return results[0:5]
+        q = db.Query(Place)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
@@ -364,10 +363,10 @@ class Game(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-    	q = db.Query(Game)
-    	results = q.fetch(837548)
-    	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-    	return results[0:5]
+        q = db.Query(Game)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
 class GameForm(djangoforms.ModelForm):
     class Meta:
