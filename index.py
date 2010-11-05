@@ -89,7 +89,7 @@ class LoginHandler(webapp.RequestHandler):
             if user.student != None:
                 self.session['student_id'] = user.student.key().id()
             if user.isAdmin:
-                self.session['isAdmin'] = True
+                self.session['admin'] = True
             self.redirect('/')
         else:
             doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
@@ -108,12 +108,18 @@ class ImportData(webapp.RequestHandler):
         doRender(self,'import.html')
 
     def post(self):
-        xml_file = self.request.get('xml-file')
-        try:       
-          xmlImportString(xml_file)
-          self.redirect("/")
+        # xml_file = self.request.get('xml-file')
+        xml_string = self.request.get('xml-string')
+        # print self.request
+        try:
+            # if xml_file:
+                # xmlImportString(xml_file)
+            # else:
+                # xmlImportString(xml_string)
+            xmlImportString(xml_string)
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
+        self.redirect("/")
 
 
 class ExportData(webapp.RequestHandler):
@@ -221,18 +227,19 @@ class ViewBook(webapp.RequestHandler):
         book_id = int(self.request.get('_id'))
         book = Book.get_by_id(book_id)
 
-        rating = self.request.get('rating')
+        rating = self.request.get('rating') # 0-100
         comment = self.request.get('comment')
 
         #print student, book, rating, comment
-
+        
+        # add the assocation object
         assoc = StudentBook()
         assoc.student = student
         assoc.book = book
         assoc.rating = rating
         assoc.comment = comment
-        assoc.put()
-        
+        assoc.put() # this will update the average rating, etc
+
         self.redirect("/book/view?id=%d" % book_id)
         
 
@@ -241,41 +248,37 @@ class AddBook(webapp.RequestHandler):
         doRender(self,'book/add.html',{'form':BookForm()})
 
     def post(self):
-        data = BookForm(data=self.request.POST)
-        if data.is_valid():
-            book = data.save()
-            self.redirect('/book/list')
+        form = BookForm(data=self.request.POST)
+        if form.is_valid():
+            book = form.save()
+            id = book.key().id()
+            self.redirect('/book/view?id=%d' % id)
         else:
-            doRender(self,'book/add.html',data)
+            doRender(self,'book/add.html', form)
 
 class EditBook(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         book = Book.get_by_id(id)
-        doRender(self,'book/add.html',{'form':BookForm(instance=book),'id':id})
+        doRender(self,'book/edit.html',{'form':BookForm(instance=book),'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
         book = Book.get_by_id(id)
-        data = BookForm(data=self.request.POST, instance=book)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            #entity.put()
-            self.redirect('/book/list')
+        form = BookForm(data=self.request.POST, instance=book)
+        if form.is_valid():
+            form.save
+            #self.redirect('/book/list')
+            self.redirect('/book/view?id=%d' % id)
         else:
-            doRender(self,'book/add.html',data)
+            doRender(self,'book/edit.html', form) # so presumably form acts as a dictionary...
 
 class DeleteBook(webapp.RequestHandler):
-    # def get(self):
-    #     id = int(self.request.get('id'))
-    #     book = Book.get_by_id(id)
-    #     book.delete()
-    #     self.redirect('/book/list')
-
+    
     def get(self):
         id = int(self.request.get('id'))
         book = Book.get_by_id(id)
-        doRender(self,'book/delete.html',{'book':book,'id':id})
+        doRender(self,'book/delete.html',{'book':book, 'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
@@ -297,13 +300,13 @@ class AddPaper(webapp.RequestHandler):
         doRender(self,'paper/add.html',{'form':PaperForm()})
 
     def post(self):
-        data = PaperForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            paper = data.save()
+        form = PaperForm(data=self.request.POST)
+        if form.is_valid():
+            #self.response.out.write("valid data")
+            paper = form.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html', data)
+            doRender(self,'paper/add.html', form)
 
 class EditPaper(webapp.RequestHandler):
     def get(self):
@@ -314,12 +317,12 @@ class EditPaper(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         paper = Paper.get_by_id(id)
-        data = PaperForm(data=self.request.POST, instance=paper)
-        if data.is_valid():
-            paper = data.save()
+        form = PaperForm(data=self.request.POST, instance=paper)
+        if form.is_valid():
+            paper = form.save()
             self.redirect('/paper/list')
         else:
-            doRender(self,'paper/add.html', data)
+            doRender(self,'paper/add.html', form)
 
 class DeletePaper(webapp.RequestHandler):
     def get(self):
@@ -345,14 +348,12 @@ class AddPlace(webapp.RequestHandler):
         doRender(self,'place/add.html',{'form':PlaceForm()})
 
     def post(self):
-        data = PlaceForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            place = data.save() #(commit=False)
-            place.put()
+        form = PlaceForm(data=self.request.POST)
+        if form.is_valid():
+            place = data.save()
             self.redirect('/place/list')
         else:
-            doRender(self,'place/add.html',data)
+            doRender(self,'place/add.html', form)
 
 class EditPlace(webapp.RequestHandler):
     def get(self):
@@ -363,13 +364,12 @@ class EditPlace(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         place = Place.get_by_id(id)
-        data = PlaceForm(data=self.request.POST, instance=place)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+        form = PlaceForm(data=self.request.POST, instance=place)
+        if form.is_valid():
+            entity = form.save()
             self.redirect('/place/list')
         else:
-            doRender(self,'place/add.html',data)
+            doRender(self,'place/add.html', form)
 
 class DeletePlace(webapp.RequestHandler):
     def get(self):
@@ -393,14 +393,12 @@ class AddInternship(webapp.RequestHandler):
         doRender(self,'internship/add.html',{'form':InternshipForm()})
 
     def post(self):
-        data = InternshipForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            internship = data.save() #(commit=False)
-            internship.put()
+        form = InternshipForm(data=self.request.POST)
+        if form.is_valid():
+            internship = form.save()
             self.redirect('/internship/list')
         else:
-            doRender(self,'internship/add.html',data)
+            doRender(self,'internship/add.html',form)
 
 class EditInternship(webapp.RequestHandler):
     def get(self):
@@ -411,13 +409,12 @@ class EditInternship(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
-        data = InternshipForm(data=self.request.POST, instance=internship)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+        form = InternshipForm(data=self.request.POST, instance=internship)
+        if form.is_valid():
+            entity = form.save()
             self.redirect('/internship/list')
         else:
-            doRender(self,'internship/add.html',data)
+            doRender(self,'internship/add.html', form)
 
 class DeleteInternship(webapp.RequestHandler):
     def get(self):
@@ -441,14 +438,12 @@ class AddGame(webapp.RequestHandler):
         doRender(self,'game/add.html',{'form':GameForm()})
 
     def post(self):
-        data = GameForm(data=self.request.POST)
-        if data.is_valid():
-            self.response.out.write("valid data")
-            game = data.save() #(commit=False)
-            game.put()
+        form = GameForm(data=self.request.POST)
+        if form.is_valid():
+            game = data.save()
             self.redirect('/game/list')
         else:
-            doRender(self,'game/add.html',data)
+            doRender(self,'game/add.html', form)
 
 class EditGame(webapp.RequestHandler):
     def get(self):
@@ -459,13 +454,12 @@ class EditGame(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         game = Game.get_by_id(id)
-        data = GameForm(data=self.request.POST, instance=game)
-        if data.is_valid():
-            entity = data.save(commit=False)
-            entity.put()
+        form = GameForm(data=self.request.POST, instance=game)
+        if form.is_valid():
+            entity = form.save()
             self.redirect('/game/list')
         else:
-            doRender(self,'game/add.html',data)
+            doRender(self,'game/add.html', form)
 
 class DeleteGame(webapp.RequestHandler):
     def get(self):

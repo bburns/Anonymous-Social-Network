@@ -7,7 +7,10 @@
 .PHONY: test
 
 
+ifeq ($(OS),Windows_NT)
+appserver := ..\google_appengine\dev_appserver.py
 
+else
 #pychecker := pychecker
 # this is v0.8.16:
 #pychecker := "/p/lib/python2.4/site-packages/pychecker/checker.py"
@@ -19,7 +22,8 @@ pylint := pylint
 
 pydoc := pydoc
 epydoc := /public/linux/graft/epydoc-2.1/bin/epydoc
-
+appserver := ../google_appengine/dev_appserver.py
+endif
 
 
 
@@ -58,7 +62,7 @@ twill:
 # that way your data will always be there
 run:
 #	../google_appengine/dev_appserver.py .
-	../google_appengine/dev_appserver.py --datastore_path=datastore .
+	$(appserver) --datastore_path=datastore .
 
 
 # publish the app to google appengine

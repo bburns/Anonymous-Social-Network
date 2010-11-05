@@ -1,15 +1,22 @@
 <html>
   <body>
     <h1>Import xml</h1>
+    
     {% if error %}
       <p>{{ error }}</p>
     {% else %}
-      <p>Paste your xml as text into the text box and click the "Import" button</p>
+    
+      <p>Paste your xml as text into the text box, or select a file, and click the "Import" button</p>
+      
       <form method="post" action="/import">
-        <label>Data:</label><br />
-        <textarea name="xml-file" rows="20" cols="80">XML data goes here...</textarea><br />
+        <table>
+        <tr><label>Data:</label><br /></tr>
+        <tr><textarea name="xml-string" rows="20" cols="90">XML data goes here...</textarea><br /></tr>
+        <!-- <tr><input type="file" name="xml-file" id="xml-file" size="90"/></tr> -->
+        </table>
         <input value="Import" type="submit" />
       </form>
+
     {% endif %}
   </body>
 </html>
