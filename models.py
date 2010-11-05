@@ -308,7 +308,9 @@ class Place(db.Model):
     place_type = db.StringProperty(choices = ["study_place", "live_place", "eat_place", "fun_place"])
     place_name = db.StringProperty()
     location = db.StringProperty()
-    semester = db.StringProperty()
+    semester = db.StringProperty() 
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -328,6 +330,36 @@ class StudentPlace(db.Model):
     place = db.ReferenceProperty(Place)
     rating = db.StringProperty()
     comment = db.TextProperty()
+    
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this book - sbs is a list of assoc objects, 
+        # each with a rating and comment. 
+        place = self.place
+        sps = place.studentplace_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sp.rating) for sp in sps]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        place.ratingAvg = ratingAvg
+        place.refCount = n
+        place.put()
+
 
 class Game(db.Model):
     os = db.StringProperty()

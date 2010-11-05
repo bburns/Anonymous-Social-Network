@@ -424,6 +424,39 @@ class EditPlace(webapp.RequestHandler):
         else:
             doRender(self,'place/add.html', form)
 
+class ViewPlace(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        place = Place.get_by_id(id)
+        form = PlaceForm(instance=place)
+        assocs = place.studentplace_set
+        doRender(self,'place/view.html',{'form':form,'place':place,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        place_id = int(self.request.get('_id'))
+        place = Place.get_by_id(place_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, place, rating, comment
+        
+        # add the assocation object
+        assoc = StudentPlace()
+        assoc.student = student
+        assoc.place = place
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        self.redirect("/place/view?id=%d" % place_id)
+
 class DeletePlace(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
@@ -603,6 +636,7 @@ _URLS = (
      ('/place/add', AddPlace),
      ('/place/edit', EditPlace),
      ('/place/delete', DeletePlace),
+     ('/place/view', ViewPlace),
 
      ('/game/list', ListGame),
      ('/game/add', AddGame),
