@@ -1,7 +1,13 @@
 {% extends "../_base.html" %}
 {% block content %}
 
-<h2>Please complete the following form to add an internship.</h2>
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<h3>Please complete the following form to add an internship.</h3>
 
 <form method="post" action={% if id %}"/internship/edit"{%else %}"/internship/add"{%endif%} >
   <table>

@@ -15,6 +15,8 @@ from google.appengine.ext.db import djangoforms
 # validation functions
 # can be used by passing it as a param in a Property  declaration
 #       eg:   course_num = db.StringProperty(validator=validate_course_num)
+
+# student validations
 def validate_email(email):
     if not email:
 	raise db.BadValueError
@@ -22,16 +24,24 @@ def validate_email(email):
     if re.match(regex, email) == None:
 	raise db.BadValueError("Invalid value entered. eg: email@email.com")
 
+# rating valiation
+def validate_rating(val):
+    if val:
+	regex = "[0-9]*"
+	if re.match(regex, str(val)) == None:
+	    raise db.BadValueError("Invalid value entered. Rating must be an integer value")
+	elif val < 0 :
+	    raise db.BadValueError("Invalid value entered. Rating value cannot be negative")
+	elif val > 100 :
+	    raise db.BadValueError("Invalid value entered. Rating value cannot greater than 100")
+
+# class validations
 def validate_course_num(val):
     if not val:
 	raise db.BadValueError("This field is required.")
     regex = "[A-Z]([A-Z]|\s){0,2}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
     if re.match(regex, val) == None:
-        raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
-
-
-
-
+        raise db.BadValueError("Invalid value entered. eg: CS 341, EE 316")
 
 def validate_semester(semester):
     if semester :
@@ -45,30 +55,19 @@ def validate_unique(unique):
 	if re.match(regex, unique) == None:
 	   raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only")
 
-
-
-
-
 def validate_grade(val):
-    if not val:
-	raise db.BadValueError
-    regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
-    if re.match(regex, val) == None:
-	raise db.BadValueError
+    if val:
+	regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
+	if re.match(regex, val) == None:
+		raise db.BadValueError
+
+# book validations
 
 def validate_isbn(val):
-    if not val:
-	raise db.BadValueError
-    regex = "\S{8}"
-    if re.match(regex, val)== None:
-	raise db.BadValueError
-
-def validate_rating(val):
     if val:
-	if val < 0 :
-	    raise db.BadValueError
-	if val > 100 :
-	    raise db.BadValueError
+    	regex = "\S{8}"
+   	if re.match(regex, val)== None:
+		raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
 
 
 
@@ -151,19 +150,19 @@ class ClassForm(djangoforms.ModelForm):
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)
     class_ = db.ReferenceProperty(Class)
-    rating = db.StringProperty()
+    rating = db.StringProperty(validator=validate_rating)
     comment = db.StringProperty()
-    grade = db.StringProperty()
+    grade = db.StringProperty(validator=validate_grade)
 
 
 class Book(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
-    isbn = db.StringProperty()
+    isbn = db.StringProperty(validator=validate_isbn)
 
     # store aggregate info here, so don't have to do expensive joins
     # update in StudentBook.put method
-    ratingAvg = db.IntegerProperty() # 0 to 100
+    ratingAvg = db.IntegerProperty(validator=validate_rating) # 0 to 100
     refCount = db.IntegerProperty()
     
     edit_time = db.DateTimeProperty(auto_now=True)
@@ -184,7 +183,7 @@ class BookForm(djangoforms.ModelForm):
 class StudentBook(db.Model):
     student = db.ReferenceProperty(Student)
     book = db.ReferenceProperty(Book)
-    rating = db.StringProperty()
+    rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
 
     def put(self):
@@ -261,7 +260,7 @@ class Place(db.Model):
     place_type = db.StringProperty(choices = ["study_place", "live_place", "eat_place", "fun_place"])
     place_name = db.StringProperty()
     location = db.StringProperty()
-    semester = db.StringProperty()
+    semester = db.StringProperty(validator=validate_semester)
     edit_time = db.DateTimeProperty(auto_now=True)
 
     @staticmethod
@@ -279,7 +278,7 @@ class PlaceForm(djangoforms.ModelForm):
 class StudentPlace(db.Model):
     student = db.ReferenceProperty(Student)
     place = db.ReferenceProperty(Place)
-    rating = db.StringProperty()
+    rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
 
 class Game(db.Model):
@@ -301,7 +300,7 @@ class GameForm(djangoforms.ModelForm):
 class StudentGame(db.Model):
     student = db.ReferenceProperty(Student)
     game = db.ReferenceProperty(Game)
-    rating = db.StringProperty()
+    rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
 
 

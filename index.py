@@ -154,7 +154,7 @@ class ListClass(webapp.RequestHandler):
         
 class AddClass(webapp.RequestHandler):
     def get(self):
-        doRender(self,'class/add.html',{'form':classForm()})
+        doRender(self,'class/add.html',{'form':ClassForm()})
 
     def post(self):
         form = ClassForm(self.request.POST)
@@ -162,7 +162,7 @@ class AddClass(webapp.RequestHandler):
 	        form.save()
         	self.redirect("/class/list")
 	else :
-		doRender(self,'class/add.html',{'form':form, 'error':'Invalid info entered.'})
+		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please check the following and try again: '})
 		
 
 
@@ -246,7 +246,7 @@ class AddBook(webapp.RequestHandler):
             book = data.save()
             self.redirect('/book/list')
         else:
-            doRender(self,'book/add.html',data)
+            doRender(self,'book/add.html',{'form': data, 'error': 'ERROR: please check the following and try again'})
 
 class EditBook(webapp.RequestHandler):
     def get(self):
@@ -352,7 +352,7 @@ class AddPlace(webapp.RequestHandler):
             place.put()
             self.redirect('/place/list')
         else:
-            doRender(self,'place/add.html',data)
+            doRender(self,'place/add.html',{'form':data, 'error':'ERROR: please check the following and try again'})
 
 class EditPlace(webapp.RequestHandler):
     def get(self):
