@@ -146,6 +146,13 @@ class Class(db.Model):
     	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
     	return results[0:5]
 
+    def put(self):
+        "Override this so we can catch required fields"
+        if not self.course_num:
+            raise db.BadValueError("Course Number is required.")
+        else:
+            db.Model.put(self) # call the superclass
+
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:

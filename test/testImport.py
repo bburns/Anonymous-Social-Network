@@ -109,9 +109,9 @@ class testImport (unittest.TestCase) :
 
     def testImportStudentClass2(self) :
 
+        # http://localhost:8080/test?format=plain&name=testImport.testImport.testImportStudentClass2
         self.dbClear()
-	#xmlImportFile('testImport.xml')
-	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
+	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><course_num>CS 373</course_num><grade>F</grade><comment>hard</comment></class></student></students>')
 	query = Student.all()
 	students = query.fetch(1)
 	student = students[0]

@@ -45,7 +45,7 @@ def xmlImport(dom):
 
         #class tag handler
         for node in studentNode.getElementsByTagName('class'):
-	    
+
 	    c = Class()
             c.unique = getElementData(node, 'unique')
             c.course_num = getElementData(node, 'course_num')

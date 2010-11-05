@@ -71,6 +71,7 @@ class testExport (unittest.TestCase) :
         s2 = Student()
         s2.put()
         c1 = Class()
+        c1.course_num = "CS 373"
         c1.unique = "12345"
         c1.put()
         sc = StudentClass()
@@ -80,7 +81,7 @@ class testExport (unittest.TestCase) :
         sc.comment = "okay"
         sc.put()
         students = [s1,s2]
-        expected = u'<?xml version="1.0" ?><students><student><id>Jonathan</id><class><unique>12345</unique><rating>85</rating><comment>okay</comment></class></student><student/></students>'
+        expected = u'<?xml version="1.0" ?><students><student><id>Jonathan</id><class><unique>12345</unique><course_num>CS 373</course_num><rating>85</rating><comment>okay</comment></class></student><student/></students>'
         output = xmlExport(students)
         self.assert_(output == expected, output)
 
