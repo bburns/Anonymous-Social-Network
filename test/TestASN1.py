@@ -27,7 +27,7 @@ class testASN1 (unittest.TestCase) :
 
     def dbClear(self):
         "A helper method to clear the database"
-        #. do for all tables? 
+        #. do for all tables
         query = Student.all()
         db.delete(query)
 
@@ -123,7 +123,7 @@ class testASN1 (unittest.TestCase) :
 
 
 
-    # for phase 2
+    # for phase 3
     """
     def testFindAddBook(self):
         
