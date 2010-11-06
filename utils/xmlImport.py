@@ -361,9 +361,10 @@ def getElementData(node, tagname) :
     """
     #e = node.getElementsByTagName(tagname)[0].firstChild
     nodes = node.getElementsByTagName(tagname)
+
     if nodes:
         e = nodes[0].firstChild
-        if e is None:
+	if e is None:
             return ""
         else:
             return e.data

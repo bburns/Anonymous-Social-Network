@@ -18,12 +18,24 @@
       <td>{{place.location}}</td>
       <td>{{place.semester}}</td>
       <td>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+          <a href="/place/view?id={{ place.key.id }}">View</a> |
+          <a href='/place/edit?id={{ place.key.id }}'>Edit</a> |
+          <a href='/place/delete?id={{ place.key.id }}'>Delete</a></td>
+=======
+>>>>>>> origin/formvalidation
           <a href="/place/view?id={{ place.key.id }}">View</a>
           {% if username %}|
           <a href='/place/edit?id={{ place.key.id }}'>Edit</a> |
           <a href='/place/delete?id={{ place.key.id }}'>Delete</a>
           {% endif %}
       </td>
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+>>>>>>> origin/formvalidation
     </tr>
   {% endfor %}
 </table>

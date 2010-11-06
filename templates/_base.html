@@ -22,7 +22,7 @@
     </div>
     <div class="container">
       <div class="span-24 round" id="header">
-        <h1><a href="/" >@SN</a></h1>
+        <h1><a href="/" ><img src="/static/logo.png" alt="logo"/></a></h1>
         <ul>
           {% if admin %}<li><a href="/student/list">Students</a></li>{% endif %}
           <li><a href="/class/list">Classes</a></li>
@@ -70,7 +70,7 @@
 	  <div>
             <table>
               {%for class in recentClasses%}
-	        <tr><td>{{class.course_name}}</td></tr>
+	        <tr><td><a href="/class/view?id={{class.key.id}}">{{class.course_name}}</a></td></tr>
               {%endfor%}
             </table>
           </div>
@@ -78,7 +78,7 @@
 	  <div>
 	    <table>
 	      {%for paper in recentPapers%}
-	        <tr><td>{{paper.title}}</td></tr>
+	        <tr><td><a href="/paper/view?id={{paper.key.id}}">{{paper.title}}</a></td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -86,7 +86,7 @@
 	  <div>
 	    <table>
 	      {%for book in recentBooks%}
-	        <tr><td>{{book.title}}</td></tr>
+	        <tr><td><a href="/book/view?id={{book.key.id}}">{{book.title}}</td></a></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -94,7 +94,7 @@
 	  <div>
 	    <table>
 	      {%for place in recentPlaces%}
-	        <tr><td>{{place.place_name}}</td></tr>
+	        <tr><td><a href="/place/view?id={{place.key.id}}">{{place.place_name}}</a></td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -102,7 +102,7 @@
 	  <div>
 	    <table>
 	      {%for internship in recentInternships%}
-	        <tr><td>{{internship.place_name}}</td></tr>
+	        <tr><td><a href="/internship/view?id={{internship.key.id}}">{{internship.place_name}}</a></td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -110,7 +110,7 @@
 	  <div>
 	    <table>
 	      {%for game in recentGames%}
-	        <tr><td>{{game.title}}</td></tr>
+	        <tr><td><a href="/game/view?id={{game.key.id}}">{{game.title}}</a></td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -118,7 +118,7 @@
       </div>
     <div class="span-23 last round" id="footer"> 
         <ul class="footer_nav"> 
-          <li>All rights reserved<a href="/about">Ca$h Money Software</li> 
+          <li>All rights reserved<a href="/about">Ca$h Money Softwar</a></li> 
         </ul>
     </div>
 

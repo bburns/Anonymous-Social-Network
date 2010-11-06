@@ -22,6 +22,14 @@
 		<li><a href="#tabs-6">Games</a></li>
 	</ul>
 	<div id="tabs-1">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+		{%for class in recentClasses%}
+			{{class.course_name}}<br/>
+		{%endfor%}
+=======
+>>>>>>> origin/formvalidation
 		<table>
 		  <thead>
 		    <th>Course Name</th>
@@ -32,7 +40,11 @@
 		  <tbody>
 
 		  {%for sclass in sclasses%}
+<<<<<<< HEAD
 		    <tr><td>{{sclass.class_.course_name}}</td>
+=======
+		    <tr><td><a href="/class/view?id={{sclass.class_.key.id}}">{{sclass.class_.course_name}}</a></td>
+>>>>>>> origin/formvalidation
 		    <td>{{sclass.class_.instructor}}</td>
 		    <td>{{sclass.comment}}</td>
 		    <td>{{sclass.rating}}</td>
@@ -40,6 +52,10 @@
 		  {%endfor%}
 		</table>
 		
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+>>>>>>> origin/formvalidation
 	</div>
 	<div id="tabs-2">
 		<table>
@@ -51,7 +67,11 @@
 		  <tbody>
 
 		  {%for sbook in sbooks%}
+<<<<<<< HEAD
 		    <tr><td>{{sbook.book.title}}</td>
+=======
+		    <tr><td><a href="/book/view?id={{sbook.book.key.id}}">{{sbook.book.title}}</a></td>
+>>>>>>> origin/formvalidation
 		    <td>{{sbook.comment}}</td>
 		    <td>{{sbook.rating}}</td>
 		    </tr>
@@ -70,8 +90,13 @@
 		  <tbody>
 
 		  {%for spaper in spapers%}
+<<<<<<< HEAD
 		    <tr><td>{{spaper.paper.paper_category}}</td>
 		    <td>{{spaper.paper.title}}</td>
+=======
+		    <tr><td><a href="/paper/view?id={{spaper.paper.key.id}}">{{spaper.paper.title}}</a></td>
+		    <td>{{spaper.paper.paper_category}}</td>
+>>>>>>> origin/formvalidation
 		    <td>{{spaper.paper.author}}</td>
 		    <td>{{spaper.comment}}</td>
 		    <td>{{spaper.rating}}</td>
@@ -91,8 +116,13 @@
 		  <tbody>
 
 		  {%for sinternship in sinternships%}
+<<<<<<< HEAD
 		    <tr><td>{{sinternship.internship.place_name}}</td>
 		    <tr><td>{{sinternship.internship.location}}</td>
+=======
+		    <tr><td><a href="/internship/view?id={{sinternship.internship.key.id}}">{{sinternship.internship.place_name}}</a></td>
+		    <td>{{sinternship.internship.location}}</td>
+>>>>>>> origin/formvalidation
 		    <td>{{sinternship.comment}}</td>
 		    <td>{{sinternship.rating}}</td>
 		    </tr>
@@ -112,7 +142,11 @@
 		  <tbody>
 
 		  {%for splace in splaces%}
+<<<<<<< HEAD
 		    <tr><td>{{splace.place.place_type}}</td>
+=======
+		    <tr><td><a href="/place/view?id={{splace.place.key.id}}">{{splace.place.place_type}}</a></td>
+>>>>>>> origin/formvalidation
 		    <td>{{splace.place.place_name}}</td>
 		    <td>{{splace.place.location}}</td>
 		    <td>{{splace.comment}}</td>
@@ -133,7 +167,11 @@
 		  <tbody>
 
 		  {%for sgame in sgames%}
+<<<<<<< HEAD
 		    <tr><td>{{sgame.game.os}}</td>
+=======
+		    <tr><td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.os}}</a></td>
+>>>>>>> origin/formvalidation
 		    <td>{{sgame.game.title}}</td>
 		    <td>{{sgame.comment}}</td>
 		    <td>{{sgame.rating}}</td>
