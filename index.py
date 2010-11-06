@@ -32,8 +32,51 @@ class About(webapp.RequestHandler):
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
-        doRender(self,"profile.html")
+	x = Session()        
+	if 'student_id' in x:
+		template = {}		
+		sb = StudentBook.all()
+		sc = StudentClass.all()
+		sp = StudentPlace.all()
+		si = StudentInternship.all()
+		spa = StudentPaper.all()
+		sg = StudentGame.all()
+		
+		s = Student.get_by_id(x['student_id'])
+		
+		#books
+		sbooks = sb.filter("student =", s)
+		sbooks = sbooks.fetch(98988)		
+		template['sbooks'] = sbooks
 
+		#class
+		sclasses = sc.filter("student =", s)
+		sclasses = sclasses.fetch(98988)
+		template['sclasses'] = sclasses
+
+		#Place
+		splaces = sp.filter("student = ", s)
+		splaces = splaces.fetch(98988)
+		template['splaces'] = splaces
+
+		#Internship
+		sinternships = si.filter("student = ", s)
+		sinternships = sinternships.fetch(98988)
+		template['sinternships'] = sinternships
+
+		#Paper
+		spapers = spa.filter("student = ", s)
+		spapers = spapers.fetch(98988)
+		template['spapers'] = spapers
+
+		#Game
+		sgames = sg.filter("student = ", s)
+		sgames = sgames.fetch(98988)
+		template['sgames'] = sgames
+		
+		doRender(self,"profile.html", template)
+	else:	 
+		doRender(self,"profile.html")
 
 class SignupHandler(webapp.RequestHandler):
     def get(self):
@@ -166,8 +209,9 @@ class AddClass(webapp.RequestHandler):
     def post(self):
         form = ClassForm(self.request.POST)
 	if form.is_valid() :
-	        form.save()
-        	self.redirect("/class/list")
+	        class_ = form.save()
+		id = class_.key().id()
+        	self.redirect('/class/view?id=%d' % id)
 	else :
 		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
 		
@@ -195,6 +239,40 @@ class DeleteClass(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id).delete()
+        self.redirect("/class/list")
+
+class ViewClass(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        class_ = Class.get_by_id(id)
+        form = ClassForm(instance=class_)
+        assocs = class_.studentclass_set
+        doRender(self,'class/view.html',{'form':form,'class':class_,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        class_id = int(self.request.get('_id'))
+        class_ = Class.get_by_id(class_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+        
+        # add the assocation object
+        assoc = StudentClass()
+        assoc.student = student
+        assoc.class_ = class_
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/class/list")
 
 
@@ -241,8 +319,8 @@ class ViewBook(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/book/view?id=%d" % book_id)
-        
+        #self.redirect("/book/view?id=%d" % book_id)
+        self.redirect("/book/list")
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -305,7 +383,8 @@ class AddPaper(webapp.RequestHandler):
         if form.is_valid():
             #self.response.out.write("valid data")
             paper = form.save()
-            self.redirect('/paper/list')
+	    id = paper.key().id()
+            self.redirect('/paper/view?id=%d' %id)
         else:
             doRender(self,'paper/add.html', form)
 
@@ -336,6 +415,40 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id).delete()
         self.redirect("/paper/list")
 
+class ViewPaper(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        paper = Paper.get_by_id(id)
+        form = PaperForm(instance=paper)
+        assocs = paper.studentpaper_set
+        doRender(self,'paper/view.html',{'form':form,'paper':paper,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        paper_id = int(self.request.get('_id'))
+        paper = Paper.get_by_id(paper_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+        
+        # add the assocation object
+        assoc = StudentPaper()
+        assoc.student = student
+        assoc.paper = paper
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/book/view?id=%d" % book_id)
+        self.redirect("/paper/list")
+
 
 # Place
 
@@ -351,8 +464,9 @@ class AddPlace(webapp.RequestHandler):
     def post(self):
         form = PlaceForm(data=self.request.POST)
         if form.is_valid():
-            place = data.save()
-            self.redirect('/place/list')
+            place = form.save()
+	    id = place.key().id()
+            self.redirect('/place/view?id=%d' %id)
         else:
             doRender(self,'place/add.html', form)
 
@@ -403,7 +517,7 @@ class ViewPlace(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/place/view?id=%d" % place_id)
+        self.redirect("/place/list")
 
 class DeletePlace(webapp.RequestHandler):
     def get(self):
@@ -631,6 +745,7 @@ _URLS = (
 
      ('/class/list',ListClass),
      ('/class/add', AddClass),
+     ('/class/view', ViewClass),
      ('/class/edit', EditClass),
      ('/class/delete', DeleteClass),
 
@@ -644,6 +759,7 @@ _URLS = (
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
      ('/paper/delete', DeletePaper),
+     ('/paper/view', ViewPaper),
 
      ('/internship/list', ListInternship),
      ('/internship/view', ViewInternship),
