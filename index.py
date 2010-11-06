@@ -83,6 +83,33 @@ class ListStudent(webapp.RequestHandler):
         students = Student.all()        
         doRender(self,'student/list.html',{'students':students})
 
+class changePassword(webapp.RequestHandler):
+    def get(self):
+        x = Session()  
+	if 'student_id' in x:      
+	    s = Student.get_by_id(x['student_id'])
+
+	doRender(self,'changePassword.html',{})
+
+    def post(self):
+	template = {}	
+	self.session = Session()
+        oldPass = self.request.get('oldPass')
+        newPass1 = self.request.get('newPass1')
+        newPass2 = self.request.get('newPass2')
+	email = self.session['username']
+	user = User.get_by_email(email)
+	if(oldPass != user.password):
+		template['oldPassError'] = True
+
+	if( newPass1 != newPass2):
+		template['mismatch'] = True
+
+	if(oldPass == user.password and newPass1 == newPass2):
+		user.password = newPass1
+		user.put()
+		template['success'] = True
+	doRender(self,'changePassword.html', template)
 
 
 class SignupHandler(webapp.RequestHandler):
@@ -770,6 +797,8 @@ _URLS = (
      ('/help',Help),
 
      ('/profile',StudentProfile),
+
+     ('/changePassword', changePassword),
 
      ('/class/list',ListClass),
      ('/class/add', AddClass),
