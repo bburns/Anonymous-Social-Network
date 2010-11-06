@@ -18,28 +18,21 @@ from models import *
 
 
 # -----------
-# TestASN1
+# TestAuthent
 # -----------
 
 
 class testAuthent (unittest.TestCase) :
 
-    # def dbClear(self):
-    #     "A helper method to clear the database"
-    #     #. do for all tables? 
-    #     query = Student.all()
-    #     db.delete(query)
-
-
     def testGetUser(self):
         user = User()
-        user.email = 'brian@google.com'
+        user.email = 'brian@brian.com'
         user.put()
 
-        user2 = User.get_by_email('brian@google.com')
+        user2 = User.get_by_email('brian@brian.com')
         #self.assert_(user == user2) # fails - why?
         self.assert_(user.email == user2.email)
 
-
+        
 
 
