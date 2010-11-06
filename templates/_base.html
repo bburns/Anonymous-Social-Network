@@ -70,7 +70,7 @@
 	  <div>
             <table>
               {%for class in recentClasses%}
-	        <tr><td>{{class.course_name}}</td></tr>
+	        <tr><td><a href="/class/view?id={{class.key.id}}">{{class.course_name}}</a></td></tr>
               {%endfor%}
             </table>
           </div>
@@ -78,7 +78,7 @@
 	  <div>
 	    <table>
 	      {%for paper in recentPapers%}
-	        <tr><td>{{paper.title}}</td></tr>
+	        <tr><td><a href="/paper/view?id={{paper.key.id}}">{{paper.title}}</a></td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -86,7 +86,7 @@
 	  <div>
 	    <table>
 	      {%for book in recentBooks%}
-	        <tr><td>{{book.title}}</td></tr>
+	        <tr><td><a href="/book/view?id={{book.key.id}}">{{book.title}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -94,7 +94,7 @@
 	  <div>
 	    <table>
 	      {%for place in recentPlaces%}
-	        <tr><td>{{place.place_name}}</td></tr>
+	        <tr><td><a href="/place/view?id={{place.key.id}}">{{place.place_name}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -102,7 +102,7 @@
 	  <div>
 	    <table>
 	      {%for internship in recentInternships%}
-	        <tr><td>{{internship.place_name}}</td></tr>
+	        <tr><td><a href="/internship/view?id={{internship.key.id}}">{{internship.place_name}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -110,7 +110,7 @@
 	  <div>
 	    <table>
 	      {%for game in recentGames%}
-	        <tr><td>{{game.title}}</td></tr>
+	        <tr><td><a href="/game/view?id={{game.key.id}}">{{game.title}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>

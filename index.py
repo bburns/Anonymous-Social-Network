@@ -711,7 +711,7 @@ def doRender(handler, filename='index.html', values = {}):
     
     filepath = os.path.join(os.path.dirname(__file__), 'templates/' + filename)
     if not os.path.isfile(filepath):
-        self.response.out.write("Invalid template file: " + filename)
+        handler.response.out.write("Invalid template file: " + filename)
         return False
 
     # copy the dictionary, so we can add things to it
