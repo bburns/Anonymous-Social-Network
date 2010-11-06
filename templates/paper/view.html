@@ -1,0 +1,110 @@
+<!-- view a class and associated ratings and comments -->
+
+{% extends "../_base.html" %}
+{% block content %}
+
+<a href="/paper/list">Back to paper listings</a>
+
+<h2>View Paper</h2>
+
+<!-- no good way to make a form read-only?
+<form>
+<table>
+{{ form.as_table }}
+</table>
+</form>
+-->
+
+<table>
+  <tbody>
+  <tr><td>Paper category: {{ paper.paper_category }} </td></tr>
+  <tr><td>Title: {{ class.title }} </td></tr>
+  <tr><td>Author: {{ class.author }} </td></tr>
+  <tr><td>Rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
+
+
+<table>
+  <thead>
+    <th>Rating</th>
+    <th>Comment</th>
+  </thead>
+  <tbody>
+  {% for assoc in assocs %}
+    <tr>
+      <td>{{ assoc.rating }}</td>
+      <td>{{ assoc.comment|escape|linebreaks }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% if username %}
+
+<div class="rating">
+
+<h3>Add your rating and comments for this class</h3>
+
+
+<form method="post" action="/paper/view">
+  <table>
+  <tr>
+    <td><label for="id_rating">Rating:</label></td>
+    <td>
+      <select name="rating" id="id_rating">
+        <option value="0">0</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80">80</option>
+        <option value="90">90</option>
+        <option value="100">100</option>
+      <!--
+        <option value="0">0 stars</option>
+        <option value="20">1 star</option>
+        <option value="40">2 stars</option>
+        <option value="60">3 stars</option>
+        <option value="80">4 stars</option>
+        <option value="100">5 stars</option>
+        -->
+        <!--
+        <option value="0">0 stars</option>
+        <option value="10">0.5 stars</option>
+        <option value="20">1 star</option>
+        <option value="30">1.5 stars</option>
+        <option value="40">2 stars</option>
+        <option value="50">2.5 stars</option>
+        <option value="60">3 stars</option>
+        <option value="70">3.5 stars</option>
+        <option value="80">4 stars</option>
+        <option value="90">4.5 stars</option>
+        <option value="100">5 stars</option>
+        -->
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label align="top" for="id_comment">Comment:</label></td>
+    <!--<td><input type="textarea" rows="4" name="comment" id="id_comment"/></td>   rows not working?-->
+    <td><textarea rows="4" name="comment" id="id_comment"></textarea></td>
+  </tr>
+  </table>
+  <input type="submit" value="Add Rating/Comment"/>
+  <input type="hidden" name="_id" value="{{ id }}"/>
+</form>
+
+</div>
+
+<!--
+  <a href="/book/edit?id={{ book.key.id }}">Edit</a>
+  <a href="/book/delete?id={{ book.key.id }}">Delete</a>
+-->
+
+{% endif %}
+        
+{% endblock %}
