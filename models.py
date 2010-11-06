@@ -155,15 +155,14 @@ class Class(db.Model):
     def put(self):
         "Override this so we can catch required fields"
         if not self.course_num:
-            raise db.BadValueError("Course Number is required.")
+            raise db.BadValueError("Course number is a required field.")
+	if not self.unique :
+	   raise db.BadValueError("Unique is a required field.")	
+	if not self.semester :
+	   raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
 
-    def put(self) :
-	if not self.course_num :
-	   raise db.BadValueError("This field is required.")
-	else :
-	   db.Model.put(self)
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:
@@ -195,6 +194,13 @@ class Book(db.Model):
         results = q.fetch(837548)
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
+    
+    def put(self) :
+        "Override this so we can catch required fields"
+        if not self.isbn:
+            raise db.BadValueError("ISBN is a required field.")
+        else:
+            db.Model.put(self) # call the superclass
 
 
 class BookForm(djangoforms.ModelForm):
@@ -252,6 +258,13 @@ class Paper(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
 
+    def put(self) :
+        "Override this so we can catch required fields"
+        if not self.paper_category:
+            raise db.BadValueError("Paper category not selected.")
+        else:
+            db.Model.put(self) # call the superclass
+
 class PaperForm(djangoforms.ModelForm):
     class Meta:
         model = Paper
@@ -278,6 +291,13 @@ class Internship(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
 
+    def put(self) :
+        "Override this so we can catch required fields"
+        if not self.semester:
+            raise db.BadValueError("Semester is a required field.")
+        else:
+            db.Model.put(self) # call the superclass
+
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
         model = Internship
@@ -295,7 +315,6 @@ class StudentInternship(db.Model):
         assocs = internship.studentinternship_set
         ratings = [int(assoc.rating) for assoc in assocs]
         n = len(ratings)
-        ratingAvg = sum(ratings) / n
         internship.ratingAvg = ratingAvg
         internship.refCount = n
         internship.put()
@@ -318,9 +337,19 @@ class Place(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
 
+    def put(self) :
+        "Override this so we can catch required fields"
+	if not self.semester:
+            raise db.BadValueError("Place category not selected.")
+        if not self.semester:
+            raise db.BadValueError("Semester is a required field.")
+        else:
+            db.Model.put(self) # call the superclass
+
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
         model = Place
+	exclude = ['ratingAvg', 'refCount']
 
 
 class StudentPlace(db.Model):

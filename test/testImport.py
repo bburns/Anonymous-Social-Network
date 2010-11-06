@@ -173,24 +173,14 @@ class testImport (unittest.TestCase) :
 	self.assert_(sc.comment == "cool")
 
 
-<<<<<<< HEAD
-
-    def testImportStudentClass2(self) :
-=======
     def testImportStudentClass3(self) :
->>>>>>> origin/formvalidation
-
         # http://localhost:8080/test?format=plain&name=testImport.testImport.testImportStudentClass2
         self.dbClear()
-<<<<<<< HEAD
-	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 341</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
-=======
 	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><course_num>CS 373</course_num><grade>F</grade><comment>hard</comment></class></student></students>')
->>>>>>> origin/formvalidation
 	query = Student.all()
 	students = query.fetch(1)
 	student = students[0]
-	sclist = student.studentclass_set.fetch(1)
+	sclist = student.studentclass_set.fetch(2)
 	sc = sclist[0]
 	c = sc.class_
 	self.assert_(c.unique == "12345")
