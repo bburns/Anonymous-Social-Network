@@ -14,24 +14,12 @@
       <td>{{game.os}}</td>
       <td>{{game.title}}</td>
       <td>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-          <a href='/game/view?id={{game.key.id}}'>View</a> |
-          <a href='/game/edit?id={{game.key.id}}'>Edit</a> |
-          <a href='/game/delete?id={{game.key.id}}'>Delete</a></td>
-=======
->>>>>>> origin/formvalidation
           <a href='/game/view?id={{game.key.id}}'>View</a>
-          {% if username %}|
+          {% if username %} |
           <a href='/game/edit?id={{game.key.id}}'>Edit</a> |
           <a href='/game/delete?id={{game.key.id}}'>Delete</a>
           {% endif %}
       </td>
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/formvalidation
     </tr>
   {% endfor %}
 </table>

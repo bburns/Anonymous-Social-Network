@@ -216,14 +216,14 @@ class AddClass(webapp.RequestHandler):
 
     def post(self):
         form = ClassForm(self.request.POST)
-	      if form.is_valid() :
-		        try :
+        if form.is_valid() :
+            try :
                 form.save()
-			          self.redirect("/class/list")
-		        except db.BadValueError, e :
-			          doRender(self,'class/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
-	      else :
-		        doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
+                self.redirect("/class/list")
+            except db.BadValueError, e :
+                doRender(self,'class/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+        else :
+            doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
 		
 
 
