@@ -114,3 +114,42 @@ a.signup_button {
   border: solid 1px #cc5500;
 }
 
+#footer {
+  text-align: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  border: solid 1px #cc5500;
+}
+
+.footer_nav {
+  padding: 0 0.7em;
+  white-space: nowrap;
+}
+
+ul.footer_nav {
+  margin: 0;
+}
+
+.footer_nav li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0.2 0;
+}
+
+.footer_nav li a {
+  padding: 0 5px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000000;
+}
+
+.footer_nav li:visited {
+  color: #000000;
+}
+
+.footer_nav li a:hover {
+  text-decoration: underline;
+}
+
