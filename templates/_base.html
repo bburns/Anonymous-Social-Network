@@ -26,10 +26,10 @@
         <ul>
           {% if admin %}<li><a href="/student/list">Students</a></li>{% endif %}
           <li><a href="/class/list">Classes</a></li>
-          <li><a href="/paper/list">Papers</a></li>
           <li><a href="/book/list">Books</a></li>
+          <li><a href="/paper/list">Papers</a></li>
+	  <li><a href="/internship/list">Internships</a></li>
           <li><a href="/place/list">Places</a></li>
-          <li><a href="/internship/list">Internships</a></li>
           <li><a href="/game/list">Games</a></li>
         </ul>
       </div>
@@ -74,6 +74,14 @@
               {%endfor%}
             </table>
           </div>
+	  <h3><a href="#">Recent Books</a></h3>
+	  <div>
+	    <table>
+	      {%for book in recentBooks%}
+	        <tr><td><a href="/book/view?id={{book.key.id}}">{{book.title}}</td></tr>
+              {%endfor%}
+	    </table>
+	  </div>
 	  <h3><a href="#">Recent Papers</a></h3>
 	  <div>
 	    <table>
@@ -82,11 +90,11 @@
               {%endfor%}
 	    </table>
 	  </div>
-          <h3><a href="#">Recent Books</a></h3>
+	  <h3><a href="#">Recent Internships</a></h3>
 	  <div>
 	    <table>
-	      {%for book in recentBooks%}
-	        <tr><td><a href="/book/view?id={{book.key.id}}">{{book.title}}</td></tr>
+	      {%for internship in recentInternships%}
+	        <tr><td><a href="/internship/view?id={{internship.key.id}}">{{internship.place_name}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
@@ -95,14 +103,6 @@
 	    <table>
 	      {%for place in recentPlaces%}
 	        <tr><td><a href="/place/view?id={{place.key.id}}">{{place.place_name}}</td></tr>
-              {%endfor%}
-	    </table>
-	  </div>
-          <h3><a href="#">Recent Internships</a></h3>
-	  <div>
-	    <table>
-	      {%for internship in recentInternships%}
-	        <tr><td><a href="/internship/view?id={{internship.key.id}}">{{internship.place_name}}</td></tr>
               {%endfor%}
 	    </table>
 	  </div>
