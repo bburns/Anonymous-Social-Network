@@ -130,7 +130,7 @@ class SignupHandler(webapp.RequestHandler):
             s = Student()
             s.generateID()
             s.password = self.request.get('password')
-            s.put()
+	    s.put()
             user = form.save()
             user.student = s
             user.put()
@@ -243,12 +243,14 @@ class AddClass(webapp.RequestHandler):
 
     def post(self):
         form = ClassForm(self.request.POST)
-	if form.is_valid() :
-	        class_ = form.save()
-		id = class_.key().id()
-        	self.redirect('/class/view?id=%d' % id)
-	else :
-		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
+        if form.is_valid() :
+            try :
+                form.save()
+                self.redirect("/class/list")
+            except db.BadValueError, e :
+                doRender(self,'class/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+        else :
+            doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
 		
 
 
@@ -364,11 +366,15 @@ class AddBook(webapp.RequestHandler):
     def post(self):
         form = BookForm(data=self.request.POST)
         if form.is_valid():
-            book = form.save()
-            id = book.key().id()
-            self.redirect('/book/view?id=%d' % id)
+	    try :
+            	book = form.save()
+            	id = book.key().id()
+	        self.redirect('/book/view?id=%d' % id)
+	    except db.BadValueError, e :
+		doRender(self,'book/add.html',{'form':form, 'error':"ERROR: " + e.args[0]})
         else:
-            doRender(self,'book/add.html', form)
+            doRender(self,'book/add.html',{'form': form, 'error': 'ERROR: please check the following and try again'})
+
 
 class EditBook(webapp.RequestHandler):
     def get(self):
@@ -416,10 +422,12 @@ class AddPaper(webapp.RequestHandler):
     def post(self):
         form = PaperForm(data=self.request.POST)
         if form.is_valid():
-            #self.response.out.write("valid data")
-            paper = form.save()
-	    id = paper.key().id()
-            self.redirect('/paper/view?id=%d' %id)
+	    try :
+	        #self.response.out.write("valid data")
+	        paper = form.save()
+        	self.redirect('/paper/list')
+	    except db.BadValueError, e:
+		doRender(self,'paper/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
             doRender(self,'paper/add.html', form)
 
@@ -430,7 +438,7 @@ class EditPaper(webapp.RequestHandler):
         doRender(self,'paper/add.html',{'form':PaperForm(instance=paper),'id':id})
 
     def post(self):
-        id = int(self.request.get('_id'))
+        id = int(self.request.get('_id'))  
         paper = Paper.get_by_id(id)
         form = PaperForm(data=self.request.POST, instance=paper)
         if form.is_valid():
@@ -499,11 +507,14 @@ class AddPlace(webapp.RequestHandler):
     def post(self):
         form = PlaceForm(data=self.request.POST)
         if form.is_valid():
-            place = form.save()
-	    id = place.key().id()
-            self.redirect('/place/view?id=%d' %id)
+	    try :
+            	place = form.save()
+	        self.redirect('/place/list')
+	    except db.BadValueError, e: 
+		doRender(self,'place/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'place/add.html', form)
+            doRender(self,'place/add.html',{'form':form, 'error':'ERROR: please check the following and try again'})
+
 
 class EditPlace(webapp.RequestHandler):
     def get(self):
@@ -516,7 +527,7 @@ class EditPlace(webapp.RequestHandler):
         place = Place.get_by_id(id)
         form = PlaceForm(data=self.request.POST, instance=place)
         if form.is_valid():
-            entity = form.save()
+            entity = form.save()  
             self.redirect('/place/list')
         else:
             doRender(self,'place/add.html', form)
@@ -552,7 +563,8 @@ class ViewPlace(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/place/list")
+        self.redirect("/place/view?id=%d" % place_id)
+
 
 class DeletePlace(webapp.RequestHandler):
     def get(self):
@@ -613,9 +625,13 @@ class AddInternship(webapp.RequestHandler):
     def post(self):
         form = InternshipForm(data=self.request.POST)
         if form.is_valid():
-            internship = form.save()
-            id = internship.key().id()
-            self.redirect('/internship/view?id=%d' % id)
+
+	    try :
+            	internship = form.save()
+            	id = internship.key().id()
+            	self.redirect('/internship/view?id=%d' % id)
+	    except db.BadValueError, e :
+		doRender(self,'internship/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
             doRender(self,'internship/add.html',form)
 
@@ -637,8 +653,7 @@ class EditInternship(webapp.RequestHandler):
             doRender(self,'internship/edit.html', form)
 
 class DeleteInternship(webapp.RequestHandler):
-    def get(self):
-        id = int(self.request.get('id'))
+    def get(self):  
         internship = Internship.get_by_id(id)
         doRender(self,'internship/delete.html',{'internship':internship,'id':id})
 
@@ -661,8 +676,11 @@ class AddGame(webapp.RequestHandler):
     def post(self):
         form = GameForm(data=self.request.POST)
         if form.is_valid():
-            game = form.save()
-            self.redirect('/game/view?id=%d' % game.key().id())
+	    try :
+            	game = form.save()
+            	self.redirect('/game/view?id=%d' % game.key().id())
+	    except db.BadValueError, e:
+		doRender(self,'game/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
             doRender(self,'game/add.html', form)
 

@@ -33,6 +33,6 @@ class testAuthent (unittest.TestCase) :
         #self.assert_(user == user2) # fails - why?
         self.assert_(user.email == user2.email)
 
-
+        
 
 
