@@ -32,51 +32,58 @@ class About(webapp.RequestHandler):
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
-	x = Session()        
-	if 'student_id' in x:
-		template = {}		
-		sb = StudentBook.all()
-		sc = StudentClass.all()
-		sp = StudentPlace.all()
-		si = StudentInternship.all()
-		spa = StudentPaper.all()
-		sg = StudentGame.all()
-		
-		s = Student.get_by_id(x['student_id'])
-		
-		#books
-		sbooks = sb.filter("student =", s)
-		sbooks = sbooks.fetch(98988)		
-		template['sbooks'] = sbooks
+        x = Session()
+        if 'student_id' in x:
+            template = {}
+            sb = StudentBook.all()
+            sc = StudentClass.all()
+            sp = StudentPlace.all()
+            si = StudentInternship.all()
+            spa = StudentPaper.all()
+            sg = StudentGame.all()
+            
+            s = Student.get_by_id(x['student_id'])
+            
+            #books
+            sbooks = sb.filter("student =", s)
+            sbooks = sbooks.fetch(98988)		
+            template['sbooks'] = sbooks
 
-		#class
-		sclasses = sc.filter("student =", s)
-		sclasses = sclasses.fetch(98988)
-		template['sclasses'] = sclasses
+            #class
+            sclasses = sc.filter("student =", s)
+            sclasses = sclasses.fetch(98988)
+            template['sclasses'] = sclasses
 
-		#Place
-		splaces = sp.filter("student = ", s)
-		splaces = splaces.fetch(98988)
-		template['splaces'] = splaces
+            #Place
+            splaces = sp.filter("student = ", s)
+            splaces = splaces.fetch(98988)
+            template['splaces'] = splaces
 
-		#Internship
-		sinternships = si.filter("student = ", s)
-		sinternships = sinternships.fetch(98988)
-		template['sinternships'] = sinternships
+            #Internship
+            sinternships = si.filter("student = ", s)
+            sinternships = sinternships.fetch(98988)
+            template['sinternships'] = sinternships
 
-		#Paper
-		spapers = spa.filter("student = ", s)
-		spapers = spapers.fetch(98988)
-		template['spapers'] = spapers
+            #Paper
+            spapers = spa.filter("student = ", s)
+            spapers = spapers.fetch(98988)
+            template['spapers'] = spapers
 
-		#Game
-		sgames = sg.filter("student = ", s)
-		sgames = sgames.fetch(98988)
-		template['sgames'] = sgames
-		
-		doRender(self,"profile.html", template)
-	else:	 
-		doRender(self,"profile.html")
+            #Game
+            sgames = sg.filter("student = ", s)
+            sgames = sgames.fetch(98988)
+            template['sgames'] = sgames
+            
+            doRender(self,"profile.html", template)
+        else:	 
+            doRender(self,"profile.html")
+
+class ListStudent(webapp.RequestHandler):
+    def get(self):
+        students = Student.all()        
+        doRender(self,'student/list.html',{'students':students})
+
+
 
 class SignupHandler(webapp.RequestHandler):
     def get(self):
@@ -144,6 +151,7 @@ class LogoutHandler(webapp.RequestHandler):
         self.session = Session()
         self.session.delete_item('username')
         self.session.delete_item('student_id')
+        self.session.delete_item('admin')
         doRender(self,'index.html')
 
 
@@ -682,6 +690,7 @@ class ViewGame(webapp.RequestHandler):
 
 class DeleteGame(webapp.RequestHandler):
     def get(self):
+        session = Session()
         id = int(self.request.get('id'))
         game = Game.get_by_id(id)
         doRender(self,'game/delete.html',{'game':game,'id':id})
@@ -720,8 +729,9 @@ def doRender(handler, filename='index.html', values = {}):
 
     if 'student_id' in handler.session:
         newdict['student_id'] = handler.session['student_id']
-    #.
-    newdict['admin'] = True
+    
+    if 'admin' in handler.session:
+        newdict['admin'] = handler.session['admin']
 
 
     s = template.render(filepath, newdict)

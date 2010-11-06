@@ -23,6 +23,15 @@
     <div class="container">
       <div class="span-24 round" id="header">
         <h1><a href="/" >@SN</a></h1>
+        <ul>
+          {% if admin %}<li><a href="/student/list">Students</a></li>{% endif %}
+          <li><a href="/class/list">Classes</a></li>
+          <li><a href="/paper/list">Papers</a></li>
+          <li><a href="/book/list">Books</a></li>
+          <li><a href="/place/list">Places</a></li>
+          <li><a href="/internship/list">Internships</a></li>
+          <li><a href="/game/list">Games</a></li>
+        </ul>
       </div>
         <div class="span-4 round" id="sidecol">
           <ul class="navigation">
@@ -107,6 +116,12 @@
 	  </div>
         </div>
       </div>
+    <div class="span-23 last round" id="footer"> 
+        <ul class="footer_nav"> 
+          <li>All rights reserved<a href="/about">Ca$h Money Software</li> 
+        </ul>
+    </div>
+
     </div>
   </body>
 </html>
