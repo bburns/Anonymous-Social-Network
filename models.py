@@ -22,8 +22,7 @@ def validate_email(email):
 #	raise db.BadValueError
     if email: 
 	regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
-	#regex2 = "[a-zA-Z0-9]*"
-   	if re.match(regex, email) == None:
+	if re.match(regex, email) == None:
 		raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
 
 # rating valiation
@@ -146,6 +145,11 @@ class Class(db.Model):
     	results = sorted(results, key=lambda time: time.edit_time, reverse = True)
     	return results[0:5]
 
+    def put(self) :
+	if not self.course_num :
+	   raise db.BadValueError("This field is required.")
+	else :
+	   db.Model.put(self)
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:

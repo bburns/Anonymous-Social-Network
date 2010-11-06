@@ -107,15 +107,15 @@ class testImport (unittest.TestCase) :
 	self.assert_(sc.comment == "cool")
 
 
+
     def testImportStudentClass2(self) :
 
         self.dbClear()
-	#xmlImportFile('testImport.xml')
-	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
+	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 341</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
 	query = Student.all()
 	students = query.fetch(1)
 	student = students[0]
-	sclist = student.studentclass_set.fetch(2)
+	sclist = student.studentclass_set.fetch(1)
 	sc = sclist[0]
 	c = sc.class_
 	self.assert_(c.unique == "12345")
