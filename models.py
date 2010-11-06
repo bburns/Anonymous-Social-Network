@@ -69,14 +69,11 @@ def validate_grade(val):
                 raise db.BadValueError
 
 # book validations
-
 def validate_isbn(val):
     if val:
         regex = "\S{8}"
         if re.match(regex, val)== None:
                 raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
-
-
 
 
 class Student(db.Model):
@@ -143,6 +140,10 @@ class Class(db.Model):
     unique = db.StringProperty(validator=validate_unique)
     semester = db.StringProperty(validator=validate_semester)
     instructor = db.StringProperty()
+
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
+
     edit_time = db.DateTimeProperty(auto_now=True)
   
     @staticmethod
@@ -167,6 +168,7 @@ class Class(db.Model):
 class ClassForm(djangoforms.ModelForm):
     class Meta:
         model = Class
+	exclude = ['ratingAvg', 'refCount']
 
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)
@@ -174,6 +176,35 @@ class StudentClass(db.Model):
     rating = db.StringProperty(validator=validate_rating)
     comment = db.StringProperty()
     grade = db.StringProperty(validator=validate_grade)
+
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this class - scs is a list of assoc objects, 
+        # each with a raating and comment. 
+	class_ = self.class_
+	scs = class_.studentclass_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sc.rating) for sc in scs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the class
+        class_.ratingAvg = ratingAvg
+        class_.refCount = n
+        class_.put()
 
 
 class Book(db.Model):
@@ -249,7 +280,10 @@ class Paper(db.Model):
     paper_category = db.StringProperty(choices = ["journal", "conference"])
     title = db.StringProperty()
     author = db.StringProperty()
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
+    
 
     @staticmethod
     def get_by_date(limit = 5):
@@ -268,12 +302,44 @@ class Paper(db.Model):
 class PaperForm(djangoforms.ModelForm):
     class Meta:
         model = Paper
+        exclude = ['ratingAvg', 'refCount']
+
 
 class StudentPaper(db.Model):
     student = db.ReferenceProperty(Student)
     paper = db.ReferenceProperty(Paper)
     rating = db.StringProperty()
     comment = db.TextProperty()
+
+
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this paper - sbs is a list of assoc objects, 
+        # each with a rating and comment. 
+        paper = self.paper
+        sbs = paper.studentpaper_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sb.rating) for sb in sbs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        paper.ratingAvg = ratingAvg
+        paper.refCount = n
+        paper.put()
 
 
 class Internship(db.Model):
@@ -405,6 +471,7 @@ class Game(db.Model):
 class GameForm(djangoforms.ModelForm):
     class Meta:
         model = Game
+	exclude = ['ratingAvg', 'refCount']
 
 class StudentGame(db.Model):
     student = db.ReferenceProperty(Student)
@@ -440,6 +507,36 @@ class StudentGame(db.Model):
         game.ratingAvg = ratingAvg
         game.refCount = n
         game.put()
+
+    def put(self):
+        """
+        Override the put method so can update the average rating and reference count
+        properties for the rated item. 
+        This will get called automatically on importing the xml, 
+        when user rates an existing item, and when they add and rate a new item. 
+        """
+        
+        # call superclass
+        db.Model.put(self) 
+        
+        # get all the refs to this book - sbs is a list of assoc objects, 
+        # each with a rating and comment. 
+        game = self.game
+        sgs = game.studentgame_set
+        
+        # get a list of rating values, and the average
+        #. get rid of int when convert from string
+        #. also could do scaling here - eg convert to 0-5? 
+        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        ratings = [int(sg.rating) for sg in sgs]
+        n = len(ratings)
+        ratingAvg = sum(ratings) / n
+        
+        # update the book
+        game.ratingAvg = ratingAvg
+        game.refCount = n
+        game.put()
+
 
 
 

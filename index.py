@@ -32,7 +32,57 @@ class About(webapp.RequestHandler):
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
-        doRender(self,"profile.html")
+        x = Session()
+        if 'student_id' in x:
+            template = {}
+            sb = StudentBook.all()
+            sc = StudentClass.all()
+            sp = StudentPlace.all()
+            si = StudentInternship.all()
+            spa = StudentPaper.all()
+            sg = StudentGame.all()
+            
+            s = Student.get_by_id(x['student_id'])
+            
+            #books
+            sbooks = sb.filter("student =", s)
+            sbooks = sbooks.fetch(98988)		
+            template['sbooks'] = sbooks
+
+            #class
+            sclasses = sc.filter("student =", s)
+            sclasses = sclasses.fetch(98988)
+            template['sclasses'] = sclasses
+
+            #Place
+            splaces = sp.filter("student = ", s)
+            splaces = splaces.fetch(98988)
+            template['splaces'] = splaces
+
+            #Internship
+            sinternships = si.filter("student = ", s)
+            sinternships = sinternships.fetch(98988)
+            template['sinternships'] = sinternships
+
+            #Paper
+            spapers = spa.filter("student = ", s)
+            spapers = spapers.fetch(98988)
+            template['spapers'] = spapers
+
+            #Game
+            sgames = sg.filter("student = ", s)
+            sgames = sgames.fetch(98988)
+            template['sgames'] = sgames
+            
+            doRender(self,"profile.html", template)
+        else:	 
+            doRender(self,"profile.html")
+
+class ListStudent(webapp.RequestHandler):
+    def get(self):
+        students = Student.all()        
+        doRender(self,'student/list.html',{'students':students})
+
 
 
 class SignupHandler(webapp.RequestHandler):
@@ -101,6 +151,7 @@ class LogoutHandler(webapp.RequestHandler):
         self.session = Session()
         self.session.delete_item('username')
         self.session.delete_item('student_id')
+        self.session.delete_item('admin')
         doRender(self,'index.html')
 
 
@@ -171,7 +222,6 @@ class AddClass(webapp.RequestHandler):
 			self.redirect("/class/list")
 		except db.BadValueError, e :
 			doRender(self,'class/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
-
 	else :
 		doRender(self,'class/add.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
 		
@@ -199,6 +249,40 @@ class DeleteClass(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id).delete()
+        self.redirect("/class/list")
+
+class ViewClass(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        class_ = Class.get_by_id(id)
+        form = ClassForm(instance=class_)
+        assocs = class_.studentclass_set
+        doRender(self,'class/view.html',{'form':form,'class':class_,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        class_id = int(self.request.get('_id'))
+        class_ = Class.get_by_id(class_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+        
+        # add the assocation object
+        assoc = StudentClass()
+        assoc.student = student
+        assoc.class_ = class_
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/class/list")
 
 
@@ -245,8 +329,8 @@ class ViewBook(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/book/view?id=%d" % book_id)
-        
+        #self.redirect("/book/view?id=%d" % book_id)
+        self.redirect("/book/list")
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -263,6 +347,7 @@ class AddBook(webapp.RequestHandler):
 		doRender(self,'book/add.html',{'form':form, 'error':"ERROR: " + e.args[0]})
         else:
             doRender(self,'book/add.html',{'form': form, 'error': 'ERROR: please check the following and try again'})
+
 
 class EditBook(webapp.RequestHandler):
     def get(self):
@@ -346,6 +431,40 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id).delete()
         self.redirect("/paper/list")
 
+class ViewPaper(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        paper = Paper.get_by_id(id)
+        form = PaperForm(instance=paper)
+        assocs = paper.studentpaper_set
+        doRender(self,'paper/view.html',{'form':form,'paper':paper,'assocs':assocs,'id':id})
+
+    def post(self):
+
+        #print self.request
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+
+        paper_id = int(self.request.get('_id'))
+        paper = Paper.get_by_id(paper_id)
+
+        rating = self.request.get('rating') # 0-100
+        comment = self.request.get('comment')
+
+        #print student, book, rating, comment
+        
+        # add the assocation object
+        assoc = StudentPaper()
+        assoc.student = student
+        assoc.paper = paper
+        assoc.rating = rating
+        assoc.comment = comment
+        assoc.put() # this will update the average rating, etc
+
+        #self.redirect("/book/view?id=%d" % book_id)
+        self.redirect("/paper/list")
+
 
 # Place
 
@@ -368,6 +487,7 @@ class AddPlace(webapp.RequestHandler):
 		doRender(self,'place/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
             doRender(self,'place/add.html',{'form':form, 'error':'ERROR: please check the following and try again'})
+
 
 class EditPlace(webapp.RequestHandler):
     def get(self):
@@ -417,6 +537,7 @@ class ViewPlace(webapp.RequestHandler):
         assoc.put() # this will update the average rating, etc
 
         self.redirect("/place/view?id=%d" % place_id)
+
 
 class DeletePlace(webapp.RequestHandler):
     def get(self):
@@ -477,6 +598,7 @@ class AddInternship(webapp.RequestHandler):
     def post(self):
         form = InternshipForm(data=self.request.POST)
         if form.is_valid():
+
 	    try :
             	internship = form.save()
             	id = internship.key().id()
@@ -502,6 +624,7 @@ class EditInternship(webapp.RequestHandler):
             self.redirect('/internship/view?id=%d' % id)
         else:
             doRender(self,'internship/edit.html', form)
+
 
 class DeleteInternship(webapp.RequestHandler):
     def get(self):  
@@ -586,6 +709,7 @@ class ViewGame(webapp.RequestHandler):
 
 class DeleteGame(webapp.RequestHandler):
     def get(self):
+        session = Session()
         id = int(self.request.get('id'))
         game = Game.get_by_id(id)
         doRender(self,'game/delete.html',{'game':game,'id':id})
@@ -606,7 +730,7 @@ def doRender(handler, filename='index.html', values = {}):
     
     filepath = os.path.join(os.path.dirname(__file__), 'templates/' + filename)
     if not os.path.isfile(filepath):
-        self.response.out.write("Invalid template file: " + filename)
+        handler.response.out.write("Invalid template file: " + filename)
         return False
 
     # copy the dictionary, so we can add things to it
@@ -624,8 +748,9 @@ def doRender(handler, filename='index.html', values = {}):
 
     if 'student_id' in handler.session:
         newdict['student_id'] = handler.session['student_id']
-    #.
-    newdict['admin'] = True
+    
+    if 'admin' in handler.session:
+        newdict['admin'] = handler.session['admin']
 
 
     s = template.render(filepath, newdict)
@@ -649,6 +774,7 @@ _URLS = (
 
      ('/class/list',ListClass),
      ('/class/add', AddClass),
+     ('/class/view', ViewClass),
      ('/class/edit', EditClass),
      ('/class/delete', DeleteClass),
 
@@ -662,6 +788,7 @@ _URLS = (
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
      ('/paper/delete', DeletePaper),
+     ('/paper/view', ViewPaper),
 
      ('/internship/list', ListInternship),
      ('/internship/view', ViewInternship),

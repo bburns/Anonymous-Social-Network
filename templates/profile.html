@@ -17,18 +17,136 @@
 		<li><a href="#tabs-1">Classes</a></li>
 		<li><a href="#tabs-2">Books</a></li>
 		<li><a href="#tabs-3">Papers</a></li>
+		<li><a href="#tabs-4">Internships</a></li>
+		<li><a href="#tabs-5">Places</a></li>
+		<li><a href="#tabs-6">Games</a></li>
 	</ul>
 	<div id="tabs-1">
+<<<<<<< HEAD
 		{%for class in recentClasses%}
 			{{class.course_name}}<br/>
 		{%endfor%}
+=======
+		<table>
+		  <thead>
+		    <th>Course Name</th>
+		    <th>Instructor</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for sclass in sclasses%}
+		    <tr><td><a href="/class/view?id={{sclass.class_.key.id}}">{{sclass.class_.course_name}}</a></td>
+		    <td>{{sclass.class_.instructor}}</td>
+		    <td>{{sclass.comment}}</td>
+		    <td>{{sclass.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
+		
+>>>>>>> origin/master
 	</div>
 	<div id="tabs-2">
-		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+		<table>
+		  <thead>
+		    <th>Title</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for sbook in sbooks%}
+		    <tr><td><a href="/book/view?id={{sbook.book.key.id}}">{{sbook.book.title}}</a></td>
+		    <td>{{sbook.comment}}</td>
+		    <td>{{sbook.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
 	</div>
 	<div id="tabs-3">
-		<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-		<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+	<table>
+		  <thead>
+		    <th>Paper Type</th>
+		    <th>Title</th>
+		    <th>Author</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for spaper in spapers%}
+		    <tr><td><a href="/paper/view?id={{spaper.paper.key.id}}">{{spaper.paper.title}}</a></td>
+		    <td>{{spaper.paper.paper_category}}</td>
+		    <td>{{spaper.paper.author}}</td>
+		    <td>{{spaper.comment}}</td>
+		    <td>{{spaper.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
+		
+	</div>
+	<div id="tabs-4">
+	<table>
+		  <thead>
+		    <th>Place Name</th>
+		    <th>Location</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for sinternship in sinternships%}
+		    <tr><td><a href="/internship/view?id={{sinternship.internship.key.id}}">{{sinternship.internship.place_name}}</a></td>
+		    <td>{{sinternship.internship.location}}</td>
+		    <td>{{sinternship.comment}}</td>
+		    <td>{{sinternship.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
+		
+	</div>
+	<div id="tabs-5">
+	<table>
+		  <thead>
+		    <th>Place Type</th>
+		    <th>Place Name</th>
+		    <th>Location</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for splace in splaces%}
+		    <tr><td><a href="/place/view?id={{splace.place.key.id}}">{{splace.place.place_type}}</a></td>
+		    <td>{{splace.place.place_name}}</td>
+		    <td>{{splace.place.location}}</td>
+		    <td>{{splace.comment}}</td>
+		    <td>{{splace.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
+		
+	</div>
+	<div id="tabs-6">
+	<table>
+	<thead>
+		    <th>Operating System</th>
+		    <th>Title</th>
+		    <th>Comment</th>
+		    <th>Rating</th>
+		  </thead>
+		  <tbody>
+
+		  {%for sgame in sgames%}
+		    <tr><td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.os}}</a></td>
+		    <td>{{sgame.game.title}}</td>
+		    <td>{{sgame.comment}}</td>
+		    <td>{{sgame.rating}}</td>
+		    </tr>
+		  {%endfor%}
+		</table>
+		
 	</div>
 </div>
 

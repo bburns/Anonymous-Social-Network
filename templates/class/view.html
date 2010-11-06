@@ -1,11 +1,11 @@
-<!-- view a book and associated ratings and comments -->
+<!-- view a class and associated ratings and comments -->
 
 {% extends "../_base.html" %}
 {% block content %}
 
-<a href="/book/list">Back to book listings</a>
+<a href="/class/list">Back to class listings</a>
 
-<h2>View Book</h2>
+<h2>View Class</h2>
 
 <!-- no good way to make a form read-only?
 <form>
@@ -17,10 +17,11 @@
 
 <table>
   <tbody>
-  <tr><td>Title: {{ book.title }} </td></tr>
-  <tr><td>Author: {{ book.author }} </td></tr>
-  <tr><td>Isbn: {{ book.isbn }} </td></tr>
-  <tr><td>Rating: {{ book.ratingAvg }} out of 100 (from {{ book.refCount }} rating(s))</td></tr>
+  <tr><td>Title: {{ class.course_num }} </td></tr>
+  <tr><td>Author: {{ class.course_name }} </td></tr>
+  <tr><td>Isbn: {{ class.unique }} </td></tr>
+<!-- unique, semester, instructor-->
+  <tr><td>Rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
   </tbody>
 </table>
 
@@ -44,10 +45,10 @@
 
 <div class="rating">
 
-<h3>Add your rating and comments for this book</h3>
+<h3>Add your rating and comments for this class</h3>
 
 
-<form method="post" action="/book/view">
+<form method="post" action="/class/view">
   <table>
   <tr>
     <td><label for="id_rating">Rating:</label></td>

@@ -19,7 +19,8 @@
       <td>{{class.semester}}</td>
       <td>{{class.instructor}}</td>
       <td>{{class.course_name}}</td>
-      <td>{% if username %}<a href='/class/edit?id={{class.key.id}}'>Edit</a> |
+      <td><a href='/class/edit?id={{class.key.id}}'>View</a>
+          {% if username %}| <a href='/class/edit?id={{class.key.id}}'>Edit</a> |
           <a href='/class/delete?id={{class.key.id}}'>Delete</a>{% endif %}</td>
     </tr>
   {% endfor %}
