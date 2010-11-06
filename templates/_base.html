@@ -50,6 +50,19 @@
             <li><a href="/help" class="round">Help</a></li>
           </ul>
         </div>
+      <div class="span-15 round" id="lower_header">
+      <ul class="footer_nav">
+        {% if admin %}
+          <li><a href="/student/list">Students</a></li>
+        {% endif %}
+        <li><a href="/class/list">Classes</a></li>
+        <li><a href="/paper/list">Papers</a></li>
+        <li><a href="/book/list">Books</a></li>
+        <li><a href="/place/list">Places</a></li>
+        <li><a href="/internship/list">Internships</a></li>
+        <li><a href="/game/list">Games</a></li>
+      </ul>
+      </div>
       <div class="span-15 round" id="content">
         {% block content %}
           This will be replaced
@@ -109,7 +122,7 @@
       </div>
     <div class="span-23 last round" id="footer"> 
         <ul class="footer_nav"> 
-        <li><a href="/about">About Ca$h Money Software</a></li> 
+          <li>All rights reserved<a href="/about">Ca$h Money Software</li> 
         </ul>
     </div>
 

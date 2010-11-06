@@ -24,6 +24,9 @@
   {% endfor %}
   </tbody>
 </table>
+
+{% if username %}
+
 <div class="rating">
 <h3>Add your rating and comments for this place</h3>
 
@@ -56,4 +59,5 @@
   <input type="hidden" name="_id" value="{{ id }}"/>
 </form>
 </div>
+{% endif %}
 {% endblock %}
