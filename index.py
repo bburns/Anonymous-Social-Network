@@ -78,6 +78,13 @@ class StudentProfile(webapp.RequestHandler):
 	else:	 
 		doRender(self,"profile.html")
 
+class ListStudent(webapp.RequestHandler):
+    def get(self):
+        students = Student.all()        
+        doRender(self,'student/list.html',{'students':students})
+
+
+
 class SignupHandler(webapp.RequestHandler):
     def get(self):
         self.session = Session()
@@ -720,8 +727,9 @@ def doRender(handler, filename='index.html', values = {}):
 
     if 'student_id' in handler.session:
         newdict['student_id'] = handler.session['student_id']
-    #.
-    newdict['admin'] = True
+    
+    if 'admin' in handler.session:
+        newdict['admin'] = handler.session['admin']
 
 
     s = template.render(filepath, newdict)
