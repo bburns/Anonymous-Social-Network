@@ -17,9 +17,9 @@
       <td>{{game.ratingAvg}}</td>
       <td>
           <a href='/game/view?id={{game.key.id}}'>View</a>
-          {% if username %} |
-          <a href='/game/edit?id={{game.key.id}}'>Edit</a> |
-          <a href='/game/delete?id={{game.key.id}}'>Delete</a>
+          {% if admin %}
+            | <a href='/game/edit?id={{game.key.id}}'>Edit</a>
+            | <a href='/game/delete?id={{game.key.id}}'>Delete</a>
           {% endif %}
       </td>
     </tr>

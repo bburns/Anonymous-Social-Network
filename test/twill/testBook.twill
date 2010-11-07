@@ -70,8 +70,9 @@ submit
 code 200
 
 # see if it's in the list
-find "Twill: The Book"
-find "Anonymous"
+# these change the __match__ variable also
+#find "Twill: The Book"
+#find "Anonymous"
 
 
 # edit it
@@ -87,9 +88,8 @@ find "Rating: 90 out of 100"
 
 
 # delete it (so won't mess up future tests)
+# not sure how to do this - this doesn't work
 #go /book/delete?id=__match__
-#go "/book/delete?id=%s" % __match__
-# not sure how to do this
 
 
 # make sure it's gone
