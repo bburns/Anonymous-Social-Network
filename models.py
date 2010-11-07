@@ -354,16 +354,16 @@ class StudentPaper(db.Model):
         # call superclass
         db.Model.put(self) 
         
-        # get all the refs to this paper - sbs is a list of assoc objects, 
+        # get all the refs to this paper - links is a list of assoc objects, 
         # each with a rating and comment. 
         paper = self.paper
-        sbs = paper.studentpaper_set
+        links = paper.studentpaper_set
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sb.rating) for sb in sbs]
+        ratings = [int(link.rating) for link in links]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
         
@@ -412,6 +412,7 @@ class StudentInternship(db.Model):
         assocs = internship.studentinternship_set
         ratings = [int(assoc.rating) for assoc in assocs]
         n = len(ratings)
+        ratingAvg = sum(ratings) / n
         internship.ratingAvg = ratingAvg
         internship.refCount = n
         internship.put()
@@ -436,7 +437,7 @@ class Place(db.Model):
 
     def put(self) :
         "Override this so we can catch required fields"
-	if not self.semester:
+        if not self.place_type:
             raise db.BadValueError("Place category not selected.")
         if not self.semester:
             raise db.BadValueError("Semester is a required field.")
@@ -446,7 +447,7 @@ class Place(db.Model):
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
         model = Place
-	exclude = ['ratingAvg', 'refCount']
+        exclude = ['ratingAvg', 'refCount']
 
 
 class StudentPlace(db.Model):
