@@ -1,18 +1,16 @@
 {% extends "../_base.html" %}
-{% block title %}Users/Students{% endblock %}
+{% block title %}Students{% endblock %}
 {% block content %}
-  <h2>Users/Students</h2>
+  <h2>Students</h2>
   <table>
     <tr>
-      <th>Email</th>
-      <th>Password</th>
-      <th>Admin</th>
+      <th>ID</th>
+      <th></th>
     </tr>
-    {% for user in users %}
+    {% for student in students %}
       <tr>
-        <td><a href="/student/edit?id={{user.key.id}}">{{user.email}}</a></td>
-        <td>{{user.password}}</td>
-        <td>{{user.isAdmin}}</td>
+        <td>{{student.id_}}</td>
+	<td><a href="/student/delete?id={{student.key.id}}">Delete</a></td>
       </tr>
     {% endfor %}
   </table>
