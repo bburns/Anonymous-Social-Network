@@ -75,6 +75,7 @@ def validate_isbn(val):
                 raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
 
 
+
 class Student(db.Model):
     # this has to come before the User class, because it references Student. 
     
@@ -129,11 +130,13 @@ class UserForm(djangoforms.ModelForm):
 
                 
 
-#. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
-#. or maybe just put semester and unique into the association class,
-# so coursenum,name and instructor all get rated together
 class Class(db.Model):
-    #course_num = db.StringProperty(required = True, validator=validate_course_num)
+    #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
+    #. or just put semester and unique into the association class,
+    # so coursenum,name and instructor all get rated together
+
+    # We could specify properties to be required here, but then you wouldn't be allowed
+    # to create empty objects. So we override put instead, to catch missing properties. 
     course_num = db.StringProperty(validator=validate_course_num)
     course_name = db.StringProperty()
     unique = db.StringProperty(validator=validate_unique)

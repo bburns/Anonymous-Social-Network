@@ -463,7 +463,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
         </game>
     </student>
     <student>
-	    <id>sbalani</id>
+	    <id>sbalani1</id>
 	    <password>shanky</password>
 	    <class>
 		    <unique>32165</unique>
@@ -739,6 +739,9 @@ The book is a comprehensive and insightful introduction to artificial intelligen
             <author>Hirotaka Takeuchi and Ikujiro Nanaka</author>
             <rating>83</rating>
             <comment></comment>
+        </paper>
+        <paper>
+            <paper_category>journal</paper_category>
             <title>Evolution of Database Designs</title>
             <author>Foo B. Ar</author>
             <rating>65</rating>

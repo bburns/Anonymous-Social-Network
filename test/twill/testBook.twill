@@ -1,7 +1,9 @@
 
-# a simple twill test script - will fail unless user brian with pw brian is in the db. 
+# a simple twill test script
 # run with 
 # > twill-sh testBook.twill
+# twill reference: http://twill.idyll.org/commands.html
+#---------------------------------------------------------------
 
 
 # check home page
@@ -16,7 +18,7 @@ find "Current books"
 
 # try to login and fail
 follow Login
-fv 1 1 brian
+fv 1 1 arachidonic.acid@gmail.com
 fv 1 2 wrongpw
 submit
 code 200
@@ -24,18 +26,46 @@ find "Invalid"
 
 # login correctly
 follow Login
-fv 1 1 brian
-fv 1 2 brian
+fv 1 1 arachidonic.acid@gmail.com
+fv 1 2 password
 submit
 code 200
 find "Logout"
 
 # add a book
 follow Books
-follow "Add a Book"
-fv 1 1 "123456789"
-fv 1 2 "Twill: The Book"
-fv 1 3 "Anonymous"
+follow Add
+# >> showforms
+# Form #1
+# ## ## __Name__________________ __Type___ __ID________ __Value__________________
+# 1     title                    text      id_title      
+# 2     author                   text      id_author     
+# 3     isbn                     text      id_isbn       
+# 4     _id                      hidden    (None)        
+# 5  1  None                     submit    (None)       Add Book 
+fv 1 1 "Twill: The Book"
+fv 1 2 "Anonymous"
+fv 1 3 "123456789"
+submit
+code 200
+
+# parse the url to get the book id into __match__
+# url is something like http://localhost:8080/book/view?id=1152
+url ".*\?id\=(.*)"
+
+# add a rating and comment
+# >> showforms
+# Form #1
+# ## ## __Name__________________ __Type___ __ID________ __Value__________________
+# 1     rating                   select    id_rating    ['0'] of ['0', '10', '20', '30', '40 ... 
+# 2     comment                  textarea  id_comment    
+# 3  1  None                     submit    (None)       Add Rating/Comment 
+# 4     _id                      hidden    (None)       1152 
+fv 1 1 90
+fv 1 2 "It's good but expensive"
+
+#. for some reason this isn't working - it's submitting the form, but 
+# getting redirected to /book/view, like it's doing a GET instead of a POST??
 submit
 code 200
 
@@ -43,17 +73,28 @@ code 200
 find "Twill: The Book"
 find "Anonymous"
 
-# edit it
 
-# check that changes made it
+# edit it
+# (no edit capability yet)
+
+# check that changes made it to list
 
 # view it
+follow __match__
+code 200
+find "Twill: The Book"
+find "Rating: 90 out of 100"
 
 
 # delete it (so won't mess up future tests)
+#go /book/delete?id=__match__
+#go "/book/delete?id=%s" % __match__
+# not sure how to do this
 
 
 # make sure it's gone
+#go /book/list
+#notfind "Twill: The Book"
 
 
 # logout
