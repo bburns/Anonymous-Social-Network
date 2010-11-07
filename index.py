@@ -83,6 +83,19 @@ class ListStudent(webapp.RequestHandler):
         students = Student.all()        
         doRender(self,'student/list.html',{'students':students})
 
+class DeleteStudent(webapp.RequestHandler):
+    
+    def get(self):
+        id = int(self.request.get('id'))
+        student = Student.get_by_id(id)
+        doRender(self,'student/delete.html',{'student':student, 'id':id})
+
+    def post(self):
+        id = int(self.request.get('_id'))
+        student = Student.get_by_id(id)
+        student.delete()
+        self.redirect("/student/list")
+
 class changePassword(webapp.RequestHandler):
     def get(self):
         x = Session()  
@@ -798,6 +811,9 @@ _URLS = (
      ('/profile',StudentProfile),
 
      ('/changePassword', changePassword),
+
+     ('/student/list', ListStudent),
+     ('/student/delete', DeleteStudent),
 
      ('/class/list',ListClass),
      ('/class/add', AddClass),
