@@ -159,10 +159,10 @@ class Class(db.Model):
         "Override this so we can catch required fields"
         if not self.course_num:
             raise db.BadValueError("Course number is a required field.")
-	if not self.unique :
-	   raise db.BadValueError("Unique is a required field.")	
-	if not self.semester :
-	   raise db.BadValueError("Semester is a required field.")
+	#if not self.unique :
+	#   raise db.BadValueError("Unique is a required field.")
+	#if not self.semester :
+	#   raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
 
@@ -257,12 +257,12 @@ class Book(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
     
-    def put(self) :
-        "Override this so we can catch required fields"
-        if not self.isbn:
-            raise db.BadValueError("ISBN is a required field.")
-        else:
-            db.Model.put(self) # call the superclass
+    # def put(self) :
+    #     "Override this so we can catch required fields"
+    #     if not self.isbn:
+    #         raise db.BadValueError("ISBN is a required field.")
+    #     else:
+    #         db.Model.put(self) # call the superclass
 
 
 class BookForm(djangoforms.ModelForm):
@@ -388,12 +388,12 @@ class Internship(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
 
-    def put(self) :
-        "Override this so we can catch required fields"
-        if not self.semester:
-            raise db.BadValueError("Semester is a required field.")
-        else:
-            db.Model.put(self) # call the superclass
+    # def put(self) :
+    #     "Override this so we can catch required fields"
+    #     if not self.semester:
+    #         raise db.BadValueError("Semester is a required field.")
+    #     else:
+    #         db.Model.put(self) # call the superclass
 
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
@@ -439,8 +439,8 @@ class Place(db.Model):
         "Override this so we can catch required fields"
         if not self.place_type:
             raise db.BadValueError("Place category not selected.")
-        if not self.semester:
-            raise db.BadValueError("Semester is a required field.")
+        #if not self.semester:
+        #    raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
 
