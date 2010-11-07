@@ -4,21 +4,23 @@
 <table>
   <thead>
     <tr>
-      <th>Unique</th>
       <th>Course Num</th>
+      <th>Course Name</th>
+      <th>Unique</th>
       <th>Semester</th>
       <th>Instructor</th>
-      <th>Course Name</th>
+      <th>Rating</th>
       <th></th>
     </tr>
   </thead>
   {% for class in classes %}
     <tr>
-      <td>{{class.unique}}</td>
       <td>{{class.course_num}}</td>
+      <td>{{class.course_name}}</td>
+      <td>{{class.unique}}</td>
       <td>{{class.semester}}</td>
       <td>{{class.instructor}}</td>
-      <td>{{class.course_name}}</td>
+      <td>{{class.ratingAvg}}</td>
       <td><a href='/class/view?id={{class.key.id}}'>View</a>
           {% if username %}| <a href='/class/edit?id={{class.key.id}}'>Edit</a> |
           <a href='/class/delete?id={{class.key.id}}'>Delete</a>{% endif %}</td>

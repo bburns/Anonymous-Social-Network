@@ -7,6 +7,7 @@
       <th>Title</th>
       <th>Author</th>
       <th>Category</th>
+      <th>Rating</th>
       <th></th>
     </tr>
   </thead>
@@ -15,6 +16,7 @@
       <td>{{paper.title}}</td>
       <td>{{paper.author}}</td>
       <td>{{paper.paper_category}}</td>
+      <td>{{paper.ratingAvg}}</td>
       <td><a href='/paper/view?id={{paper.key.id}}'>View</a>
           {% if username %} | <a href='/paper/edit?id={{paper.key.id}}'>Edit</a> |
           <a href='/paper/delete?id={{paper.key.id}}'>Delete</a>{% endif %}</td>

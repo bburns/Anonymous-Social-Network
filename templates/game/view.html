@@ -1,6 +1,8 @@
 {% extends "../_base.html" %}
 {% block content %}
+
 <a href="/game/list">Back to games</a>
+
 <h2>View Game</h2>
 <table>
   <tbody>
@@ -24,20 +26,11 @@
   {% endfor %}
   </tbody>
 </table>
-<<<<<<< HEAD
 
 {% if username %}
 
-=======
-<<<<<<< HEAD
-=======
-
-{% if username %}
-
->>>>>>> origin/master
->>>>>>> origin/formvalidation
 <div class="rating">
-<h3>Add your rating and comments for this place</h3>
+<h3>Add your rating and comments for this game</h3>
 
 <form method="post" action="/game/view">
   <table>
@@ -68,12 +61,7 @@
   <input type="hidden" name="_id" value="{{ id }}"/>
 </form>
 </div>
-<<<<<<< HEAD
+
 {% endif %}
-=======
-<<<<<<< HEAD
-=======
-{% endif %}
->>>>>>> origin/master
->>>>>>> origin/formvalidation
+
 {% endblock %}

@@ -366,12 +366,12 @@ class AddBook(webapp.RequestHandler):
     def post(self):
         form = BookForm(data=self.request.POST)
         if form.is_valid():
-	    try :
-            	book = form.save()
-            	id = book.key().id()
-	        self.redirect('/book/view?id=%d' % id)
-	    except db.BadValueError, e :
-		doRender(self,'book/add.html',{'form':form, 'error':"ERROR: " + e.args[0]})
+            try :
+                book = form.save()
+                id = book.key().id()
+                self.redirect('/book/view?id=%d' % id)
+            except db.BadValueError, e :
+                doRender(self,'book/add.html',{'form':form, 'error':"ERROR: " + e.args[0]})
         else:
             doRender(self,'book/add.html',{'form': form, 'error': 'ERROR: please check the following and try again'})
 
@@ -391,7 +391,7 @@ class EditBook(webapp.RequestHandler):
             #self.redirect('/book/list')
             self.redirect('/book/view?id=%d' % id)
         else:
-            doRender(self,'book/edit.html', form) # so presumably form acts as a dictionary...
+            doRender(self,'book/edit.html', {'form': form})
 
 class DeleteBook(webapp.RequestHandler):
     
@@ -422,14 +422,14 @@ class AddPaper(webapp.RequestHandler):
     def post(self):
         form = PaperForm(data=self.request.POST)
         if form.is_valid():
-	    try :
-	        #self.response.out.write("valid data")
-	        paper = form.save()
-        	self.redirect('/paper/list')
-	    except db.BadValueError, e:
-		doRender(self,'paper/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+            try :
+                paper = form.save()
+                id = paper.key().id()
+                self.redirect('/paper/view?id=%d' % id)
+            except db.BadValueError, e:
+                doRender(self,'paper/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'paper/add.html', form)
+            doRender(self,'paper/add.html', {'form':form})
 
 class EditPaper(webapp.RequestHandler):
     def get(self):
@@ -507,11 +507,12 @@ class AddPlace(webapp.RequestHandler):
     def post(self):
         form = PlaceForm(data=self.request.POST)
         if form.is_valid():
-	    try :
-            	place = form.save()
-	        self.redirect('/place/list')
-	    except db.BadValueError, e: 
-		doRender(self,'place/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+            try :
+                place = form.save()
+                id = place.key().id()
+                self.redirect('/place/view?id=%d' % id)
+            except db.BadValueError, e: 
+                doRender(self,'place/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
             doRender(self,'place/add.html',{'form':form, 'error':'ERROR: please check the following and try again'})
 
@@ -563,7 +564,7 @@ class ViewPlace(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        self.redirect("/place/view?id=%d" % place_id)
+        self.redirect("/place/list")
 
 
 class DeletePlace(webapp.RequestHandler):
@@ -579,12 +580,11 @@ class DeletePlace(webapp.RequestHandler):
 
 
 # Internship
+
 class ListInternship(webapp.RequestHandler):
     def get(self):
         internships = Internship.all()
         doRender(self,'internship/list.html',{'internships':internships})
-
-
 
 class ViewInternship(webapp.RequestHandler):
     def get(self):
@@ -625,15 +625,14 @@ class AddInternship(webapp.RequestHandler):
     def post(self):
         form = InternshipForm(data=self.request.POST)
         if form.is_valid():
-
-	    try :
+            try :
             	internship = form.save()
             	id = internship.key().id()
             	self.redirect('/internship/view?id=%d' % id)
-	    except db.BadValueError, e :
-		doRender(self,'internship/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+            except db.BadValueError, e :
+                doRender(self,'internship/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'internship/add.html',form)
+            doRender(self,'internship/add.html',{'form':form})
 
 class EditInternship(webapp.RequestHandler):
     def get(self):
