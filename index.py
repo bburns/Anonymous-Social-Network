@@ -2,7 +2,9 @@
 """
 ASN2
 Anonymous Social Network phase 2
-"""   
+This file defines all the request handlers for the application.
+URL redirections are defined at the end of the file.
+"""
 
 import os
 
@@ -17,6 +19,8 @@ from utils.sessions import Session
 from models import *
 
 from google.appengine.ext.db import djangoforms
+
+
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -314,11 +318,6 @@ class ViewClass(webapp.RequestHandler):
 
 
 # Book
-
-# also want to show ratings and comments.
-# maybe show avg rating, # of ratings in listing. 
-# click on a book to view it, and all associated ratings and comments
-
 
 class ListBook(webapp.RequestHandler):
     def get(self):
@@ -662,7 +661,9 @@ class DeleteInternship(webapp.RequestHandler):
         internship.delete()
         self.redirect("/internship/list")
 
-#Game
+
+# Game
+
 class ListGame(webapp.RequestHandler):
     def get(self):
         games = Game.all()

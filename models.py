@@ -20,10 +20,9 @@ from google.appengine.ext.db import djangoforms
 # validation functions
 # can be used by passing it as a param in a Property  declaration
 #       eg:   course_num = db.StringProperty(validator=validate_course_num)
+
 # student validations
 def validate_email(email):
-#    if not email:
-#       raise db.BadValueError
     if email: 
 	regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
 	if re.match(regex, email) == None:
@@ -208,43 +207,14 @@ class StudentClass(db.Model):
         class_.refCount = n
         class_.put()
 
-    def put(self):
-        """
-        Override the put method so can update the average rating and reference count
-        properties for the rated item. 
-        This will get called automatically on importing the xml, 
-        when user rates an existing item, and when they add and rate a new item. 
-        """
-        
-        # call superclass
-        db.Model.put(self) 
-        
-        # get all the refs to this class - scs is a list of assoc objects, 
-        # each with a raating and comment. 
-	class_ = self.class_
-	scs = class_.studentclass_set
-        
-        # get a list of rating values, and the average
-        #. get rid of int when convert from string
-        #. also could do scaling here - eg convert to 0-5? 
-        # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sc.rating) for sc in scs]
-        n = len(ratings)
-        ratingAvg = sum(ratings) / n
-        
-        # update the class
-        class_.ratingAvg = ratingAvg
-        class_.refCount = n
-        class_.put()
-
 
 class Book(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     isbn = db.StringProperty(validator=validate_isbn)
 
-    # store aggregate info here, so don't have to do expensive joins
-    # update in StudentBook.put method
+    # store aggregate info here, so don't have to do expensive joins to get it.
+    # updated in StudentBook.put method.
     ratingAvg = db.IntegerProperty(validator=validate_rating) # 0 to 100
     refCount = db.IntegerProperty()
     
@@ -306,8 +276,9 @@ class StudentBook(db.Model):
         book.put()
 
 
-#. add more choices, journal name, year, etc
+
 class Paper(db.Model):
+    #. add more choices, journal name, year, etc
     paper_category = db.StringProperty(choices = ["journal", "conference"])
     title = db.StringProperty()
     author = db.StringProperty()

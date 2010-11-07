@@ -101,7 +101,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentClass(self) :
 
         self.dbClear()
-        #xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN2.xml')
         xmlImportString("""
 <students>
 	<student>
@@ -274,7 +274,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentBook2(self) :
 
         self.dbClear()
-        #xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN2.xml')
         xmlImportString("""
 <students>
    <student><id>12345678</id><password>foo</password></student>
@@ -337,7 +337,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentPaper(self) :
 
         self.dbClear()
-        #xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN2.xml')
         xmlImportString("""
 <students>
 	<student>
@@ -413,7 +413,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentPaper2(self) :
 
         self.dbClear()
-        #xmlImportFile('xml/ASN1.xml')
+        #xmlImportFile('xml/ASN2.xml')
         xmlImportString("""
 <students>
     <student>
@@ -455,7 +455,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentInternship(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -492,7 +492,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentInternship2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[3]	
@@ -529,7 +529,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentStudyPlace(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -569,7 +569,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentStudyPlace2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[3]	
@@ -609,7 +609,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentLivePlace(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -649,7 +649,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentLivePlace2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[3]	
@@ -689,7 +689,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentEatPlace(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -729,7 +729,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentEatPlace2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[3]	
@@ -769,7 +769,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentFunPlace(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -809,7 +809,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentFunPlace2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[3]	
@@ -848,7 +848,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentGame(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[0]	
@@ -882,7 +882,7 @@ class testImport (unittest.TestCase) :
     def testImportStudentGame2(self) :
 
         self.dbClear()
-	xmlImportFile('xml/ASN1.xml')
+	xmlImportFile('xml/ASN2.xml')
 	query = Student.all()
 	students = query.fetch(5)
 	student = students[3]	

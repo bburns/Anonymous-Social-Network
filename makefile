@@ -4,7 +4,7 @@
 #---------------------------------------------------------------
 
 # need this because 'make test' doesn't work otherwise (?)
-.PHONY: test
+.PHONY: test docs
 
 
 ifeq ($(OS),Windows_NT)
@@ -106,11 +106,11 @@ check:
 
 # generate html docs
 docs:
-#	pydoc ASN2
+	pydoc index
 	rm -rf html
 	mkdir html
-	pydoc -w ASN2
-	mv ASN2.html html
+	pydoc -w index
+	mv index.html html/ASN2.html
 
 
 # epydoc

@@ -1,13 +1,16 @@
 
-why refactoring import would help...
+ASN2
+Anonymous Social Network phase 2
 
-> python testInConsole.py TestASN1
-Ran 4 tests in 0.065s
 
-> python testInConsole.py testExport
-Ran 11 tests in 0.302s
+To run locally, have google_appengine installed in a parent folder, then
 
-> python testInConsole.py testImport
-Ran 21 tests in 10.578s
+> make run
+
+this will run the application with a database called datastore in the current folder. 
+Then navigate in a browser to http://localhost:8080
+
+
+To run on appspot.com, navigate to http://cs373-asn2-jkgrimes.appspot.com
 
 
