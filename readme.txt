@@ -13,4 +13,7 @@ Then navigate in a browser to http://localhost:8080
 
 To run on appspot.com, navigate to http://cs373-asn2-jkgrimes.appspot.com
 
+To login as an admin, use the following account:
+  email: admin@admin.com
+  password: admin
 

@@ -106,26 +106,27 @@ check:
 
 # generate html docs
 docs:
-	pydoc index
+#	pydoc index
 	rm -rf html
 	mkdir html
 	pydoc -w index
-	mv index.html html/ASN2.html
+	pydoc -w models
+	mv *.html html
 
 
 # epydoc
 # it works, but it does make a LOT of files
-edoc:
-	${epydoc} --html -o html2 ASN2.py
+#edoc:
+#	${epydoc} --html -o html2 ASN2.py
 
 
 
 # validate xml against schema
 #. not working from here
-validate:
-	cd xml
-	validate *.xml
-	cd ..
+#validate:
+#	cd xml
+#	validate *.xml
+#	cd ..
 
 
 # get git log
@@ -137,7 +138,8 @@ log:
 
 # zip up files for turnin
 zip:
-	zip -r ASN2.zip ASN2.log test/*.py ASN2.py xmlImport.py xmlExport.py html
+	zip -r ASN2.zip ASN2.log test/*.py test/twill index.py models.py utils/*.py html makefile testInConsole.py readme.txt app.yaml docs
+
 
 
 # do turnin
