@@ -159,55 +159,43 @@ class testImport (unittest.TestCase) :
         # try importing a string
 
         self.dbClear()
-<<<<<<< HEAD
-        xmlImportString('<students><student><class><unique>12345</unique> <course_name>AI</course_name><grade>A</grade><rating>93</rating><comment>cool</comment> </class></student></students>')
-=======
-	xmlImportString('<students><student><class><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment>cool</comment> </class></student></students>')
->>>>>>> origin/formvalidation
-	query = Student.all()
-	students = query.fetch(1)
-	student = students[0]
-	sclist = student.studentclass_set.fetch(1)
-	sc = sclist[0]
-	c = sc.class_
-	self.assert_(c.unique == "12345")
-	self.assert_(sc.grade == "A")
-	self.assert_(sc.rating == "93")
-	self.assert_(c.course_num == "CS 343")
-	self.assert_(sc.comment == "cool")
+        xmlImportString('<students><student><class><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment>cool</comment> </class></student></students>')
+        query = Student.all()
+        students = query.fetch(1)
+        student = students[0]
+        sclist = student.studentclass_set.fetch(1)
+        sc = sclist[0]
+        c = sc.class_
+        self.assert_(c.unique == "12345")
+        self.assert_(sc.grade == "A")
+        self.assert_(sc.rating == "93")
+        self.assert_(c.course_num == "CS 343")
+        self.assert_(sc.comment == "cool")
 
 
     def testImportStudentClass3(self) :
-<<<<<<< HEAD
-
-        self.dbClear()
-        #xmlImportFile('testImport.xml')
-	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique> <course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><grade>F</grade><comment>hard</comment></class></student></students>')
-=======
         # http://localhost:8080/test?format=plain&name=testImport.testImport.testImportStudentClass2
         self.dbClear()
-	xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><course_num>CS 373</course_num><grade>F</grade><comment>hard</comment></class></student></students>')
->>>>>>> origin/formvalidation
-	query = Student.all()
-	students = query.fetch(1)
-	student = students[0]
-	sclist = student.studentclass_set.fetch(2)
-	sc = sclist[0]
-	c = sc.class_
-	self.assert_(c.unique == "12345")
-	self.assert_(sc.grade == "A")
-	sc2 = sclist[1]
-	c2 = sc2.class_
-	self.assert_(c2.unique == "54321")
-	self.assert_(sc2.grade == "F")
-	self.assert_(sc2.comment == "hard")
+        xmlImportString('<students><student><class><id>foo</id><unique>12345</unique><course_num>CS 343</course_num><course_name>AI</course_name><grade>A</grade><rating>93</rating><comment></comment> </class><class><unique>54321</unique><course_num>CS 373</course_num><grade>F</grade><comment>hard</comment></class></student></students>')
+        query = Student.all()
+        students = query.fetch(1)
+        student = students[0]
+        sclist = student.studentclass_set.fetch(2)
+        sc = sclist[0]
+        c = sc.class_
+        self.assert_(c.unique == "12345")
+        self.assert_(sc.grade == "A")
+        sc2 = sclist[1]
+        c2 = sc2.class_
+        self.assert_(c2.unique == "54321")
+        self.assert_(sc2.grade == "F")
+        self.assert_(sc2.comment == "hard")
 
 
     def testImportStudentBook(self) :
 
         self.dbClear()
-        #xmlImportFile('xml/ASN1.xml')
-	xmlImportString("""
+        xmlImportString("""
 <students>
 	<student>
 		<id>bkornfue</id>
@@ -260,27 +248,27 @@ class testImport (unittest.TestCase) :
 </students>
 """)
 
-	query = Student.all()
-	students = query.fetch(5)
-	student = students[0]	
-	sblist = student.studentbook_set.fetch(9857437)
-	
-	#test 1 Book			
-	sb = sblist[0]
-	b = sb.book
-	self.assert_(sb.rating == "97")
-	self.assert_(sb.comment == "Long")
-	self.assert_(b.isbn == "4356745290")
-	self.assert_(b.title == "Automata, Complexity, and Computability", b.title)
-	self.assert_(b.author == "Elaine Rich")
-	
-	#test 2 books
-	sb = sblist[1]
-	b = sb.book
-	self.assert_(sb.rating == "90")
-	self.assert_(b.isbn == "0679736646")
-	self.assert_(b.title == "Test", b.title)
-	self.assert_(b.author == "Ben Kornfuehrer")
+        query = Student.all()
+        students = query.fetch(5)
+        student = students[0]	
+        sblist = student.studentbook_set.fetch(9857437)
+        
+        #test 1 Book			
+        sb = sblist[0]
+        b = sb.book
+        self.assert_(sb.rating == "97")
+        self.assert_(sb.comment == "Long")
+        self.assert_(b.isbn == "4356745290")
+        self.assert_(b.title == "Automata, Complexity, and Computability", b.title)
+        self.assert_(b.author == "Elaine Rich")
+        
+        #test 2 books
+        sb = sblist[1]
+        b = sb.book
+        self.assert_(sb.rating == "90")
+        self.assert_(b.isbn == "0679736646")
+        self.assert_(b.title == "Test", b.title)
+        self.assert_(b.author == "Ben Kornfuehrer")
 
 
     def testImportStudentBook2(self) :

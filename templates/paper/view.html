@@ -18,9 +18,9 @@
 <table>
   <tbody>
   <tr><td>Paper category: {{ paper.paper_category }} </td></tr>
-  <tr><td>Title: {{ class.title }} </td></tr>
-  <tr><td>Author: {{ class.author }} </td></tr>
-  <tr><td>Rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
+  <tr><td>Title: {{ paper.title }} </td></tr>
+  <tr><td>Author: {{ paper.author }} </td></tr>
+  <tr><td>Rating: {{ paper.ratingAvg }} out of 100 (from {{ paper.refCount }} rating(s))</td></tr>
   </tbody>
 </table>
 
@@ -44,7 +44,7 @@
 
 <div class="rating">
 
-<h3>Add your rating and comments for this class</h3>
+<h3>Add your rating and comments for this paper</h3>
 
 
 <form method="post" action="/paper/view">
