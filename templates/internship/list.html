@@ -21,11 +21,10 @@
       <td>{{internship.ratingAvg}}</td>
       <td>
         <a href="/internship/view?id={{ internship.key.id }}">View</a>
-      
-        <!--
-        {% if admin %}<a href='/internship/edit?id={{internship.key.id}}'>Edit</a> |
-          <a href='/internship/delete?id={{internship.key.id}}'>Delete</a>{% endif %}
-        -->
+        {% if admin %}
+          | <a href='/internship/edit?id={{internship.key.id}}'>Edit</a>
+          | <a href='/internship/delete?id={{internship.key.id}}'>Delete</a>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

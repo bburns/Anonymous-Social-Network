@@ -1,0 +1,697 @@
+commit d36c4c530eb2e5dc94fce300c77bfce5f299feb4
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Sun Nov 7 15:07:14 2010 -0600
+
+    edit and delete links only available to admins.
+
+commit 68e7688381312359bce9bba600f7a70662c42a3b
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Sun Nov 7 13:56:08 2010 -0600
+
+    made isbn and semester optional. all tests passing.
+
+commit 1aad7f1c98895408b0a7716aa674006f16dafe68
+Merge: beb5961 9620345
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Sun Nov 7 13:46:16 2010 -0600
+
+    Merge branch 'master' of git.assembla.com:cs373-asn2-jkgrimes
+
+commit beb5961295b6a29c3280d3ba476d95a2bda2a02a
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Sun Nov 7 13:46:10 2010 -0600
+
+    various stuff
+
+commit 96203451c39bc500691bec4b7ebafb929d127524
+Merge: 3a9be67 4ef04af
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Sun Nov 7 13:01:26 2010 -0600
+
+    Merge branch 'master' of git.assembla.com:cs373-asn2-jkgrimes
+
+commit 3a9be674e48369e7f5271d610a82163528cc49fc
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Sun Nov 7 13:00:29 2010 -0600
+
+    Fixed small bug is profile page
+
+commit 4ef04af12014a4374071b854463f334191ab13de
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Sun Nov 7 01:32:28 2010 -0500
+
+    Fixed some inconsistencies in the different type handling, resolved lingering merge conflicts.
+
+commit 93e8d66398534997da4ca371f3ef570688238fe1
+Merge: bf2c900 660436f
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Sat Nov 6 15:36:40 2010 -0500
+
+    Merge branch 'master' of git.assembla.com:cs373-asn2-jkgrimes
+    
+    Conflicts:
+    	templates/_base.html
+    
+    Conflicts resolved
+
+commit bf2c900d3bf76f1b7270b1a8f0f3725a4e4030ab
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Sat Nov 6 15:32:00 2010 -0500
+
+    Modified base.html. Lining up links.
+
+commit 660436f58a94243c6d24f39ac78c1157ad0100c5
+Merge: db0baa0 0384a74
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Nov 6 15:24:09 2010 -0500
+
+    Even more conflict resolutions.  Regulate
+
+commit db0baa0fc0443f4510919fc56f74bcf4f692d274
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Nov 6 15:15:09 2010 -0500
+
+    Resolving even more conflicts.  Making conflict diamonds outta this shit
+
+commit 7f61be4b569739f4805e9f1ee5b8fa76e02dd7fc
+Merge: 32cec95 d51cb36
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Nov 6 15:03:36 2010 -0500
+
+    Resolved conflicts. Again
+
+commit 0384a749f2e491c7f09e6452e9c95e0d44893c29
+Author: benk701 <benk0615@gmail.com>
+Date:   Sat Nov 6 14:55:05 2010 -0500
+
+    Change Password functionality Working
+
+commit d51cb36e914b14d6954cb40f0586a72cf68fdf9b
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Sat Nov 6 14:42:10 2010 -0500
+
+    still resolving conflicts
+
+commit 64919948125562587f8109e2c822623a7981d62a
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Sat Nov 6 14:11:10 2010 -0500
+
+    fixed all the validation problems, added error messeges. Added a logo
+
+commit 0635cb1b083d5cfd35134660eb8afc006e17e69d
+Author: benk701 <benk0615@gmail.com>
+Date:   Sat Nov 6 13:30:44 2010 -0500
+
+    Added Links to sidebar and profile page
+
+commit 32cec95b30cc2cd476abe50831191ae9cafac759
+Merge: a1fe8e4 17a6032
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Sat Nov 6 12:57:45 2010 -0500
+
+    Merge branch 'master' of git.assembla.com:cs373-asn2-jkgrimes
+
+commit a1fe8e4758b600c2e3b8e66fcf1d3f5f240eb403
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Sat Nov 6 12:57:02 2010 -0500
+
+    Added view files for paper and class
+
+commit 27ac08348d6a4911198f7229bd5372f951305b92
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Sat Nov 6 12:47:40 2010 -0500
+
+    temp commit
+
+commit 5f273fdbd1e4ab60681099244696b22d83776d8a
+Merge: 55f965a 57d72aa
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Sat Nov 6 12:46:51 2010 -0500
+
+    temp commit
+
+commit 55f965a36724056ae1832b7e840413b320331a53
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Sat Nov 6 12:45:56 2010 -0500
+
+    temp commit
+
+commit 17a6032135121f2c68bdb93f64afeffd43ccc6c8
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Nov 6 12:08:40 2010 -0500
+
+    Added header navgiation
+
+commit eeeea6ffdfad629a4deff80b99f2bb93af1c44df
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Nov 6 11:45:42 2010 -0500
+
+    Fixing some UI inconsistencies
+
+commit 436f1b90253ee4f96a6a9eba411c213d4fc85578
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Nov 6 10:48:52 2010 -0500
+
+    Admin login works for applicable users. Some links hidden from non admins
+
+commit 2036aba4c6f6ab92b79ba38584fdfa34b43caf5f
+Merge: 6f315c6 f9a883a
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Fri Nov 5 19:10:07 2010 -0500
+
+    Merge remote branch 'origin/master'
+
+commit 6f315c61cb712b4fda0c551dc424692c8e4271d9
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Fri Nov 5 19:09:48 2010 -0500
+
+    Added a footer to _base.html
+
+commit 57d72aa0e69781ee29eba8bde87275bb32513730
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Fri Nov 5 17:04:14 2010 -0500
+
+    adding semester validation - not working
+
+commit cfa97b8f0c1024254f3cc8b7578762b77e52b15a
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Fri Nov 5 16:53:47 2010 -0500
+
+    resolved conflicts
+
+commit f9a883a54d0cf215ccf4b15adfbde3012d9df3a7
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 16:50:47 2010 -0500
+
+    Working Profile page
+
+commit 9ea1da4e0fdbacd4eed80f7d2f654346cab83a6a
+Merge: 6aa8f70 8f4559a
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 16:45:40 2010 -0500
+
+    Merge commit 'origin/master'
+
+commit 6aa8f703af7d127d99191d515f837ba9e4ebe7bf
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 16:45:13 2010 -0500
+
+    Modified Profile - added papers
+
+commit 97eab2cf9d02dfb042a2d23cccb00117479ff11c
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Fri Nov 5 16:44:22 2010 -0500
+
+    fixed 'bug' - test actually had two classes, only one had the course_num set
+
+commit 8f4559a800d1012ab6cb50f13ac4ff1996f9b995
+Merge: 988f8b2 6ede7cc
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Fri Nov 5 16:41:12 2010 -0500
+
+    Merge remote branch 'origin/master'
+
+commit 988f8b23be96969d56c2bd7d6d481b7a1b114b23
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Fri Nov 5 16:41:01 2010 -0500
+
+    Added student-game functionality
+
+commit cc24b537062d8b6fe564141e91a84009694af37f
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 16:27:20 2010 -0500
+
+    Modified profile
+
+commit 8242c91937ea052b2d8fd248535e4f5fba815e97
+Merge: d5fd9cc 6ede7cc
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 16:04:50 2010 -0500
+
+    Merge commit 'origin/master'
+
+commit d5fd9cc3c01dbd10cb9596bfd4fd65b36396885b
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 16:04:19 2010 -0500
+
+    Edited Profile page
+
+commit b2d2fcd18605c3f0adf85e1b3474db0971453ac9
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Fri Nov 5 15:56:51 2010 -0500
+
+    So far all the validations work except the course_num is considered as optional for now
+
+commit 641e34c137718aef0f4f0d02f01f73982e3fee16
+Merge: 4334d2d b05ad08
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 15:50:39 2010 -0500
+
+    Merge commit 'origin/master'
+
+commit 4334d2d8f34a9d4db24a6c80558c4ed964b335a9
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Fri Nov 5 15:50:06 2010 -0500
+
+    Added functionality to view user's profile
+
+commit 6ede7ccbb50e7d3a603025f23fce74d01b872e2c
+Merge: 72b11f3 b05ad08
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Fri Nov 5 15:49:05 2010 -0500
+
+    Merge branch 'master' of git.assembla.com:cs373-asn2-jkgrimes into internships
+
+commit 72b11f3acd418cd0f79c8c9bfe29e01ad89bd78c
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Fri Nov 5 15:43:55 2010 -0500
+
+    got internships working
+
+commit b05ad08056daeca66e003c4baab50c948c22ee94
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Fri Nov 5 15:41:37 2010 -0500
+
+    Students and places now associated
+
+commit 8df3fbb310fd4ee29c8bf3e4efddcc03e835007f
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Fri Nov 5 12:48:49 2010 -0500
+
+    Got all the validation function applied to fields. Made the error messeges more specific. Still trying to figure out what's causing test to fail
+
+commit bd45930e8a979fad89b6e4d43e40c2ab920bfba7
+Merge: 03da2ab 96accf8
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 23:54:30 2010 -0500
+
+    merged with refactor-import (partially completed converting tests to xml strings)
+
+commit 03da2ab1de80ecd1d2f87537642e59a5c75a59b0
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 23:37:18 2010 -0500
+
+    finishing up the book association class handling. added an edit page. added a huge comment to the xml file.
+
+commit c00a6b1aeac1195120c45abffed02219604d4d92
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Thu Nov 4 16:51:09 2010 -0500
+
+    fixed minor changes, validation functions are being used with their data specific error tags
+
+commit 1e8dccf54e88da4c9525a4ec7376515653d363d6
+Merge: ec1c887 c5086bd
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Thu Nov 4 16:44:23 2010 -0500
+
+    Merge commit 'origin/master' into formvalidation
+
+commit ec1c887adc24c21dc8f35f0b331115fc065f2bfb
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Thu Nov 4 16:44:16 2010 -0500
+
+    added more validation functions.
+
+commit c5086bd53bab77f996433cb633e5fc4e6b68202b
+Merge: d12355c 38de215
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Thu Nov 4 16:31:07 2010 -0500
+
+    Resolved Changes
+
+commit 38de215db1aff65d8e8e6a36a829e53951a7659a
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Thu Nov 4 16:28:25 2010 -0500
+
+    branch done for now
+
+commit d12355cc6aed3a304b9c2bbebea43e331d7507c9
+Merge: 3f0e8cc f3f185e
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 16:24:11 2010 -0500
+
+    Merge commit 'origin'; branch 'assoc-book'
+
+commit f3f185ec1641806c64d6dba54fbb381ce164146a
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 16:23:31 2010 -0500
+
+    add rating/comment seems to work for books. removed _base templates from subfolders.
+
+commit 1984be4c23bcb22deb5ed0b303e329b665fd63a7
+Merge: 140ba72 3f0e8cc
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Thu Nov 4 16:04:06 2010 -0500
+
+    Merge commit 'origin/master' into profile
+
+commit 140ba721da8bfa22d8c7f0f069a6a3e33c009738
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Thu Nov 4 16:03:25 2010 -0500
+
+    Remove unnecessary jquery files
+
+commit 3f0e8cc908fb30330bf1495051c0fd17ecdceb33
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Thu Nov 4 15:52:09 2010 -0500
+
+    Added about page
+
+commit 042b25be34b29fe973577a9ff4ee7b92487a3091
+Merge: 12377d5 53da55a
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 15:46:09 2010 -0500
+
+    Merge commit 'origin/master' into assoc-book
+
+commit 12377d51b3a4d7dbf5229657ac265ac2c6b7d622
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 15:46:05 2010 -0500
+
+    working on add ratings form in book view
+
+commit a488ae5ff529dfdda59318ff46834fc9fedcd35e
+Author: scy77 <scy77@mail.utexas.edu>
+Date:   Thu Nov 4 15:40:15 2010 -0500
+
+    implemented validation function for email. It works perfectly in signup
+
+commit 38d2de8825adf155925712a72dd939d24a22a688
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Thu Nov 4 15:32:17 2010 -0500
+
+    Added barebones help page
+
+commit 53da55a118fe3eb0f075eacebfa1bee1a17bc3c4
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Thu Nov 4 14:13:37 2010 -0500
+
+    Users associated student id now handled in sessions
+
+commit 6f171031b0f428b4db0f9152ae0f696714d63b45
+Merge: 9e1f380 4f971a3
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 01:35:25 2010 -0500
+
+    Merge commit 'origin'; branch 'assoc'
+
+commit 9e1f380add4fafbe4b8457a6aced812b67305907
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 01:35:20 2010 -0500
+
+    git still being weird about these two files.
+
+commit 4f971a3770cc115acae6f243e469a1e854ff69cf
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Thu Nov 4 01:34:29 2010 -0500
+
+    got preliminary aggregation working for Books. listing shows average rating. click view to see new view page with details. need to allow user to choose an existing book when adding a rating/comment. added all.xml (from the google doc instance xml) - fixed most schema problems, but still won't import.
+
+commit 96accf8caf4d4124b151d9ecd19d837577c9f11f
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Wed Nov 3 23:55:24 2010 -0500
+
+    git is being weird. didn't change these files.
+
+commit 91155777a6bf4609e509923f17bc6b3a82f7d37e
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Wed Nov 3 23:54:06 2010 -0500
+
+    still cleaning up. added admin menu items
+
+commit 9864e15b9c36cbbac755d066fd41129bae8f3a6b
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Wed Nov 3 22:43:59 2010 -0500
+
+    still cleaning up a bit. made dbclear delete ALL the tables - in tests also.
+
+commit cbf87896f1816aebf0324baf61ebeefcc57290e9
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Wed Nov 3 22:07:45 2010 -0500
+
+    cleanup. not sure why asn.mdl and sang.xml are showing up as changed - for some reason they're doing that on my windows machine, and did so when I first cloned the repository.
+
+commit 12f86d76a9e3c55e574d5502d4515e0926ff3af4
+Author: benk701 <benk0615@gmail.com>
+Date:   Wed Nov 3 17:37:09 2010 -0500
+
+    Got Accordian Working on right nav
+
+commit dad7e83458f0d899d408c2433759292045f96bc2
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Wed Nov 3 15:43:45 2010 -0500
+
+    Working for classes
+
+commit 7efffe6a502cd26cb289e683f60291518c298b00
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Wed Nov 3 15:16:07 2010 -0500
+
+    Added functionality of sorting most recent editied attributes.
+
+commit f5b6729234260f63bc30fb290c15473b85713cd6
+Merge: 7a2f9ca 8a4c4ad
+Author: sbalani17 <sbalani17@mail.utexas.edu>
+Date:   Wed Nov 3 14:12:15 2010 -0500
+
+    Merge commit 'origin/userInterface' into userInterface
+
+commit 7a2f9ca1a9f2a413d0d6811ff01f0d5c0715eb24
+Merge: 4f8b463 dfb6279
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 23:58:03 2010 -0500
+
+    Merge commit 'origin/master'
+
+commit 4f8b4637b262b3553456358db3ecadcc05703606
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 23:54:54 2010 -0500
+
+    Merge commit 'origin'; branch 'brian'
+
+commit 993a4aedb65688805ba4f9a9b1d6bc9ac93af2ee
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 23:54:25 2010 -0500
+
+    added twill test
+
+commit 10b9a4f8dbef4f3016bc8a56cfb5ffe0121e910d
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 20:24:29 2010 -0500
+
+    modifying the code didn't help much - they must use a hash for getting child nodes. so slowly converting tests from xml file to xml strings. saves half a second per test.
+
+commit dfb6279ce45564ef4aa778c14a12ad98d8a47a88
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Tue Nov 2 20:11:05 2010 -0500
+
+    Fixed some minor styling things
+
+commit 70a0044bfcf5378e15335a658707302195655d19
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 18:45:49 2010 -0500
+
+    messing with makefile
+
+commit 2482a7d7393b4fa217dd8743f60c3cca6411b9b5
+Merge: 314dc14 1cff2ec
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 16:14:07 2010 -0500
+
+    Merge commit 'origin'; branch 'authent'
+
+commit 314dc140b14d01ee00e49630601ee0575fc4a953
+Merge: 5a26803 de01bd2
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 16:11:18 2010 -0500
+
+    Merge branch 'master' of git.assembla.com:cs373-asn2-jkgrimes
+
+commit 1cff2ec20564b17c8a3994e4208f3677f0171b98
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 16:10:50 2010 -0500
+
+    hide signup button when logged in
+
+commit 8a4c4ad6117904f1a1d7fc91ef4529eecaf73adb
+Author: benk701 <benk0615@gmail.com>
+Date:   Tue Nov 2 16:07:05 2010 -0500
+
+    Initial commit of new branch, messing with UI template
+
+commit 2e08235f28d0b5185fd2df3d32e771a863b90a9a
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 15:58:15 2010 -0500
+
+    got signup and login working
+
+commit de01bd22b2316a4b7fdae6bcfa7180a193fe0101
+Merge: bb3d5b8 f5bf476
+Author: benk701 <benk0615@gmail.com>
+Date:   Tue Nov 2 15:25:33 2010 -0500
+
+    Merge commit 'origin/master'
+
+commit bb3d5b8f43c5fcdba2f271d061b5bd5bf8fe0dac
+Author: benk701 <benk0615@gmail.com>
+Date:   Tue Nov 2 15:24:56 2010 -0500
+
+    All pages woring for add/edit/delte
+
+commit 285d7fe28105c70104eb3c22531d9a477c872e97
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 15:13:46 2010 -0500
+
+    trying to get tests working
+
+commit 5a26803dc4bcb3e50fccffd105245198067bcc10
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Tue Nov 2 14:52:15 2010 -0500
+
+    got signup page working
+
+commit f5bf476aa9aa9dfcddbbb4f9c0584b37030332bb
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Tue Nov 2 14:44:38 2010 -0500
+
+    Signup page and handler in place
+
+commit de4af043e1ca84356dd6b3d9ba3796f4e086f0a2
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Tue Nov 2 14:25:12 2010 -0500
+
+    Started signup page
+
+commit b21ff03f5e3244b94ee858527ac38f5a340594ff
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Tue Nov 2 13:22:18 2010 -0500
+
+    Fixed unit tests broken from reorg
+
+commit 6c3d573d28a8ab152db94ad916ba4e101bdec2be
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Tue Nov 2 13:03:13 2010 -0500
+
+    Basic session feature works; no authentication in place yet
+
+commit c3ea175529e0ba78f22c44d8ea0e62aa47e1464b
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Tue Nov 2 12:53:01 2010 -0500
+
+    First hack at session authentication
+
+commit 4e2911f8319012ec507bddc9f61423b33cdef887
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Mon Nov 1 21:26:52 2010 -0500
+
+    Refactored some model code; Paper, Class and Book now work
+
+commit 718deff29e84ea7e3a7dba328ac6bd224547cb5f
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Mon Nov 1 20:34:02 2010 -0500
+
+    Refactored Class forms to new style; continuing refactoring for Book
+
+commit 840fc1367ae66862ecd4c8194a0790edee98f5a2
+Merge: 172d5f6 e0cfb53
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Mon Nov 1 20:00:32 2010 -0500
+
+    Resolved conflcits from master merge
+
+commit 172d5f66f5621fbd76deb6c0363c3d2ca990c76a
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Mon Nov 1 19:51:11 2010 -0500
+
+    Base templates in place
+
+commit 714a20b82aa5e9a2e7602de6b6fa1160e4955bfb
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Mon Nov 1 19:19:18 2010 -0500
+
+    Working on getting templates working
+
+commit e0cfb530f7b390746725d273168554d961028852
+Merge: ed03bc8 caff97e
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Mon Nov 1 18:39:05 2010 -0500
+
+    merged with book branch. unable to test in browser, but tested a bit with twill shell, seems okay
+
+commit caff97ea577dbecbb14e658ca526176131f43a41
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Mon Nov 1 17:59:06 2010 -0500
+
+    minor changes. untested.
+
+commit ea90691b5dc4ee1538e501003e503365575cb5a8
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Mon Nov 1 16:27:47 2010 -0500
+
+    started on bookview.html
+
+commit ed03bc8bd1227e5a18c26f1519184665daea4c70
+Author: benk701 <benk0615@gmail.com>
+Date:   Mon Nov 1 16:26:50 2010 -0500
+
+    Class add/delete/edit functionality is working. Done for day.
+
+commit f5b76a44ab6669a33f90507d68d7337c04971cdc
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Mon Nov 1 16:05:22 2010 -0500
+
+    got edit/delete/add book interface working
+
+commit 82b5aa3fa1deb249137ddda523d8e8d76928e7b5
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Mon Nov 1 15:41:47 2010 -0500
+
+    got book/list, book/add, book/edit working, with no frills
+
+commit 53ff28e2f2dfc77ec0705dcd64c14b1730fbbc41
+Author: benk701 <benk0615@gmail.com>
+Date:   Mon Nov 1 15:34:36 2010 -0500
+
+    Edit form for class works
+
+commit 5aed62de737a9e5ec451b633c795593cd1f86a0a
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Mon Nov 1 14:38:06 2010 -0500
+
+    got add book form working
+
+commit 84ecf5bb5d401e864a09c9128808170532daebec
+Author: benk701 <benk0615@gmail.com>
+Date:   Mon Nov 1 14:36:41 2010 -0500
+
+    addClass get method successfully displaying form.
+
+commit ba57505ab8ece1f048b03ee242d92566dd79a75b
+Author: bburns <arachidonic.acid@gmail.com>
+Date:   Sat Oct 30 14:25:01 2010 -0500
+
+    experimenting with refactoring import to make it faster
+
+commit e4db39d97acd6f72c305b2868255027d88540e8a
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Sat Oct 30 08:47:20 2010 -0500
+
+    Styling completed
+
+commit 3db8aa175811c4be7a4bc6f81c3e84da4ef44b11
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Thu Oct 28 19:38:00 2010 -0500
+
+    First attempt at getting django templates working
+
+commit d156066858ad74c6ea6ee5ec7bf32f2d547afee6
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Thu Oct 28 18:12:04 2010 -0500
+
+    Added .gitignore and modified app.yaml to run in new AppEngine instance
+
+commit d1339b8a87df59da48e028e33591ca5e2f0d3abf
+Author: Jonathan Grimes <jonkgrimes@gmail.com>
+Date:   Thu Oct 28 12:33:36 2010 -0500
+
+    Initial commit

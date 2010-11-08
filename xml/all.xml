@@ -2906,8 +2906,8 @@
                         <course_name>Software Engineering</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Downing</instructor>
-                        <grade>A</grade>
                         <rating>100</rating>
+                        <grade>A</grade>
                 </class>
                 <class>
                         <unique>52495</unique>
@@ -2915,8 +2915,8 @@
                         <course_name>Computer Graphics</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Bajaj</instructor>
-                        <grade>B</grade>
                         <rating>5</rating>
+                        <grade>B</grade>
                 </class>
                 <class>
                         <unique>52535</unique>
@@ -2924,8 +2924,8 @@
                         <course_name>OS</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Dhalin</instructor>
-                        <grade>B</grade>
                         <rating>100</rating>
+                        <grade>B</grade>
                 </class>
                 <book>
                         <isbn>1234567890</isbn>
@@ -2951,8 +2951,8 @@
            <course_name>Programming Languages</course_name>
            <semester>Fall 2010</semester>
            <instructor>Shmatikov</instructor>
-           <grade>A</grade>
            <rating>4</rating>
+           <grade>A</grade>
 <comment></comment>
        </class>
        <class>
@@ -2961,8 +2961,8 @@
            <course_name>Intro to Computer Security</course_name>
            <semester>Fall 2010</semester>
            <instructor>Young</instructor>
-           <grade>A-</grade>
            <rating>5</rating>
+           <grade>A-</grade>
 <comment></comment>
        </class>
        <class>
@@ -2971,8 +2971,8 @@
            <course_name>Software Engineering</course_name>
            <semester>Fall 2010</semester>
            <instructor>Downing</instructor>
-           <grade>B</grade>
            <rating>5</rating>
+           <grade>B</grade>
 <comment></comment>
        </class>
        <book>
@@ -3012,9 +3012,9 @@
                         <course_name>Software Engineering</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Downing</instructor>
-                        <grade>Q</grade>
                         <rating>100</rating>
 <comment></comment>
+                        <grade>Q</grade>
                 </class>
                 <class>
                         <unique>52230</unique>
@@ -3022,9 +3022,9 @@
                         <course_name>Computer Programming</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Dunham</instructor>
-                        <grade>Q</grade>
                         <rating>100</rating>
 <comment></comment>
+                        <grade>Q</grade>
                 </class>
                 <class>
                         <unique>52510</unique>
@@ -3032,9 +3032,9 @@
                         <course_name>Intro to Computer Security</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Young</instructor>
-                        <grade>Q</grade>
                         <rating>100</rating>
 <comment></comment>
+                        <grade>Q</grade>
                 </class>
                 <class>
                         <unique>16185</unique>
@@ -3042,9 +3042,9 @@
                         <course_name>Linear Systems and Signals</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Evans</instructor>
-                        <grade>Q</grade>
                         <rating>100</rating>
 <comment></comment>
+                        <grade>Q</grade>
                 </class>
                 <class>
                         <unique>52553</unique>
@@ -3052,9 +3052,9 @@
                         <course_name>Software Design</course_name>
                         <semester>Fall 2010</semester>
                         <instructor>Batory</instructor>
-                        <grade>Q</grade>
                         <rating>100</rating>
 <comment></comment>
+                        <grade>Q</grade>
                 </class>
                 <book>
                         <isbn>0877797099</isbn>

@@ -293,9 +293,10 @@ class testExport (unittest.TestCase) :
         sc.student = s1
         sc.class_ = c2
         sc.comment = "foo"
+        sc.rating = "80"
         sc.put()
         students = [s1,s2]
-        expected = u'<?xml version="1.0" ?><students><student><id>Jonathan Grimes</id><password>password</password><class><unique>12345</unique><course_num>CS 373</course_num><rating>90</rating></class><class><unique>45678</unique><course_num>CS 343</course_num><comment>foo</comment></class></student><student><id>Brian Burns</id><password>password</password></student></students>'
+        expected = u'<?xml version="1.0" ?><students><student><id>Jonathan Grimes</id><password>password</password><class><unique>12345</unique><course_num>CS 373</course_num><rating>90</rating></class><class><unique>45678</unique><course_num>CS 343</course_num><rating>80</rating><comment>foo</comment></class></student><student><id>Brian Burns</id><password>password</password></student></students>'
         output = xmlExport(students)
         self.assert_(output == expected, output)
 
