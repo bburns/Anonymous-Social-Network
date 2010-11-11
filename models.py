@@ -80,6 +80,18 @@ class Student(db.Model):
     
     id_ = db.StringProperty()   # id is reserved in python
     password = db.StringProperty()
+    isAdmin = db.BooleanProperty()
+
+    @staticmethod
+    def get_by_id(id_):
+	q = db.Query(Student)
+	q = q.filter('id_', id_)
+	results = q.fetch(limit=1)
+	if results:
+	   user = results[0]
+	else:
+	   user = None
+	return user
 
     def generateID(self):
         random.seed(8)
@@ -101,7 +113,7 @@ class Student(db.Model):
 
 
 class User(db.Model):
-    email = db.EmailProperty(validator=validate_email)
+    email = db.EmailProperty()   #validator=validate_email)
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
     student = db.ReferenceProperty(Student)
@@ -439,6 +451,17 @@ class Place(db.Model):
         #    raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
+    
+    def get_pretty_place_name(self):
+    	if self.place_type ==  "eat_place":
+		return "Restaurant"
+        elif self.place_type == "live_place":
+         	return "Residence"
+        elif self.place_type == "study_place":
+      		return "Study Area"
+      	else:
+        	return "Recreational Place"
+
 
 class PlaceForm(djangoforms.ModelForm):
     class Meta:

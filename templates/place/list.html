@@ -14,7 +14,7 @@
   </thead>
   {% for place in places %}
     <tr>
-      <td>{{place.place_type}}</td>
+      <td>{{place.get_pretty_place_name}}</td>    
       <td>{{place.place_name}}</td>
       <td>{{place.location}}</td>
       <td>{{place.semester}}</td>

@@ -3,7 +3,7 @@
 <h2>Are you sure you want to Delete this class?</h2>
 <form method="post" action="/place/delete">
 	<table>
-		<tr><td>Place Type = {{ place.place_type }}</td></tr>
+		<tr><td>Place Type = {{ place.get_pretty_place_name }}</td></tr>
 		<tr><td>Place Name = {{ place.place_name }}</td></tr>
 		<tr><td>Location = {{ place.location }}</td></tr>
 		<tr><td>Semester = {{ place.semester }}</td></tr>	

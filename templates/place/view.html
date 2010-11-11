@@ -5,7 +5,7 @@
 <table>
   <tbody>
   <tr><td>Place name: {{ place.place_name }}</td></tr>
-  <tr><td>Place type: {{ place.place_type }}</td></tr>
+  <tr><td>Place type: {{ place.get_pretty_place_name }}</td></tr>
   <tr><td>Location: {{ place.location }}</td></tr>
   <tr><td>Semester: {{ place.semester }}</td></tr>
   <tr><td>Rating: {{ place.ratingAvg }} out of 100 (from {{ place.refCount }} rating(s))</td></tr>
