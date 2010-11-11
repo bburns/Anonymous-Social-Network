@@ -234,6 +234,31 @@ class Book(db.Model):
     #     else:
     #         db.Model.put(self) # call the superclass
 
+    @staticmethod
+    def findAdd(title, author='', isbn=''):
+        """
+        Find and return the given book, or create and add it to the database.
+        Returns the book object.
+        """
+        # get_or_insert does something similar in gae, but expects a key also. 
+        # http://code.google.com/appengine/docs/python/datastore/modelclass.html#Model_get_or_insert
+
+        q = Book.all()
+        q.filter("title = ", title)
+        # q.filter("author = ", author)
+        # q.filter("isbn = ", isbn)
+
+        results = q.fetch(1)
+        if results:
+            book = results[0]
+        else:
+            book = Book()
+            book.title = title
+            book.author = author
+            book.isbn = isbn
+            book.put()
+        return book
+
 
 class BookForm(djangoforms.ModelForm):
     class Meta:

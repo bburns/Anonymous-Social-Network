@@ -221,11 +221,17 @@ def xmlImport(dom):
             for node in studentNode.getElementsByTagName('book'):
 
                 # create a book object
-                b = Book()
-                b.isbn = getElementData(node, 'isbn')
-                b.author = getElementData(node, 'author')
-                b.title = getElementData(node, 'title')
-                b.put()
+                # b = Book()
+                # b.isbn = getElementData(node, 'isbn')
+                # b.author = getElementData(node, 'author')
+                # b.title = getElementData(node, 'title')
+                # b.put()
+
+                # find or add a book object
+                isbn = getElementData(node, 'isbn')
+                author = getElementData(node, 'author')
+                title = getElementData(node, 'title')
+                b = Book.findAdd(title, author, isbn)
 
                 # create a studentBook association class
                 sb = StudentBook()

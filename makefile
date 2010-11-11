@@ -41,8 +41,8 @@ endif
 # default of no name will run all test modules
 name := 
 test:
-	python testInConsole.py ${name} > ASN2.out
-	cat ASN2.out
+	python testInConsole.py ${name} > ASN.out
+	cat ASN.out
 
 
 # run twill tests 
@@ -131,18 +131,18 @@ docs:
 
 # get git log
 log:
-	git log > ASN2.log
-	cat ASN2.log
+	git log > ASN.log
+	cat ASN.log
 
 
 
 # zip up files for turnin
 zip:
-	zip -r ASN2.zip ASN2.log test/*.py test/twill index.py models.py utils/*.py html makefile testInConsole.py readme.txt app.yaml docs
+	zip -r ASN3.zip ASN3.log test/*.py test/twill index.py models.py utils/*.py html makefile testInConsole.py readme.txt app.yaml docs
 
 
 
 # do turnin
 turnin:
-	turnin --submit alexloh cs373pj6 ASN2.zip
+	turnin --submit alexloh cs373pj6 ASN3.zip
 	turnin --list alexloh cs373pj6

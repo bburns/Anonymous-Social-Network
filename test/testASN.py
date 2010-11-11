@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # -------------------------------
-# TestASN1.py
+# TestASN.py
 # Copyright (C) 2010
 # Jonathan Grimes
 # -------------------------------
@@ -19,11 +19,11 @@ from utils.xmlExport import *
 
 
 # -----------
-# TestASN1
+# TestASN
 # -----------
 
 
-class testASN1 (unittest.TestCase) :
+class testASN (unittest.TestCase) :
 
     def dbClear(self):
         "A helper method to clear the database"
@@ -123,26 +123,28 @@ class testASN1 (unittest.TestCase) :
 
 
 
-    # for phase 3
-    """
     def testFindAddBook(self):
         
         self.dbClear()
+
         b = Book()
         b.title = "Valis"
         b.isbn = "0679734465"
         b.author = "Philip K. Dick"
         b.put()
 
-        # find an existing book
-        b = findAddBook("Valis")
+        # find or add an existing book
+        b = Book.findAdd("Valis")
         self.assert_(b.isbn == "0679734465")
 
         # add a new book
-        b = findAddBook("Ubik")
-        self.assert_(b.isbn == "")
+        b = Book.findAdd("Ubik", "pkdick", "1234567890")
+        self.assert_(b.isbn == "1234567890")
 
 
+
+
+    """
     def testStudentBook2(self):
 
         self.dbClear()
