@@ -426,6 +426,17 @@ class Place(db.Model):
         #    raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
+    
+    def get_pretty_place_name(self):
+    	if self.place_type ==  "eat_place":
+		return "Restaurant"
+        elif self.place_type == "live_place":
+         	return "Residence"
+        elif self.place_type == "study_place":
+      		return "Study Area"
+      	else:
+        	return "Recreational Place"
+
 
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
