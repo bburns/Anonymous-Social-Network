@@ -20,7 +20,7 @@
       <td>{{class.ratingAvg}}</td>
       <td>{{class.refCount}}</td>
       <td>
-        <a href='/class/view?id={{class.key.id}}'>View/Rate</a>
+        <a href='/class/view?id={{class.key.id}}'>View{%if username%}/Rate{%endif%}</a>
         {% if admin %}
           | <a href='/class/edit?id={{class.key.id}}'>Edit</a>
           | <a href='/class/delete?id={{class.key.id}}'>Delete</a>

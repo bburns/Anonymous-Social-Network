@@ -21,7 +21,7 @@
       <td>{{ book.ratingAvg }}</td>
       <td>{{ book.refCount }}</td>
       <td>
-        <a href="/book/view?id={{ book.key.id }}">View/Rate</a>
+        <a href="/book/view?id={{ book.key.id }}">View{%if username%}/Rate{%endif%}</a>
         {% if admin %}
           | <a href="/book/edit?id={{ book.key.id }}">Edit</a>
           | <a href="/book/delete?id={{ book.key.id }}">Delete</a>

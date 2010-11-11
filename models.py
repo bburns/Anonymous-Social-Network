@@ -106,7 +106,7 @@ class Student(db.Model):
         # """
         # sb = StudentBook()
         # sb.student = self
-        # sb.book = findAddBook(title, author, isbn)
+        # sb.book = Book.findAdd(title, author, isbn)
         # sb.rating = rating
         # sb.comment = comment
         # sb.put()
@@ -180,26 +180,33 @@ class Class(db.Model):
         """
         Find and return the given class, or create and add it to the database.
         Does an exact match on coursenum, ignores coursename, and does
-        a partial match on instructor. 
+        a partial match on instructor (eg "Glen Downing" will match "Downing"). 
         Returns the class object.
         """
         q = Class.all()
         q.filter("course_num = ", course_num)
         #q.filter("course_name = ", course_name)
         #q.filter("instructor = ", instructor)
+        #results = q.fetch(1)
 
         # can't do anything like this with GQL
         #q = Class.gql("WHERE course_num=:1 AND (instructor IN :2 OR :3 IN instructor)", course_num, instructor, instructor)
-
         #results = q.fetch(1)
+
+        # iterate over all the classes with the same course number, 
+        # check for ones that have the same (or similar instructor), add them
+        # to a resultset. 
+        # really should just get one match, but throw them all in a list anyway. 
         results = []
         for c in q:
+            # this handles things like "Downing" matching "Glen Downing" or vice-versa
             if (c.instructor in instructor) or (instructor in c.instructor):
                 results.append(c)
 
         if results:
             c = results[0]
         else:
+            # no match found so create a new class object
             c = Class()
             c.course_num = course_num
             c.course_name = course_name
