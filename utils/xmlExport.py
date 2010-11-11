@@ -51,6 +51,12 @@ def appendModel(dom, node, model):
         for sc in model.studentclass_set :
             cl = sc.class_
             newNode = appendModel(dom, e, cl)
+
+            appendElement(dom, newNode, "unique", sc.unique)
+            appendElement(dom, newNode, "course_num", cl.course_num)
+            appendElement(dom, newNode, "course_name", cl.course_name)
+            appendElement(dom, newNode, "semester", sc.semester)
+            appendElement(dom, newNode, "instructor", cl.instructor)
             appendElement(dom, newNode, "grade", sc.grade)
             appendElement(dom, newNode, "rating", sc.rating)
             appendElement(dom, newNode, "comment", sc.comment)
@@ -89,11 +95,11 @@ def appendModel(dom, node, model):
     elif name == 'Class':
         e = dom.createElement("class")
         node.appendChild(e)
-        appendElement(dom,e,"unique",model.unique)
-        appendElement(dom,e,"course_num",model.course_num)
-        appendElement(dom,e,"course_name",model.course_name)
-        appendElement(dom,e,"semester",model.semester)
-        appendElement(dom,e,"instructor",model.instructor)
+    #     appendElement(dom,e,"unique",model.unique)
+    #     appendElement(dom,e,"course_num",model.course_num)
+    #     appendElement(dom,e,"course_name",model.course_name)
+    #     appendElement(dom,e,"semester",model.semester)
+    #     appendElement(dom,e,"instructor",model.instructor)
 
     elif name == 'Book':
         e = dom.createElement('book')

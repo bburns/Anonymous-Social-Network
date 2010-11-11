@@ -27,9 +27,17 @@ class testASN (unittest.TestCase) :
 
     def dbClear(self):
         "A helper method to clear the database"
-        #. do for all tables
-        query = Student.all()
-        db.delete(query)
+
+        # you actually have to clear the association tables also -
+        # even if you delete all the related objects, the association objects
+        # are still there!
+        # which makes sense, as appengine doesn't know they're just association objects.
+        tables = [Student, Class, Book, Paper, Internship, Place, Game]
+        tables += [StudentClass, StudentBook, StudentPaper, StudentInternship, StudentPlace, StudentGame]
+        for table in tables:
+            query = table.all()
+            db.delete(query)
+
 
 
     
@@ -120,6 +128,37 @@ class testASN (unittest.TestCase) :
         titles = [sb.book.title for sb in s.studentbook_set]
         self.assert_(titles == ['Valis','Ubik'])
 
+
+
+
+
+    def testFindAddClass(self):
+        
+        self.dbClear()
+
+        c = Class()
+        c.course_num = "CS 373"
+        c.course_name = "Software Engineering"
+        c.instructor = "Downing"
+        c.put()
+
+        # find or add an existing class - 
+        # ignores course name, fuzzy match on instructor
+        c = Class.findAdd("CS 373", "swe", "Downing")
+        self.assert_(c.course_name == "Software Engineering")
+
+        # fuzzy match on instructor (longer name)
+        c = Class.findAdd("CS 373", "swe", "Glen Downing")
+        self.assert_(c.course_name == "Software Engineering")
+
+
+        # add a new class
+        c = Class.findAdd("CS 343", "AI", "Ray Mooney")
+        self.assert_(c.instructor == "Ray Mooney")
+
+        # fuzzy match on instructor (shorter name)
+        c = Class.findAdd("CS 343", "A.I.", "Mooney")
+        self.assert_(c.instructor == "Ray Mooney")
 
 
 

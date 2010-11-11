@@ -139,79 +139,35 @@ def xmlImport(dom):
     # transform1
 #    for studentNode in rootNode.getElementsByTagName('student') :
     for studentNode in rootNode.childNodes:
-        #. assert this true? NO - could be an empty element (due to CR's in text!)
+        # assert this true? NO - could be an empty element (due to CR's in text!)
         #assert (studentNode.nodeName == "student")
         if studentNode.nodeName == "student":
 
-            # transform2
             # add the student to the database
             s = Student()
             s.id_ = getElementData(studentNode, "id")
             s.password = getElementData(studentNode, "password")
             s.put()
 
-            # s = Student()
-            # #s.put()
-            # for node in studentNode.childNodes:
-            #     name = node.nodeName
-            #     if name == "id": 
-            #         s.id_ = getData(node)
-            #     elif name == "password": 
-            #         s.password = getData(node)
-            #         # have all data, so can save it to db
-            #         #s.put()
-
-            #     # transform3
-            #     elif name == "class": 
-            #         c = Class()
-            #         #c.put()
-            #         sc = StudentClass()
-            #         #sc.put()
-
-            #         for node2 in node.childNodes:
-            #             propname = node2.nodeName
-            #             propvalue = getData(node2)
-
-            #             # transform4
-            #             # if propname == "unique": c.unique = propvalue
-            #             # elif propname == "course_num": c.course_num = propvalue
-            #             # elif propname == "course_name": c.course_name = propvalue
-            #             # elif propname == "semester": c.semester = propvalue
-            #             # elif propname == "instructor": c.instructor = propvalue
-
-            #             # elif propname == "grade": sc.grade = propvalue
-            #             # elif propname == "rating": sc.rating = propvalue
-            #             # elif propname == "comment": sc.comment = propvalue
-
-            #             if propname in cpropmap:
-            #                 c.__setattr__(propname, propvalue)
-            #             elif propname in scpropmap:
-            #                 sc.__setattr__(propname, propvalue)
-
-            #         s.put()
-            #         c.put()
-            #         sc.student = s
-            #         sc.class_ = c
-            #         sc.put()
-            # s.put()
-
-
             # now look for child elements and add them also
 
             # class tag handler
             for node in studentNode.getElementsByTagName('class'):
-                c = Class()
-                c.unique = getElementData(node, 'unique')
-                c.course_num = getElementData(node, 'course_num')
-                c.course_name = getElementData(node, 'course_name')
-                c.semester = getElementData(node, 'semester')
-                c.instructor = getElementData(node, 'instructor')
-                c.put()
+
+                # find or add a class object
+                unique = getElementData(node, 'unique')
+                course_num = getElementData(node, 'course_num')
+                course_name = getElementData(node, 'course_name')
+                semester = getElementData(node, 'semester')
+                instructor = getElementData(node, 'instructor')
+                c = Class.findAdd(course_num, course_name, instructor)
 
                 #create a studentClass association class
                 sc = StudentClass()
                 sc.student = s
                 sc.class_ = c
+                sc.unique = unique
+                sc.semester = semester
                 sc.grade = getElementData(node, 'grade')
                 sc.rating = getElementData(node, 'rating')
                 sc.comment = getElementData(node, 'comment')
@@ -219,13 +175,6 @@ def xmlImport(dom):
 
             # books
             for node in studentNode.getElementsByTagName('book'):
-
-                # create a book object
-                # b = Book()
-                # b.isbn = getElementData(node, 'isbn')
-                # b.author = getElementData(node, 'author')
-                # b.title = getElementData(node, 'title')
-                # b.put()
 
                 # find or add a book object
                 isbn = getElementData(node, 'isbn')

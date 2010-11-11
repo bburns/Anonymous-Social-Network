@@ -207,6 +207,7 @@ def doRender(handler, filename='index.html', values = {}):
     newdict['recentInternships'] = Internship.get_by_date()
     newdict['recentPlaces'] = Place.get_by_date()
     newdict['recentGames'] = Game.get_by_date()
+
     handler.session = Session()
     if 'username' in handler.session:
         newdict['username'] = handler.session['username']
