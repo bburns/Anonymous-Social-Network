@@ -1,6 +1,7 @@
 import os
 from google.appengine.ext import webapp
 from utils.sessions import Session
+from utils.doRender import doRender
 from models import *
 
 def doRender(handler, filename='index.html', values = {}):
