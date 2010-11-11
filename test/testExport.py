@@ -72,11 +72,11 @@ class testExport (unittest.TestCase) :
         s2.put()
         c1 = Class()
         c1.course_num = "CS 373"
-        c1.unique = "12345"
         c1.put()
         sc = StudentClass()
         sc.student = s1
         sc.class_ = c1
+        sc.unique = "12345"
         sc.rating = "85"
         sc.comment = "okay"
         sc.put()
@@ -277,21 +277,21 @@ class testExport (unittest.TestCase) :
         s2.password = "password"
         s2.put()
         c1 = Class()
-        c1.unique = "12345"
         c1.course_num = "CS 373"
         c1.put()
         c2 = Class()
-        c2.unique = "45678"
         c2.course_num = "CS 343"
         c2.put()
         sc = StudentClass()
         sc.student = s1
         sc.class_ = c1
+        sc.unique = "12345"
         sc.rating = "90"
         sc.put()
         sc = StudentClass()
         sc.student = s1
         sc.class_ = c2
+        sc.unique = "45678"
         sc.comment = "foo"
         sc.rating = "80"
         sc.put()

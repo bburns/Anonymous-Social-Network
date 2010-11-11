@@ -138,8 +138,6 @@ class Class(db.Model):
     # to create empty objects. So we override put instead, to catch missing properties. 
     course_num = db.StringProperty(validator=validate_course_num)
     course_name = db.StringProperty()
-    unique = db.StringProperty(validator=validate_unique)
-    semester = db.StringProperty(validator=validate_semester)
     instructor = db.StringProperty()
 
     ratingAvg = db.IntegerProperty() # 0 to 100
@@ -166,17 +164,27 @@ class Class(db.Model):
             db.Model.put(self) # call the superclass
 
     @staticmethod
-    def findAdd(course_num, course_name='', instructor='', unique='', semester=''):
+    def findAdd(course_num, course_name='', instructor=''):
         """
         Find and return the given class, or create and add it to the database.
+        Does an exact match on coursenum, ignores coursename, and does
+        a partial match on instructor. 
         Returns the class object.
         """
         q = Class.all()
         q.filter("course_num = ", course_num)
-        q.filter("course_name = ", course_name)
-        q.filter("instructor = ", instructor)
+        #q.filter("course_name = ", course_name)
+        #q.filter("instructor = ", instructor)
 
-        results = q.fetch(1)
+        # can't do anything like this with GQL
+        #q = Class.gql("WHERE course_num=:1 AND (instructor IN :2 OR :3 IN instructor)", course_num, instructor, instructor)
+
+        #results = q.fetch(1)
+        results = []
+        for c in q:
+            if (c.instructor in instructor) or (instructor in c.instructor):
+                results.append(c)
+
         if results:
             c = results[0]
         else:
@@ -184,8 +192,6 @@ class Class(db.Model):
             c.course_num = course_num
             c.course_name = course_name
             c.instructor = instructor
-            c.unique = unique
-            c.semester = semester
             c.put()
         return c
 
@@ -198,6 +204,8 @@ class ClassForm(djangoforms.ModelForm):
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)
     class_ = db.ReferenceProperty(Class)
+    unique = db.StringProperty(validator=validate_unique)
+    semester = db.StringProperty(validator=validate_semester)
     rating = db.StringProperty(validator=validate_rating)
     comment = db.StringProperty()
     grade = db.StringProperty(validator=validate_grade)

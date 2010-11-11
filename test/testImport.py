@@ -148,7 +148,7 @@ class testImport (unittest.TestCase) :
 	c = sc.class_
 	self.assert_(sc.rating == "95")
 	self.assert_(sc.comment== "There were many new concepts")
-	self.assert_(c.unique == "52540")
+	self.assert_(sc.unique == "52540")
 	sc2 = sclist[1]
 	c2 = sc2.class_
 	self.assert_(sc2.rating == "55")
@@ -166,7 +166,7 @@ class testImport (unittest.TestCase) :
         sclist = student.studentclass_set.fetch(1)
         sc = sclist[0]
         c = sc.class_
-        self.assert_(c.unique == "12345")
+        self.assert_(sc.unique == "12345")
         self.assert_(sc.grade == "A")
         self.assert_(sc.rating == "93")
         self.assert_(c.course_num == "CS 343")
@@ -183,11 +183,11 @@ class testImport (unittest.TestCase) :
         sclist = student.studentclass_set.fetch(2)
         sc = sclist[0]
         c = sc.class_
-        self.assert_(c.unique == "12345")
+        self.assert_(sc.unique == "12345")
         self.assert_(sc.grade == "A")
         sc2 = sclist[1]
         c2 = sc2.class_
-        self.assert_(c2.unique == "54321")
+        self.assert_(sc2.unique == "54321")
         self.assert_(sc2.grade == "F")
         self.assert_(sc2.comment == "hard")
 
