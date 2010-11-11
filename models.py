@@ -165,6 +165,30 @@ class Class(db.Model):
         else:
             db.Model.put(self) # call the superclass
 
+    @staticmethod
+    def findAdd(course_num, course_name='', instructor='', unique='', semester=''):
+        """
+        Find and return the given class, or create and add it to the database.
+        Returns the class object.
+        """
+        q = Class.all()
+        q.filter("course_num = ", course_num)
+        q.filter("course_name = ", course_name)
+        q.filter("instructor = ", instructor)
+
+        results = q.fetch(1)
+        if results:
+            c = results[0]
+        else:
+            c = Class()
+            c.course_num = course_num
+            c.course_name = course_name
+            c.instructor = instructor
+            c.unique = unique
+            c.semester = semester
+            c.put()
+        return c
+
 
 class ClassForm(djangoforms.ModelForm):
     class Meta:
@@ -220,13 +244,6 @@ class Book(db.Model):
     
     edit_time = db.DateTimeProperty(auto_now=True)
 
-    @staticmethod
-    def get_by_date(limit = 5):
-        q = db.Query(Book)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
-    
     # def put(self) :
     #     "Override this so we can catch required fields"
     #     if not self.isbn:
@@ -234,6 +251,13 @@ class Book(db.Model):
     #     else:
     #         db.Model.put(self) # call the superclass
 
+    @staticmethod
+    def get_by_date(limit = 5):
+        q = db.Query(Book)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
+    
     @staticmethod
     def findAdd(title, author='', isbn=''):
         """

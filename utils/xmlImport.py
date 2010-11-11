@@ -200,13 +200,22 @@ def xmlImport(dom):
 
             # class tag handler
             for node in studentNode.getElementsByTagName('class'):
-                c = Class()
-                c.unique = getElementData(node, 'unique')
-                c.course_num = getElementData(node, 'course_num')
-                c.course_name = getElementData(node, 'course_name')
-                c.semester = getElementData(node, 'semester')
-                c.instructor = getElementData(node, 'instructor')
-                c.put()
+                # create a class object
+                # c = Class()
+                # c.unique = getElementData(node, 'unique')
+                # c.course_num = getElementData(node, 'course_num')
+                # c.course_name = getElementData(node, 'course_name')
+                # c.semester = getElementData(node, 'semester')
+                # c.instructor = getElementData(node, 'instructor')
+                # c.put()
+
+                # find or add a class object
+                unique = getElementData(node, 'unique')
+                course_num = getElementData(node, 'course_num')
+                course_name = getElementData(node, 'course_name')
+                semester = getElementData(node, 'semester')
+                instructor = getElementData(node, 'instructor')
+                c = Class.findAdd(course_num, course_name, instructor, unique, semester)
 
                 #create a studentClass association class
                 sc = StudentClass()

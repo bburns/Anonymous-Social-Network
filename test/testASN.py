@@ -123,6 +123,29 @@ class testASN (unittest.TestCase) :
 
 
 
+
+    def testFindAddClass(self):
+        
+        self.dbClear()
+
+        c = Class()
+        c.course_num = "CS 373"
+        c.course_name = "Software Engineering"
+        c.instructor = "Downing"
+        c.unique = "12345"
+        c.put()
+
+        # find or add an existing class
+        c = Class.findAdd("CS 373", "Software Engineering", "Downing")
+        self.assert_(c.course_name == "Software Engineering")
+        self.assert_(c.unique == "12345")
+
+        # add a new class
+        c = Class.findAdd("CS 343", "AI", "Mooney")
+        self.assert_(c.instructor == "Mooney")
+        self.assert_(c.unique == "")
+
+
     def testFindAddBook(self):
         
         self.dbClear()
