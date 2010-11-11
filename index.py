@@ -54,8 +54,8 @@ class changePassword(webapp.RequestHandler):
         oldPass = self.request.get('oldPass')
         newPass1 = self.request.get('newPass1')
         newPass2 = self.request.get('newPass2')
-	email = self.session['username']
-	user = User.get_by_email(email)
+	username = self.session['username']
+	user = Student.get_by_id(username)
 	if(oldPass != user.password):
 		template['oldPassError'] = True
 
@@ -80,18 +80,19 @@ class SignupHandler(webapp.RequestHandler):
         form = UserForm(self.request.POST)
         if form.is_valid() :
             # check if username already exists
-            email = self.request.get('email')
-            if User.get_by_email(email):
+            username = self.request.get('username')
+            if Student.get_by_id(username):
                 doRender(self,'signup.html',{'error': "Sorry, that username already exists. Please try another one."})
                 return
             s = Student()
-            s.generateID()
+            #s.generateID()
+	    s.id_ = username
             s.password = self.request.get('password')
 	    s.put()
             user = form.save()
-            user.student = s
+            user = s
             user.put()
-            self.session['username'] = user.email
+            self.session['username'] = user.id_
             self.session['student_id'] = s.key().id()
             self.redirect('/')
         else:
@@ -104,30 +105,30 @@ class LoginHandler(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        email = self.request.get('username')
-        pw = self.request.get('password')
+        #email = self.request.get('username')
+	id_ = self.request.get('username')        
+	pw = self.request.get('password')
         self.session.delete_item('username')
 
-        if email == '':
+        if id_ == '':        # if email == ' ' :
             doRender(self, 'login.html', {'error':'Please specify a username.'})
             return
         if pw == '':
             doRender(self, 'login.html', {'error':'Please specify a password.'})
             return
         
-        user = User.get_by_email(email)
-    
+       # user = User.get_by_email(email)
+    	user = Student.get_by_id(id_)
         if user is None:
-            doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})  
+            doRender(self,'login.html',{'error':'Invalid username entered. Please try again.  '})  
         elif pw == user.password:
-            self.session['username'] = email
-            if user.student != None:
-                self.session['student_id'] = user.student.key().id()
+            self.session['username'] = id_
+            self.session['student_id'] = user.key().id()
             if user.isAdmin:
                 self.session['admin'] = True
             self.redirect('/')
         else:
-            doRender(self,'login.html',{'error':'Invalid username or password entered. Please try again.'})
+            doRender(self,'login.html',{'error':'Invalid password entered. Please try again.'})
 
 
 class LogoutHandler(webapp.RequestHandler):

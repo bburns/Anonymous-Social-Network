@@ -80,6 +80,18 @@ class Student(db.Model):
     
     id_ = db.StringProperty()   # id is reserved in python
     password = db.StringProperty()
+    isAdmin = db.BooleanProperty()
+
+    @staticmethod
+    def get_by_id(id_):
+	q = db.Query(Student)
+	q = q.filter('id_', id_)
+	results = q.fetch(limit=1)
+	if results:
+	   user = results[0]
+	else:
+	   user = None
+	return user
 
     def generateID(self):
         random.seed(8)
@@ -101,7 +113,7 @@ class Student(db.Model):
 
 
 class User(db.Model):
-    email = db.EmailProperty(validator=validate_email)
+    email = db.EmailProperty()   #validator=validate_email)
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
     student = db.ReferenceProperty(Student)

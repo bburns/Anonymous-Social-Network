@@ -39,8 +39,15 @@ class EditClass(webapp.RequestHandler):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id)
         form = ClassForm(data = self.request.POST, instance = cl)
-        form.save()
-        self.redirect("/class/list")
+	if form.is_valide() :
+	   try :
+		form.save()
+		self.redirect("/class/list")
+	   except db.BadValueError, e :
+		doRender(self, 'class/edit.html', {'form':form, 'error': "ERROR: " + e.args[0]})
+	else :
+		doRender(self,'class/edit.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
+	       
 
 class DeleteClass(webapp.RequestHandler):
     def get(self):
