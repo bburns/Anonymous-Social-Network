@@ -4,17 +4,19 @@
 <table>
   <thead>
     <tr>
-      <th>Operating System</th>
       <th>Title</th>
+      <th>Operating System</th>
       <th>Rating</th>
+      <th>Ratings</th>
       <th></th>
     </tr>
   </thead>
   {% for game in games %}
     <tr>
-      <td>{{game.os}}</td>
       <td>{{game.title}}</td>
+      <td>{{game.os}}</td>
       <td>{{game.ratingAvg}}</td>
+      <td>{{game.refCount}}</td>
       <td>
           <a href='/game/view?id={{game.key.id}}'>View</a>
           {% if admin %}

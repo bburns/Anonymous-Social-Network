@@ -10,6 +10,7 @@
       <th>Location</th>
       <th>Semester</th>
       <th>Rating</th>
+      <th>Ratings</th>
       <th></th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
       <td>{{internship.location}}</td>
       <td>{{internship.semester}}</td>
       <td>{{internship.ratingAvg}}</td>
+      <td>{{internship.refCount}}</td>
       <td>
         <a href="/internship/view?id={{ internship.key.id }}">View</a>
         {% if admin %}

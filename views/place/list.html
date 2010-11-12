@@ -9,6 +9,7 @@
       <th>Location</th>
       <th>Semester</th>
       <th>Rating</th>
+      <th>Ratings</th>
       <th></th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
       <td>{{place.location}}</td>
       <td>{{place.semester}}</td>
       <td>{{place.ratingAvg}}</td>
+      <td>{{place.refCount}}</td>
       <td>
           <a href="/place/view?id={{ place.key.id }}">View</a>
           {% if username %}|

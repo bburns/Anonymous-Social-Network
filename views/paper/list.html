@@ -8,6 +8,7 @@
       <th>Author</th>
       <th>Category</th>
       <th>Rating</th>
+      <th>Ratings</th>
       <th></th>
     </tr>
   </thead>
@@ -17,6 +18,7 @@
       <td>{{paper.author}}</td>
       <td>{{paper.paper_category}}</td>
       <td>{{paper.ratingAvg}}</td>
+      <td>{{paper.refCount}}</td>
       <td>
         <a href='/paper/view?id={{paper.key.id}}'>View</a>
         {% if admin %}
