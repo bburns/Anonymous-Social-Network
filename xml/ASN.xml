@@ -1,6 +1,5 @@
 <students>
 
-<!-- ben -------------------------------------------------------------------->
 
 	<student>
 		<id>ben00000</id>
@@ -184,8 +183,8 @@
 			<comment>It's a crime to be this good</comment>
 		</game>
    </student>
+
    
-<!-- brian -------------------------------------------------------------------->
 
    <student>
 	<id>brian000</id>
@@ -348,7 +347,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 	</game>
     </student>
 
-<!-- jonathan -------------------------------------------------------------------->
+
 
     <student>
         <id>jonathan</id>
@@ -440,7 +439,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
         </game>
     </student>
 
-<!-- shanky -------------------------------------------------------------------->
+
 
     <student>
 	    <id>shanky00</id>
@@ -651,8 +650,8 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 		    <comment>AMAZING!!</comment>
 	    </game>
     </student>
+
     
-<!-- josh -------------------------------------------------------------------->
 
     <student>
         <id>josh0000</id>

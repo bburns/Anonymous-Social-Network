@@ -364,6 +364,13 @@ class Paper(db.Model):
     edit_time = db.DateTimeProperty(auto_now=True)
     
 
+    def put(self) :
+        "Override this so we can catch required fields"
+        if not self.paper_category:
+            raise db.BadValueError("Paper category not selected.")
+        else:
+            db.Model.put(self) # call the superclass
+
     @staticmethod
     def get_by_date(limit = 5):
         q = db.Query(Paper)
@@ -371,12 +378,29 @@ class Paper(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
 
-    def put(self) :
-        "Override this so we can catch required fields"
-        if not self.paper_category:
-            raise db.BadValueError("Paper category not selected.")
+    @staticmethod
+    def findAdd(title, author='', paper_category=''):
+        """
+        Find and return the given paper, or create and add it to the database.
+        Does an exact match on title, ignores the rest.
+        Returns the paper object.
+        """
+        q = Paper.all()
+        q.filter("title = ", title)
+        results = q.fetch(1)
+
+        if results:
+            o = results[0]
         else:
-            db.Model.put(self) # call the superclass
+            # no match found so create a new paper object
+            o = Paper()
+            o.paper_category = paper_category
+            o.title = title
+            o.author = author
+            o.put()
+        return o
+
+
 
 class PaperForm(djangoforms.ModelForm):
     class Meta:
@@ -429,6 +453,13 @@ class Internship(db.Model):
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
+    # def put(self) :
+    #     "Override this so we can catch required fields"
+    #     if not self.semester:
+    #         raise db.BadValueError("Semester is a required field.")
+    #     else:
+    #         db.Model.put(self) # call the superclass
+
     @staticmethod
     def get_by_date(limit = 5):
         q = db.Query(Internship)
@@ -436,12 +467,29 @@ class Internship(db.Model):
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
 
-    # def put(self) :
-    #     "Override this so we can catch required fields"
-    #     if not self.semester:
-    #         raise db.BadValueError("Semester is a required field.")
-    #     else:
-    #         db.Model.put(self) # call the superclass
+    @staticmethod
+    def findAdd(place_name, location='', semester=''):
+        """
+        Find and return the given internship, or create and add it to the database.
+        Does an exact match on place_name, ignores the rest.
+        Returns the internship object.
+        """
+        q = Internship.all()
+        q.filter("place_name = ", place_name)
+        results = q.fetch(1)
+
+        if results:
+            o = results[0]
+        else:
+            # no match found so create a new internship object
+            o = Internship()
+            o.place_name = place_name
+            o.location = location
+            o.semester = semester
+            o.put()
+        return o
+
+
 
 class InternshipForm(djangoforms.ModelForm):
     class Meta:
@@ -502,6 +550,32 @@ class Place(db.Model):
       	else:
         	return "Recreational Place"
 
+    @staticmethod
+    def findAdd(place_type, place_name, location='', semester=''):
+        """
+        Find and return the given item, or create and add it to the database.
+        Does an exact match on place_type and place_name, ignores the rest.
+        Returns the object.
+        """
+        q = Place.all()
+        q.filter("place_type = ", place_type)
+        q.filter("place_name = ", place_name)
+        results = q.fetch(1)
+
+        if results:
+            o = results[0]
+        else:
+            # no match found so create a new object
+            o = Place()
+            o.place_type = place_type
+            o.place_name = place_name
+            o.location = location
+            o.semester = semester
+            o.put()
+        return o
+
+
+
 
 class PlaceForm(djangoforms.ModelForm):
     class Meta:
@@ -558,6 +632,28 @@ class Game(db.Model):
         results = q.fetch(837548)
         results = sorted(results, key=lambda time: time.edit_time, reverse = True)
         return results[0:5]
+
+    @staticmethod
+    def findAdd(title, os=''):
+        """
+        Find and return the given item, or create and add it to the database.
+        Does an exact match on title, ignores the rest.
+        Returns the object.
+        """
+        q = Game.all()
+        q.filter("title = ", title)
+        results = q.fetch(1)
+
+        if results:
+            o = results[0]
+        else:
+            # no match found so create a new object
+            o = Game()
+            o.title = title
+            o.os = os
+            o.put()
+        return o
+
 
 class GameForm(djangoforms.ModelForm):
     class Meta:

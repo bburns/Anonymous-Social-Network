@@ -41,7 +41,8 @@ class testASN (unittest.TestCase) :
 
 
     
-    # this works, though adds about 4 secs to unit test runtime, so commenting it out
+    # this works, though adds about 4 secs to unit test runtime, so leave it commented out
+
     # def testImportExport(self):
     #     """
     #     Pseudo-acceptance test - import-export-import cycle. 
@@ -53,7 +54,7 @@ class testASN (unittest.TestCase) :
     #     self.dbClear()
 
     #     # import all our data
-    #     xmlImportFile("xml/ASN1.xml")
+    #     xmlImportFile("../xml/ASN.xml")
         
     #     # export it
     #     students = Student.all()
@@ -180,6 +181,88 @@ class testASN (unittest.TestCase) :
         b = Book.findAdd("Ubik", "pkdick", "1234567890")
         self.assert_(b.isbn == "1234567890")
 
+
+
+    def testFindAddPaper(self):
+        
+        self.dbClear()
+
+        o = Paper()
+        o.paper_category = "journal"
+        o.title = "Lambda the Ultimate"
+        o.author = "Anonymous"
+        o.put()
+
+        # find or add an existing paper
+        o = Paper.findAdd("Lambda the Ultimate")
+        self.assert_(o.author == "Anonymous")
+
+        # add a new paper
+        o = Paper.findAdd("Lambda something", "Lance Armstrong", "journal")
+        self.assert_(o.author == "Lance Armstrong")
+
+
+
+    def testFindAddInternship(self):
+        
+        self.dbClear()
+
+        o = Internship()
+        o.place_name = "Google"
+        o.location = "California"
+        o.semester = "Summer 2009"
+        o.put()
+
+        # find or add an existing item
+        o = Internship.findAdd("Google")
+        self.assert_(o.location == "California")
+
+        # add a new item
+        o = Internship.findAdd("Microsoft", "Seattle", "Fall 2004")
+        self.assert_(o.location == "Seattle")
+
+
+
+    def testFindAddPlace(self):
+        
+        self.dbClear()
+
+        o = Place()
+        o.place_type = "eat_place"
+        o.place_name = "Los Tios"
+        o.location = "Houston"
+        o.semester = "Summer 2000"
+        o.put()
+
+        # find or add an existing item
+        o = Place.findAdd("eat_place", "Los Tios")
+        self.assert_(o.location == "Houston")
+
+        # add a new item
+        o = Place.findAdd("eat_place", "Taco Cabana", "Austin", "Summer 1999")
+        self.assert_(o.location == "Austin")
+
+
+    def testFindAddGame(self):
+        
+        self.dbClear()
+
+        o = Game()
+        o.title = "Zork"
+        o.os = "Any"
+        o.put()
+
+        # find or add an existing item
+        o = Game.findAdd("Zork")
+        self.assert_(o.os == "Any")
+
+        # find or add an existing item
+        o = Game.findAdd("Zork", "Apple II")
+        self.assert_(o.os == "Any") # will ignore os in search
+
+        # add a new item
+        o = Game.findAdd("Ultima I", "Apple II")
+        self.assert_(o.os == "Apple II")
 
 
 
