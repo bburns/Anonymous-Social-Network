@@ -84,7 +84,7 @@ class Student(db.Model):
     isAdmin = db.BooleanProperty()
 
     @staticmethod
-    def get_by_id(id_):
+    def get_by_username(id_):
 	q = db.Query(Student)
 	q = q.filter('id_', id_)
 	results = q.fetch(limit=1)
