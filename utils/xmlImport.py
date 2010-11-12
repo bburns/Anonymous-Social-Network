@@ -4,7 +4,10 @@ Import data from an xml file or string.
 """
 
 from xml.dom import minidom
+import logging
+
 from models import *
+
 
 
 def xmlImportFile(xmlfile):
@@ -13,6 +16,7 @@ def xmlImportFile(xmlfile):
     Input: A path to a relative file location as a string
     Output: None. but there is a database created that you can now query.
     """
+    logging.info("xmlImportFile")
     #. check file is valid
     dom = minidom.parse(xmlfile)
     return xmlImport(dom)
@@ -24,8 +28,16 @@ def xmlImportString(s):
     Input: A path to a relative file location as a string
     Output: None. but there is a database created that you can now query.    
     """
+    logging.info("xmlImportString")
+    logging.info(type(s))
     # minidom may throw an exception if input is invalid, eg empty string
-    dom = minidom.parseString(s)
+    try:
+        dom = minidom.parseString(s)
+    except Exception, e:
+        print type(e)     # the exception instance
+        print e.args      # arguments stored in .args
+        print e           # __str__ allows args to printed directly
+
     return xmlImport(dom)
 
 
@@ -37,6 +49,8 @@ def xmlImport(dom):
     Output: None. but there is a database created that you can now query.    
     """
 
+    logging.info("xmlImport")
+    
     # the root node should be a 'students' element
     rootNode = dom.firstChild
 
@@ -52,6 +66,8 @@ def xmlImport(dom):
             s.id_ = getElementData(studentNode, "id")
             s.password = getElementData(studentNode, "password")
             s.put()
+            
+            logging.info(s.id_ + ' ' + s.password)
 
             # now look for child elements and add them also
 
@@ -65,6 +81,7 @@ def xmlImport(dom):
                 semester = getElementData(node, 'semester')
                 instructor = getElementData(node, 'instructor')
                 c = Class.findAdd(course_num, course_name, instructor)
+                logging.info(c.course_num)
 
                 #create a studentClass association class
                 sc = StudentClass()
@@ -75,7 +92,11 @@ def xmlImport(dom):
                 sc.grade = getElementData(node, 'grade')
                 sc.rating = getElementData(node, 'rating')
                 sc.comment = getElementData(node, 'comment')
-                sc.put()                    
+                logging.info(sc.grade)
+                logging.info(sc.rating)
+                logging.info(sc.comment)
+                sc.put()
+                logging.info("added link")
 
             # books
             for node in studentNode.getElementsByTagName('book'):
@@ -85,14 +106,19 @@ def xmlImport(dom):
                 author = getElementData(node, 'author')
                 title = getElementData(node, 'title')
                 b = Book.findAdd(title, author, isbn)
+                logging.info(b.title)
 
                 # create a studentBook association class
                 sb = StudentBook()
+                logging.info("got sb")
                 sb.student = s
                 sb.book = b
                 sb.rating = getElementData(node, 'rating')
+                logging.info(sb.rating)
                 sb.comment = getElementData(node, 'comment')
-                sb.put()    
+                logging.info(sb.comment)
+                sb.put()
+                logging.info("added link")
 
             # papers
             for node in studentNode.getElementsByTagName('paper'):                
@@ -102,6 +128,7 @@ def xmlImport(dom):
                 p.author = getElementData(node, 'author')
                 p.title = getElementData(node, 'title')
                 p.put()
+                logging.info(p.title)
 
                 sp = StudentPaper()
                 sp.student = s
@@ -109,6 +136,7 @@ def xmlImport(dom):
                 sp.rating = getElementData(node, 'rating')
                 sp.comment = getElementData(node, 'comment')
                 sp.put()
+                logging.info("added link")
 
             # internship
             for node in studentNode.getElementsByTagName('internship'):           
@@ -118,14 +146,15 @@ def xmlImport(dom):
                 i.location = getElementData(node, 'location')
                 i.semester = getElementData(node, 'semester')
                 i.put()
+                logging.info(i.location)
 
                 si = StudentInternship()
                 si.student = s
                 si.internship = i
                 si.rating = getElementData(node, 'rating')
                 si.comment = getElementData(node, 'comment')
-
                 si.put()
+                logging.info("added link")
 
             # studyPlace
             for node in studentNode.getElementsByTagName('study_place'):          
@@ -136,6 +165,7 @@ def xmlImport(dom):
                 sp.location = getElementData(node, 'location')
                 sp.semester = getElementData(node, 'semester')
                 sp.put()
+                logging.info(sp.place_name)
 
                 ssp = StudentPlace()
                 ssp.student = s
@@ -143,6 +173,7 @@ def xmlImport(dom):
                 ssp.rating = getElementData(node, 'rating')
                 ssp.comment = getElementData(node, 'comment')
                 ssp.put()
+                logging.info("added link")
 
             # livePlace
             for node in studentNode.getElementsByTagName('live_place'):           
@@ -153,6 +184,7 @@ def xmlImport(dom):
                 lp.location = getElementData(node, 'location')
                 lp.semester = getElementData(node, 'semester')
                 lp.put()
+                logging.info(lp.place_name)
 
                 slp = StudentPlace()
                 slp.student = s
@@ -160,6 +192,7 @@ def xmlImport(dom):
                 slp.rating = getElementData(node, 'rating')
                 slp.comment = getElementData(node, 'comment')
                 slp.put()
+                logging.info("added link")
 
             # eatPlace
             for node in studentNode.getElementsByTagName('eat_place'):            
@@ -170,6 +203,7 @@ def xmlImport(dom):
                 ep.location = getElementData(node, 'location')
                 ep.semester = getElementData(node, 'semester')
                 ep.put()
+                logging.info(ep.place_name)
 
                 sep = StudentPlace()
                 sep.student = s
@@ -177,6 +211,7 @@ def xmlImport(dom):
                 sep.rating = getElementData(node, 'rating')
                 sep.comment = getElementData(node, 'comment')
                 sep.put()
+                logging.info("added link")
 
             # funPlace
             for node in studentNode.getElementsByTagName('fun_place'):            
@@ -187,6 +222,7 @@ def xmlImport(dom):
                 fp.location = getElementData(node, 'location')
                 fp.semester = getElementData(node, 'semester')
                 fp.put()
+                logging.info(fp.place_name)
 
                 sfp = StudentPlace()
                 sfp.student = s
@@ -194,6 +230,7 @@ def xmlImport(dom):
                 sfp.rating = getElementData(node, 'rating')
                 sfp.comment = getElementData(node, 'comment')
                 sfp.put()
+                logging.info("added link")
 
             # game
             for node in studentNode.getElementsByTagName('game'):                 
@@ -202,6 +239,7 @@ def xmlImport(dom):
                 g.os = getElementData(node, 'os')
                 g.title = getElementData(node, 'title')
                 g.put()
+                logging.info(g.title)
 
                 sg = StudentGame()
                 sg.student = s
@@ -209,6 +247,7 @@ def xmlImport(dom):
                 sg.rating = getElementData(node, 'rating')
                 sg.comment = getElementData(node, 'comment')
                 sg.put()
+                logging.info("added link")
             
 
 def getElementData(node, tagname) :

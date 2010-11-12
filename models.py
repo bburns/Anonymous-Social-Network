@@ -169,10 +169,10 @@ class Class(db.Model):
         "Override this so we can catch required fields"
         if not self.course_num:
             raise db.BadValueError("Course number is a required field.")
-	#if not self.unique :
-	#   raise db.BadValueError("Unique is a required field.")
-	#if not self.semester :
-	#   raise db.BadValueError("Semester is a required field.")
+        #if not self.unique :
+        #   raise db.BadValueError("Unique is a required field.")
+        #if not self.semester :
+        #   raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
 
@@ -219,7 +219,7 @@ class Class(db.Model):
 class ClassForm(djangoforms.ModelForm):
     class Meta:
         model = Class
-	exclude = ['ratingAvg', 'refCount']
+        exclude = ['ratingAvg', 'refCount']
 
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)
@@ -227,7 +227,7 @@ class StudentClass(db.Model):
     unique = db.StringProperty(validator=validate_unique)
     semester = db.StringProperty(validator=validate_semester)
     rating = db.StringProperty(validator=validate_rating)
-    comment = db.StringProperty()
+    comment = db.TextProperty()
     grade = db.StringProperty(validator=validate_grade)
 
     def put(self):

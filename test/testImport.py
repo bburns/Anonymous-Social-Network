@@ -139,19 +139,19 @@ class testImport (unittest.TestCase) :
 </student>
 </students>
 """)
-	query = Student.all()
-	students = query.fetch(5)
-	student = students[0]
-	sclist = student.studentclass_set.fetch(9857437)
-	sc = sclist[0]
-	c = sc.class_
-	self.assert_(sc.rating == "95")
-	self.assert_(sc.comment== "There were many new concepts")
-	self.assert_(sc.unique == "52540")
-	sc2 = sclist[1]
-	c2 = sc2.class_
-	self.assert_(sc2.rating == "55")
-	self.assert_(c2.course_name == "Linear Algebra")
+        query = Student.all()
+        students = query.fetch(5)
+        student = students[0]
+        sclist = student.studentclass_set.fetch(9857437)
+        sc = sclist[0]
+        c = sc.class_
+        self.assert_(sc.rating == "95")
+        self.assert_(sc.comment== "There were many new concepts")
+        self.assert_(sc.unique == "52540")
+        sc2 = sclist[1]
+        c2 = sc2.class_
+        self.assert_(sc2.rating == "55")
+        self.assert_(c2.course_name == "Linear Algebra")
 
     
     def testImportStudentClass2(self) :
@@ -186,6 +186,38 @@ class testImport (unittest.TestCase) :
         self.assert_(sc2.unique == "54321")
         self.assert_(sc2.grade == "F")
         self.assert_(sc2.comment == "hard")
+
+
+    def testImportClass(self):
+        # something from all.xml that bombed
+        self.dbClear()
+        xmlImportString("""
+<students>
+<student>
+           <class>
+                   <unique>52540</unique>
+                   <course_num>CS 373</course_num>
+                   <course_name>Software Engineering</course_name>
+                   <semester>Fall 2010</semester>
+                   <instructor>Downing</instructor>
+                   <rating>60</rating>
+                   <comment>Class doesn't progress as quickly as I would like. Also,
+                           projects what.</comment>
+                   <grade>B</grade>
+           </class>
+</student>
+</students>
+""")
+        query = Student.all()
+        students = query.fetch(1)
+        student = students[0]
+        sclist = student.studentclass_set.fetch(2)
+        sc = sclist[0]
+        c = sc.class_
+        self.assert_(sc.unique == "52540")
+        self.assert_(sc.grade == "B")
+        self.assert_(sc.rating == "60")
+        
 
 
     def testImportStudentBook(self) :
@@ -326,6 +358,38 @@ class testImport (unittest.TestCase) :
         self.assert_(b.title == "Ubik", b.title)
         self.assert_(b.author == "Philip K. Dick")
 
+
+
+    def testImportBook(self):
+        # something from all.xml that bombed
+        self.dbClear()
+        xmlImportString("""
+<students>
+    <student>
+          <book>
+                      <isbn>0345347951</isbn>
+                      <title>Childhood's End</title>
+                      <author>Arthur C. Clarke</author>
+<rating>90</rating>
+<comment></comment>
+          </book>
+</student>
+</students>
+""")
+        query = Student.all()
+        students = query.fetch(5)
+        student = students[0]
+        sblist = student.studentbook_set.fetch(9857437)
+
+        # test 1 Book	
+        sb = sblist[0]
+        b = sb.book
+        self.assert_(sb.rating == "90")
+        self.assert_(sb.comment == "")
+        self.assert_(b.title == "Childhood's End")
+        self.assert_(b.author == "Arthur C. Clarke")
+        self.assert_(b.isbn == "0345347951")
+
     
     def testImportStudentPaper(self) :
         self.dbClear()
@@ -439,6 +503,7 @@ class testImport (unittest.TestCase) :
         self.assert_(p.paper_category == "journal")
         self.assert_(p.title == "The New Product Development Game")
         self.assert_(p.author == "Hirotaka Takeuchi and Ikujiro Nanaka")
+
 
 
     def testImportStudentInternship(self) :
