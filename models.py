@@ -143,28 +143,21 @@ class UserForm(djangoforms.ModelForm):
                 
 
 class Class(db.Model):
-    #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
-    #. or just put semester and unique into the association class,
-    # so coursenum,name and instructor all get rated together
+    """
+    Ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof).
+    Originally this had unique# and semester here, but moved those into the association class,
+    so coursenum, coursename and instructor all get rated together.
+    """
 
     # We could specify properties to be required here, but then you wouldn't be allowed
     # to create empty objects. So we override put instead, to catch missing properties. 
     course_num = db.StringProperty(validator=validate_course_num)
     course_name = db.StringProperty()
     instructor = db.StringProperty()
-
     ratingAvg = db.IntegerProperty() # 0 to 100
     refCount = db.IntegerProperty()
-
     edit_time = db.DateTimeProperty(auto_now=True)
   
-    @staticmethod
-    def get_by_date(limit = 5):
-        q = db.Query(Class)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
-
     def put(self):
         "Override this so we can catch required fields"
         if not self.course_num:
@@ -175,6 +168,13 @@ class Class(db.Model):
         #   raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
+
+    @staticmethod
+    def get_by_date(limit = 5):
+        q = db.Query(Class)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
     @staticmethod
     def findAdd(course_num, course_name='', instructor=''):
@@ -241,23 +241,59 @@ class StudentClass(db.Model):
         # call superclass
         db.Model.put(self) 
         
-        # get all the refs to this class - scs is a list of assoc objects, 
-        # each with a raating and comment. 
-	class_ = self.class_
-	scs = class_.studentclass_set
+        # get all the refs to this class - links is a list of assoc objects, 
+        # each with a rating and comment and grade. 
+	c = self.class_
+	links = c.studentclass_set
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sc.rating) for sc in scs]
+        ratings = [int(link.rating) for link in links]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
         
+        # get average grade
+        grades = [link.grade for link in links]
+        grades = map(gradeToNum, grades)
+        gradeAvg = sum(grades) / n
+        #gradeAvg = numToGrade(gradeAvg)
+
         # update the class
-        class_.ratingAvg = ratingAvg
-        class_.refCount = n
-        class_.put()
+        c.ratingAvg = ratingAvg
+        c.gradeAvg = gradeAvg
+        c.refCount = n
+        c.put()
+
+def gradeToNum(g):
+    """
+    Convert grade string to its numeric representation.
+    A  	4.00
+    A- 	3.70
+    B+ 	3.30
+    B 	3.00
+    B- 	2.70
+    C+ 	2.30
+    C 	2.00
+    C- 	1.70
+    D+ 	1.30
+    D 	1.00
+    D- 	0.70
+    F 	0.00
+    """
+    m = {'A':4.0, 'B':3.0, 'C':2.0, 'D':1.0, 'F':0.0}
+    letter = g[0]
+    plusminus = g[1] if len(g)>1 else ''
+    n = m[letter]
+    adjustment = 0.3 if plusminus=='+' else -0.3 if plusminus=='-' else 0.0
+    n = n + adjustment
+    return n
+
+def numToGrade(x):
+    "Convert grade point to its string representation"
+    #m = [(0,'F'), (0.7,'D-'), (1.0,'D'),(1.3,'D+'), 
+    pass
 
 
 class Book(db.Model):

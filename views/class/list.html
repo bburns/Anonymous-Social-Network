@@ -8,6 +8,7 @@
       <th>Course Name</th>
       <th>Instructor</th>
       <th>Rating</th>
+      <th>Grade</th>
       <th>Ratings</th>
       <th></th>
     </tr>
@@ -18,6 +19,7 @@
       <td>{{class.course_name}}</td>
       <td>{{class.instructor}}</td>
       <td>{{class.ratingAvg}}</td>
+      <td>{{class.gradeAvg}}</td>
       <td>{{class.refCount}}</td>
       <td>
         <a href='/class/view?id={{class.key.id}}'>View{%if username%}/Rate{%endif%}</a>
