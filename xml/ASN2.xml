@@ -1,6 +1,6 @@
 <students>
 	<student>
-		<id>bkornfue</id>
+		<id>ben00000</id>
 		<password>ben</password>
 		<class>
 			<unique>52540</unique>
@@ -38,8 +38,8 @@
 			<course_name>Programming Languages</course_name>
 			<semester>Spring 2010</semester>
 			<instructor>Cannata</instructor>
-			<rating>95</rating>
-			<comment>This class was great</comment>
+			<rating>90</rating>
+			<comment></comment>
 			<grade>A</grade>
 		</class>
 		<book>
@@ -63,27 +63,6 @@
 			<rating>95</rating>
 			<comment></comment>
 		</book>
-		<paper>
-			<paper_category>conference</paper_category>
-			<title>Cognitive Architectures: Research Issues and Challenges</title>
-			<author>Pat Langley, John E. Laird, and Seth Rogers</author>
-			<rating>67</rating>
-			<comment>2009. Gives a detailed overview of cognitive architectures.</comment>
-		</paper>
-		<paper>
-			<paper_category>journal</paper_category>
-			<title>The 1980 ACM Turing Award Lecture</title>
-			<author>C.A.R. (Tony) Hoare</author>
-			<rating>92</rating>
-			<comment>Interesting talk about his experience designing languages</comment>
-		</paper>
-		<paper>
-			<paper_category>journal</paper_category>
-			<title>The Evolution of Lisp</title>
-			<author>Guy L. Steele, Jr. and Richard P. Gabriel</author>
-			<rating>90</rating>
-			<comment>ACM 1993</comment>
-		</paper>
 		<internship>
 			<place_name>Microsoft</place_name>
 			<location>Seattle</location>
@@ -117,7 +96,7 @@
 			<location>21st Street</location>
 			<semester>Fall 2010</semester>
 			<rating>45</rating>
-			<comment>It's good when it's not too crowded</comment>
+			<comment></comment>
 		</study_place>
 		<study_place>
 			<place_name>PCL</place_name>
@@ -196,12 +175,6 @@
 		    -->
 		<game>
 			<os>Any</os>
-			<title>Zork II</title>
-			<rating>5</rating>
-			<comment>dsaf</comment>
-		</game>
-		<game>
-			<os>Any</os>
 			<title>FIFA 2011</title>
 			<rating>5</rating>
 			<comment>The players look so real</comment>
@@ -214,7 +187,7 @@
 		</game>
    </student>
    <student>
-	<id>73162312</id>
+	<id>brian000</id>
 	<password>brian</password>
 	<class>
 		<unique>52540</unique>
@@ -316,7 +289,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 		<location>campus</location>
 		<semester>Fall 2010</semester>
 		<rating>90</rating>
-		<comment></comment>
+		<comment>Man, these freshmen are loud</comment>
 	</study_place>
 	<study_place>
 		<place_name>Architecture Library</place_name>
@@ -330,7 +303,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 		<location>campus</location>
 		<semester>Fall 2010</semester>
 		<rating>75</rating>
-		<comment>Bleh</comment>
+		<comment>Fluorescent lighting, orange carpet, vinyl seats. Bleh.</comment>
 	</study_place>
 	<live_place>
 		<place_name>3203 Helms</place_name>
@@ -374,7 +347,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 	</game>
     </student>
     <student>
-        <id>bhujkiop</id>
+        <id>jonathan</id>
         <password>jonathan</password>
         <class>
             <unique>52540</unique>
@@ -463,7 +436,7 @@ The book is a comprehensive and insightful introduction to artificial intelligen
         </game>
     </student>
     <student>
-	    <id>sbalani1</id>
+	    <id>shanky00</id>
 	    <password>shanky</password>
 	    <class>
 		    <unique>32165</unique>
@@ -677,8 +650,8 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 	    </game>
     </student>
     <student>
-        <id>joshsyun</id>
-        <password>sang</password>
+        <id>josh0000</id>
+        <password>josh</password>
         <class>
             <unique>52540</unique>
             <course_num>CS 373</course_num>

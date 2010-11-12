@@ -24,15 +24,15 @@ from google.appengine.ext.db import djangoforms
 # student validations
 def validate_email(email):
     if email: 
-	regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
-	if re.match(regex, email) == None:
-		raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
+        regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
+        if re.match(regex, email) == None:
+            raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
 
 
 # rating valiation
 def validate_rating(val):
     if val:
-        regex = "[0-9]*"
+        regex = "[0-9]+"
         if re.match(regex, str(val)) == None:
             raise db.BadValueError("Invalid value entered. Rating must be an integer value")
         elif int(val) < 0 :
@@ -69,7 +69,8 @@ def validate_grade(val):
 # book validations
 def validate_isbn(val):
     if val:
-        regex = "\S{8}"
+        #regex = "\S{8}"
+        regex = "[0-9]{10}|[0-9]{13}"
         if re.match(regex, val)== None:
                 raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
 
