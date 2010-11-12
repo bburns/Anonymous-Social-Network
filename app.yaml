@@ -11,5 +11,5 @@ handlers:
   script: utils/gaeunit.py
 
 - url: .*
-  script: index.py
+  script: handlers/index.py
 

@@ -11,7 +11,7 @@ def doRender(handler, filename='index.html', values = {}):
     
     filepath = os.path.join(os.path.dirname(__file__), '../views/' + filename)
     if not os.path.isfile(filepath):
-        handler.response.out.write("Invalid template file: " + filename)
+        handler.response.out.write("Invalid template file: " + filepath)
 
     # copy the dictionary, so we can add things to it
     newvalues = dict(values)
