@@ -97,6 +97,11 @@ class Student(db.Model):
     def generateID(self):
         random.seed(8)
         d = [random.choice(string.letters + string.digits) for x in xrange(8)]
+        self.password = "".join(d)
+
+    def generatePassword(self):
+        random.seed()
+        d = [random.choice(string.letters + string.digits) for x in xrange(8)]
         self.id_ = "".join(d)
 
     # for phase 3?

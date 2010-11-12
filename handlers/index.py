@@ -128,6 +128,20 @@ class ListStudent(webapp.RequestHandler):
 
 
 class SignupHandler(webapp.RequestHandler):
+    def get(self) :
+	self.session = Session()
+	self.session.delete_item('username')
+	s = Student()
+        s.generateID()
+        s.generatePassword() 
+        s.put()
+        user = s
+        user.put()
+        self.session['username'] = user.id_
+        self.session['student_id'] = s.key().id()
+	doRender(self, 'issueAccount.html', {'student' : s})
+
+    """
     def get(self):
         self.session = Session()
         self.session.delete_item('username')
@@ -155,6 +169,8 @@ class SignupHandler(webapp.RequestHandler):
             self.redirect('/')
         else:
             doRender(self,'signup.html', {'error': "Could not process the information please check the following and try again: <br/>- all the fields are filled in. <br/>- valid email address entered."})
+      """
+
 
 
 class LoginHandler(webapp.RequestHandler):
@@ -253,6 +269,7 @@ _URLS = (
      ('/login',LoginHandler),
      ('/logout',LogoutHandler),
      ('/signup',SignupHandler),
+     #('/issueAccount', issueAccount),
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),
