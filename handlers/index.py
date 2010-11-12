@@ -72,8 +72,76 @@ class changePassword(webapp.RequestHandler):
             
         doRender(self,'changePassword.html', values)
 
+class StudentProfile(webapp.RequestHandler):
+    def get(self):
+        x = Session()
+        if 'student_id' in x : 
+            template = {}
+            sb = StudentBook.all()
+            sc = StudentClass.all()
+            sp = StudentPlace.all()
+            si = StudentInternship.all()
+            spa = StudentPaper.all()
+            sg = StudentGame.all()
+            
+            s = Student.get_by_id(x['student_id'])
+            
+            #books
+            sbooks = sb.filter("student =", s)
+            sbooks = sbooks.fetch(98988)		
+            template['sbooks'] = sbooks
+
+            #class
+            sclasses = sc.filter("student =", s)
+            sclasses = sclasses.fetch(98988)
+            template['sclasses'] = sclasses
+
+            #Place
+            splaces = sp.filter("student = ", s)
+            splaces = splaces.fetch(98988)
+            template['splaces'] = splaces
+
+            #Internship
+            sinternships = si.filter("student = ", s)
+            sinternships = sinternships.fetch(98988)
+            template['sinternships'] = sinternships
+
+            #Paper
+            spapers = spa.filter("student = ", s)
+            spapers = spapers.fetch(98988)
+            template['spapers'] = spapers
+
+            #Game
+            sgames = sg.filter("student = ", s)
+            sgames = sgames.fetch(98988)
+            template['sgames'] = sgames
+            
+            doRender(self,"profile.html", template)
+        else:	 
+            doRender(self,"profile.html")
+
+class ListStudent(webapp.RequestHandler):
+    def get(self):
+        students = Student.all()        
+        doRender(self,'student/list.html',{'students':students})
+
+
 
 class SignupHandler(webapp.RequestHandler):
+    def get(self) :
+	self.session = Session()
+	self.session.delete_item('username')
+	s = Student()
+        s.generateID()
+        s.generatePassword() 
+        s.put()
+        user = s
+        user.put()
+        self.session['username'] = user.id_
+        self.session['student_id'] = s.key().id()
+	doRender(self, 'issueAccount.html', {'student' : s})
+
+    """
     def get(self):
         self.session = Session()
         self.session.delete_item('username')
@@ -85,7 +153,7 @@ class SignupHandler(webapp.RequestHandler):
         if form.is_valid() :
             # check if username already exists
             username = self.request.get('username')
-            if Student.get_by_id(username):
+            if Student.get_by_username(username):
                 doRender(self,'signup.html',{'error': "Sorry, that username already exists. Please try another one."})
                 return
             s = Student()
@@ -101,6 +169,8 @@ class SignupHandler(webapp.RequestHandler):
             self.redirect('/')
         else:
             doRender(self,'signup.html', {'error': "Could not process the information please check the following and try again: <br/>- all the fields are filled in. <br/>- valid email address entered."})
+      """
+
 
 
 class LoginHandler(webapp.RequestHandler):
@@ -122,7 +192,7 @@ class LoginHandler(webapp.RequestHandler):
             return
         
         # user = User.get_by_email(email)
-        user = Student.get_by_id(id_)
+        user = Student.get_by_username(id_)
         if user is None:
             doRender(self,'login.html',{'error':'Invalid username entered. Please try again.  '})  
         elif pw == user.password:
@@ -199,6 +269,7 @@ _URLS = (
      ('/login',LoginHandler),
      ('/logout',LogoutHandler),
      ('/signup',SignupHandler),
+     #('/issueAccount', issueAccount),
      ('/export',ExportData),
      ('/import',ImportData),
      ('/dbclear',ClearData),

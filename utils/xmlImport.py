@@ -65,6 +65,8 @@ def xmlImport(dom):
             s = Student()
             s.id_ = getElementData(studentNode, "id")
             s.password = getElementData(studentNode, "password")
+	    if s.id_ in ["brian000", "ben00000", "shanky00", "jonathan"] :
+		s.isAdmin = True
             s.put()
             
             logging.info(s.id_ + ' ' + s.password)

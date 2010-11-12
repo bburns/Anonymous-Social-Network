@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+{% block title %}New Account Creation{% endblock %}
+{% block content %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+  <fieldset>
+    <legend>New Account</legend>
+        <h4>Congratulations!</h4>
+	<h4>You have been issued a new Account succesfully.</h4>
+        <p>Please keep the following information someplace secure for future access to your account.</p>
+    	<li><big><strong> Your new username : </strong>{{student.id_}}</big></li>
+    	<li><big><strong> Your new password : </strong>{{student.password}}</big></li>
+  </fieldset>
+  <small>You may change your password in the profile page.</small>
+{% endblock %}
+

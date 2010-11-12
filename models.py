@@ -84,7 +84,7 @@ class Student(db.Model):
     isAdmin = db.BooleanProperty()
 
     @staticmethod
-    def get_by_id(id_):
+    def get_by_username(id_):
 	q = db.Query(Student)
 	q = q.filter('id_', id_)
 	results = q.fetch(limit=1)
@@ -96,6 +96,11 @@ class Student(db.Model):
 
     def generateID(self):
         random.seed(8)
+        d = [random.choice(string.letters + string.digits) for x in xrange(8)]
+        self.password = "".join(d)
+
+    def generatePassword(self):
+        random.seed()
         d = [random.choice(string.letters + string.digits) for x in xrange(8)]
         self.id_ = "".join(d)
 
