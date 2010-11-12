@@ -193,7 +193,7 @@ def doRender(handler, filename='index.html', values = {}):
     Handles the Session cookie also. 
     """
     
-    filepath = os.path.join(os.path.dirname(__file__), 'templates/' + filename)
+    filepath = os.path.join(os.path.dirname(__file__), 'views/' + filename)
     if not os.path.isfile(filepath):
         handler.response.out.write("Invalid template file: " + filename)
         return False
@@ -218,10 +218,10 @@ def doRender(handler, filename='index.html', values = {}):
     if 'admin' in handler.session:
         newdict['admin'] = handler.session['admin']
 
-
     s = template.render(filepath, newdict)
     handler.response.out.write(s)
     return True
+
 
 _URLS = (
      ('/', MainPage),

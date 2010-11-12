@@ -443,7 +443,33 @@ class testImport (unittest.TestCase) :
 
     def testImportStudentInternship(self) :
         self.dbClear()
-        xmlImportFile('xml/ASN2.xml')
+        xmlImportString("""
+<students>
+<student>
+		<internship>
+			<place_name>Microsoft</place_name>
+			<location>Seattle</location>
+			<semester>Summer 2009</semester>
+			<rating>5</rating>
+			<comment>asdklfj</comment>
+		</internship>
+		<internship>
+			<place_name>Valero</place_name>
+			<location>San Antonio</location>
+			<semester>Summer 2010</semester>
+			<rating>25</rating>
+			<comment>It Sucked!</comment>
+		</internship>
+		<internship>
+			<place_name>Deloitte</place_name>
+			<location>Houston</location>
+			<semester>Summer 2008</semester>
+			<rating>4</rating>
+			<comment>Not my major</comment>
+		</internship>
+</student>
+</students>
+""")
         query = Student.all()
         students = query.fetch(5)
         student = students[0]	
@@ -477,13 +503,14 @@ class testImport (unittest.TestCase) :
         self.assert_(i.semester == "Summer 2008")
 
 
+    """
     def testImportStudentInternship2(self) :
 
         self.dbClear()
         xmlImportFile('xml/ASN2.xml')
         query = Student.all()
         students = query.fetch(5)
-        student = students[3]	
+        student = students[0]
         silist = student.studentinternship_set.fetch(9857437)
 
         #test 1 Internship	
@@ -512,12 +539,45 @@ class testImport (unittest.TestCase) :
         self.assert_(i.place_name == "Epic")
         self.assert_(i.location == "Madison")
         self.assert_(i.semester == "Summer 2010")
-
+    """
 
     def testImportStudentStudyPlace(self) :
 
         self.dbClear()
-        xmlImportFile('xml/ASN2.xml')
+        xmlImportString("""
+<students>
+<student>
+		<study_place>
+			<place_name>Painter</place_name>
+			<location>Inner Campus Drive</location>
+			<semester>Fall 2010</semester>
+			<rating>4</rating>
+			<comment>A lot of stairs to walk up</comment>
+		</study_place>
+		<study_place>
+			<place_name>Architecture Library</place_name>
+			<location>21st Street</location>
+			<semester>Fall 2010</semester>
+			<rating>45</rating>
+			<comment></comment>
+		</study_place>
+		<study_place>
+			<place_name>PCL</place_name>
+			<location>Speedway and 21st</location>
+			<semester>Fall 2010</semester>
+			<rating>3</rating>
+			<comment>Bleh</comment>
+		</study_place>
+		<live_place>
+			<place_name>The Block</place_name>
+			<location>23rd Street</location>
+			<semester>Fall 2009</semester>
+			<rating>20</rating>
+			<comment>Twas OK</comment>
+		</live_place>
+</student>
+</students>
+""")
         query = Student.all()
         students = query.fetch(5)
         student = students[0]	
@@ -553,7 +613,7 @@ class testImport (unittest.TestCase) :
         self.assert_(sp.place_name == "PCL")
         self.assert_(sp.semester == "Fall 2010")
 
-
+    """
     def testImportStudentStudyPlace2(self) :
 
         self.dbClear()
@@ -592,12 +652,52 @@ class testImport (unittest.TestCase) :
         self.assert_(ssp.comment == "Very quiet since no one knows about it.")
         self.assert_(sp.place_name == "Rec Center")
         self.assert_(sp.semester == "Spring 2009")
-
+    """
 
     def testImportStudentLivePlace(self) :
 
         self.dbClear()
-        xmlImportFile('xml/ASN2.xml')
+        xmlImportString("""
+<students>
+<student>
+		<study_place>
+			<place_name>PCL</place_name>
+			<location>Speedway and 21st</location>
+			<semester>Fall 2010</semester>
+			<rating>3</rating>
+			<comment>Bleh</comment>
+		</study_place>
+		<live_place>
+			<place_name>The Block</place_name>
+			<location>23rd Street</location>
+			<semester>Fall 2009</semester>
+			<rating>20</rating>
+			<comment>Twas OK</comment>
+		</live_place>
+		<live_place>
+			<place_name>Enfield Townhomes</place_name>
+			<location>2605 Enfield Rd</location>
+			<semester>Spring 2008</semester>
+			<rating>45</rating>
+			<comment>Peace and quiet</comment>
+		</live_place>
+		<live_place>
+			<place_name>Jefferson 26</place_name>
+			<location>26th Street</location>
+			<semester>Spring 2009</semester>
+			<rating>45</rating>
+			<comment>Awesome Pool</comment>
+		</live_place>
+		<eat_place>
+			<place_name>Pluckers</place_name>
+			<location>rio grande</location>
+			<semester>Spring 2009</semester>
+			<rating>45</rating>
+			<comment>WINGS</comment>
+		</eat_place>
+</student>
+</students>
+""")
         query = Student.all()
         students = query.fetch(5)
         student = students[0]	
@@ -634,6 +734,7 @@ class testImport (unittest.TestCase) :
         self.assert_(lp.semester == "Spring 2009")
 
 
+    """
     def testImportStudentLivePlace2(self) :
 
         self.dbClear()
@@ -672,17 +773,56 @@ class testImport (unittest.TestCase) :
         self.assert_(slp.comment == "On Riverside")
         self.assert_(lp.place_name == "Landry Place Apts")
         self.assert_(lp.location == "2239 Cromwell Cir.")
-
+    """
 
     def testImportStudentEatPlace(self) :
 
         self.dbClear()
-        xmlImportFile('xml/ASN2.xml')
+        xmlImportString("""
+<students>
+<student>
+		<live_place>
+			<place_name>Jefferson 26</place_name>
+			<location>26th Street</location>
+			<semester>Spring 2009</semester>
+			<rating>45</rating>
+			<comment>Awesome Pool</comment>
+		</live_place>
+		<eat_place>
+			<place_name>Pluckers</place_name>
+			<location>rio grande</location>
+			<semester>Spring 2009</semester>
+			<rating>45</rating>
+			<comment>WINGS</comment>
+		</eat_place>
+		<eat_place>
+			<place_name>What-A-Burger</place_name>
+			<location>Guadalupe</location>
+			<semester>Spring 2010</semester>
+			<rating>45</rating>
+			<comment>Drunken Food</comment>
+		</eat_place>    
+		<eat_place>
+			<place_name>Taco C</place_name>
+			<location>MLK</location>
+			<semester>Fall 2007</semester>
+			<rating>45</rating>
+			<comment>3 AM Drunkfest</comment>
+		</eat_place>    
+		<fun_place>
+			<place_name>Dave and Busters</place_name>
+			<location>183</location>
+			<semester>Spring 2009</semester>
+			<rating>45</rating>
+			<comment>Eat and Play combo</comment>
+		</fun_place>            
+</student>
+</students>
+""")
         query = Student.all()
         students = query.fetch(5)
         student = students[0]	
         seplist5 = student.studentplace_set
-
 
         seplist = []
         for pA in seplist5:
@@ -713,7 +853,7 @@ class testImport (unittest.TestCase) :
         self.assert_(ep.place_name == "Taco C")
         self.assert_(ep.semester == "Fall 2007")
 
-
+    """
     def testImportStudentEatPlace2(self) :
 
         self.dbClear()
@@ -751,18 +891,49 @@ class testImport (unittest.TestCase) :
         self.assert_(sep.comment == "3 AM Drunkfest")
         self.assert_(ep.place_name == "Kerbey Lane")
         self.assert_(ep.semester == "Fall 2006")
-
+    """
    
      
     def testImportStudentFunPlace(self) :
 
         self.dbClear()
-        xmlImportFile('xml/ASN2.xml')
+        xmlImportString("""
+<students>
+<student>
+		<fun_place>
+			<place_name>Dave and Busters</place_name>
+			<location>183</location>
+			<semester>Spring 2009</semester>
+			<rating>45</rating>
+			<comment>Eat and Play combo</comment>
+		</fun_place>            
+		<fun_place>
+			<place_name>Main Event</place_name>
+			<location>Anderson Mill</location>
+			<semester>Fall 2009</semester>
+			<rating>45</rating>
+			<comment>Glow in the dark golf</comment>
+		</fun_place>
+		<fun_place>
+			<place_name>Downtown</place_name>
+			<location>downtown</location>
+			<semester>Spring 2010</semester>
+			<rating>45</rating>
+			<comment>All the bars in one street</comment>
+		</fun_place>
+		<game>
+			<os>Any</os>
+			<title>FIFA 2011</title>
+			<rating>5</rating>
+			<comment>The players look so real</comment>
+		</game>
+</student>
+</students>
+""")
         query = Student.all()
         students = query.fetch(5)
         student = students[0]	
         sfplist5 = student.studentplace_set
-
 
         sfplist = []
         for pA in sfplist5:
@@ -794,6 +965,7 @@ class testImport (unittest.TestCase) :
         self.assert_(fp.semester == "Spring 2010")
 
 
+    """
     def testImportStudentFunPlace2(self) :
 
         self.dbClear()
@@ -831,12 +1003,37 @@ class testImport (unittest.TestCase) :
         self.assert_(sfp.comment == "Great Music")
         self.assert_(fp.place_name == "ACL")
         self.assert_(fp.semester == "Fall 2010")
+    """
 
 
     def testImportStudentGame(self) :
 
         self.dbClear()
-        xmlImportFile('xml/ASN2.xml')
+        xmlImportString("""
+<students>
+<student>
+		<fun_place>
+			<place_name>Downtown</place_name>
+			<location>downtown</location>
+			<semester>Spring 2010</semester>
+			<rating>45</rating>
+			<comment>All the bars in one street</comment>
+		</fun_place>
+		<game>
+			<os>Any</os>
+			<title>FIFA 2011</title>
+			<rating>5</rating>
+			<comment>The players look so real</comment>
+		</game>
+		<game>
+			<os>Any</os>
+			<title>Call of Duty: Modern Warfare</title>
+			<rating>5</rating>
+			<comment>It's a crime to be this good</comment>
+		</game>
+</student>
+</students>
+""")
         query = Student.all()
         students = query.fetch(5)
         student = students[0]	
@@ -858,7 +1055,7 @@ class testImport (unittest.TestCase) :
         self.assert_(g.os == "Any")
         self.assert_(g.title == "Call of Duty: Modern Warfare")
 
-
+    """
     def testImportStudentGame2(self) :
 
         self.dbClear()
@@ -891,6 +1088,6 @@ class testImport (unittest.TestCase) :
         self.assert_(sg.comment == "AMAZING!!")
         self.assert_(g.os == "Any")
         self.assert_(g.title == "Super Smash Brothers")
-
+    """
 
 
