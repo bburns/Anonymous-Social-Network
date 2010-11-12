@@ -1,5 +1,10 @@
-from models import *
+"""
+xmlImport
+Import data from an xml file or string.
+"""
+
 from xml.dom import minidom
+from models import *
 
 
 def xmlImportFile(xmlfile):
@@ -24,98 +29,6 @@ def xmlImportString(s):
     return xmlImport(dom)
 
 
-"""
-Looking at the XML in binary.xml, you might think that the grammar has only two child nodes, the two ref elements. But you're missing something: the carriage returns! After the '<grammar>' and before the first '<ref>' is a carriage return, and this text counts as a child node of the grammar element. Similarly, there is a carriage return after each '</ref>'; these also count as child nodes. So grammar.childNodes is actually a list of 5 objects: 3 Text objects and 2 Element objects.
-ugh
-
-
-change to iterate over child nodes, add to a dictionary, then pull out the values you want?
-
-getElementsByTagName finds all children of a given name, no matter how deep, thus working recursively. This is usually good, but can cause problems if similar nodes exist at multiple levels and the intervening nodes are important. 
-
-> make test module=xmlImport
-
-initially 
-Ran 21 tests in 10.578s
-
-transform1: iterate over rootNode.childNodes instead of gathering all student nodes
-  Ran 21 tests in 7.835s
-
-transform2: iterate over student childnodes, instead of searching for them
-  Ran 21 tests in 7.681s
-
-transform3: iterate over classes
-  Ran 21 tests in 7.845s
-  hmm, didn't help. might be the giant switch statement on properties. 
-  so use a hash? 
-
-transform4: use hash to check if element is valid property, use __setattr__ to set it
-  Ran 21 tests in 7.873s
-  damn
-
-  so it looks like using getElementsByTagName is not a problem, 
-  except for the top level one. 
-  okay - the code is clearer with it anyway. 
-  big time savings will come from ditching the xml file. 
-
-transform5: revert to transform1
- Ran 21 tests in 7.653s
-
-transform6: start removing the xml file tests. 
-  one test down - 
-  Ran 21 tests in 7.190s
-  yep. 
-
-transform7: delete *all* tables in between tests
-  Ran 21 tests in 9.653s
-  so doing this adds about a tenth of a second per test. bleh. 
-
-transform8: continue removing xml file tests
-  Ran 22 tests in 9.086s
-  Ran 22 tests in 8.497s
-  Ran 22 tests in 7.996s
-  Ran 22 tests in 7.409s
-
-  oy...
-
-
-------------------
-
-problem is - 
-we get the student, set the properties, add to db. 
-get a class, set the properties, add to db.
-get the studentclass, set the properties, add to db. 
-actually, should be okay, assuming the dom elements are in the right order. 
-if not, it'll fail. but that's okay. 
-
-um, the parser has already done the hard work - it's all in the dom now. 
-we just need to iterate over the dom, 
-and when you see an element you recognize, call the corresponding class import method?
-eg
-if e.name=='student':
-    student = Student.createFromDom(e)
-    student.put()
-
-and could have a map from element name to the corresponding class
-classMap = {'student': Student, 'class': Class, 'book': Book...}
-cl = classMap[e.name]
-o = cl.createFromDom(e)
-o.put()
-
-so just iterate over the student nodes, 
-call this on them. 
-then the student will handle iterating over child doms? 
-alternative is doing a switch here
-
-also use a hash for mapping properties, so don't have to do long switch statement
-propMap = {'unique': 'unique', ...}
-then
-propname = propMap[e.name]
-o.__set__(propname, propvalue)
-
-"""
-
-
 
 def xmlImport(dom):
     """
@@ -124,20 +37,11 @@ def xmlImport(dom):
     Output: None. but there is a database created that you can now query.    
     """
 
-    # cprops = ['unique','course_num','course_name','semester','instructor']
-    # cpropmap = dict(zip(cprops, cprops))
-
-    # scprops = ['grade','rating','comment']
-    # scpropmap = dict(zip(scprops, scprops))
-
-
     # the root node should be a 'students' element
     rootNode = dom.firstChild
 
     # iterate over all student nodes
-
-    # transform1
-#    for studentNode in rootNode.getElementsByTagName('student') :
+    #for studentNode in rootNode.getElementsByTagName('student'): # this worked but it's slower
     for studentNode in rootNode.childNodes:
         # assert this true? NO - could be an empty element (due to CR's in text!)
         #assert (studentNode.nodeName == "student")
@@ -314,24 +218,14 @@ def getElementData(node, tagname) :
     Input: minidom node, tagname to look for
     Output: An empty string or the data.
     """
-    #e = node.getElementsByTagName(tagname)[0].firstChild
+    
     nodes = node.getElementsByTagName(tagname)
-
     if nodes:
         e = nodes[0].firstChild
-	if e is None:
+        if e is None:
             return ""
         else:
             return e.data
     else:
         return ""
-
-
-# def getData(node):
-#     """
-#     """
-#     e = node.firstChild
-#     if e is None:
-#         return ""
-#     return e.data
 
