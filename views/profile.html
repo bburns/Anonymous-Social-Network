@@ -40,7 +40,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		
+		{%if username %}<p><a href="/class/add">Add a Class</a><p>{% endif %}		
 	</div>
 	<div id="tabs-2">
 		<table>
@@ -58,6 +58,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
+		{%if username %}<p><a href="/book/add">Add a Book</a><p>{% endif %}	
 	</div>
 	<div id="tabs-3">
 	<table>
@@ -79,7 +80,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		
+		{%if username %}<p><a href="/paper/add">Add a Paper</a><p>{% endif %}	
 	</div>
 	<div id="tabs-4">
 	<table>
@@ -99,7 +100,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		
+		{%if username %}<p><a href="/internship/add">Add an Internship</a><p>{% endif %}	
 	</div>
 	<div id="tabs-5">
 	<table>
@@ -113,15 +114,16 @@
 		  <tbody>
 
 		  {%for splace in splaces%}
-		    <tr><td><a href="/place/view?id={{splace.place.key.id}}">{{splace.place.place_type}}</a></td>
-		    <td>{{splace.place.place_name}}</td>
+		    <tr>
+		    <td>{{splace.place.get_pretty_place_name}}</td>
+		    <td><a href="/place/view?id={{splace.place.key.id}}">{{splace.place.place_name}}</a></td>
 		    <td>{{splace.place.location}}</td>
 		    <td>{{splace.comment}}</td>
 		    <td>{{splace.rating}}</td>
 		    </tr>
 		  {%endfor%}
 		</table>
-		
+		{%if username %}<p><a href="/place/add">Add a Place</a><p>{% endif %}	
 	</div>
 	<div id="tabs-6">
 	<table>
@@ -134,14 +136,14 @@
 		  <tbody>
 
 		  {%for sgame in sgames%}
-		    <tr><td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.os}}</a></td>
-		    <td>{{sgame.game.title}}</td>
+		    <tr><td>{{sgame.game.os}}</a></td>
+		    <td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.title}}</a></td>
 		    <td>{{sgame.comment}}</td>
 		    <td>{{sgame.rating}}</td>
 		    </tr>
 		  {%endfor%}
 		</table>
-		
+		{%if username %}<p><a href="/game/add">Add a Game</a><p>{% endif %}	
 	</div>
 </div>
 

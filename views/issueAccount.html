@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+{% block title %}New Account Creation{% endblock %}
+{% block content %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+  <fieldset>
+    <legend>New Account</legend>
+    <tr>
+    	<td> Your new username : {{student.id_}}</td>
+    	<td> Your new password : {{student.password}}</td>
+    </tr>
+  </fieldset>
+
+{% endblock %}
+
