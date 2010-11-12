@@ -77,32 +77,31 @@ def validate_isbn(val):
 
 
 class Student(db.Model):
-    # this has to come before the User class, because it references Student. 
     
-    id_ = db.StringProperty()   # id is reserved in python
+    id_ = db.StringProperty()   # id is reserved in python(?)
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
 
     @staticmethod
     def get_by_username(id_):
-	q = db.Query(Student)
-	q = q.filter('id_', id_)
-	results = q.fetch(limit=1)
-	if results:
-	   user = results[0]
-	else:
-	   user = None
-	return user
+        q = db.Query(Student)
+        q = q.filter('id_', id_)
+        results = q.fetch(limit=1)
+        if results:
+           user = results[0]
+        else:
+           user = None
+        return user
 
     def generateID(self):
-        random.seed(8)
+        random.seed()
         d = [random.choice(string.letters + string.digits) for x in xrange(8)]
-        self.password = "".join(d)
+        self.id_ = "".join(d)
 
     def generatePassword(self):
         random.seed()
         d = [random.choice(string.letters + string.digits) for x in xrange(8)]
-        self.id_ = "".join(d)
+        self.password = "".join(d)
 
     # for phase 3?
     # def addBook(self, title, author='', isbn='', rating=None, comment=''):
@@ -117,7 +116,7 @@ class Student(db.Model):
         # sb.comment = comment
         # sb.put()
 
-
+"""
 class User(db.Model):
     email = db.EmailProperty()   #validator=validate_email)
     password = db.StringProperty()
@@ -144,8 +143,9 @@ class UserForm(djangoforms.ModelForm):
     class Meta:
         model = User
         exclude = ['isAdmin','student']
-
-                
+"""
+    
+    
 
 class Class(db.Model):
     #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
@@ -154,22 +154,18 @@ class Class(db.Model):
 
     # We could specify properties to be required here, but then you wouldn't be allowed
     # to create empty objects. So we override put instead, to catch missing properties. 
+    
     course_num = db.StringProperty(validator=validate_course_num)
     course_name = db.StringProperty()
     instructor = db.StringProperty()
 
+    # store aggregate info here, so don't have to do expensive joins to get it.
+    # updated in StudentBook.put method.
     ratingAvg = db.IntegerProperty() # 0 to 100
     refCount = db.IntegerProperty()
-
+    
     edit_time = db.DateTimeProperty(auto_now=True)
   
-    @staticmethod
-    def get_by_date(limit = 5):
-        q = db.Query(Class)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
-
     def put(self):
         "Override this so we can catch required fields"
         if not self.course_num:
@@ -180,6 +176,13 @@ class Class(db.Model):
         #   raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
+
+    @staticmethod
+    def get_by_date(limit = 5):
+        q = db.Query(Class)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
     @staticmethod
     def findAdd(course_num, course_name='', instructor=''):
@@ -269,12 +272,8 @@ class Book(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     isbn = db.StringProperty(validator=validate_isbn)
-
-    # store aggregate info here, so don't have to do expensive joins to get it.
-    # updated in StudentBook.put method.
     ratingAvg = db.IntegerProperty(validator=validate_rating) # 0 to 100
-    refCount = db.IntegerProperty()
-    
+    refCount = db.IntegerProperty()    
     edit_time = db.DateTimeProperty(auto_now=True)
 
     # def put(self) :
@@ -339,16 +338,16 @@ class StudentBook(db.Model):
         # call superclass
         db.Model.put(self) 
         
-        # get all the refs to this book - sbs is a list of assoc objects, 
+        # get all the refs to this book - links is a list of assoc objects, 
         # each with a rating and comment. 
         book = self.book
-        sbs = book.studentbook_set
+        links = book.studentbook_set
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sb.rating) for sb in sbs]
+        ratings = [int(link.rating) for link in links]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
         
@@ -510,8 +509,8 @@ class StudentInternship(db.Model):
     def put(self):
         db.Model.put(self) # call superclass
         internship = self.internship
-        assocs = internship.studentinternship_set
-        ratings = [int(assoc.rating) for assoc in assocs]
+        links = internship.studentinternship_set
+        ratings = [int(link.rating) for link in links]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
         internship.ratingAvg = ratingAvg
@@ -529,13 +528,6 @@ class Place(db.Model):
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
-    @staticmethod
-    def get_by_date(limit = 5):
-        q = db.Query(Place)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
-
     def put(self) :
         "Override this so we can catch required fields"
         if not self.place_type:
@@ -546,14 +538,21 @@ class Place(db.Model):
             db.Model.put(self) # call the superclass
     
     def get_pretty_place_name(self):
-    	if self.place_type ==  "eat_place":
-		return "Restaurant"
+        if self.place_type ==  "eat_place":
+            return "Restaurant"
         elif self.place_type == "live_place":
-         	return "Residence"
+            return "Residence"
         elif self.place_type == "study_place":
-      		return "Study Area"
-      	else:
-        	return "Recreational Place"
+            return "Study Area"
+        else:
+            return "Recreational Place"
+
+    @staticmethod
+    def get_by_date(limit = 5):
+        q = db.Query(Place)
+        results = q.fetch(837548)
+        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
+        return results[0:5]
 
     @staticmethod
     def findAdd(place_type, place_name, location='', semester=''):
@@ -605,16 +604,16 @@ class StudentPlace(db.Model):
         # call superclass
         db.Model.put(self) 
         
-        # get all the refs to this book - sbs is a list of assoc objects, 
+        # get all the refs to this item - links is a list of assoc objects, 
         # each with a rating and comment. 
         place = self.place
-        sps = place.studentplace_set
+        links = place.studentplace_set
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sp.rating) for sp in sps]
+        ratings = [int(link.rating) for link in links]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
         
@@ -663,7 +662,7 @@ class Game(db.Model):
 class GameForm(djangoforms.ModelForm):
     class Meta:
         model = Game
-	exclude = ['ratingAvg', 'refCount']
+        exclude = ['ratingAvg', 'refCount']
 
 class StudentGame(db.Model):
     student = db.ReferenceProperty(Student)
@@ -682,16 +681,16 @@ class StudentGame(db.Model):
         # call superclass
         db.Model.put(self) 
         
-        # get all the refs to this book - sbs is a list of assoc objects, 
+        # get all the refs to this item - links is a list of assoc objects, 
         # each with a rating and comment. 
         game = self.game
-        sgs = game.studentgame_set
+        links = game.studentgame_set
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sg.rating) for sg in sgs]
+        ratings = [int(link.rating) for link in links]
         n = len(ratings)
         ratingAvg = sum(ratings) / n
         
@@ -699,3 +698,4 @@ class StudentGame(db.Model):
         game.ratingAvg = ratingAvg
         game.refCount = n
         game.put()
+

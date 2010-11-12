@@ -5,17 +5,14 @@ Home
 {% endblock %}
 
 {% block content %}
-  {% if not username %}
-  <h2>Welcome to the @nonymous Social Network</h2>
-  <p>This site is dedicated to betterment of the University of Texas student by providing a quick and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaining complete anonymity and thus ensuring an accurate score.</p>
-  {% endif %}
-
 
   {% if username %}
   <h2>Welcome {{username}}!</h2>
-  <p>This site is dedicated to betterment of the University of Texas student by providing a quick and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaining complete anonymity and thus ensuring an accurate score.</p>
+  {% else %}
+  <h2>Welcome to the @nonymous Social Network</h2>
   {% endif %}
-
+  
+  <p>This site is dedicated to the betterment of University of Texas students by providing a quick and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaining complete anonymity and thus ensuring accurate scores.</p>
 
   {% if not username %}
     <a class="signup_button round" href="/signup">Sign Up!</a>

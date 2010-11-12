@@ -42,7 +42,7 @@ class About(webapp.RequestHandler):
         doRender(self,"about.html")
 
 
-class changePassword(webapp.RequestHandler):
+class ChangePassword(webapp.RequestHandler):
     def get(self):
         x = Session()  
         if 'student_id' in x:      
@@ -57,7 +57,7 @@ class changePassword(webapp.RequestHandler):
         newPass1 = self.request.get('newPass1')
         newPass2 = self.request.get('newPass2')
         username = self.session['username']
-        user = Student.get_by_id(username)
+        user = Student.get_by_username(username)
         
         if oldPass != user.password:
             values['oldPassError'] = True
@@ -71,6 +71,7 @@ class changePassword(webapp.RequestHandler):
             values['success'] = True
             
         doRender(self,'changePassword.html', values)
+
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
@@ -120,6 +121,7 @@ class StudentProfile(webapp.RequestHandler):
         else:	 
             doRender(self,"profile.html")
 
+
 class ListStudent(webapp.RequestHandler):
     def get(self):
         students = Student.all()        
@@ -129,9 +131,9 @@ class ListStudent(webapp.RequestHandler):
 
 class SignupHandler(webapp.RequestHandler):
     def get(self) :
-	self.session = Session()
-	self.session.delete_item('username')
-	s = Student()
+        self.session = Session()
+        self.session.delete_item('username')
+        s = Student()
         s.generateID()
         s.generatePassword() 
         s.put()
@@ -139,8 +141,9 @@ class SignupHandler(webapp.RequestHandler):
         user.put()
         self.session['username'] = user.id_
         self.session['student_id'] = s.key().id()
-	doRender(self, 'issueAccount.html', {'student' : s})
+        doRender(self, 'issueAccount.html', {'student' : s})
 
+    # old version - let user enter their username (email) and password
     """
     def get(self):
         self.session = Session()
@@ -179,19 +182,17 @@ class LoginHandler(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        #email = self.request.get('username')
         id_ = self.request.get('username')        
         pw = self.request.get('password')
         self.session.delete_item('username')
 
-        if id_ == '':        # if email == ' ' :
+        if id_ == '':
             doRender(self, 'login.html', {'error':'Please specify a username.'})
             return
         if pw == '':
             doRender(self, 'login.html', {'error':'Please specify a password.'})
             return
         
-        # user = User.get_by_email(email)
         user = Student.get_by_username(id_)
         if user is None:
             doRender(self,'login.html',{'error':'Invalid username entered. Please try again.  '})  
@@ -219,6 +220,7 @@ class ImportData(webapp.RequestHandler):
         doRender(self,'import.html')
 
     def post(self):
+        #. trying to get this to handle a file also
         # xml_file = self.request.get('xml-file')
         xml_string = self.request.get('xml-string')
         # print self.request
@@ -235,7 +237,7 @@ class ImportData(webapp.RequestHandler):
 
 class ExportData(webapp.RequestHandler):
     def get(self):
-        students = Student.all()  #.fetch(1000)  can just iterate over all()
+        students = Student.all()
         xml = xmlExport(students)
         self.response.headers['Content-Type'] = 'text/xml'
         self.response.out.write(xml)
@@ -246,10 +248,6 @@ class ClearData(webapp.RequestHandler):
         """
         Clear the datastore
         """
-        # query = Student.all()
-        # db.delete(query)
-        # self.redirect("/")
-
         #. move this to utils
         # clear ALL the tables
         tables = [Student, Class, Book, Paper, Internship, Place, Game]
@@ -278,7 +276,7 @@ _URLS = (
 
      ('/profile',StudentProfile),
 
-     ('/changePassword', changePassword),
+     ('/changePassword', ChangePassword),
 
      ('/student/list', ListStudent),
      ('/student/delete', DeleteStudent),
