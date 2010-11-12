@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # -------------------------------
-# testValidation.py
+# testValidate.py
 # Copyright (C) 2010
 # Sang Yun
 # -------------------------------
@@ -17,14 +17,14 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
 
 # -----------
-# TestValidation
+# TestValidate
 # -----------
 
-class testValidation (unittest.TestCase) :
+class testValidate (unittest.TestCase) :
 
     # Course Num
 
-    def testValidationCourseNum(self) :
+    def testValidateCourseNum(self) :
         self.assertRaises(db.BadValueError, validate_course_num, "CS")
         self.assertRaises(db.BadValueError, validate_course_num, "373")
         self.assertRaises(db.BadValueError, validate_course_num, "      ")
@@ -35,7 +35,7 @@ class testValidation (unittest.TestCase) :
 
 
     # Unique number
-    def testValidationUnique(self) :
+    def testValidateUnique(self) :
         # input is non-integer value
         self.assertRaises(db.BadValueError, validate_unique, "asdfg")
         self.assertRaises(db.BadValueError, validate_unique, "unique")
@@ -53,7 +53,7 @@ class testValidation (unittest.TestCase) :
 
 
     # Semester    
-    def testValidationSemester(self) :
+    def testValidateSemester(self) :
         # input is does not have year
         self.assertRaises(db.BadValueError, validate_semester, "Fall")
         self.assertRaises(db.BadValueError, validate_semester, "Spring")
@@ -80,7 +80,7 @@ class testValidation (unittest.TestCase) :
 
 
     # Rating
-    def testValidationRating(self) :
+    def testValidateRating(self) :
         self.assertRaises(db.BadValueError, validate_rating, "asdf")
         self.assertRaises(db.BadValueError, validate_rating, "Foo")
         self.assertRaises(db.BadValueError, validate_rating, "   ")
@@ -96,7 +96,7 @@ class testValidation (unittest.TestCase) :
 
 
     # Email
-    def testValidationEmail(self) :
+    def testValidateEmail(self) :
         # Email is does not have @ or dot com
         self.assertRaises(db.BadValueError, validate_email, "asdf")
         self.assertRaises(db.BadValueError, validate_email, "asdf1234@asdf")
@@ -108,7 +108,7 @@ class testValidation (unittest.TestCase) :
 
 
     # ISBN
-    def testValidationIsbn(self):
+    def testValidateIsbn(self):
         self.assertRaises(db.BadValueError, validate_isbn, "  ")
         self.assertRaises(db.BadValueError, validate_isbn, "123")
         self.assertRaises(db.BadValueError, validate_isbn, "12345678901") # too long

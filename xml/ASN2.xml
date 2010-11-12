@@ -1,5 +1,7 @@
 <students>
 
+<!-- ben -------------------------------------------------------------------->
+
 	<student>
 		<id>ben00000</id>
 		<password>ben</password>
@@ -169,11 +171,6 @@
 			<rating>45</rating>
 			<comment>All the bars in one street</comment>
 		</fun_place>
-		<!--
-		    live_place
-		    eat_place
-		    fun_place
-		    -->
 		<game>
 			<os>Any</os>
 			<title>FIFA 2011</title>
@@ -188,6 +185,8 @@
 		</game>
    </student>
    
+<!-- brian -------------------------------------------------------------------->
+
    <student>
 	<id>brian000</id>
 	<password>brian</password>
@@ -246,7 +245,7 @@
 		<title>Valis</title>
 		<author>Philip K. Dick</author>
 		<rating>95</rating>
-		<comment>crazy</comment>
+		<comment>mind-bending</comment>
 	</book>
 	<book>
 		<isbn>0679736646</isbn>
@@ -348,7 +347,9 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 		<comment>I loved this game as a kid.</comment>
 	</game>
     </student>
-    
+
+<!-- jonathan -------------------------------------------------------------------->
+
     <student>
         <id>jonathan</id>
         <password>jonathan</password>
@@ -438,7 +439,9 @@ The book is a comprehensive and insightful introduction to artificial intelligen
             <comment>Would be better, if the linebackers weren't all superfreaks</comment>
         </game>
     </student>
-    
+
+<!-- shanky -------------------------------------------------------------------->
+
     <student>
 	    <id>shanky00</id>
 	    <password>shanky</password>
@@ -629,11 +632,6 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 		    <rating>97</rating>
 		    <comment>Great Music</comment>
 	    </fun_place>
-	    <!--
-		live_place
-		eat_place
-		fun_place
-		-->
 	    <game>
 		    <os>Any</os>
 		    <title>Grand Theft Auto</title>
@@ -654,6 +652,8 @@ The book is a comprehensive and insightful introduction to artificial intelligen
 	    </game>
     </student>
     
+<!-- josh -------------------------------------------------------------------->
+
     <student>
         <id>josh0000</id>
         <password>josh</password>
@@ -802,11 +802,6 @@ The book is a comprehensive and insightful introduction to artificial intelligen
             <rating>70</rating>
             <comment>Nice pool tables. Good for family parties too.</comment>
         </fun_place>
-        <!--
-        live_place
-        eat_place
-        fun_place
-        -->
         <game>
             <os>PC</os>
             <title>Sherlock Holmes vs Aresene Lupin</title>

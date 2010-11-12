@@ -17,13 +17,14 @@ from utils.xmlExport import xmlExport
 from utils.xmlImport import xmlImportString
 from utils.sessions import Session
 from models import *
-from handlers.ClassHandler import * 
-from handlers.BookHandler import *
-from handlers.PaperHandler import *
-from handlers.PlaceHandler import *
-from handlers.InternshipHandler import *
-from handlers.GameHandler import *
-from handlers.StudentHandler import *
+from handlers import *
+# from handlers.ClassHandler import * 
+# from handlers.BookHandler import *
+# from handlers.PaperHandler import *
+# from handlers.PlaceHandler import *
+# from handlers.InternshipHandler import *
+# from handlers.GameHandler import *
+# from handlers.StudentHandler import *
 
 from google.appengine.ext.db import djangoforms
 
@@ -43,30 +44,30 @@ class About(webapp.RequestHandler):
 class changePassword(webapp.RequestHandler):
     def get(self):
         x = Session()  
-	if 'student_id' in x:      
-	    s = Student.get_by_id(x['student_id'])
+        if 'student_id' in x:      
+            s = Student.get_by_id(x['student_id'])
 
-	doRender(self,'changePassword.html',{})
+        doRender(self,'changePassword.html',{})
 
     def post(self):
-	template = {}	
-	self.session = Session()
-        oldPass = self.request.get('oldPass')
-        newPass1 = self.request.get('newPass1')
-        newPass2 = self.request.get('newPass2')
-	username = self.session['username']
-	user = Student.get_by_id(username)
-	if(oldPass != user.password):
-		template['oldPassError'] = True
+        template = {}	
+        self.session = Session()
+            oldPass = self.request.get('oldPass')
+            newPass1 = self.request.get('newPass1')
+            newPass2 = self.request.get('newPass2')
+        username = self.session['username']
+        user = Student.get_by_id(username)
+        if(oldPass != user.password):
+            template['oldPassError'] = True
 
-	if( newPass1 != newPass2):
-		template['mismatch'] = True
+        if( newPass1 != newPass2):
+            template['mismatch'] = True
 
-	if(oldPass == user.password and newPass1 == newPass2):
-		user.password = newPass1
-		user.put()
-		template['success'] = True
-	doRender(self,'changePassword.html', template)
+        if(oldPass == user.password and newPass1 == newPass2):
+            user.password = newPass1
+            user.put()
+            template['success'] = True
+        doRender(self,'changePassword.html', template)
 
 
 class SignupHandler(webapp.RequestHandler):
@@ -86,9 +87,9 @@ class SignupHandler(webapp.RequestHandler):
                 return
             s = Student()
             #s.generateID()
-	    s.id_ = username
+            s.id_ = username
             s.password = self.request.get('password')
-	    s.put()
+            s.put()
             user = form.save()
             user = s
             user.put()
@@ -106,8 +107,8 @@ class LoginHandler(webapp.RequestHandler):
     def post(self):
         self.session = Session()
         #email = self.request.get('username')
-	id_ = self.request.get('username')        
-	pw = self.request.get('password')
+        id_ = self.request.get('username')        
+        pw = self.request.get('password')
         self.session.delete_item('username')
 
         if id_ == '':        # if email == ' ' :
@@ -117,8 +118,8 @@ class LoginHandler(webapp.RequestHandler):
             doRender(self, 'login.html', {'error':'Please specify a password.'})
             return
         
-       # user = User.get_by_email(email)
-    	user = Student.get_by_id(id_)
+        # user = User.get_by_email(email)
+        user = Student.get_by_id(id_)
         if user is None:
             doRender(self,'login.html',{'error':'Invalid username entered. Please try again.  '})  
         elif pw == user.password:
@@ -185,6 +186,7 @@ class ClearData(webapp.RequestHandler):
             db.delete(query)
 
         self.redirect("/")
+
 
 def doRender(handler, filename='index.html', values = {}):
     """
