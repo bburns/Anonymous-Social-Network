@@ -554,6 +554,9 @@
                       <course_name>Software Engineering</course_name>
                       <semester>Fall 2020</semester>
                       <instructor>Downing</instructor>
+<rating>90</rating>
+<comment/>
+<grade/>
           </class>
           <class>
                       <unique>11811</unique>
@@ -2455,7 +2458,7 @@
            </game>
         </student>
         <student>
-           <id>FacemanPeck</id>
+           <id>FacemanP</id>
            <password>pW2468</password>
            <class>
                <unique>52540</unique>
@@ -2898,7 +2901,7 @@
        
    </student>
 <student>
-                <id>raj787789</id>
+                <id>raj78778</id>
                 <password>bigPass</password>
                 <class>
                         <unique>52545</unique>
@@ -2907,6 +2910,7 @@
                         <semester>Fall 2010</semester>
                         <instructor>Downing</instructor>
                         <rating>100</rating>
+<comment/>
                         <grade>A</grade>
                 </class>
                 <class>
@@ -2916,6 +2920,7 @@
                         <semester>Fall 2010</semester>
                         <instructor>Bajaj</instructor>
                         <rating>5</rating>
+<comment/>
                         <grade>B</grade>
                 </class>
                 <class>
@@ -2925,6 +2930,7 @@
                         <semester>Fall 2010</semester>
                         <instructor>Dhalin</instructor>
                         <rating>100</rating>
+<comment/>
                         <grade>B</grade>
                 </class>
                 <book>
@@ -2952,8 +2958,8 @@
            <semester>Fall 2010</semester>
            <instructor>Shmatikov</instructor>
            <rating>4</rating>
+<comment/>
            <grade>A</grade>
-<comment></comment>
        </class>
        <class>
            <unique>52510</unique>
@@ -2962,8 +2968,8 @@
            <semester>Fall 2010</semester>
            <instructor>Young</instructor>
            <rating>5</rating>
+<comment/>
            <grade>A-</grade>
-<comment></comment>
        </class>
        <class>
            <unique>52545</unique>
@@ -2972,8 +2978,8 @@
            <semester>Fall 2010</semester>
            <instructor>Downing</instructor>
            <rating>5</rating>
+<comment/>
            <grade>B</grade>
-<comment></comment>
        </class>
        <book>
            <isbn>0545139708</isbn>
@@ -3097,12 +3103,6 @@
                         <comment>Great class! Lots of fun!</comment>
                         <grade>A</grade>
                 </class>
-                <game>
-                        <os>Windows</os>
-                        <title>Bioshock 2</title>
-                        <rating>91</rating>
-                        <comment>Good game, very good spiritual successor to System Shock 2</comment>
-                </game>
                 <book>
                         <isbn>1603090444</isbn>
                         <title>Lost Girls</title>
@@ -3117,9 +3117,15 @@
                         <rating>100</rating>
                         <comment></comment>
                 </study_place>
+                <game>
+                        <os>Windows</os>
+                        <title>Bioshock 2</title>
+                        <rating>91</rating>
+                        <comment>Good game, very good spiritual successor to System Shock 2</comment>
+                </game>
         </student>
         <student>
-       <id>Id0193149</id>
+       <id>Id019311</id>
        <password>vlm487</password>
        <class>
            <unique>52460</unique>
@@ -3128,6 +3134,7 @@
            <semester>Fall 2010</semester>
            <instructor>Misra</instructor>
            <rating>50</rating>
+<comment/>
            <grade>Q</grade>
        </class>
        <class>
@@ -3137,7 +3144,8 @@
            <semester>Fall 2010</semester>
            <instructor>Glenn Downing</instructor>
            <rating>80</rating>
-           <grade>AQ</grade>
+<comment/>
+           <grade>Q</grade>
        </class>
        <class>
            <unique>52485</unique>
@@ -3146,6 +3154,7 @@
            <semester>Fall 2010</semester>
            <instructor>Hunt</instructor>
            <rating>75</rating>
+<comment/>
            <grade>Q</grade>
        </class>
        <class>
@@ -3155,6 +3164,7 @@
            <semester>Fall 2010</semester>
            <instructor>Donald Fussell</instructor>
            <rating>90</rating>
+<comment/>
            <grade>Q</grade>
        </class>
        <book>
@@ -3162,6 +3172,7 @@
            <title>Harry Potter and the Deathly Hallows</title>
            <author>J K Rowling</author>
            <rating>75</rating>
+<comment/>
        </book>
        <internship>
            <place_name>RW3</place_name>
@@ -3175,6 +3186,7 @@
            <location>Corner of 24th and Guadalupe</location>
            <semester>Fall 2010</semester>
            <rating>80</rating>
+<comment></comment>
        </study_place>
        <game>
            <os>XBox 360</os>
@@ -3825,7 +3837,7 @@
            </game>
         </student>
         <student>
-           <id>FacemanPeck</id>
+           <id>FacemanP</id>
            <password>pW2468</password>
            <class>
                <unique>52540</unique>
@@ -4307,7 +4319,7 @@
            </eat_place>
    </student>
 <student>
-       <id>mr358djM382</id>
+       <id>mr358djM</id>
        <password>kingsquest</password>
        
        <class>
@@ -4432,7 +4444,7 @@
        </game>
    </student>
 <student>
-        <id>cal743</id>
+        <id>cal74300</id>
         <password>tryagain</password>
    
         <class>
@@ -4441,9 +4453,9 @@
          <course_name>Second To Last</course_name>
          <semester>Fall 9999</semester>
          <instructor>Glenn P. Downing</instructor>
-<grade></grade>
          <rating>99</rating>
          <comment>IT'S A DOUBLE RAINBOW</comment>
+<grade></grade>
         </class>
         <class>
          <unique>23451</unique>
@@ -4451,9 +4463,9 @@
          <course_name>Next To Last</course_name>
          <semester>Fall 9999</semester>
          <instructor>Glenn P. Downing</instructor>
-<grade></grade>
          <rating>99</rating>
          <comment>IT'S A TRIPLE RAINBOW</comment>
+<grade></grade>
         </class>
         <class>
          <unique>34512</unique>
@@ -4461,9 +4473,9 @@
          <course_name>The Last</course_name>
          <semester>Spring 9999</semester>
          <instructor>Glenn P. Downing</instructor>
-<grade></grade>
          <rating>99</rating>
          <comment>SO MANY BLASPHEMIN’ LAYERS OF BLOODY PURPLE AND GREEN AND WHATNOT RAINBOWS</comment>
+<grade></grade>
         </class>
    
         <book>

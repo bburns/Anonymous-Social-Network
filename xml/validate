@@ -5,5 +5,5 @@
 # > validate brian.xml
 for file in $*
   do
-  xmllint --noout --schema ASN1.xsd $file
+  xmllint --noout --schema ASN2.xsd $file
 done
