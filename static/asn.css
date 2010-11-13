@@ -2,6 +2,11 @@
   height: 400px;
 }
 
+textarea {
+  width: 95%;
+  height: 80px;
+}
+
 #orangebar {
   position: absolute;
   background: #cc6600;

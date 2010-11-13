@@ -229,6 +229,7 @@ class ClassForm(djangoforms.ModelForm):
         model = Class
         exclude = ['ratingAvg', 'refCount']
 
+
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)
     class_ = db.ReferenceProperty(Class)
@@ -267,6 +268,10 @@ class StudentClass(db.Model):
         class_.refCount = n
         class_.put()
 
+class StudentClassForm(djangoforms.ModelForm):
+    class Meta:
+        model = StudentClass
+        exclude = ['student','class_']
 
 class Book(db.Model):
     title = db.StringProperty()
