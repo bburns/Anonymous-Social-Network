@@ -9,7 +9,6 @@ from models import *
 class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
-        # classes.fetch(100)  # Class.all() can be iterated over. 
         doRender(self,'class/list.html',{'classes':classes})
         
 class AddClass(webapp.RequestHandler):
@@ -80,7 +79,6 @@ class ViewClass(webapp.RequestHandler):
 
     def post(self):
 
-        #print self.request
         self.session = Session()
         student_id = self.session['student_id']
         student = Student.get_by_id(student_id)
@@ -89,15 +87,17 @@ class ViewClass(webapp.RequestHandler):
         class_ = Class.get_by_id(class_id)
 
         rating = self.request.get('rating') # 0-100
+        grade = self.request.get('grade') # A-F
         comment = self.request.get('comment')
 
-        #print student, book, rating, comment
-        
+        print rating, grade
+
         # add the assocation object
         assoc = StudentClass()
         assoc.student = student
         assoc.class_ = class_
         assoc.rating = rating
+        assoc.grade = grade
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 

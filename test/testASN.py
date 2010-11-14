@@ -266,6 +266,55 @@ class testASN (unittest.TestCase) :
 
 
 
+    def testGrades(self):
+        
+        self.assert_(gradeToNum('A')==4.0)
+        self.assert_(gradeToNum('A-')==3.7)
+        self.assert_(gradeToNum('B+')==3.3)
+        self.assert_(gradeToNum('B')==3.0)
+        self.assert_(gradeToNum('B-')==2.7)
+        self.assert_(gradeToNum('F')==0.0)
+
+
+
+    def testAvgGrades(self):
+        
+        self.dbClear()
+
+        c = Class()
+        c.course_num = "CS 373"
+        c.course_name = "Software Engineering"
+        c.instructor = "Downing"
+        c.put()
+
+        s = Student()
+        s.id_ = "test0000"
+        s.put()
+
+        link = StudentClass()
+        link.student = s
+        link.class_ = c
+        link.rating = "80"
+        link.grade = "C"
+        link.put()
+
+        s = Student()
+        s.id_ = "test0001"
+        s.put()
+
+        link = StudentClass()
+        link.student = s
+        link.class_ = c
+        link.rating = "90"
+        link.grade = "A"
+        link.put()
+
+        self.assert_(c.gradeAvg == 3.0)
+        #self.assert_(c.gradeAvg == "B")
+
+
+
+
     """
     def testStudentBook2(self):
 

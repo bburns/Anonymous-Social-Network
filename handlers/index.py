@@ -220,18 +220,14 @@ class ImportData(webapp.RequestHandler):
         doRender(self,'import.html')
 
     def post(self):
-        #. trying to get this to handle a file also
-        # xml_file = self.request.get('xml-file')
         xml_string = self.request.get('xml-string')
-        # print self.request
         try:
-            # if xml_file:
-                # xmlImportString(xml_file)
-            # else:
-                # xmlImportString(xml_string)
             xmlImportString(xml_string)
         except Exception, e:
             doRender(self,'import.html',{ 'error' : e.args })
+            # bug - was missing this return statement, so wound up
+            # falling through to next redirect, and not realizing it was failing.
+            return 
         self.redirect("/")
 
 

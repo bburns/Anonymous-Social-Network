@@ -14,7 +14,7 @@ def xmlImportFile(xmlfile):
     """
     Imports an xml file to a google database
     Input: A path to a relative file location as a string
-    Output: None. but there is a database created that you can now query.
+    Output: True if imported entire file. 
     """
     logging.info("xmlImportFile")
     #. check file is valid
@@ -26,11 +26,12 @@ def xmlImportString(s):
     """
     Imports an xml string to a google database
     Input: A path to a relative file location as a string
-    Output: None. but there is a database created that you can now query.    
+    Output: True if imported entire file.
     """
     logging.info("xmlImportString")
     logging.info(type(s))
-    # minidom may throw an exception if input is invalid, eg empty string
+    # minidom may throw an exception if input is invalid, eg empty string,
+    # or bad unicode characters (weird)
     try:
         dom = minidom.parseString(s)
     except Exception, e:
@@ -46,7 +47,7 @@ def xmlImport(dom):
     """
     Imports a dom (document object model) to a google database.
     Input: a dom, obtained by parsing an xml file, for instance. 
-    Output: None. but there is a database created that you can now query.    
+    Output: True if imported the whole dom, None otherwise (seems to fail silently)
     """
 
     logging.info("xmlImport")
@@ -65,8 +66,11 @@ def xmlImport(dom):
             s = Student()
             s.id_ = getElementData(studentNode, "id")
             s.password = getElementData(studentNode, "password")
-	    if s.id_ in ["brian000", "ben00000", "shanky00", "jonathan"] :
-		s.isAdmin = True
+            
+            # set admin flag for us (leaving josh out for testing purposes)
+            if s.id_ in ["brian000", "ben00000", "shanky00", "jonathan"] :
+                s.isAdmin = True
+                
             s.put()
             
             logging.info(s.id_ + ' ' + s.password)
@@ -88,7 +92,7 @@ def xmlImport(dom):
 
                 # find or add a class object
                 o = Class.findAdd(course_num, course_name, instructor)
-                logging.info(o.course_num)
+                logging.info(course_num)
 
                 # create a studentClass association object
                 link = StudentClass()
@@ -114,7 +118,7 @@ def xmlImport(dom):
 
                 # find or add a book object
                 o = Book.findAdd(title, author, isbn)
-                logging.info(o.title)
+                logging.info(title)
 
                 # create a studentBook association object
                 link = StudentBook()
@@ -137,7 +141,7 @@ def xmlImport(dom):
 
                 # find or add a paper object
                 o = Paper.findAdd(title, author, paper_category)
-                logging.info(o.title)
+                logging.info(title)
 
                 # create association object
                 link = StudentPaper()
@@ -158,7 +162,7 @@ def xmlImport(dom):
                 comment = getElementData(node, 'comment')
 
                 o = Internship.findAdd(place_name, location, semester)
-                logging.info(o.place_name)
+                logging.info(place_name)
 
                 link = StudentInternship()
                 link.student = s
@@ -179,7 +183,7 @@ def xmlImport(dom):
                 comment = getElementData(node, 'comment')
 
                 o = Place.findAdd(place_type, place_name, location, semester)
-                logging.info(o.place_name)
+                logging.info(place_name)
 
                 link = StudentPlace()
                 link.student = s
@@ -200,7 +204,7 @@ def xmlImport(dom):
                 comment = getElementData(node, 'comment')
 
                 o = Place.findAdd(place_type, place_name, location, semester)
-                logging.info(o.place_name)
+                logging.info(place_name)
 
                 link = StudentPlace()
                 link.student = s
@@ -221,7 +225,7 @@ def xmlImport(dom):
                 comment = getElementData(node, 'comment')
 
                 o = Place.findAdd(place_type, place_name, location, semester)
-                logging.info(o.place_name)
+                logging.info(place_name)
 
                 link = StudentPlace()
                 link.student = s
@@ -242,7 +246,7 @@ def xmlImport(dom):
                 comment = getElementData(node, 'comment')
 
                 o = Place.findAdd(place_type, place_name, location, semester)
-                logging.info(o.place_name)
+                logging.info(place_name)
 
                 link = StudentPlace()
                 link.student = s
@@ -261,7 +265,7 @@ def xmlImport(dom):
                 comment = getElementData(node, 'comment')
 
                 o = Game.findAdd(title, os)
-                logging.info(o.title)
+                logging.info(title)
 
                 link = StudentGame()
                 link.student = s
@@ -270,7 +274,9 @@ def xmlImport(dom):
                 link.comment = comment
                 link.put()
                 logging.info("added link")
-            
+
+    return True
+    
 
 def getElementData(node, tagname) :
     """

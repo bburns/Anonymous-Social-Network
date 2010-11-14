@@ -1,0 +1,828 @@
+<students>   
+        <student>
+           <id>vandura7</id>
+           <password>gmc1974</password>
+           <class>
+               <unique>90262</unique>
+               <course_num>CH s302</course_num>
+               <course_name>Principles of Chemistry II</course_name>
+               <semester>Summer 2009</semester>
+               <instructor>McCord</instructor>
+               <rating>90</rating>
+               <comment>Cristina Eliz Martinez.</comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>53220</unique>
+               <course_num>CH 204</course_num>
+               <course_name>Introduction to Chemical Practice</course_name>
+               <semester>Fall 2009</semester>
+               <instructor>Anderson</instructor>
+               <rating>99</rating>
+               <comment>Cristina Eliz Martinez.</comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>54825</unique>
+               <course_num>CS 357</course_num>
+               <course_name>Algorithms</course_name>
+               <semester>Fall 2009</semester>
+               <instructor>Plaxton</instructor>
+               <rating>87</rating>
+               <comment></comment>
+               <grade>B</grade>
+           </class>
+           <class>
+               <unique>54820</unique>
+               <course_num>CS 356</course_num>
+               <course_name>Computer Networks</course_name>
+               <semester>Fall 2009</semester>
+               <instructor>Lam</instructor>
+               <rating>75</rating>
+               <comment></comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>57905</unique>
+               <course_num>M 361K</course_num>
+               <course_name>Probability</course_name>
+               <semester>Fall 2009</semester>
+               <instructor>Wu</instructor>
+               <rating>69</rating>
+               <comment></comment>
+               <grade>B</grade>
+           </class>
+           <class>
+               <unique>57160</unique>
+               <course_num>M 375T</course_num>
+               <course_name>Functions and Modeling</course_name>
+               <semester>Fall 2009</semester>
+               <instructor>Daniels</instructor>
+               <rating>98</rating>
+               <comment></comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>54310</unique>
+               <course_num>CS 375</course_num>
+               <course_name>Compilers</course_name>
+               <semester>Spring 2010</semester>
+               <instructor>Pingali</instructor>
+               <rating>60</rating>
+               <comment>Syllabus change was the key factor!</comment>
+               <grade>C</grade>
+           </class>
+           <class>
+               <unique>54255</unique>
+               <course_num>CS 354</course_num>
+               <course_name>Computer Graphics</course_name>
+               <semester>Spring 2010</semester>
+               <instructor>Bajaj</instructor>
+               <rating>100</rating>
+               <comment>RayTracing!</comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>54250</unique>
+               <course_num>CS 353</course_num>
+               <course_name>Theory of Computation</course_name>
+               <semester>Spring 2010</semester>
+               <instructor>Zuckerman</instructor>
+               <rating>56</rating>
+               <comment></comment>
+               <grade>C</grade>
+           </class>
+           <class>
+               <unique>57030</unique>
+               <course_num>M 361K</course_num>
+               <course_name>Introduction to Real Analysis</course_name>
+               <semester>Spring 2010</semester>
+               <instructor>Bjorland</instructor>
+               <rating>91</rating>
+               <comment></comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>83985</unique>
+               <course_num>ITL f506</course_num>
+               <course_name>First Year Italian I</course_name>
+               <semester>Summer 2010</semester>
+               <instructor>Demos</instructor>
+               <rating>100</rating>
+               <comment>She was an excellent teacher. Would take again!</comment>
+               <grade>B+</grade>
+           </class>
+           <class>
+               <unique>52545</unique>
+               <course_num>CS 373</course_num>
+               <course_name>Software Engineering</course_name>
+               <semester>Fall 2010</semester>
+               <instructor>Downing</instructor>
+               <rating>100</rating>
+               <comment>Glenn Downing rocks!</comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>52475</unique>
+               <course_num>CS 346</course_num>
+               <course_name>Cryptography</course_name>
+               <semester>Fall 2010</semester>
+               <instructor>Gal</instructor>
+               <rating>90</rating>
+               <comment></comment>
+               <grade>A</grade>
+           </class>
+           <class>
+               <unique>55550</unique>
+               <course_num>M 362M</course_num>
+               <course_name>Intro to Stochastic Processes</course_name>
+               <semester>Fall 2010</semester>
+               <instructor>Sirbu</instructor>
+               <rating>80</rating>
+               <comment>I made a friend in this class named Jamie. I think she's pretty. But aside from a friend, I think this class was a worthwhile experience!</comment>
+               <grade>B+</grade>
+           </class>
+           <class>
+               <unique>52535</unique>
+               <course_num>CS 372</course_num>
+               <course_name>Introduction to Operating Systems</course_name>
+               <semester>Fall 2010</semester>
+               <instructor>Dahlin</instructor>
+               <rating>84</rating>
+               <comment>This professor looks like Christian Bale. Seriously.</comment>
+               <grade>B</grade>
+           </class>
+           <book>
+               <isbn>9780131862395</isbn>
+               <title>Introduction to Cryptography with Coding Theory</title>
+               <author>Trappe</author>
+               <rating>80</rating>
+               <comment></comment>
+           </book>
+           <book>
+               <isbn>9780201485677</isbn>
+               <title>Refactoring</title>
+               <author>Fowler</author>
+               <rating>91</rating>
+               <comment>Software Engineering.</comment>
+           </book>
+           <book>
+               <isbn>9780201708424</isbn>
+               <title>Extreme Programming Installed</title>
+               <author>Jeffries</author>
+               <rating>80</rating>
+               <comment></comment>
+           </book>
+           <book>
+               <isbn>9780136006633</isbn>
+               <title>Modern Operating Systems</title>
+               <author>Tanenbaum</author>
+               <rating>96</rating>
+               <comment></comment>
+           </book>
+           <book>
+               <isbn>9780471321484</isbn>
+               <title>Introduction to Real Analysis</title>
+               <author>Bartle</author>
+               <rating>85</rating>
+               <comment>The green book.</comment>
+           </book>
+           <book>
+               <isbn>9780534950972</isbn>
+               <title>Introduction to the Theory of Computation</title>
+               <author>Sipster</author>
+               <rating>90</rating>
+               <comment>The grey book.</comment>
+           </book>
+           <paper>
+               <paper_category>journal</paper_category>
+               <title>Solving Problems using a^n + b^n</title>
+               <author>Brian Urbina</author>
+               <rating>17</rating>
+               <comment></comment>
+           </paper>
+           <paper>
+               <paper_category>conference</paper_category>
+               <title>Instant Search</title>
+               <author>Unknown</author>
+               <rating>90</rating>
+               <comment></comment>
+           </paper>
+           <internship>
+               <place_name>Google</place_name>
+               <location>Mountain View, CA</location>
+               <semester>Summer 2010</semester>
+               <rating>100</rating>
+               <comment>Instant Search!</comment>
+           </internship>
+           <study_place>
+               <place_name>Perry-Castaneda Library</place_name>
+               <location>PCL</location>
+               <semester>Fall 2010</semester>
+               <rating>100</rating>
+               <comment></comment>
+           </study_place>
+           <study_place>
+               <place_name>Micro Lab ENS</place_name>
+               <location>ENS</location>
+               <semester>Fall 2010</semester>
+               <rating>100</rating>
+               <comment></comment>
+           </study_place>
+           <study_place>
+               <place_name>Micro Lab Painter</place_name>
+               <location>Painter</location>
+               <semester>Fall 2010</semester>
+               <rating>100</rating>
+               <comment></comment>
+           </study_place>
+           <study_place>
+               <place_name>Micro Lab Taylor</place_name>
+               <location>Taylor Basement</location>
+               <semester>Spring 2010</semester>
+               <rating>100</rating>
+               <comment></comment>
+           </study_place>
+           <study_place>
+               <place_name>Starbucks Coffee</place_name>
+               <location>Texas Union</location>
+               <semester>Spring 2009</semester>
+               <rating>99</rating>
+               <comment></comment>
+           </study_place>
+           <study_place>
+               <place_name>Third Floor</place_name>
+               <location>Texas Union</location>
+               <semester>Spring 2009</semester>
+               <rating>99</rating>
+               <comment></comment>
+           </study_place>
+           <study_place>
+               <place_name>FAC Lobby</place_name>
+               <location>FAC</location>
+               <semester>Spring 2010</semester>
+               <rating>87</rating>
+               <comment></comment>
+           </study_place>
+           <live_place>
+               <place_name>Longhorn Landing</place_name>
+               <location>Riverside</location>
+               <semester>Fall 2010</semester>
+               <rating>79</rating>
+               <comment></comment>
+           </live_place>
+           <live_place>
+               <place_name>Urbina Residence</place_name>
+               <location>San Antonio Texas</location>
+               <semester>Spring 2007</semester>
+               <rating>99</rating>
+               <comment></comment>
+           </live_place>
+           <eat_place>
+               <place_name>Wendy's</place_name>
+               <location>Jester</location>
+               <semester>Fall 2010</semester>
+               <rating>93</rating>
+               <comment></comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Chick-Fil-A</place_name>
+               <location>Texas Union</location>
+               <semester>Spring 2010</semester>
+               <rating>92</rating>
+               <comment></comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Subway</place_name>
+               <location>Royal Stadium</location>
+               <semester>Fall 2010</semester>
+               <rating>97</rating>
+               <comment>Healthy</comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Subway</place_name>
+               <location>24th</location>
+               <semester>Fall 2010</semester>
+               <rating>97</rating>
+               <comment>Healthy</comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Subway</place_name>
+               <location>Oltorf Street</location>
+               <semester>Fall 2010</semester>
+               <rating>97</rating>
+               <comment>Healthy</comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Schlotzsky's Deli</place_name>
+               <location>Guadalupe Street</location>
+               <semester>Summer 2010</semester>
+               <rating>90</rating>
+               <comment>Purdy Healthy</comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Fran's Hamburgers</place_name>
+               <location>Congress Street</location>
+               <semester>Summer 2010</semester>
+               <rating>98</rating>
+               <comment>Purdy bad but delicious!</comment>
+           </eat_place>
+           <eat_place>
+               <place_name>Five Guys</place_name>
+               <location>Guadalupe Street</location>
+               <semester>Fall 2010</semester>
+               <rating>94</rating>
+               <comment>Purdy bad but really delicious!</comment>
+           </eat_place>
+           <fun_place>
+               <place_name>Slick Willies</place_name>
+               <location>Ingram Park Mall</location>
+               <semester>Fall 2006</semester>
+               <rating>91</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Apple Store</place_name>
+               <location>Barton Creek Square Mall</location>
+               <semester>Fall 2010</semester>
+               <rating>100</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Gamestop</place_name>
+               <location>Highland Mall</location>
+               <semester>Fall 2009</semester>
+               <rating>78</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Regal Westgate</place_name>
+               <location>Westgate Blvd.</location>
+               <semester>Fall 2010</semester>
+               <rating>71</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Blanton Museum of Art</place_name>
+               <location>University of Texas at Austin</location>
+               <semester>Spring 2010</semester>
+               <rating>99</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Bowling Alley</place_name>
+               <location>Union Underground</location>
+               <semester>Spring 2010</semester>
+               <rating>99</rating>
+               <comment>Maty Gil and I went bowling together to celebrate one school semester's completion!</comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Austin City Limits</place_name>
+               <location>Zilker Park</location>
+               <semester>Fall 2010</semester>
+               <rating>99</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Best Buy</place_name>
+               <location>51st</location>
+               <semester>Fall 2010</semester>
+               <rating>95</rating>
+               <comment></comment>
+           </fun_place>
+           <fun_place>
+               <place_name>Movie Theater</place_name>
+               <location>Dobie Mall</location>
+               <semester>Spring 2010</semester>
+               <rating>77</rating>
+               <comment></comment>
+           </fun_place>
+           <game>
+               <os>Nintendo DS</os>
+               <title>Pokemon HeartGold</title>
+               <rating>100</rating>
+               <comment></comment>
+           </game>
+        </student>
+   <student>
+           <id>splinter</id>
+           <password>phobe</password>
+           <class>
+                   <unique>54080</unique>
+                   <course_num>CS 378</course_num>
+                   <course_name>Always All Answers Hyper Honors</course_name>
+                   <semester>Fall 1337</semester>
+                   <instructor>God</instructor>
+                   <rating>100</rating>
+                   <comment>It's Alpha to the power of Omega</comment>
+                   <grade>A</grade>
+           </class>
+           <book>
+                   <isbn>1234567890</isbn>
+                   <title>Urban Dictionary</title>
+                   <author>The Internet</author>
+                   <rating>0</rating>
+                   <comment>Some things you don't wanna know</comment>
+           </book>
+           <internship>
+                   <place_name>HomeAway</place_name>
+                   <location>Austin, TX</location>
+                   <semester>Summer 2010</semester>
+                   <rating>100</rating>
+                   <comment>Good Pay, Nice Environment, Friendly People, PING PONG TABLE</comment>
+           </internship>
+           <study_place>
+                   <place_name>room 2110</place_name>
+                   <location>Duren</location>
+                   <semester>Fall 2010</semester>
+                   <rating>100</rating>
+                   <comment>No place like home...</comment>
+           </study_place>
+           <game>
+                   <os>Windows/Mac</os>
+                   <title>Team Fortress 2</title>
+                   <rating>100</rating>
+                   <comment>It gets updated monthly... for free!</comment>
+           </game>
+   </student>
+   <student>
+          <id>55378008</id>
+          <password>youllneverguessit</password>
+          <class>
+                      <unique>52460</unique>
+                      <course_num>CS 373</course_num>
+                      <course_name>Software Engineering</course_name>
+                      <semester>Fall 2020</semester>
+                      <instructor>Downing</instructor>
+<rating>90</rating>
+<comment/>
+<grade/>
+          </class>
+          <class>
+                      <unique>11811</unique>
+                      <course_num>C 101</course_num>
+                      <course_name>Coolness Class</course_name>
+                      <semester>Spring 3008</semester>
+                      <instructor>Da Fonz</instructor>
+                      <rating>100</rating>
+                  <comment>"Heeeey"</comment>
+                  <grade>A</grade>
+          </class>
+          <book>
+                      <isbn>0345347951</isbn>
+                      <title>Childhood's End</title>
+                      <author>Arthur C. Clarke</author>
+<rating>90</rating>
+<comment></comment>
+          </book>
+          <study_place>
+                      <place_name>6th Floor</place_name>
+                      <location>PCL</location>
+                      <semester>Fall 2010</semester>
+                      <rating>1</rating>
+                  <comment>You're not supposed have one of those on campus.</comment>
+          </study_place>
+          <live_place>
+                  <place_name>The Ballpark</place_name>
+                  <location>Riverside</location>
+                  <semester>Fall 2007</semester>
+<rating>90</rating>
+<comment></comment>
+          </live_place>
+          <eat_place>
+                  <place_name>Juan in a Million</place_name>
+                  <location>2300 E Cesar Chavez St</location>
+                  <semester>Fall 2009</semester>
+                  <rating>90</rating>
+<comment></comment>
+          </eat_place>
+          <fun_place>
+                  <place_name>6th Street</place_name>
+                  <location>Downtown Austin</location>
+                  <semester>Fall 2009</semester>
+<rating>90</rating>
+<comment></comment>
+          </fun_place>
+          <game>
+                  <os>Gamecube</os>
+                  <title>Resident Evil 4</title>
+                  <rating>100</rating>
+                  <comment>"Well, I see that the President has equipped his daughter with ballistics too!"</comment>
+        </game>
+        <game>
+                  <os>Super Nintendo</os>
+                  <title>Super Mario World</title>
+                  <rating>100</rating>
+                  <comment>Why does Mario have to punch Yoshi?</comment>
+        </game>
+        <game>
+                  <os>Gameboy</os>
+                  <title>Pokemon Blue</title>
+                  <rating>100</rating>
+                  <comment>Ok yuh</comment>
+        </game>
+  </student>
+   <student>
+       <id>bhujkiop</id>
+       <password>jonathan</password>
+       <class>
+           <unique>52540</unique>
+           <course_num>CS 373</course_num>
+           <course_name>Software Engineering</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Downing</instructor>
+           <rating>90</rating>
+           <comment>Enjoyable so far</comment>
+           <grade>B</grade>
+       </class>
+       <class>
+           <unique>52467</unique>
+           <course_num>CS 343</course_num>
+           <course_name>Artificial Intelligence</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Mooney</instructor>
+           <rating>85</rating>
+           <comment></comment>
+           <grade>B</grade>
+       </class>
+       <class>
+           <unique>87987</unique>
+           <course_num>CS 378</course_num>
+           <course_name>Software Design</course_name>
+           <semester>Spring 2010</semester>
+           <instructor>Batory</instructor>
+           <rating>80</rating>
+           <comment>A little too abstract for my tastes. Code examples could be better</comment>
+           <grade>B</grade>
+       </class>
+       <book>
+           <isbn>0136042597</isbn>
+           <title>Artificial Intelligence: A Modern Approach</title>
+           <author>Norvig</author>
+           <rating>76</rating>
+           <comment></comment>
+       </book>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>The New New Product Development Game</title>
+           <author>Hirotaka Takeuchi and Ikujiro Nanaka</author>
+           <rating>83</rating>
+           <comment></comment>
+       </paper>
+       <study_place>
+           <place_name>PCL</place_name>
+           <location>Inner Campus Drive</location>
+           <semester>Fall 2010</semester>
+           <rating>90</rating>
+           <comment></comment>
+       </study_place>
+       <live_place>
+           <place_name>Oak Hollow Apartements</place_name>
+           <location>Far West Dr</location>
+           <semester>Fall 2010</semester>
+           <rating>70</rating>
+           <comment>A little old</comment>
+       </live_place>
+       <eat_place>
+           <place_name>Abel's at the Lake</place_name>
+           <location>Lake Austin Dr</location>
+           <semester>Fall 2010</semester>
+           <rating>99</rating>
+           <comment>Great burgers, great place to watch a game. Gotta try the Texas Teas</comment>
+       </eat_place>
+       <eat_place>
+           <place_name>What-A-Burger</place_name>
+           <location>Anderson Ln</location>
+           <semester>Spring 2010</semester>
+           <rating>90</rating>
+           <comment>Great drunk food</comment>
+       </eat_place>    
+       <fun_place>
+           <place_name>Home Slice Pizza</place_name>
+           <location>South Congress Dr</location>
+           <semester>Fall 2010</semester>
+           <rating>95</rating>
+           <comment>Best pizza in Austin</comment>
+       </fun_place>            
+       <game>
+           <os>XBox 360</os>
+           <title>NCAA Football 2010</title>
+           <rating>85</rating>
+           <comment>Would be better, if the linebackers weren't all superfreaks</comment>
+       </game>
+   </student>
+   <student>
+       <id>bkornfue</id>
+       <password>ben</password>
+       <class>
+           <unique>52540</unique>
+           <course_num>CS 373</course_num>
+           <course_name>Software Engineering</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Downing</instructor>
+           <rating>95</rating>
+           <comment></comment>
+           <grade></grade>
+       </class>
+       <class>
+           <unique>52568</unique>
+           <course_num>M340</course_num>
+           <course_name>Linear Algebra</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Lam</instructor>
+           <rating>55</rating>
+           <comment></comment>
+           <grade></grade>
+       </class>
+       <class>
+           <unique>52485</unique>
+           <course_num>CS 341</course_num>
+           <course_name>Automata Theory</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Rich</instructor>
+           <rating>80</rating>
+           <comment>Not fun</comment>
+           <grade></grade>
+       </class>
+       <class>
+           <unique>99999</unique>
+           <course_num>CS 345</course_num>
+           <course_name>Programming Languages</course_name>
+           <semester>Spring 2010</semester>
+           <instructor>Cannata</instructor>
+           <rating>95</rating>
+           <comment>This class was great</comment>
+           <grade>A</grade>
+       </class>
+       <book>
+           <isbn>4356745290</isbn>
+           <title>Automata, Complexity, and Computability</title>
+           <author>Elaine Rich</author>
+           <rating>97</rating>
+           <comment>Long</comment>
+       </book>
+       <book>
+           <isbn>0679736646</isbn>
+           <title>Test</title>
+           <author>Ben Kornfuehrer</author>
+           <rating>90</rating>
+           <comment></comment>
+       </book>
+       <book>
+           <isbn>2398476354098</isbn>
+           <title>The Big Bang Theory</title>
+           <author>Albert Einstein</author>
+           <rating>95</rating>
+           <comment></comment>
+       </book>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>Cognitive Architectures: Research Issues and Challenges</title>
+           <author>Pat Langley, John E. Laird, and Seth Rogers</author>
+           <rating>67</rating>
+           <comment>2009. Gives a detailed overview of cognitive architectures.</comment>
+       </paper>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>The 1980 ACM Turing Award Lecture</title>
+           <author>C.A.R. (Tony) Hoare</author>
+           <rating>92</rating>
+           <comment>Interesting talk about his experience designing languages</comment>
+       </paper>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>The Evolution of Lisp</title>
+           <author>Guy L. Steele, Jr. and Richard P. Gabriel</author>
+           <rating>90</rating>
+           <comment>ACM 1993</comment>
+       </paper>
+       <internship>
+           <place_name>Microsoft</place_name>
+           <location>Seattle</location>
+           <semester>Summer 2009</semester>
+           <rating>5</rating>
+           <comment>asdklfj</comment>
+       </internship>
+       <internship>
+           <place_name>Valero</place_name>
+           <location>San Antonio</location>
+           <semester>Summer 2010</semester>
+           <rating>25</rating>
+           <comment>It Sucked!</comment>
+       </internship>
+       <internship>
+           <place_name>Deloitte</place_name>
+           <location>Houston</location>
+           <semester>Summer 2008</semester>
+           <rating>4</rating>
+           <comment>Not my major</comment>
+       </internship>
+       <study_place>
+           <place_name>Painter</place_name>
+           <location>Inner Campus Drive</location>
+           <semester>Fall 2010</semester>
+           <rating>4</rating>
+           <comment></comment>
+       </study_place>
+       <study_place>
+           <place_name>Architecture Library</place_name>
+           <location>21st Street</location>
+           <semester>Fall 2010</semester>
+           <rating>45</rating>
+           <comment>It's good when it's not too crowded</comment>
+       </study_place>
+       <study_place>
+           <place_name>PCL</place_name>
+           <location>Speedway and 21st</location>
+           <semester>Fall 2010</semester>
+           <rating>3</rating>
+           <comment>Bleh</comment>
+       </study_place>
+       <live_place>
+           <place_name>The Block</place_name>
+           <location>23rd Street</location>
+           <semester>Fall 2009</semester>
+           <rating>20</rating>
+           <comment>Twas OK</comment>
+       </live_place>
+       <live_place>
+           <place_name>Enfield Townhomes</place_name>
+           <location>2605 Enfield Rd</location>
+           <semester>Spring 2008</semester>
+           <rating>45</rating>
+           <comment>Peace and quiet</comment>
+       </live_place>
+       <live_place>
+           <place_name>Jefferson 26</place_name>
+           <location>26th Street</location>
+           <semester>Spring 2009</semester>
+           <rating>45</rating>
+           <comment>Awesome Pool</comment>
+       </live_place>
+       <eat_place>
+           <place_name>Pluckers</place_name>
+           <location>rio grande</location>
+           <semester>Spring 2009</semester>
+           <rating>45</rating>
+           <comment>WINGS</comment>
+       </eat_place>
+       <eat_place>
+           <place_name>What-A-Burger</place_name>
+           <location>Guadalupe</location>
+           <semester>Spring 2010</semester>
+           <rating>45</rating>
+           <comment>Drunken Food</comment>
+       </eat_place>    
+       <eat_place>
+           <place_name>Taco C</place_name>
+           <location>MLK</location>
+           <semester>Fall 2007</semester>
+           <rating>45</rating>
+           <comment>3 AM Drunkfest</comment>
+       </eat_place>    
+       <fun_place>
+           <place_name>Dave and Busters</place_name>
+           <location>183</location>
+           <semester>Spring 2009</semester>
+           <rating>45</rating>
+           <comment>jasdklfj</comment>
+       </fun_place>            
+       <fun_place>
+           <place_name>Main Event</place_name>
+           <location>35</location>
+           <semester>Fall 2009</semester>
+           <rating>45</rating>
+           <comment>jasdklfj</comment>
+       </fun_place>
+       <fun_place>
+           <place_name>Downtown</place_name>
+           <location>downtown</location>
+           <semester>Spring 2010</semester>
+           <rating>45</rating>
+           <comment>jasdklfj</comment>
+       </fun_place>
+       <!--
+       live_place
+       eat_place
+       fun_place
+       -->
+       <game>
+           <os>Any</os>
+           <title>Zork II</title>
+           <rating>5</rating>
+           <comment>dsaf</comment>
+       </game>
+       <game>
+           <os>Any</os>
+           <title>FIFA 2011</title>
+           <rating>5</rating>
+           <comment>dsaf</comment>
+       </game>
+       <game>
+           <os>Any</os>
+           <title>Call of Duty: Modern Warfare</title>
+           <rating>5</rating>
+           <comment>dsaf</comment>
+       </game>
+   </student>
+</students>

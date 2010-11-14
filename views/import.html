@@ -1,21 +1,26 @@
 <html>
   <body>
-    <h1>Import xml</h1>
+    <h1>Import XML</h1>
     
     {% if error %}
       <p>{{ error }}</p>
     {% else %}
     
-      <p>Paste your xml as text into the text box, or select a file, and click the "Import" button</p>
-      
-      <form method="post" action="/import">
-        <table>
-        <tr><label>Data:</label><br /></tr>
-        <tr><textarea name="xml-string" rows="20" cols="90">XML data goes here...</textarea><br /></tr>
-        <!-- <tr><input type="file" name="xml-file" id="xml-file" size="90"/></tr> -->
-        </table>
-        <input value="Import" type="submit" />
-      </form>
+    <p>Select an XML file and click Import.</p>
+    <!-- the important part here is the enctype - the file gets transmitted as a string, the same as the textarea -->
+    <form method="post" enctype='multipart/form-data' action='/import'>
+    <input type="file" name="xml-string" size="90"/><br/>
+    <input value="Import" type="submit" />
+    </form>
+
+    <p>Or paste your XML as text into the text box, and click Import.</p>
+    <form method="post" action="/import">
+      <table>
+      <tr><label>Data:</label><br /></tr>
+      <tr><textarea name="xml-string" rows="20" cols="90"></textarea><br /></tr>
+      </table>
+      <input value="Import" type="submit" />
+    </form>
 
     {% endif %}
   </body>

@@ -8,12 +8,11 @@ and associated Django form classes.
 import string
 import random
 import re
+import logging
 
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.ext.db import djangoforms
-
-
 
 
 
@@ -116,41 +115,14 @@ class Student(db.Model):
         # sb.comment = comment
         # sb.put()
 
-"""
-class User(db.Model):
-    email = db.EmailProperty()   #validator=validate_email)
-    password = db.StringProperty()
-    isAdmin = db.BooleanProperty()
-    student = db.ReferenceProperty(Student)
 
-    @staticmethod
-    def get_by_email(email):
-        q = db.Query(User)
-        q = q.filter('email', email)
-        results = q.fetch(limit=1)
-        #logging.info(results)
-        if results:
-            user = results[0]
-        else:
-            user = None
-        return user
-
-    def authenticate(self):
-        pass
-
-
-class UserForm(djangoforms.ModelForm):
-    class Meta:
-        model = User
-        exclude = ['isAdmin','student']
-"""
-    
-    
 
 class Class(db.Model):
-    #. ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof)
-    #. or just put semester and unique into the association class,
-    # so coursenum,name and instructor all get rated together
+    """
+    Ideally this would be split into Course (cs 343 ai) and Class (unique#, semester, prof).
+    Originally this had unique# and semester here, but moved those into the association class,
+    so coursenum, coursename and instructor all get rated together.
+    """
 
     # We could specify properties to be required here, but then you wouldn't be allowed
     # to create empty objects. So we override put instead, to catch missing properties. 
@@ -160,7 +132,8 @@ class Class(db.Model):
     instructor = db.StringProperty()
 
     # store aggregate info here, so don't have to do expensive joins to get it.
-    # updated in StudentBook.put method.
+    # updated in StudentClass.put method.
+    gradeAvg = db.FloatProperty() #. make string
     ratingAvg = db.IntegerProperty() # 0 to 100
     refCount = db.IntegerProperty()
     
@@ -250,28 +223,82 @@ class StudentClass(db.Model):
         # call superclass
         db.Model.put(self) 
         
-        # get all the refs to this class - scs is a list of assoc objects, 
-        # each with a raating and comment. 
-	class_ = self.class_
-	scs = class_.studentclass_set
+        # get all the refs to this class - links is a list of assoc objects, 
+        # each with a rating and comment and grade. 
+        c = self.class_
+        links = c.studentclass_set
+        logging.info(links)
         
         # get a list of rating values, and the average
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
-        ratings = [int(sc.rating) for sc in scs]
-        n = len(ratings)
-        ratingAvg = sum(ratings) / n
+        ratings = [int(link.rating) for link in links]
+        nratings = len(ratings)
+        ratingAvg = sum(ratings) / nratings
+        logging.info(ratings)
+        logging.info(ratingAvg)
+        
+        # get average grade
+        # grade is optional, so may be empty string!
+        grades = [link.grade for link in links]
+        logging.info(grades)
+        grades = [grade for grade in grades if grade not in Grade.skip]
+        logging.info(grades)
+        grades = map(gradeToNum, grades)
+        logging.info(grades)
+        ngrades = len(grades) # 
+        gradeAvg = None if ngrades==0 else sum(grades) / ngrades
+        #. gradeAvg = numToGrade(gradeAvg)
+        logging.info(gradeAvg)
         
         # update the class
-        class_.ratingAvg = ratingAvg
-        class_.refCount = n
-        class_.put()
+        c.ratingAvg = ratingAvg
+        c.gradeAvg = gradeAvg
+        c.refCount = nratings
+        c.put()
+        logging.info('put')
+
+
+class Grade:
+    # don't include these grades in the average calculation
+    skip = set(['','P','CR','NC','Q','I','X'])
+    
+def gradeToNum(g):
+    """
+    Convert grade string to its numeric representation.
+    A  	4.00
+    A- 	3.70
+    B+ 	3.30
+    B 	3.00
+    B- 	2.70
+    C+ 	2.30
+    C 	2.00
+    C- 	1.70
+    D+ 	1.30
+    D 	1.00
+    D- 	0.70
+    F 	0.00
+    """
+    m = {'A':4.0, 'B':3.0, 'C':2.0, 'D':1.0, 'F':0.0}
+    letter = g[0]
+    plusminus = g[1] if len(g)>1 else ''
+    n = m[letter]
+    adjustment = 0.3 if plusminus=='+' else -0.3 if plusminus=='-' else 0.0
+    n = n + adjustment
+    return n
+
+def numToGrade(x):
+    "Convert grade point to its string representation"
+    #m = [(0,'F'), (0.7,'D-'), (1.0,'D'),(1.3,'D+'), 
+    pass
 
 class StudentClassForm(djangoforms.ModelForm):
     class Meta:
         model = StudentClass
         exclude = ['student','class_']
+
+
 
 class Book(db.Model):
     title = db.StringProperty()

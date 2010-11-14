@@ -1,0 +1,455 @@
+<students>
+   <student>
+       <id>brian000</id>
+       <password>brian</password>
+       <class>
+           <unique>52540</unique>
+           <course_num>CS 373</course_num>
+           <course_name>Software Engineering</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Downing</instructor>
+           <rating>95</rating>
+           <comment></comment>
+           <grade></grade>
+       </class>
+       <class>
+           <unique>52467</unique>
+           <course_num>CS 343</course_num>
+           <course_name>Artificial Intelligence</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Mooney</instructor>
+           <rating>92</rating>
+           <comment></comment>
+           <grade></grade>
+       </class>
+       <class>
+           <unique>52485</unique>
+           <course_num>CS 352</course_num>
+           <course_name>Computer Systems Architecture</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Hunt</instructor>
+           <rating>80</rating>
+           <comment>seems like a duplication of cs310</comment>
+           <grade></grade>
+       </class>
+       <class>
+           <unique>99999</unique>
+           <course_num>CS 345</course_num>
+           <course_name>Programming Languages</course_name>
+           <semester>Spring 2010</semester>
+           <instructor>Cannata</instructor>
+           <rating>95</rating>
+           <comment>This class was great</comment>
+           <grade>A</grade>
+       </class>
+       <class>
+           <unique>99999</unique>
+           <course_num>CS 105</course_num>
+           <course_name>Computer Programming: Common Lisp</course_name>
+           <semester>Spring 2009</semester>
+           <instructor>Schrum</instructor>
+           <rating>95</rating>
+           <comment></comment>
+           <grade>A</grade>
+       </class>
+       <book>
+           <isbn>0679734465</isbn>
+           <title>Valis</title>
+           <author>Philip K. Dick</author>
+           <rating>95</rating>
+           <comment>crazy</comment>
+       </book>
+       <book>
+           <isbn>0679736646</isbn>
+           <title>Ubik</title>
+           <author>Philip K. Dick</author>
+           <rating>90</rating>
+           <comment></comment>
+       </book>
+       <book>
+           <isbn>0136042597</isbn>
+           <title>Artificial Intelligence: A Modern Approach</title>
+           <author>Stuart Russell and Peter Norvig</author>
+           <rating>95</rating>
+           <comment></comment>
+       </book>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>Cognitive Architectures: Research Issues and Challenges</title>
+           <author>Pat Langley, John E. Laird, and Seth Rogers</author>
+           <rating>45</rating>
+           <comment>2009. Gives a detailed overview of cognitive architectures.</comment>
+       </paper>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>The 1980 ACM Turing Award Lecture</title>
+           <author>C.A.R. (Tony) Hoare</author>
+           <rating>92</rating>
+           <comment>Interesting talk about his experience designing languages</comment>
+       </paper>
+       <paper>
+           <paper_category>journal</paper_category>
+           <title>The Evolution of Lisp</title>
+           <author>Guy L. Steele, Jr. and Richard P. Gabriel</author>
+           <rating>90</rating>
+           <comment>ACM 1993</comment>
+       </paper>
+       <study_place>
+           <place_name>Painter Lab</place_name>
+           <location>campus</location>
+           <semester>Fall 2010</semester>
+           <rating>90</rating>
+           <comment></comment>
+       </study_place>
+       <study_place>
+           <place_name>Architecture Library</place_name>
+           <location>campus</location>
+           <semester>Fall 2010</semester>
+           <rating>93</rating>
+           <comment>It's good when it's not too crowded</comment>
+       </study_place>
+       <study_place>
+           <place_name>PCL</place_name>
+           <location>campus</location>
+           <semester>Fall 2010</semester>
+           <rating>75</rating>
+           <comment>Bleh</comment>
+       </study_place>
+       <live_place>
+           <place_name>3203 Helms</place_name>
+           <location>north campus</location>
+           <semester>Fall 2010</semester>
+           <rating>70</rating>
+           <comment>ceiling is too thin and squeaky</comment>
+       </live_place>
+       <eat_place>
+           <place_name>Dirty Martin's</place_name>
+           <location>guadalupe</location>
+           <semester>Fall 2010</semester>
+           <rating>94</rating>
+           <comment>Awesome burgers and fries and shakes</comment>
+       </eat_place>
+       <eat_place>
+           <place_name>Madras Pavilion</place_name>
+           <location>9025 Research Blvd</location>
+           <semester>Fall 2010</semester>
+           <rating>92</rating>
+           <comment>Good Indian lunch buffet</comment>
+       </eat_place>
+       <fun_place>
+           <place_name>Bob Wentz Park</place_name>
+           <location>Lake Travis</location>
+           <semester>Fall 2010</semester>
+           <rating>91</rating>
+           <comment>It's almost like a beach. Almost.</comment>
+       </fun_place>
+       <game>
+           <os>Any</os>
+           <title>Zork II</title>
+           <rating>95</rating>
+           <comment>The best in the Zork series.</comment>
+       </game>
+       <game>
+           <os>Apple II</os>
+           <title>Ultima I</title>
+           <rating>95</rating>
+           <comment>I loved this game as a kid.</comment>
+       </game>
+   </student>
+
+<student>
+                <id>raj78778</id>
+                <password>bigPass</password>
+                <class>
+                        <unique>52545</unique>
+                        <course_num>CS 373</course_num>
+                        <course_name>Software Engineering</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Downing</instructor>
+                        <rating>100</rating>
+<comment/>
+                        <grade>A</grade>
+                </class>
+                <class>
+                        <unique>52495</unique>
+                        <course_num>CS 354</course_num>
+                        <course_name>Computer Graphics</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Bajaj</instructor>
+                        <rating>5</rating>
+<comment/>
+                        <grade>B</grade>
+                </class>
+                <class>
+                        <unique>52535</unique>
+                        <course_num>CS 372</course_num>
+                        <course_name>OS</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Dhalin</instructor>
+                        <rating>100</rating>
+<comment/>
+                        <grade>B</grade>
+                </class>
+                <book>
+                        <isbn>1234567890</isbn>
+                        <title>Hack-Zilla: The Refactoring</title>
+                        <author>Yo Mamma</author>
+                        <rating>100</rating>
+                        <comment>ACTION PACKED!</comment>
+                </book>
+       <eat_place>
+                        <place_name>Torchys</place_name>
+           <location>Guad</location>
+           <semester>Fall 2010</semester>
+           <rating>100</rating>
+<comment></comment>
+                </eat_place>
+        </student>
+        <student>
+       <id>aps12345</id>
+       <password>a1b2c3</password>
+       <class>
+           <unique>52470</unique>
+           <course_num>CS 345</course_num>
+           <course_name>Programming Languages</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Shmatikov</instructor>
+           <rating>4</rating>
+<comment/>
+           <grade>A</grade>
+       </class>
+       <class>
+           <unique>52510</unique>
+           <course_num>CS 361</course_num>
+           <course_name>Intro to Computer Security</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Young</instructor>
+           <rating>5</rating>
+<comment/>
+           <grade>A-</grade>
+       </class>
+       <class>
+           <unique>52545</unique>
+           <course_num>CS 373</course_num>
+           <course_name>Software Engineering</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Downing</instructor>
+           <rating>5</rating>
+<comment/>
+           <grade>B</grade>
+       </class>
+       <book>
+           <isbn>0545139708</isbn>
+           <title>Harry Potter and the Deathly Hallows</title>
+           <author>J K Rowling</author>
+           <rating>1</rating>
+<comment></comment>
+       </book>
+       <internship>
+           <place_name>Cisco</place_name>
+           <location>Austin, Tx</location>
+           <semester>Summer 2010</semester>
+           <rating>5</rating>
+<comment></comment>
+       </internship>
+       <study_place>
+           <place_name>PCL</place_name>
+           <location>PCL</location>
+           <semester>Fall 2010</semester>
+           <rating>5</rating>
+<comment></comment>
+       </study_place>
+       <game>
+           <os>Xbox360</os>
+           <title>Halo Reach</title>
+           <rating>5</rating>
+<comment></comment>
+       </game>
+    </student>
+    <student>
+                <id>mch00000</id>
+                <password>myPassword</password>
+                <class>
+                        <unique>52545</unique>
+                        <course_num>CS 373</course_num>
+                        <course_name>Software Engineering</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Downing</instructor>
+                        <rating>100</rating>
+<comment></comment>
+                        <grade>Q</grade>
+                </class>
+                <class>
+                        <unique>52230</unique>
+                        <course_num>CS 105</course_num>
+                        <course_name>Computer Programming</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Dunham</instructor>
+                        <rating>100</rating>
+<comment></comment>
+                        <grade>Q</grade>
+                </class>
+                <class>
+                        <unique>52510</unique>
+                        <course_num>CS 361</course_num>
+                        <course_name>Intro to Computer Security</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Young</instructor>
+                        <rating>100</rating>
+<comment></comment>
+                        <grade>Q</grade>
+                </class>
+                <class>
+                        <unique>16185</unique>
+                        <course_num>E E 313</course_num>
+                        <course_name>Linear Systems and Signals</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Evans</instructor>
+                        <rating>100</rating>
+<comment></comment>
+                        <grade>Q</grade>
+                </class>
+                <class>
+                        <unique>52553</unique>
+                        <course_num>CS 378</course_num>
+                        <course_name>Software Design</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Batory</instructor>
+                        <rating>100</rating>
+<comment></comment>
+                        <grade>Q</grade>
+                </class>
+                <book>
+                        <isbn>0877797099</isbn>
+                        <title>Merriam-Webster's Collegiate Dictionary</title>
+                        <author>Merriam-Webster</author>
+                        <rating>70</rating>
+                        <comment>BORING!</comment>
+                </book>
+        </student>
+        <student>
+                <id>kW99O9WU</id>
+                <password>4739</password>
+                <class>
+                        <unique>55530</unique>
+                        <course_num>M 362K</course_num>
+                        <course_name>PROBABILITY I</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Odell</instructor>
+                        <rating>90</rating>
+                        <comment>Interesting class, obsessed with gambling and crashing airplanes</comment>
+                        <grade>A</grade>
+                </class>
+                <class>
+                        <unique>52500</unique>
+                        <course_num>CS 356</course_num>
+                        <course_name>COMPUTER NETWORKS</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Qiu</instructor>
+                        <rating>80</rating>
+                        <comment>Class is interesting, but poorly structured</comment>
+                        <grade>A</grade>
+                </class>
+                <class>
+                        <unique>52545</unique>
+                        <course_num>CS 373</course_num>
+                        <course_name>SOFTWARE ENGINEERING-W</course_name>
+                        <semester>Fall 2010</semester>
+                        <instructor>Downing</instructor>
+                        <rating>100</rating>
+                        <comment>Great class! Lots of fun!</comment>
+                        <grade>A</grade>
+                </class>
+                <book>
+                        <isbn>1603090444</isbn>
+                        <title>Lost Girls</title>
+                        <author>Alan Moore &amp; Melinda Gebbie</author>
+                        <rating>97</rating>
+                        <comment>Interesting book. A very different take on Alice in Wonderland, Peter Pan, and The Wizard of Oz.</comment>
+                </book>
+                <study_place>
+                        <place_name>Painter Computer Lab</place_name>
+                        <location>Painter</location>
+                        <semester>Fall 2010</semester>
+                        <rating>100</rating>
+                        <comment></comment>
+                </study_place>
+                <game>
+                        <os>Windows</os>
+                        <title>Bioshock 2</title>
+                        <rating>91</rating>
+                        <comment>Good game, very good spiritual successor to System Shock 2</comment>
+                </game>
+        </student>
+        <student>
+       <id>Id019311</id>
+       <password>vlm487</password>
+       <class>
+           <unique>52460</unique>
+           <course_num>CS 337</course_num>
+           <course_name>Theory in Programming Practice</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Misra</instructor>
+           <rating>50</rating>
+<comment/>
+           <grade>Q</grade>
+       </class>
+       <class>
+           <unique>52545</unique>
+           <course_num>CS 373W</course_num>
+           <course_name>Software Engineering</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Glenn Downing</instructor>
+           <rating>80</rating>
+<comment/>
+           <grade>Q</grade>
+       </class>
+       <class>
+           <unique>52485</unique>
+           <course_num>CS 352</course_num>
+           <course_name>Computer Systems Architecture</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Hunt</instructor>
+           <rating>75</rating>
+<comment/>
+           <grade>Q</grade>
+       </class>
+       <class>
+           <unique>52585</unique>
+           <course_num>CS 384G</course_num>
+           <course_name>Computer Graphics</course_name>
+           <semester>Fall 2010</semester>
+           <instructor>Donald Fussell</instructor>
+           <rating>90</rating>
+<comment/>
+           <grade>Q</grade>
+       </class>
+       <book>
+           <isbn>0545139708</isbn>
+           <title>Harry Potter and the Deathly Hallows</title>
+           <author>J K Rowling</author>
+           <rating>75</rating>
+<comment/>
+       </book>
+       <internship>
+           <place_name>RW3</place_name>
+           <location>Austin, TX</location>
+           <semester>Summer 2009</semester>
+           <rating>80</rating>
+           <comment>Very results-oriented.</comment>
+       </internship>
+       <study_place>
+           <place_name>Union</place_name>
+           <location>Corner of 24th and Guadalupe</location>
+           <semester>Fall 2010</semester>
+           <rating>80</rating>
+<comment></comment>
+       </study_place>
+       <game>
+           <os>XBox 360</os>
+           <title>Borderlands</title>
+           <rating>85</rating>
+           <comment>Great game!</comment>
+       </game>
+   </student>
+</students>

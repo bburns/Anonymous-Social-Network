@@ -20,7 +20,8 @@
   <tr><td>Course num: {{ class.course_num }} </td></tr>
   <tr><td>Course name: {{ class.course_name }} </td></tr>
   <tr><td>Instructor: {{ class.instructor }} </td></tr>
-  <tr><td>Rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
+  <tr><td>Avg Rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
+  <tr><td>Avg Grade: {{ class.gradeAvg }}</td></tr>
   </tbody>
 </table>
 
@@ -30,6 +31,7 @@
     <th>Semester</th>
     <th>Unique</th>
     <th>Rating</th>
+    <th>Grade</th>
     <th>Comment</th>
   </thead>
   <tbody>
@@ -38,6 +40,7 @@
       <td>{{ assoc.semester }} </td>
       <td>{{ assoc.unique }} </td>
       <td>{{ assoc.rating }}</td>
+      <td>{{ assoc.grade }}</td>
       <td>{{ assoc.comment|escape|linebreaks }}</td>
     </tr>
   {% endfor %}
@@ -93,9 +96,19 @@
     </td>
   </tr>
   <tr>
+    <td><label for="id_grade">Grade:</label></td>
+    <td>
+      <select name="grade" id="id_grade">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
     <td><label align="top" for="id_comment">Comment:</label></td>
-    <!--<td><input type="textarea" rows="4" name="comment" id="id_comment"/></td>   rows not working?-->
-    <td><textarea rows="4" name="comment" id="id_comment"></textarea></td>
+    <td><textarea name="comment" id="id_comment"></textarea></td>
   </tr>
   </table>
   <input type="submit" value="Add Rating/Comment"/>
