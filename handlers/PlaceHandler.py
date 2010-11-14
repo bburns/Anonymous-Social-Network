@@ -17,11 +17,11 @@ class AddPlace(webapp.RequestHandler):
 
     def post(self):
         form = PlaceForm(data=self.request.POST)
-        if form.is_valid():
+        if form.is_valid(): # this checks the values against the validator functions
             try :
-                place = form.save()
-                id = place.key().id()
-                self.redirect('/place/view?id=%d' % id)
+                place = form.save() # this calls Place.put(), which checks for missing values
+                place_id = place.key().id()
+                self.redirect('/place/view?id=%d' % place_id)
             except db.BadValueError, e: 
                 doRender(self,'place/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:

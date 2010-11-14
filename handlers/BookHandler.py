@@ -21,7 +21,9 @@ class ViewBook(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        if 'student_id' in self.session:
+        if 'student_id' not in self.session:
+            doRender(self,'not_auth.html')
+        else:
             student_id = self.session['student_id']
             student = Student.get_by_id(student_id)
             book_id = int(self.request.get('_id'))
@@ -42,8 +44,6 @@ class ViewBook(webapp.RequestHandler):
 
             #self.redirect("/book/view?id=%d" % book_id)
             self.redirect("/book/list")
-        else:
-            doRender(self,'not_auth.html')
 
 class AddBook(webapp.RequestHandler):
     def get(self):
@@ -51,7 +51,9 @@ class AddBook(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        if 'student_id' in self.session:
+        if 'student_id' not in self.session:
+            doRender(self,'not_auth.html')
+        else:
             form = BookForm(data=self.request.POST)
             if form.is_valid():
                 try :
@@ -62,8 +64,6 @@ class AddBook(webapp.RequestHandler):
                     doRender(self,'book/add.html',{'form':form, 'error':"ERROR: " + e.args[0]})
             else:
                 doRender(self,'book/add.html',{'form': form, 'error': 'ERROR: please check the following and try again'})
-        else:
-            doRender(self,'not_auth.html')
 
 class EditBook(webapp.RequestHandler):
     def get(self):
@@ -73,7 +73,9 @@ class EditBook(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        if 'student_id' in self.session:
+        if 'student_id' not in self.session:
+            doRender(self,'not_auth.html')
+        else:
             id = int(self.request.get('_id'))
             book = Book.get_by_id(id)   
             form = BookForm(data=self.request.POST, instance=book)
@@ -82,8 +84,6 @@ class EditBook(webapp.RequestHandler):
                 self.redirect('/book/view?id=%d' % id)
             else:
                 doRender(self,'book/edit.html', {'form': form})
-        else:
-            doRender(self,'not_auth.html')
 
 class DeleteBook(webapp.RequestHandler):
     
@@ -94,10 +94,10 @@ class DeleteBook(webapp.RequestHandler):
 
     def post(self):
         self.session = Session()
-        if 'student_id' in self.session:
+        if 'student_id' not in self.session:
+            doRender(self,'not_auth.html')
+        else:
             id = int(self.request.get('_id'))
             book = Book.get_by_id(id)
             book.delete()
             self.redirect("/book/list")
-        else:
-            doRender(self,'not_auth.html')

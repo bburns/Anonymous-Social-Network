@@ -14,17 +14,18 @@ class ListClass(webapp.RequestHandler):
 class AddClass(webapp.RequestHandler):
     def get(self):
         self.session = Session()
-        id = self.session['student_id']
-        doRender(self,'class/add.html',{'class_form':ClassForm(), 'studentclass_form':StudentClassForm(),'id':id})
+        student_id = self.session['student_id']
+        doRender(self,'class/add.html',{'class_form':ClassForm(), 'studentclass_form':StudentClassForm(),'id':student_id})
 
     def post(self):
         student_id = int(self.request.get('id'))
         class_form = ClassForm(self.request.POST)
         sc_form = StudentClassForm(self.request.POST)
         student = Student.get_by_id(student_id)
-        if class_form.is_valid() and sc_form.is_valid() :
+        # this checks the values against the validator functions
+        if class_form.is_valid() and sc_form.is_valid() : 
             try :
-                cl = class_form.save()
+                cl = class_form.save() # this calls Class.put(), which checks for missing values
                 sc = sc_form.save(commit = False)
                 sc.student = student
                 sc.class_ = cl

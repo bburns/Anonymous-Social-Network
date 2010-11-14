@@ -11,12 +11,11 @@
 <form method="post" action={% if id %}"/place/edit"{%else %}"/place/add"{%endif%} >
   <table>
 	<tr><th><label for="id_place_type">Place type:</label></th><td><select name="place_type" id="id_place_type">
-	<option value="" selected="selected">---------</option>
-	<option value="study_place">Study Area</option>
-	<option value="live_place">Residence</option>
-	<option value="eat_place">Restaurant</option>
-
-	<option value="fun_place">Recreational Place</option>
+    <option value="" selected="selected">---------</option>
+    <option value="study_place">Study Area</option>
+    <option value="live_place">Residence</option>
+    <option value="eat_place">Restaurant</option>
+    <option value="fun_place">Recreational Place</option>
 	</select></td></tr>
 	<tr><th><label for="id_place_name">Place name:</label></th><td><input type="text" name="place_name" id="id_place_name" /></td></tr>
 	<tr><th><label for="id_location">Location:</label></th><td><input type="text" name="location" id="id_location" /></td></tr>
