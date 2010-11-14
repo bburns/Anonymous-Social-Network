@@ -21,11 +21,11 @@ from google.appengine.ext.db import djangoforms
 #       eg:   course_num = db.StringProperty(validator=validate_course_num)
 
 # student validations
-def validate_email(email):
-    if email: 
-        regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
-        if re.match(regex, email) == None:
-            raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
+# def validate_email(email):
+    # if email: 
+        # regex = "[a-z0-9\-\.\_]+\@[a-z]+\.[a-z]+[\.[a-z]*]?"
+        # if re.match(regex, email) == None:
+            # raise db.BadValueError("Invalid value entered. eg: email@email.com: "   + email)
 
 
 # rating valiation
@@ -45,25 +45,25 @@ def validate_course_num(val):
     if val :    
         regex = "[A-Z]([A-Z]|\s){0,3}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
         if re.match(regex, val) == None:
-            raise db.BadValueError("Invalid value entered. eg: CS 341, EE 316")
+            raise db.BadValueError("Invalid value entered. Should look like CS 341, or EE 316.")
 
 def validate_semester(semester):
     if semester :
         regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
         if re.match(regex, semester) == None:
-            raise db.BadValueError("Invalid value entered. eg: Spring 2009, Fall 2002")
+            raise db.BadValueError("Invalid value entered. Should look like Spring 2009, or Fall 2002.")
     
 def validate_unique(unique):
     if unique :
         regex = "[0-9]{5}"
         if re.match(regex, unique) == None:
-           raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only")
+            raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only.")
 
 def validate_grade(val):
     if val:
         regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
         if re.match(regex, val) == None:
-                raise db.BadValueError
+            raise db.BadValueError
 
 # book validations
 def validate_isbn(val):
@@ -71,7 +71,7 @@ def validate_isbn(val):
         #regex = "\S{8}"
         regex = "[0-9]{10}|[0-9]{13}"
         if re.match(regex, val)== None:
-                raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only")
+            raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only.")
 
 
 
@@ -102,6 +102,21 @@ class Student(db.Model):
         d = [random.choice(string.letters + string.digits) for x in xrange(8)]
         self.password = "".join(d)
 
+
+    def put(self):
+        """
+        Override this so we can set isAdmin flag
+        """
+        
+        # set admin flag for us (leaving josh out for testing purposes)
+        if self.id_ in ["brian000", "ben00000", "shanky00", "jonathan", "admin000"]:
+            self.isAdmin = True
+        
+        # call superclass
+        db.Model.put(self)
+
+        
+
     # for phase 3?
     # def addBook(self, title, author='', isbn='', rating=None, comment=''):
         # """
@@ -127,14 +142,14 @@ class Class(db.Model):
     # We could specify properties to be required here, but then you wouldn't be allowed
     # to create empty objects. So we override put instead, to catch missing properties. 
     
-    course_num = db.StringProperty(validator=validate_course_num)
+    course_num = db.StringProperty(validator=validate_course_num, verbose_name="Course Number")
     course_name = db.StringProperty()
     instructor = db.StringProperty()
 
     # store aggregate info here, so don't have to do expensive joins to get it.
     # updated in StudentClass.put method.
-    gradeAvg = db.FloatProperty() #. make string
     ratingAvg = db.IntegerProperty() # 0 to 100
+    gradeAvg = db.StringProperty()
     refCount = db.IntegerProperty()
     
     edit_time = db.DateTimeProperty(auto_now=True)
@@ -143,10 +158,6 @@ class Class(db.Model):
         "Override this so we can catch required fields"
         if not self.course_num:
             raise db.BadValueError("Course number is a required field.")
-        #if not self.unique :
-        #   raise db.BadValueError("Unique is a required field.")
-        #if not self.semester :
-        #   raise db.BadValueError("Semester is a required field.")
         else:
             db.Model.put(self) # call the superclass
 
@@ -200,17 +211,129 @@ class Class(db.Model):
 class ClassForm(djangoforms.ModelForm):
     class Meta:
         model = Class
-        exclude = ['ratingAvg', 'refCount']
+        exclude = ['ratingAvg', 'gradeAvg', 'refCount']
+
+
+
+class Rating:
+    """
+    """
+    # oh, gae already has a RatingProperty type.
+    # see http://code.google.com/appengine/docs/python/datastore/typesandpropertyclasses.html#Rating
+
+    # this would be nice for forms, but then we're importing all kinds of weird data, so 
+    # using this in the property definition would throw errors on seeing that data. 
+    # if we had control over the schema we could have limited ratings to these values or something. 
+    choices = ['0','10','20','30','40','50','60','70','80','90','100']
+
+
+class Grade:
+    """
+    Just a place to store code and dicts for now. 
+    Could make into a gae property type. 
+    Need to define this before StudentClass, as it references this class.
+    A  	4.00
+    A- 	3.70
+    B+ 	3.30
+    B   3.00
+    B- 	2.70
+    C+ 	2.30
+    C 	2.00
+    C- 	1.70
+    D+ 	1.30
+    D 	1.00
+    D- 	0.70
+    F 	0.00
+    """
+
+    # store maps here so don't need to keep parsing them
+    mapNum = {'A':4.0, 'B':3.0, 'C':2.0, 'D':1.0, 'F':0.0}
+    mapLetter = {0:'F',1:'F',2:'D-',3:'D',4:'D+',5:'C-',6:'C',7:'C+', \
+                8:'B-',9:'B',10:'B+',11:'A-',12:'A'}
+    mapAdjust = {'+':0.3, '-':-0.3, '':0.0}
+
+    # don't include these grades in the average calculation
+    skipGrades = set(['','P','CR','NC','Q','I','X'])
+
+    # choices used in property definition (and hence dropdowns)
+    choices = ['','A','A-','B+','B','B-','C+','C','C-','D+','D','D-','F','P','CR','NC','Q','I','X']
+
+    @staticmethod
+    def gradeToNum(s):
+        """
+        Convert grade string to its numeric representation, eg 'A-' to 3.7. 
+        """
+        # preconditions
+        assert (len(s)==1 or len(s)==2)
+        
+        letter = s[0]
+        plusminus = s[1] if len(s)>1 else ''
+        n = Grade.mapNum[letter]
+        adjustment = Grade.mapAdjust[plusminus]
+        n = n + adjustment
+        
+        # postconditions
+        assert (n>=0 and n <=4)
+        return n
+
+    @staticmethod
+    def numToGrade(x):
+        """
+        Convert grade point to its string representation, eg 3.9 to 'A'.
+        If A- is 3.7, and A is 4.0, the cutoff should be halfway between them, at 3.85.
+        Ie a 3.85 would be rounded up to an A. 
+        I played around with the scale in Excel and came up with an approximately
+        linear conversion process. It'll do. 
+        """
+        # preconditions
+        assert (x>=0 and x <=4)
+        
+        i = int(x * 3.1)
+        s = Grade.mapLetter[i]
+        
+        # postconditions
+        assert (len(s)==1 or len(s)==2)
+        return s
+
+    @staticmethod
+    def getAvgGrade(grades):
+        """
+        Get average of a list of grades, as a letter grade, eg 'B'.
+        Grades can be empty strings, or Q's, etc, and will be ignored. 
+        If list has no grades, will return an empty string. 
+        eg ['A','C',''] -> 'B'
+        eg ['Q',''] -> ''
+        eg [] -> ''
+        """
+        
+        # remove invalid grades (blanks, Q's, etc)
+        grades = [grade for grade in grades if grade not in Grade.skipGrades]
+        logging.info(grades)
+        
+        # convert them to numbers, eg B to 3.0
+        grades = map(Grade.gradeToNum, grades)
+        logging.info(grades)
+
+        # get the average
+        ngrades = len(grades)
+        avg = None if ngrades==0 else sum(grades) / ngrades
+        
+        # convert it to a string, eg 3.3 to B+
+        # if it's None, return an empty string
+        s = Grade.numToGrade(avg) if avg != None else ''
+        logging.info(s)
+        return s
 
 
 class StudentClass(db.Model):
     student = db.ReferenceProperty(Student)
     class_ = db.ReferenceProperty(Class)
-    unique = db.StringProperty(validator=validate_unique)
     semester = db.StringProperty(validator=validate_semester)
+    unique = db.StringProperty(validator=validate_unique)
+    grade = db.StringProperty(validator=validate_grade, choices=Grade.choices)
+    #rating = db.StringProperty(validator=validate_rating, choices=Rating.choices) # bad mojo
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
-    grade = db.StringProperty(validator=validate_grade)
 
     def put(self):
         """
@@ -218,8 +341,15 @@ class StudentClass(db.Model):
         properties for the rated item. 
         This will get called automatically on importing the xml, 
         when user rates an existing item, and when they add and rate a new item. 
+        Also catch required fields here, for form validation.
         """
-        
+        if not self.rating:
+            raise db.BadValueError("Rating is a required field.")
+        #if not self.unique :
+        #   raise db.BadValueError("Unique is a required field.")
+        #if not self.semester :
+        #   raise db.BadValueError("Semester is a required field.")
+
         # call superclass
         db.Model.put(self) 
         
@@ -242,15 +372,7 @@ class StudentClass(db.Model):
         # get average grade
         # grade is optional, so may be empty string!
         grades = [link.grade for link in links]
-        logging.info(grades)
-        grades = [grade for grade in grades if grade not in Grade.skip]
-        logging.info(grades)
-        grades = map(gradeToNum, grades)
-        logging.info(grades)
-        ngrades = len(grades) # 
-        gradeAvg = None if ngrades==0 else sum(grades) / ngrades
-        #. gradeAvg = numToGrade(gradeAvg)
-        logging.info(gradeAvg)
+        gradeAvg = Grade.getAvgGrade(grades)
         
         # update the class
         c.ratingAvg = ratingAvg
@@ -260,38 +382,8 @@ class StudentClass(db.Model):
         logging.info('put')
 
 
-class Grade:
-    # don't include these grades in the average calculation
-    skip = set(['','P','CR','NC','Q','I','X'])
-    
-def gradeToNum(g):
-    """
-    Convert grade string to its numeric representation.
-    A  	4.00
-    A- 	3.70
-    B+ 	3.30
-    B 	3.00
-    B- 	2.70
-    C+ 	2.30
-    C 	2.00
-    C- 	1.70
-    D+ 	1.30
-    D 	1.00
-    D- 	0.70
-    F 	0.00
-    """
-    m = {'A':4.0, 'B':3.0, 'C':2.0, 'D':1.0, 'F':0.0}
-    letter = g[0]
-    plusminus = g[1] if len(g)>1 else ''
-    n = m[letter]
-    adjustment = 0.3 if plusminus=='+' else -0.3 if plusminus=='-' else 0.0
-    n = n + adjustment
-    return n
 
-def numToGrade(x):
-    "Convert grade point to its string representation"
-    #m = [(0,'F'), (0.7,'D-'), (1.0,'D'),(1.3,'D+'), 
-    pass
+
 
 class StudentClassForm(djangoforms.ModelForm):
     class Meta:

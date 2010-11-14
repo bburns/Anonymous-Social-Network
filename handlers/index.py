@@ -44,10 +44,6 @@ class About(webapp.RequestHandler):
 
 class ChangePassword(webapp.RequestHandler):
     def get(self):
-        x = Session()  
-        if 'student_id' in x:      
-            s = Student.get_by_id(x['student_id'])
-
         doRender(self,'changePassword.html',{})
 
     def post(self):
@@ -75,8 +71,8 @@ class ChangePassword(webapp.RequestHandler):
 
 class StudentProfile(webapp.RequestHandler):
     def get(self):
-        x = Session()
-        if 'student_id' in x : 
+        session = Session()
+        if 'student_id' in session: 
             template = {}
             sb = StudentBook.all()
             sc = StudentClass.all()
@@ -85,7 +81,7 @@ class StudentProfile(webapp.RequestHandler):
             spa = StudentPaper.all()
             sg = StudentGame.all()
             
-            s = Student.get_by_id(x['student_id'])
+            s = Student.get_by_id(session['student_id'])
             
             #books
             sbooks = sb.filter("student =", s)

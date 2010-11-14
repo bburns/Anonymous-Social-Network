@@ -18,9 +18,10 @@ class AddClass(webapp.RequestHandler):
         doRender(self,'class/add.html',{'class_form':ClassForm(), 'studentclass_form':StudentClassForm(),'id':id})
 
     def post(self):
+        student_id = int(self.request.get('id'))
         class_form = ClassForm(self.request.POST)
         sc_form = StudentClassForm(self.request.POST)
-        student = Student.get_by_id(int(self.request.get('id')))
+        student = Student.get_by_id(student_id)
         if class_form.is_valid() and sc_form.is_valid() :
             try :
                 cl = class_form.save()
@@ -31,11 +32,11 @@ class AddClass(webapp.RequestHandler):
                 self.redirect("/class/list")
             except db.BadValueError, e :
                 doRender(self,'class/add.html',{'class_form':class_form, \
-                'studentclass_form':sc_form, 'error': "ERROR: " + e.args[0]})
+                'studentclass_form':sc_form, 'id':student_id, 'error': "ERROR: " + e.args[0]})
         else :
             doRender(self,'class/add.html',{'class_form':class_form, \
-            'studentclass_form':sc_form, 'error':'ERROR: Please correct the following errors and try again.'})
-		
+            'studentclass_form':sc_form, 'id':student_id, 'error':'ERROR: Please correct the following errors and try again.'})
+
 
 
 class EditClass(webapp.RequestHandler):
@@ -48,15 +49,15 @@ class EditClass(webapp.RequestHandler):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id)
         form = ClassForm(data = self.request.POST, instance = cl)
-	if form.is_valid() :
-	   try :
-		form.save()
-		self.redirect("/class/list")
-	   except db.BadValueError, e :
-		doRender(self, 'class/edit.html', {'form':form, 'error': "ERROR: " + e.args[0]})
-	else :
-		doRender(self,'class/edit.html',{'form':form, 'error':'ERROR: Please correct the following errors and try again.'})
-	       
+        if form.is_valid() :
+           try :
+            form.save()
+            self.redirect("/class/list")
+           except db.BadValueError, e :
+            doRender(self, 'class/edit.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
+        else :
+            doRender(self,'class/edit.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+       
 
 class DeleteClass(webapp.RequestHandler):
     def get(self):
@@ -69,13 +70,15 @@ class DeleteClass(webapp.RequestHandler):
         cl = Class.get_by_id(id).delete()
         self.redirect("/class/list")
 
+
+
 class ViewClass(webapp.RequestHandler):
     def get(self):
-        id = int(self.request.get('id')) # get id from "?id=" in url
-        class_ = Class.get_by_id(id)
-        form = ClassForm(instance=class_)
-        assocs = class_.studentclass_set
-        doRender(self,'class/view.html',{'form':form,'class':class_,'assocs':assocs,'id':id})
+        class_id = int(self.request.get('id')) # get id from "?id=" in url
+        class_ = Class.get_by_id(class_id)
+        link_form = StudentClassForm()
+        links = class_.studentclass_set
+        doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':links,'id':class_id})
 
     def post(self):
 
@@ -86,22 +89,19 @@ class ViewClass(webapp.RequestHandler):
         class_id = int(self.request.get('_id'))
         class_ = Class.get_by_id(class_id)
 
-        rating = self.request.get('rating') # 0-100
-        grade = self.request.get('grade') # A-F
-        comment = self.request.get('comment')
-
-        print rating, grade
-
-        # add the assocation object
-        assoc = StudentClass()
-        assoc.student = student
-        assoc.class_ = class_
-        assoc.rating = rating
-        assoc.grade = grade
-        assoc.comment = comment
-        assoc.put() # this will update the average rating, etc
-
-        #self.redirect("/book/view?id=%d" % book_id)
-        self.redirect("/class/list")
+        link_form = StudentClassForm(self.request.POST)
+        if link_form.is_valid() :
+            try :
+                link = link_form.save(commit = False)
+                link.student = student
+                link.class_ = class_
+                link.put()
+                self.redirect("/class/list")
+            except db.BadValueError, e :
+                doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':assocs,'id':class_id,\
+                    'error': "ERROR: " + e.args[0]})
+        else :
+            doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':assocs,'id':class_id,\
+                'error':'ERROR: Please correct the following errors and try again.'})
 
 

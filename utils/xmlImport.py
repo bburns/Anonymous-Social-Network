@@ -63,16 +63,11 @@ def xmlImport(dom):
         if studentNode.nodeName == "student":
 
             # add the student to the database
+            # will set isAdmin flag if id is recognized - see Student.put()
             s = Student()
             s.id_ = getElementData(studentNode, "id")
             s.password = getElementData(studentNode, "password")
-            
-            # set admin flag for us (leaving josh out for testing purposes)
-            if s.id_ in ["brian000", "ben00000", "shanky00", "jonathan"] :
-                s.isAdmin = True
-                
-            s.put()
-            
+            s.put()           
             logging.info(s.id_ + ' ' + s.password)
 
             # now look for child elements and add them also

@@ -9,8 +9,12 @@
 
 ifeq ($(OS),Windows_NT)
 appserver := ..\google_appengine\dev_appserver.py
+appcfg := ..\google_appengine\appcfg.py
 
 else
+appserver := ../google_appengine/dev_appserver.py
+appcfg := ../google_appengine/appcfg.py
+
 #pychecker := pychecker
 # this is v0.8.16:
 #pychecker := "/p/lib/python2.4/site-packages/pychecker/checker.py"
@@ -22,7 +26,6 @@ pylint := pylint
 
 pydoc := pydoc
 epydoc := /public/linux/graft/epydoc-2.1/bin/epydoc
-appserver := ../google_appengine/dev_appserver.py
 endif
 
 
@@ -62,13 +65,12 @@ twill:
 # may need to put it somewhere else with --datastore_path=~/myapp_datastore 
 # that way your data will always be there
 run:
-#	../google_appengine/dev_appserver.py .
 	$(appserver) --datastore_path=datastore .
 
 
 # publish the app to google appengine
 publish:
-	../google_appengine/appcfg.py update .
+	$(appcfg) update .
 
 
 

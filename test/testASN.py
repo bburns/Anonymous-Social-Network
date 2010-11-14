@@ -266,18 +266,55 @@ class testASN (unittest.TestCase) :
 
 
 
-    def testGrades(self):
+    # Grades
+
+    def testGradeToNum(self):
         
-        self.assert_(gradeToNum('A')==4.0)
-        self.assert_(gradeToNum('A-')==3.7)
-        self.assert_(gradeToNum('B+')==3.3)
-        self.assert_(gradeToNum('B')==3.0)
-        self.assert_(gradeToNum('B-')==2.7)
-        self.assert_(gradeToNum('F')==0.0)
+        self.assert_(Grade.gradeToNum('A')==4.0)
+        self.assert_(Grade.gradeToNum('A-')==3.7)
+        self.assert_(Grade.gradeToNum('B+')==3.3)
+        self.assert_(Grade.gradeToNum('B')==3.0)
+        self.assert_(Grade.gradeToNum('B-')==2.7)
+        self.assert_(Grade.gradeToNum('F')==0.0)
+
+
+    def testNumToGrade(self):
+        
+        self.assert_(Grade.numToGrade(0)=='F')
+        self.assert_(Grade.numToGrade(4)=='A')
+        self.assert_(Grade.numToGrade(3.7)=='A-')
+        self.assert_(Grade.numToGrade(3.8)=='A-')
+        self.assert_(Grade.numToGrade(3.9)=='A')
+        self.assert_(Grade.numToGrade(1.0)=='D')
+        self.assert_(Grade.numToGrade(1.3)=='D+')
+        self.assert_(Grade.numToGrade(1.4)=='D+')
 
 
 
     def testAvgGrades(self):
+
+        self.assert_(Grade.getAvgGrade(['A','C']) == 'B')
+        self.assert_(Grade.getAvgGrade(['A','','','']) == 'A')
+        self.assert_(Grade.getAvgGrade(['A','A','A-']) == 'A')
+        self.assert_(Grade.getAvgGrade(['A','A','A','B']) == 'A-') # 4*3+3=15/4=3.75
+        self.assert_(Grade.getAvgGrade(['A','A','A','B+']) == 'A-') # 4*3+3.3=15.3/4=3.825
+        self.assert_(Grade.getAvgGrade(['A','A','A','A','B+']) == 'A-') # 4*4+3.3=19.3/5=3.86
+        self.assert_(Grade.getAvgGrade(['A','A','A','A-']) == 'A') # 4*3+3.7=15.7/4=3.925
+        
+        self.assert_(Grade.getAvgGrade([]) == '')
+        self.assert_(Grade.getAvgGrade(['','','']) == '')
+        self.assert_(Grade.getAvgGrade(['','Q','CR']) == '')
+
+        self.assert_(Grade.getAvgGrade(['A']) == 'A')
+        self.assert_(Grade.getAvgGrade(['A-']) == 'A-')
+        self.assert_(Grade.getAvgGrade(['B+']) == 'B+')
+        self.assert_(Grade.getAvgGrade(['B']) == 'B')
+        self.assert_(Grade.getAvgGrade(['B-']) == 'B-')
+        self.assert_(Grade.getAvgGrade(['D-']) == 'D-')
+        self.assert_(Grade.getAvgGrade(['F']) == 'F')
+
+
+    def testAvgGrades2(self):
         
         self.dbClear()
 
@@ -309,9 +346,7 @@ class testASN (unittest.TestCase) :
         link.grade = "A"
         link.put()
 
-        self.assert_(c.gradeAvg == 3.0)
-        #self.assert_(c.gradeAvg == "B")
-
+        self.assert_(c.gradeAvg == "B")
 
 
 

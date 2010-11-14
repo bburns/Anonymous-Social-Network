@@ -1,4 +1,9 @@
 <students>
+  <student>
+    <id>admin000</id>
+    <password>admin</password>
+  </student>
+  
    <student>
            <id>MF123456</id>
            <password>asswordpay</password>
