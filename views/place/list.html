@@ -22,7 +22,7 @@
       <td>{{place.ratingAvg}}</td>
       <td>{{place.refCount}}</td>
       <td>
-          <a href="/place/view?id={{ place.key.id }}">View</a>
+          <a href="/place/view?id={{ place.key.id }}">View{%if username%}/Rate{%endif%}</a>
           {% if username %}|
           <a href='/place/edit?id={{ place.key.id }}'>Edit</a> |
           <a href='/place/delete?id={{ place.key.id }}'>Delete</a>

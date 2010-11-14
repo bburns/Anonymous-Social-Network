@@ -22,7 +22,7 @@
       <td>{{internship.ratingAvg}}</td>
       <td>{{internship.refCount}}</td>
       <td>
-        <a href="/internship/view?id={{ internship.key.id }}">View</a>
+        <a href="/internship/view?id={{ internship.key.id }}">View{%if username%}/Rate{%endif%}</a>
         {% if admin %}
           | <a href='/internship/edit?id={{internship.key.id}}'>Edit</a>
           | <a href='/internship/delete?id={{internship.key.id}}'>Delete</a>

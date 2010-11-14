@@ -1,6 +1,6 @@
 <students>
    <student>
-       <id>sbalani8</id>
+       <id>shanky00</id>
        <password>shanky</password>
        <class>
            <unique>32165</unique>
@@ -214,8 +214,8 @@
        </game>
    </student>
    <student>
-       <id>joshsyun</id>
-       <password>sang</password>
+       <id>josh0000</id>
+       <password>josh</password>
        <class>
            <unique>52540</unique>
            <course_num>CS 373</course_num>

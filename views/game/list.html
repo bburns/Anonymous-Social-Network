@@ -18,7 +18,7 @@
       <td>{{game.ratingAvg}}</td>
       <td>{{game.refCount}}</td>
       <td>
-          <a href='/game/view?id={{game.key.id}}'>View</a>
+          <a href='/game/view?id={{game.key.id}}'>View{%if username%}/Rate{%endif%}</a>
           {% if admin %}
             | <a href='/game/edit?id={{game.key.id}}'>Edit</a>
             | <a href='/game/delete?id={{game.key.id}}'>Delete</a>

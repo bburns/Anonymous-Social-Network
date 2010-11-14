@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% block content %}
 
-  <h2>{{username}}</h2>
+  <h2>Welcome, {{username}}!</h2>
   <p align="right"><a href="/changePassword">Change Password</a></p>
   <!--<p>{{student_id}}</p>-->
   
@@ -25,6 +25,7 @@
 	<div id="tabs-1">
 		<table>
 		  <thead>
+		    <th>Course Number</th>
 		    <th>Course Name</th>
 		    <th>Instructor</th>
 		    <th>Comment</th>
@@ -33,14 +34,15 @@
 		  <tbody>
 
 		  {%for sclass in sclasses%}
-		    <tr><td><a href="/class/view?id={{sclass.class_.key.id}}">{{sclass.class_.course_name}}</a></td>
+		    <tr><td><a href="/class/view?id={{sclass.class_.key.id}}">{{sclass.class_.course_num}}</a></td>
+		    <td>{{sclass.class_.course_name}}</td>
 		    <td>{{sclass.class_.instructor}}</td>
 		    <td>{{sclass.comment}}</td>
 		    <td>{{sclass.rating}}</td>
 		    </tr>
 		  {%endfor%}
 		</table>
-		{%if username %}<p><a href="/class/add">Add a Class</a><p>{% endif %}		
+		{%if username %}<p><a href="/class/list">View/rate other classes</a><p>{% endif %}		
 	</div>
 	<div id="tabs-2">
 		<table>
@@ -58,7 +60,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		{%if username %}<p><a href="/book/add">Add a Book</a><p>{% endif %}	
+		{%if username %}<p><a href="/book/list">View/rate other books</a><p>{% endif %}	
 	</div>
 	<div id="tabs-3">
 	<table>
@@ -80,7 +82,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		{%if username %}<p><a href="/paper/add">Add a Paper</a><p>{% endif %}	
+		{%if username %}<p><a href="/paper/list">View/rate other papers</a><p>{% endif %}	
 	</div>
 	<div id="tabs-4">
 	<table>
@@ -100,7 +102,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		{%if username %}<p><a href="/internship/add">Add an Internship</a><p>{% endif %}	
+		{%if username %}<p><a href="/internship/list">View/rate other internships</a><p>{% endif %}	
 	</div>
 	<div id="tabs-5">
 	<table>
@@ -123,7 +125,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		{%if username %}<p><a href="/place/add">Add a Place</a><p>{% endif %}	
+		{%if username %}<p><a href="/place/list">View/rate other places</a><p>{% endif %}	
 	</div>
 	<div id="tabs-6">
 	<table>
@@ -143,7 +145,7 @@
 		    </tr>
 		  {%endfor%}
 		</table>
-		{%if username %}<p><a href="/game/add">Add a Game</a><p>{% endif %}	
+		{%if username %}<p><a href="/game/list">View/rate other games</a><p>{% endif %}	
 	</div>
 </div>
 

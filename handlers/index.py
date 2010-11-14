@@ -197,7 +197,7 @@ class LoginHandler(webapp.RequestHandler):
             self.session['student_id'] = user.key().id()
             if user.isAdmin:
                 self.session['admin'] = True
-            self.redirect('/')
+            self.redirect('/profile')
         else:
             doRender(self,'login.html',{'error':'Invalid password entered. Please try again.'})
 
