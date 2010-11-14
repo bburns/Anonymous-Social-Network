@@ -1,7 +1,10 @@
 {% extends "../_base.html" %}
+{% block scripts %}
+<script src="/static/jquery.dataTables.js" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
 <h2>Current Classes</h2>
-<table>
+<table id="data">
   <thead>
     <tr>
       <th>Course Num</th>
@@ -32,4 +35,9 @@
   {% endfor %}
 </table>
 {%if username %}<p><a href="/class/add">Add a Class</a><p>{% endif %}
+<script type="text/javascript">
+$(function() {
+  $("#data").dataTable();
+});
+</script>
 {% endblock %}

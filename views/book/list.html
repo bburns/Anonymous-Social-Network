@@ -1,9 +1,12 @@
 {% extends "../_base.html" %}
+{% block scripts %}
+<script src="/static/jquery.dataTables.js" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
 
 <h2>Current books</h2>
 
-<table>
+<table id="data">
   <thead>
     <th>Title</th>
     <th>Author</th>
@@ -31,7 +34,10 @@
   {% endfor %}
   </tbody>
 </table>
-
 {% if username %}<a href="/book/add">Add a Book</a>{% endif %}
-
+<script type="text/javascript">
+$(function() {
+  $("#data").dataTable();
+});
+</script>
 {% endblock %}

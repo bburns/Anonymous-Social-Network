@@ -1,5 +1,8 @@
 {% extends "../_base.html" %}
 {% block title %}Students{% endblock %}
+{% block scripts %}
+<script src="/static/jquery.dataTables.js" type="text/javascript"></script>
+{% endblock %}
 {% block content %}
   <h2>Students</h2>
   <table>
@@ -16,4 +19,9 @@
       </tr>
     {% endfor %}
   </table>
+<script type="text/javascript">
+$(function() {
+  $("#data").dataTable();
+});
+</script>
 {% endblock %}
