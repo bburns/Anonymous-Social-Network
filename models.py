@@ -163,10 +163,9 @@ class Class(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-        q = db.Query(Class)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
+        q = db.Query(Class).order("-edit_time")
+        results = q.fetch(limit)
+        return results
 
     @staticmethod
     def findAdd(course_num, course_name='', instructor=''):
@@ -409,10 +408,9 @@ class Book(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-        q = db.Query(Book)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
+        q = db.Query(Book).order("-edit_time")
+        results = q.fetch(limit)
+        return results
     
     @staticmethod
     def findAdd(title, author='', isbn=''):
@@ -501,10 +499,9 @@ class Paper(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-        q = db.Query(Paper)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
+        q = db.Query(Paper).order("-edit_time")
+        results = q.fetch(limit)
+        return results
 
     @staticmethod
     def findAdd(title, author='', paper_category=''):
@@ -590,10 +587,9 @@ class Internship(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-        q = db.Query(Internship)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
+        q = db.Query(Internship).order("-edit_time")
+        results = q.fetch(limit)
+        return results
 
     @staticmethod
     def findAdd(place_name, location='', semester=''):
@@ -673,10 +669,9 @@ class Place(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-        q = db.Query(Place)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
+        q = db.Query(Place).order("-edit_time")
+        results = q.fetch(limit)
+        return results
 
     @staticmethod
     def findAdd(place_type, place_name, location='', semester=''):
@@ -756,10 +751,9 @@ class Game(db.Model):
 
     @staticmethod
     def get_by_date(limit = 5):
-        q = db.Query(Game)
-        results = q.fetch(837548)
-        results = sorted(results, key=lambda time: time.edit_time, reverse = True)
-        return results[0:5]
+        q = db.Query(Game).order("-edit_time")
+        results = q.fetch(limit)
+        return results
 
     @staticmethod
     def findAdd(title, os=''):
