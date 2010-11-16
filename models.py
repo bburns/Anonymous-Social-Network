@@ -80,6 +80,11 @@ class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python(?)
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
+    lastLogin = db.StringProperty()
+    dateTime = db.DateTimeProperty(auto_now=True)
+
+    def setLastLogin(self, string) :
+	self.lastLogin = string
 
     @staticmethod
     def get_by_username(id_):
@@ -333,6 +338,7 @@ class StudentClass(db.Model):
     #rating = db.StringProperty(validator=validate_rating, choices=Rating.choices) # bad mojo
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
+    ratedThis = db.BooleanProperty()
 
     def put(self):
         """
@@ -348,7 +354,8 @@ class StudentClass(db.Model):
         #   raise db.BadValueError("Unique is a required field.")
         #if not self.semester :
         #   raise db.BadValueError("Semester is a required field.")
-
+        if self.rating :
+            ratedThis = True
         # call superclass
         db.Model.put(self) 
         
