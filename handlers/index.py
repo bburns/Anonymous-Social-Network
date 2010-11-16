@@ -311,7 +311,7 @@ _URLS = (
      ('/game/list', ListGame),
      ('/game/add', AddGame),
      ('/game/edit', EditGame),
-#     ('/game/editLink', EditGameLink),
+     ('/game/editLink', EditGameLink),
      ('/game/delete', DeleteGame),
      ('/game/view', ViewGame),
      )

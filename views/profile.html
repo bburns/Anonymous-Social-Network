@@ -146,6 +146,7 @@
 		    <th>Title</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -154,6 +155,7 @@
 		    <td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.title}}</a></td>
 		    <td>{{sgame.comment}}</td>
 		    <td>{{sgame.rating}}</td>
+            <td><a href="/game/editLink?link_id={{sgame.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
