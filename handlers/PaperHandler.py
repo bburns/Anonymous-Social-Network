@@ -51,7 +51,11 @@ class DeletePaper(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        paper = Paper.get_by_id(id).delete()
+        paper = Paper.get_by_id(id)
+        student_papers = StudentPaper.all().filter("paper = ", paper).fetch(1000)
+        for student_paper in student_papers:
+          student_paper.delete()
+        paper.delete()
         self.redirect("/paper/list")
 
 class ViewPaper(webapp.RequestHandler):

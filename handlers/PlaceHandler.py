@@ -86,5 +86,9 @@ class DeletePlace(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        place = Place.get_by_id(id).delete()
+        place = Place.get_by_id(id)
+        student_places = StudentPlace.all().filter("place = ", place).fetch(1000)
+        for student_place in student_places:
+          student_place.delete()
+        place.delete()
         self.redirect("/place/list")
