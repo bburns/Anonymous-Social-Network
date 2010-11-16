@@ -61,7 +61,7 @@ def validate_unique(unique):
 
 def validate_grade(val):
     if val:
-        regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
+        regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)$"
         if re.match(regex, val) == None:
             raise db.BadValueError
 
