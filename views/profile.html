@@ -99,6 +99,7 @@
 		    <th>Location</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -107,6 +108,7 @@
 		    <td>{{sinternship.internship.location}}</td>
 		    <td>{{sinternship.comment}}</td>
 		    <td>{{sinternship.rating}}</td>
+            <td><a href="/internship/editLink?link_id={{sinternship.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -120,6 +122,7 @@
 		    <th>Location</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -130,6 +133,7 @@
 		    <td>{{splace.place.location}}</td>
 		    <td>{{splace.comment}}</td>
 		    <td>{{splace.rating}}</td>
+            <td><a href="/place/editLink?link_id={{splace.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
