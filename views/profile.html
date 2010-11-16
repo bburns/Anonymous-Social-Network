@@ -28,8 +28,10 @@
 		    <th>Course Number</th>
 		    <th>Course Name</th>
 		    <th>Instructor</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Grade</th>
+		    <th>Comment</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -37,8 +39,10 @@
 		    <tr><td><a href="/class/view?id={{sclass.class_.key.id}}">{{sclass.class_.course_num}}</a></td>
 		    <td>{{sclass.class_.course_name}}</td>
 		    <td>{{sclass.class_.instructor}}</td>
-		    <td>{{sclass.comment}}</td>
 		    <td>{{sclass.rating}}</td>
+		    <td>{{sclass.grade}}</td>
+		    <td>{{sclass.comment}}</td>
+            <td><a href="/class/editLink?link_id={{sclass.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>

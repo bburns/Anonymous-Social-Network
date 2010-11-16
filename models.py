@@ -389,6 +389,9 @@ class StudentClassForm(djangoforms.ModelForm):
         model = StudentClass
         exclude = ['student','class_']
 
+#    def is_valid(self):
+        #. check for required properties here also
+
 
 
 class Book(db.Model):

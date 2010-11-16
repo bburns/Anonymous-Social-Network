@@ -277,6 +277,7 @@ _URLS = (
      ('/class/add', AddClass),
      ('/class/view', ViewClass),
      ('/class/edit', EditClass),
+     ('/class/editLink', EditClassLink),
      ('/class/delete', DeleteClass),
 
      ('/book/list', ListBook),

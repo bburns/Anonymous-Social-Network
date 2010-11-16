@@ -20,8 +20,8 @@
   <tr><td>Course number: {{ class.course_num }} </td></tr>
   <tr><td>Course name: {{ class.course_name }} </td></tr>
   <tr><td>Instructor: {{ class.instructor }} </td></tr>
-  <tr><td>Avg rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
-  <tr><td>Avg grade: {{ class.gradeAvg }}</td></tr>
+  <tr><td>Average rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
+  <tr><td>Average grade: {{ class.gradeAvg }}</td></tr>
   </tbody>
 </table>
 
@@ -35,13 +35,13 @@
     <th>Comment</th>
   </thead>
   <tbody>
-  {% for assoc in assocs %}
+  {% for link in links %}
     <tr>
-      <td>{{ assoc.semester }} </td>
-      <td>{{ assoc.unique }} </td>
-      <td>{{ assoc.rating }}</td>
-      <td>{{ assoc.grade }}</td>
-      <td>{{ assoc.comment|escape|linebreaks }}</td>
+      <td>{{ link.semester }} </td>
+      <td>{{ link.unique }} </td>
+      <td>{{ link.rating }}</td>
+      <td>{{ link.grade }}</td>
+      <td>{{ link.comment|escape|linebreaks }}</td>
     </tr>
   {% endfor %}
   </tbody>
