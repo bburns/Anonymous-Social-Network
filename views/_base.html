@@ -35,6 +35,14 @@
       </div>
         <div class="span-4 round" id="sidecol">
           <ul class="navigation">
+	  <div ALIGN='left'>
+	       {% if username %}
+	          <li><Small><Strong>Logged in as : </Strong></Small></li>
+	          <li><Small>{{ username }}</Small></li>
+	          <p></p>
+                  <hr/>
+	       {% endif %}
+          </div>
             <li><a href="/" class="round">Home</a></li>
             
             {% if username %}

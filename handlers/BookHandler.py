@@ -99,6 +99,9 @@ class DeleteBook(webapp.RequestHandler):
         else:
             id = int(self.request.get('_id'))
             book = Book.get_by_id(id)
+            student_books = StudentBook.all().filter("book = ",book).fetch(1000)
+            for student_book in student_books:
+                student_book.delete()
             book.delete()
             self.redirect("/book/list")
 

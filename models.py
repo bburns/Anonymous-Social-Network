@@ -55,13 +55,13 @@ def validate_semester(semester):
     
 def validate_unique(unique):
     if unique :
-        regex = "[0-9]{5}"
+        regex = "[0-9]{5}$"
         if re.match(regex, unique) == None:
             raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only.")
 
 def validate_grade(val):
     if val:
-        regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)?"
+        regex = "(([B-D][+|\-]?)|A|A\-|F|P|CR|NC|Q|I|X)$"
         if re.match(regex, val) == None:
             raise db.BadValueError
 
@@ -69,7 +69,7 @@ def validate_grade(val):
 def validate_isbn(val):
     if val:
         #regex = "\S{8}"
-        regex = "[0-9]{10}|[0-9]{13}"
+        regex = "[0-9]{10}$|[0-9]{13}$"
         if re.match(regex, val)== None:
             raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only.")
 
@@ -80,6 +80,11 @@ class Student(db.Model):
     id_ = db.StringProperty()   # id is reserved in python(?)
     password = db.StringProperty()
     isAdmin = db.BooleanProperty()
+    lastLogin = db.StringProperty()
+    dateTime = db.DateTimeProperty(auto_now=True)
+
+    def setLastLogin(self, string) :
+	self.lastLogin = string
 
     @staticmethod
     def get_by_username(id_):
@@ -333,6 +338,7 @@ class StudentClass(db.Model):
     #rating = db.StringProperty(validator=validate_rating, choices=Rating.choices) # bad mojo
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
+    ratedThis = db.BooleanProperty()
 
     def put(self):
         """
@@ -348,7 +354,8 @@ class StudentClass(db.Model):
         #   raise db.BadValueError("Unique is a required field.")
         #if not self.semester :
         #   raise db.BadValueError("Semester is a required field.")
-
+        if self.rating :
+            ratedThis = True
         # call superclass
         db.Model.put(self) 
         

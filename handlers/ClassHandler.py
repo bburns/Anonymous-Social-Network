@@ -69,7 +69,11 @@ class DeleteClass(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        cl = Class.get_by_id(id).delete()
+        cl = Class.get_by_id(id)
+        student_classes = StudentClass.all().filter("class_ = ",cl).fetch(1000)
+        for student_class in student_classes:
+            student_class.delete()
+        cl.delete()
         self.redirect("/class/list")
 
 
