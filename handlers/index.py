@@ -284,11 +284,13 @@ _URLS = (
      ('/book/view', ViewBook),
      ('/book/add', AddBook),
      ('/book/edit', EditBook),
+     ('/book/editLink', EditBookLink),
      ('/book/delete', DeleteBook),
 
      ('/paper/list', ListPaper),
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
+     ('/paper/editLink', EditPaperLink),
      ('/paper/delete', DeletePaper),
      ('/paper/view', ViewPaper),
 

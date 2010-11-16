@@ -458,7 +458,11 @@ class StudentBook(db.Model):
         properties for the rated item. 
         This will get called automatically on importing the xml, 
         when user rates an existing item, and when they add and rate a new item. 
+        Also catch required fields here, for form validation.
         """
+
+        if not self.rating:
+            raise db.BadValueError("Rating is a required field.")
         
         # call superclass
         db.Model.put(self) 
@@ -480,6 +484,14 @@ class StudentBook(db.Model):
         book.ratingAvg = ratingAvg
         book.refCount = n
         book.put()
+
+
+
+
+class StudentBookForm(djangoforms.ModelForm):
+    class Meta:
+        model = StudentBook
+        exclude = ['student','book']
 
 
 
@@ -539,7 +551,7 @@ class PaperForm(djangoforms.ModelForm):
 class StudentPaper(db.Model):
     student = db.ReferenceProperty(Student)
     paper = db.ReferenceProperty(Paper)
-    rating = db.StringProperty()
+    rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
 
 
@@ -549,7 +561,11 @@ class StudentPaper(db.Model):
         properties for the rated item. 
         This will get called automatically on importing the xml, 
         when user rates an existing item, and when they add and rate a new item. 
+        Also catch required fields here, for form validation.
         """
+
+        if not self.rating:
+            raise db.BadValueError("Rating is a required field.")
         
         # call superclass
         db.Model.put(self) 
@@ -571,6 +587,13 @@ class StudentPaper(db.Model):
         paper.ratingAvg = ratingAvg
         paper.refCount = n
         paper.put()
+
+
+class StudentPaperForm(djangoforms.ModelForm):
+    class Meta:
+        model = StudentPaper
+        exclude = ['student','paper']
+
 
 
 class Internship(db.Model):
@@ -626,10 +649,16 @@ class InternshipForm(djangoforms.ModelForm):
 class StudentInternship(db.Model):
     student = db.ReferenceProperty(Student)
     internship = db.ReferenceProperty(Internship)
-    rating = db.StringProperty()
+    rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
 
     def put(self):
+        """
+        Also catch required fields here, for form validation.
+        """
+        if not self.rating:
+            raise db.BadValueError("Rating is a required field.")
+        
         db.Model.put(self) # call superclass
         internship = self.internship
         links = internship.studentinternship_set
@@ -639,6 +668,12 @@ class StudentInternship(db.Model):
         internship.ratingAvg = ratingAvg
         internship.refCount = n
         internship.put()
+
+class StudentInternshipForm(djangoforms.ModelForm):
+    class Meta:
+        model = StudentInternship
+        exclude = ['student','internship']
+
 
 
 
@@ -721,7 +756,11 @@ class StudentPlace(db.Model):
         properties for the rated item. 
         This will get called automatically on importing the xml, 
         when user rates an existing item, and when they add and rate a new item. 
+        Also catch required fields here, for form validation.
         """
+
+        if not self.rating:
+            raise db.BadValueError("Rating is a required field.")
         
         # call superclass
         db.Model.put(self) 
@@ -743,6 +782,13 @@ class StudentPlace(db.Model):
         place.ratingAvg = ratingAvg
         place.refCount = n
         place.put()
+
+
+class StudentPlaceForm(djangoforms.ModelForm):
+    class Meta:
+        model = StudentPlace
+        exclude = ['student','place']
+
 
 
 class Game(db.Model):
@@ -797,7 +843,11 @@ class StudentGame(db.Model):
         properties for the rated item. 
         This will get called automatically on importing the xml, 
         when user rates an existing item, and when they add and rate a new item. 
+        Also catch required fields here, for form validation.
         """
+
+        if not self.rating:
+            raise db.BadValueError("Rating is a required field.")
         
         # call superclass
         db.Model.put(self) 
@@ -819,4 +869,10 @@ class StudentGame(db.Model):
         game.ratingAvg = ratingAvg
         game.refCount = n
         game.put()
+
+
+class StudentGameForm(djangoforms.ModelForm):
+    class Meta:
+        model = StudentGame
+        exclude = ['student','game']
 

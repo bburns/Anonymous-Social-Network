@@ -54,6 +54,7 @@
 		    <th>Title</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -61,6 +62,7 @@
 		    <tr><td><a href="/book/view?id={{sbook.book.key.id}}">{{sbook.book.title}}</a></td>
 		    <td>{{sbook.comment}}</td>
 		    <td>{{sbook.rating}}</td>
+            <td><a href="/book/editLink?link_id={{sbook.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -74,6 +76,7 @@
 		    <th>Author</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -83,6 +86,7 @@
 		    <td>{{spaper.paper.author}}</td>
 		    <td>{{spaper.comment}}</td>
 		    <td>{{spaper.rating}}</td>
+            <td><a href="/paper/editLink?link_id={{spaper.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>

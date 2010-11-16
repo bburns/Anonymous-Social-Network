@@ -101,3 +101,30 @@ class DeleteBook(webapp.RequestHandler):
             book = Book.get_by_id(id)
             book.delete()
             self.redirect("/book/list")
+
+
+
+class EditBookLink(webapp.RequestHandler):
+    def get(self):
+        # get from ?link_id= in url, or hidden form field
+        link_id = int(self.request.get('link_id')) 
+        link = StudentBook.get_by_id(link_id)
+        link_form = StudentBookForm(instance=link)
+        book = link.book
+        doRender(self,'book/editLink.html',{'link_form':link_form, 'book':book, 'link_id':link_id})
+
+    def post(self):
+        link_id = int(self.request.get('link_id'))
+        link = StudentBook.get_by_id(link_id)
+        form = StudentBookForm(data = self.request.POST, instance = link)
+        if form.is_valid(): # this checks values against validation functions
+            try: 
+                link = form.save() # this calls put, which checks for missing values
+                self.redirect("/profile")
+            except db.BadValueError, e:
+                book = link.book
+                doRender(self, 'book/editLink.html', {'link_form':form, 'book':book, 'link_id':link_id, 'error': "ERROR: " + e.args[0]})
+        else:
+            book = link.book
+            doRender(self,'book/editLink.html',{'link_form':form, 'book':book, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
+
