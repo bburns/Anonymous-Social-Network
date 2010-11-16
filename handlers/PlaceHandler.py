@@ -16,7 +16,8 @@ class AddPlace(webapp.RequestHandler):
         doRender(self,'place/add.html',{'form':PlaceForm()})
 
     def post(self):
-        form = PlaceForm(data=self.request.POST)
+        place = Place(place_type=self.request.get("id_place_type"))
+        form = PlaceForm(data=self.request.POST,instance=place)
         if form.is_valid(): # this checks the values against the validator functions
             try :
                 place = form.save() # this calls Place.put(), which checks for missing values
