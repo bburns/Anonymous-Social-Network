@@ -55,7 +55,7 @@ def validate_semester(semester):
     
 def validate_unique(unique):
     if unique :
-        regex = "[0-9]{5}"
+        regex = "[0-9]{5}$"
         if re.match(regex, unique) == None:
             raise db.BadValueError("Invalid value entered. Please enter 5 digit numbers only.")
 
@@ -69,7 +69,7 @@ def validate_grade(val):
 def validate_isbn(val):
     if val:
         #regex = "\S{8}"
-        regex = "[0-9]{10}|[0-9]{13}"
+        regex = "[0-9]{10}$|[0-9]{13}$"
         if re.match(regex, val)== None:
             raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only.")
 
