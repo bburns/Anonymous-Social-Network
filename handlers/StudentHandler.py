@@ -67,6 +67,39 @@ class DeleteStudent(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         student = Student.get_by_id(id)
+	
+	sb = StudentBook.all()
+        deleteAll(student, sb)
+        sc = StudentClass.all()
+        deleteAll(student, sc)
+        sp = StudentPlace.all()
+	deleteAll(student, sp)
+        si = StudentInternship.all()
+	deleteAll(student, si)
+        spa = StudentPaper.all()
+        deleteAll(student, spa)
+        sg = StudentGame.all()
+	deleteAll(student, sg)
         student.delete()
         self.redirect("/student/list")
+
+# iterates through all the objs related to the student s and deletes them
+def deleteAll(s, sObj) :
+    sos = sObj.filter("student = ", s)
+    sos = sos.fetch(9999)
+    for x in sos :
+        x.delete()
+
+
+
+
+
+
+
+
+
+
+
+
+
 

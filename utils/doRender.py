@@ -34,7 +34,6 @@ def doRender(handler, filename='index.html', values = {}):
         newvalues['student_id'] = handler.session['student_id']
     if 'admin' in handler.session:
         newvalues['admin'] = handler.session['admin']
-
     # render the template
     s = template.render(filepath, newvalues)
     handler.response.out.write(s)

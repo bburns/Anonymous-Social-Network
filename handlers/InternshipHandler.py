@@ -78,12 +78,16 @@ class EditInternship(webapp.RequestHandler):
 
 class DeleteInternship(webapp.RequestHandler):
     def get(self):  
+        id = int(self.request.get('id'))
         internship = Internship.get_by_id(id)
         doRender(self,'internship/delete.html',{'internship':internship,'id':id})
 
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
+        student_internships = StudentInternship.all().filter("internship = ", internship).fetch(1000)
+        for student_internship in student_internships:
+          student_internship.delete()
         internship.delete()
         self.redirect("/internship/list")
 

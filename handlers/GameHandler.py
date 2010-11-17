@@ -84,7 +84,11 @@ class DeleteGame(webapp.RequestHandler):
 
     def post(self):
         id = int(self.request.get('_id'))
-        game = Game.get_by_id(id).delete()
+        game = Game.get_by_id(id)
+        student_games = StudentGame.all().filter("game = ",game).fetch(1000)
+        for student_game in student_games:
+            student_game.delete()
+        game.delete()
         self.redirect("/game/list")
 
 
