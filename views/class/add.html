@@ -11,7 +11,7 @@
 
 <form method="post" action={% if id %}"/class/edit"{%else%}"/class/add"{%endif%} >
   <table>
-    {{ class_form.as_table }}
+    {{ form.as_table }}
   </table>
   <input type="hidden" name="id" value="{{id}}"/>
   <input type="submit" value={% if id %}"Edit Class"{%else%}"Add Class"{%endif%}/>

@@ -15,7 +15,7 @@ class ListClass(webapp.RequestHandler):
 class AddClass(webapp.RequestHandler):
     def get(self):
         form = ClassForm()
-        doRender(self,'class/add.html',{'class_form':form})
+        doRender(self,'class/add.html',{'form':form})
 
     def post(self):
         form = ClassForm(self.request.POST)
@@ -23,15 +23,11 @@ class AddClass(webapp.RequestHandler):
             try:
                 cl = form.save() # this calls Class.put(), which checks for missing values
                 self.redirect("/class/view?id=%d" % cl.key().id())
-            except db.BadValueError, e :
-                #doRender(self,'class/add.html',{'class_form':form, \
-                #'student_id':student_id, 'error': "ERROR: " + e.args[0]})
-                doRender(self,'class/add.html',{'class_form':form, 'error': "ERROR: " + e.args[0]})
-        else :
-            #doRender(self,'class/add.html',{'form':form, \
-            #'student_id':student_id, 'error':'ERROR: Please correct the following errors and try again.'})
-            doRender(self,'class/add.html',{'class_form':form, \
-            'error':'ERROR: Please correct the following errors and try again.'})
+            except db.BadValueError, e:
+                doRender(self,'class/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+        else:
+            doRender(self,'class/add.html',{'form':form, \
+                'error':'ERROR: Please correct the following errors and try again.'})
 
 
 
@@ -39,7 +35,7 @@ class EditClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         cl = Class.get_by_id(id)
-        doRender(self,'class/add.html',{'class_form':ClassForm(instance=cl),'id':id})
+        doRender(self,'class/add.html',{'form':ClassForm(instance=cl),'id':id})
 
     def post(self):
         id = int(self.request.get('id'))
@@ -50,9 +46,9 @@ class EditClass(webapp.RequestHandler):
             form.save()
             self.redirect("/class/list")
            except db.BadValueError, e:
-            doRender(self, 'class/add.html', {'class_form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
+            doRender(self, 'class/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
         else :
-            doRender(self,'class/add.html',{'class_form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+            doRender(self,'class/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
        
 
 class DeleteClass(webapp.RequestHandler):
