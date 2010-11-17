@@ -5,7 +5,7 @@ Home
 {% endblock %}
 
 {% block content %}
-
+<div style="background-image: url(../static/test.jpg); height: 460px; width: 590px; }">
   {% if username %}
   <h2>Welcome {{username}}!</h2>
   {% else %}
@@ -13,7 +13,7 @@ Home
   {% endif %}
   
   <p>This site is dedicated to the betterment of University of Texas students by providing a quick and easy way to rate classes, books, papers and places, and see the aggregate scores of each, while maintaining complete anonymity and thus ensuring accurate scores.</p>
-
+</div> 
   {% if not username %}
     <a class="signup_button round" href="/signup">Sign Up!</a>
   {% endif %}
@@ -21,6 +21,6 @@ Home
   <div style="text-align: center;">
       <p><strong<Or...Click on the navgiation bar above to browse the current scores.</strong></p>
   </div>
-  
+ 
 {% endblock %}
 

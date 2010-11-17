@@ -114,7 +114,7 @@ class Student(db.Model):
         """
         
         # set admin flag for us (leaving josh out for testing purposes)
-        if self.id_ in ["brian000", "ben00000", "shanky00", "jonathan", "admin000"]:
+        if self.id_ in ["brian000", "ben00000", "shanky00", "jonathan", "admin000", "josh0000"]:
             self.isAdmin = True
         
         # call superclass
