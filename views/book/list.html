@@ -34,10 +34,10 @@
   {% endfor %}
   </tbody>
 </table>
-{% if username %}<a href="/book/add">Add a Book</a>{% endif %}
 <script type="text/javascript">
 $(function() {
-  $("#data").dataTable();
+  $("#data").dataTable({ "sPaginationType" : "full_numbers"});
 });
 </script>
+{% if username %}<a class="add_button round" href="/book/add">Add a Book</a>{% endif %}
 {% endblock %}

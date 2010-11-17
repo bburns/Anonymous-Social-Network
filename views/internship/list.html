@@ -32,11 +32,10 @@
     </tr>
   {% endfor %}
 </table>
-
-{%if username %}<p><a href="/internship/add">Add an Internship</a><p>{% endif %}
 <script type="text/javascript">
 $(function() {
-  $("#data").dataTable();
+  $("#data").dataTable({ "sPaginationType" : "full_numbers"});
 });
 </script>
+{%if username %}<p><a class="add_button round" href="/internship/add">Add an Internship</a><p>{% endif %}
 {% endblock %}

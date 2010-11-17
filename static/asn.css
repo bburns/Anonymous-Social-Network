@@ -194,3 +194,54 @@ ul.footer_nav {
   text-decoration: underline;
 }
 
+.dataTables_info {
+  margin-top: -10px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.dataTables_paginate {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.paginate_button {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #cc5500;
+}
+
+.paginate_active {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  color: #cc5500;
+  background-color: #ffffff;
+  border: solid 1px #cc5500;
+}
+
+
+
+a.add_button {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 120px;
+  color: #ffffff;
+  background: #cc5500;
+  font-size: 100%;
+  font-weight: bold;
+  padding: 5px;
+  text-decoration: none;
+}
