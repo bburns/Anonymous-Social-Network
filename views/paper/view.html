@@ -34,7 +34,7 @@
   {% for assoc in assocs %}
     <tr>
       <td>{{ assoc.rating }}</td>
-      <td>{{ assoc.comment|escape|linebreaks }}</td>
+      <td>{{ assoc.comment|escape }}</td>
     </tr>
   {% endfor %}
   </tbody>

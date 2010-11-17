@@ -25,7 +25,6 @@
   </tbody>
 </table>
 
-
 <table>
   <thead>
     <th>Semester</th>
@@ -41,78 +40,22 @@
       <td>{{ assoc.unique }} </td>
       <td>{{ assoc.rating }}</td>
       <td>{{ assoc.grade }}</td>
-      <td>{{ assoc.comment|escape|linebreaks }}</td>
+      <td>{{ assoc.comment|escape }}</td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
 
 {% if username %}
-
 <div class="rating">
-
-<h3>Add your rating and comments for this class</h3>
-
-<form method="post" action="/class/view">
-  <table>
-    {{ link_form.as_table }}
-
-<!--
-  <tr>
-    <td><label for="id_rating">Rating:</label></td>
-    <td>
-      <select name="rating" id="id_rating">
-        <option value="0">0</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
-        <option value="60">60</option>
-        <option value="70">70</option>
-        <option value="80">80</option>
-        <option value="90">90</option>
-        <option value="100">100</option>
-        -->
-      <!--
-        <option value="0">0 stars</option>
-        <option value="20">1 star</option>
-        <option value="40">2 stars</option>
-        <option value="60">3 stars</option>
-        <option value="80">4 stars</option>
-        <option value="100">5 stars</option>
-        -->
-        <!--
-        <option value="0">0 stars</option>
-        <option value="10">0.5 stars</option>
-        <option value="20">1 star</option>
-        <option value="30">1.5 stars</option>
-        <option value="40">2 stars</option>
-        <option value="50">2.5 stars</option>
-        <option value="60">3 stars</option>
-        <option value="70">3.5 stars</option>
-        <option value="80">4 stars</option>
-        <option value="90">4.5 stars</option>
-        <option value="100">5 stars</option>
-        -->
-<!--
-      </select>
-    </td>
-  </tr>
--->
-
-  </table>
-  <input type="submit" value="Add Rating/Comment"/>
-  <input type="hidden" name="_id" value="{{ id }}"/>
-</form>
-
+  <h3>Add your rating and comments for this class</h3>
+  <form method="post" action="/class/view">
+    <table>
+      {{ link_form.as_table }}
+    </table>
+    <input type="submit" value="Add Rating/Comment"/>
+    <input type="hidden" name="_id" value="{{id}}"/>
+  </form>
 </div>
-
-<!--
-  <a href="/book/edit?id={{ book.key.id }}">Edit</a>
-  <a href="/book/delete?id={{ book.key.id }}">Delete</a>
--->
-
 {% endif %}
-        
 {% endblock %}

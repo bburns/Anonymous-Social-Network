@@ -12,9 +12,8 @@
 <form method="post" action="/class/add" >
   <table>
     {{ class_form.as_table }}
-    {{ studentclass_form.as_table }}
   </table>
-  <input type="hidden" name="id" value="{{ id }}"/>
+  <input type="hidden" name="id" value="{{id}}"/>
   <input type="submit" value="Add Class"/>
 </form>
 
