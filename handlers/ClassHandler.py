@@ -1,7 +1,7 @@
-import os
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
+from utils.authenticate import authenticate
 from models import *
 
 # Class
@@ -11,13 +11,13 @@ class ListClass(webapp.RequestHandler):
         classes = Class.all()
         doRender(self,'class/list.html',{'classes':classes})
 
-        
 class AddClass(webapp.RequestHandler):
     def get(self):
         self.session = Session()
         student_id = self.session['student_id']
         doRender(self,'class/add.html',{'class_form':ClassForm(), 'id':student_id})
 
+    @authenticate
     def post(self):
         student_id = int(self.request.get('id'))
         class_form = ClassForm(self.request.POST)
@@ -32,14 +32,13 @@ class AddClass(webapp.RequestHandler):
             doRender(self,'class/add.html',{'class_form':class_form, \
             'id':student_id, 'error':'ERROR: Please correct the following errors and try again.'})
 
-
-
 class EditClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         cl = Class.get_by_id(id)
         doRender(self,'class/add.html',{'form':ClassForm(instance=cl),'id':id})
 
+    @authenticate
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id)
@@ -53,13 +52,13 @@ class EditClass(webapp.RequestHandler):
         else :
             doRender(self,'class/edit.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
        
-
 class DeleteClass(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         cl = Class.get_by_id(id)
         doRender(self,'class/delete.html',{'cl':cl,'id':id})
 
+    @authenticate
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id)
@@ -69,8 +68,6 @@ class DeleteClass(webapp.RequestHandler):
         cl.delete()
         self.redirect("/class/list")
 
-
-
 class ViewClass(webapp.RequestHandler):
     def get(self):
         class_id = int(self.request.get('id')) # get id from "?id=" in url
@@ -79,8 +76,8 @@ class ViewClass(webapp.RequestHandler):
         links = class_.studentclass_set
         doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'links':links,'id':class_id})
 
+    @authenticate
     def post(self):
-
         self.session = Session()
         student_id = self.session['student_id']
         student = Student.get_by_id(student_id)
@@ -97,13 +94,13 @@ class ViewClass(webapp.RequestHandler):
                 link.put()
                 self.redirect("/class/list")
             except db.BadValueError, e :
-                doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':assocs,'id':class_id,\
+                links = class_.studentclass_set
+                doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'links':links,'id':class_id,\
                     'error': "ERROR: " + e.args[0]})
         else :
-            doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':assocs,'id':class_id,\
+            links = class_.studentclass_set
+            doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'links':links,'id':class_id,\
                 'error':'ERROR: Please correct the following errors and try again.'})
-
-
 
 class EditClassLink(webapp.RequestHandler):
     def get(self):
@@ -114,6 +111,7 @@ class EditClassLink(webapp.RequestHandler):
         class_ = link.class_
         doRender(self,'class/editLink.html',{'link_form':link_form, 'class':class_, 'link_id':link_id})
 
+    @authenticate
     def post(self):
         link_id = int(self.request.get('link_id'))
         link = StudentClass.get_by_id(link_id)
@@ -128,6 +126,3 @@ class EditClassLink(webapp.RequestHandler):
         else:
             class_ = link.class_
             doRender(self,'class/editLink.html',{'link_form':form, 'class':class_, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
-
-
-
