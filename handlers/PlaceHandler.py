@@ -51,7 +51,17 @@ class ViewPlace(webapp.RequestHandler):
         place = Place.get_by_id(id)
         form = PlaceForm(instance=place)
         assocs = place.studentplace_set
-        doRender(self,'place/view.html',{'form':form,'place':place,'assocs':assocs,'id':id})
+
+	self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+        sc = StudentPlace.all().filter("student = ", student)
+	sc = sc.filter("place = ", place)
+	sc = sc.fetch(1) 
+	if sc :
+              sc = sc[0]        
+
+        doRender(self,'place/view.html',{'form':form,'place':place,'assocs':assocs,'id':id, 'ratedThis' : sc})
 
     def post(self):
 

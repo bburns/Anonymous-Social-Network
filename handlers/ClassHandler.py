@@ -77,7 +77,17 @@ class ViewClass(webapp.RequestHandler):
         class_ = Class.get_by_id(class_id)
         link_form = StudentClassForm()
         links = class_.studentclass_set
-        doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'links':links,'id':class_id})
+	
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+        sc = StudentClass.all().filter("student = ", student)
+	sc = sc.filter("class_ = ", class_)
+	sc = sc.fetch(1) 
+	if sc :
+              sc = sc[0]        
+        doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'links':links,'id':class_id, 'ratedThis' : sc})
+    
 
     def post(self):
 

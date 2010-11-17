@@ -41,7 +41,11 @@
 </table>
 
 {% if username %}
-
+{% if ratedThis %}
+           <strong>You have already rated this paper.</strong>
+           <br><small><strong>My Rating : </strong>{{ ratedThis.rating }}</small>
+           <br><small><strong>My Comment : </strong><br>{{ ratedThis.comment }}</small>
+       {% else %}
 <div class="rating">
 
 <h3>Add your rating and comments for this paper</h3>
@@ -104,7 +108,7 @@
   <a href="/book/edit?id={{ book.key.id }}">Edit</a>
   <a href="/book/delete?id={{ book.key.id }}">Delete</a>
 -->
-
+{% endif %}
 {% endif %}
         
 {% endblock %}

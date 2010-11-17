@@ -17,7 +17,16 @@ class ViewInternship(webapp.RequestHandler):
         internship = Internship.get_by_id(id)
         form = InternshipForm(instance=internship)
         assocs = internship.studentinternship_set
-        doRender(self,'internship/view.html',{'form':form,'internship':internship,'assocs':assocs,'id':id})
+
+	self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+        sc = StudentInternship.all().filter("student = ", student)
+	sc = sc.filter("internship = ", internship)
+	sc = sc.fetch(1) 
+	if sc :
+              sc = sc[0]        
+        doRender(self,'internship/view.html',{'form':form,'internship':internship,'assocs':assocs,'id':id, 'ratedThis' : sc})
 
     def post(self):
 

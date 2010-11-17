@@ -64,7 +64,17 @@ class ViewPaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         form = PaperForm(instance=paper)
         assocs = paper.studentpaper_set
-        doRender(self,'paper/view.html',{'form':form,'paper':paper,'assocs':assocs,'id':id})
+
+	self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+        sc = StudentPaper.all().filter("student = ", student)
+	sc = sc.filter("paper = ", paper)
+	sc = sc.fetch(1) 
+	if sc :
+              sc = sc[0]        
+
+        doRender(self,'paper/view.html',{'form':form,'paper':paper,'assocs':assocs,'id':id, 'ratedThis' : sc})
 
     def post(self):
 

@@ -31,7 +31,11 @@
 </table>
 
 {% if username %}
-
+       {% if ratedThis %}
+           <strong>You have already rated this internship.</strong>
+           <br><small><strong>My Rating : </strong>{{ ratedThis.rating }}</small>
+           <br><small><strong>My Comment : </strong><br>{{ ratedThis.comment }}</small>
+       {% else %}
 <div class="rating">
 
 <h3>Add your rating and comments for this internship</h3>
@@ -93,7 +97,7 @@
   <a href="/internship/edit?id={{ internship.key.id }}">Edit</a>
   <a href="/internship/delete?id={{ internship.key.id }}">Delete</a>
 -->
-
+       {% endif %}
 {% endif %}
         
 {% endblock %}

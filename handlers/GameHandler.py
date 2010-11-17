@@ -48,7 +48,16 @@ class ViewGame(webapp.RequestHandler):
         game = Game.get_by_id(id)
         form = GameForm(instance=game)
         assocs = game.studentgame_set
-        doRender(self,'game/view.html',{'form':form,'game':game,'assocs':assocs,'id':id})
+
+        self.session = Session()
+        student_id = self.session['student_id']
+        student = Student.get_by_id(student_id)
+        sc = StudentGame.all().filter("student = ", student)
+	sc = sc.filter("game = ", game)
+	sc = sc.fetch(1) 
+	if sc :
+              sc = sc[0]        
+        doRender(self,'game/view.html',{'form':form,'game':game,'assocs':assocs,'id':id, 'ratedThis' : sc})
 
     def post(self):
 

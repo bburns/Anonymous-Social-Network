@@ -36,15 +36,21 @@
 </table>
 
 {% if username %}
-<div class="rating">
-  <h3>Add your rating and comments for this class</h3>
-  <form method="post" action="/class/view">
-    <table>
-      {{ link_form.as_table }}
-    </table>
-    <input type="submit" value="Add Rating/Comment"/>
-    <input type="hidden" name="_id" value="{{id}}"/>
-  </form>
-</div>
+      {% if ratedThis %}
+           <strong>You have already rated this class.</strong>
+           <br><small><strong>My Rating : </strong>{{ ratedThis.rating }}</small>
+           <br><small><strong>My Comment : </strong><br>{{ ratedThis.comment }}</small>
+       {% else %}
+          <div class="rating">
+                  <h3>Add your rating and comments for this class</h3>
+                  <form method="post" action="/class/view">
+                  <table>
+                      {{ link_form.as_table }}
+                  </table>
+                  <input type="submit" value="Add Rating/Comment"/>
+                  <input type="hidden" name="_id" value="{{id}}"/>
+                  </form>
+          </div>
+       {% endif %}
 {% endif %}
 {% endblock %}
