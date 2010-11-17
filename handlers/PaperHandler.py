@@ -91,3 +91,32 @@ class ViewPaper(webapp.RequestHandler):
 
         #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/paper/list")
+
+
+
+
+class EditPaperLink(webapp.RequestHandler):
+    def get(self):
+        # get from ?link_id= in url, or hidden form field
+        link_id = int(self.request.get('link_id')) 
+        link = StudentPaper.get_by_id(link_id)
+        link_form = StudentPaperForm(instance=link)
+        paper = link.paper
+        doRender(self,'paper/editLink.html',{'link_form':link_form, 'paper':paper, 'link_id':link_id})
+
+    def post(self):
+        link_id = int(self.request.get('link_id'))
+        link = StudentPaper.get_by_id(link_id)
+        form = StudentPaperForm(data = self.request.POST, instance = link)
+        if form.is_valid(): # this checks values against validation functions
+            try: 
+                link = form.save() # this calls put, which checks for missing values
+                self.redirect("/profile")
+            except db.BadValueError, e:
+                paper = link.paper
+                doRender(self, 'paper/editLink.html', {'link_form':form, 'paper':paper, 'link_id':link_id, 'error': "ERROR: " + e.args[0]})
+        else:
+            paper = link.paper
+            doRender(self,'paper/editLink.html',{'link_form':form, 'paper':paper, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
+
+

@@ -1,0 +1,43 @@
+{% extends "../_base.html" %}
+{% block content %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<a href="/profile">Back to profile</a>
+
+<h2>Edit Rating</h2>
+
+<table>
+  <tbody>
+  <tr><td>Place name: {{ internship.place_name }} </td></tr>
+  <tr><td>Location: {{ internship.location }} </td></tr>
+  <tr><td>Semester: {{ internship.semester }} </td></tr>
+  <tr><td>Average rating: {{ internship.ratingAvg }} out of 100 (from {{ internship.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
+
+
+<div class="rating">
+
+<h3>Edit your rating and comments for this internship</h3>
+
+<form method="post" action="/internship/editLink">
+  <table>
+    {{ link_form.as_table }}
+  </table>
+  <input type="submit" value="Edit Rating/Comment"/>
+  <input type="hidden" name="link_id" value="{{ link_id }}"/>
+</form>
+
+</div>
+
+<!--
+  <a href="/internship/delete?id={{ internship.key.id }}">Delete</a>
+-->
+
+        
+{% endblock %}

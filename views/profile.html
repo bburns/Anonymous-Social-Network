@@ -31,8 +31,10 @@
 		    <th>Course Number</th>
 		    <th>Course Name</th>
 		    <th>Instructor</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Grade</th>
+		    <th>Comment</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -40,8 +42,10 @@
 		    <tr><td><a href="/class/view?id={{sclass.class_.key.id}}">{{sclass.class_.course_num}}</a></td>
 		    <td>{{sclass.class_.course_name}}</td>
 		    <td>{{sclass.class_.instructor}}</td>
-		    <td>{{sclass.comment}}</td>
 		    <td>{{sclass.rating}}</td>
+		    <td>{{sclass.grade}}</td>
+		    <td>{{sclass.comment}}</td>
+            <td><a href="/class/editLink?link_id={{sclass.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -53,6 +57,7 @@
 		    <th>Title</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -60,6 +65,7 @@
 		    <tr><td><a href="/book/view?id={{sbook.book.key.id}}">{{sbook.book.title}}</a></td>
 		    <td>{{sbook.comment}}</td>
 		    <td>{{sbook.rating}}</td>
+            <td><a href="/book/editLink?link_id={{sbook.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -73,6 +79,7 @@
 		    <th>Author</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -82,6 +89,7 @@
 		    <td>{{spaper.paper.author}}</td>
 		    <td>{{spaper.comment}}</td>
 		    <td>{{spaper.rating}}</td>
+            <td><a href="/paper/editLink?link_id={{spaper.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -94,6 +102,7 @@
 		    <th>Location</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -102,6 +111,7 @@
 		    <td>{{sinternship.internship.location}}</td>
 		    <td>{{sinternship.comment}}</td>
 		    <td>{{sinternship.rating}}</td>
+            <td><a href="/internship/editLink?link_id={{sinternship.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -115,6 +125,7 @@
 		    <th>Location</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -125,6 +136,7 @@
 		    <td>{{splace.place.location}}</td>
 		    <td>{{splace.comment}}</td>
 		    <td>{{splace.rating}}</td>
+            <td><a href="/place/editLink?link_id={{splace.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -137,6 +149,7 @@
 		    <th>Title</th>
 		    <th>Comment</th>
 		    <th>Rating</th>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -145,6 +158,7 @@
 		    <td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.title}}</a></td>
 		    <td>{{sgame.comment}}</td>
 		    <td>{{sgame.rating}}</td>
+            <td><a href="/game/editLink?link_id={{sgame.key.id}}">Edit</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>

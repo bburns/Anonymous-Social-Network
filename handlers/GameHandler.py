@@ -93,3 +93,31 @@ class DeleteGame(webapp.RequestHandler):
 
 
 
+
+
+
+class EditGameLink(webapp.RequestHandler):
+    def get(self):
+        # get from ?link_id= in url, or hidden form field
+        link_id = int(self.request.get('link_id')) 
+        link = StudentGame.get_by_id(link_id)
+        link_form = StudentGameForm(instance=link)
+        game = link.game
+        doRender(self,'game/editLink.html',{'link_form':link_form, 'game':game, 'link_id':link_id})
+
+    def post(self):
+        link_id = int(self.request.get('link_id'))
+        link = StudentGame.get_by_id(link_id)
+        form = StudentGameForm(data = self.request.POST, instance = link)
+        if form.is_valid(): # this checks values against validation functions
+            try: 
+                link = form.save() # this calls put, which checks for missing values
+                self.redirect("/profile")
+            except db.BadValueError, e:
+                game = link.game
+                doRender(self, 'game/editLink.html', {'link_form':form, 'game':game, 'link_id':link_id, 'error': "ERROR: " + e.args[0]})
+        else:
+            game = link.game
+            doRender(self,'game/editLink.html',{'link_form':form, 'game':game, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
+
+

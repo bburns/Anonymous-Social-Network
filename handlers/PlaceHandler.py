@@ -93,3 +93,32 @@ class DeletePlace(webapp.RequestHandler):
           student_place.delete()
         place.delete()
         self.redirect("/place/list")
+
+
+
+
+
+class EditPlaceLink(webapp.RequestHandler):
+    def get(self):
+        # get from ?link_id= in url, or hidden form field
+        link_id = int(self.request.get('link_id')) 
+        link = StudentPlace.get_by_id(link_id)
+        link_form = StudentPlaceForm(instance=link)
+        place = link.place
+        doRender(self,'place/editLink.html',{'link_form':link_form, 'place':place, 'link_id':link_id})
+
+    def post(self):
+        link_id = int(self.request.get('link_id'))
+        link = StudentPlace.get_by_id(link_id)
+        form = StudentPlaceForm(data = self.request.POST, instance = link)
+        if form.is_valid(): # this checks values against validation functions
+            try: 
+                link = form.save() # this calls put, which checks for missing values
+                self.redirect("/profile")
+            except db.BadValueError, e:
+                place = link.place
+                doRender(self, 'place/editLink.html', {'link_form':form, 'place':place, 'link_id':link_id, 'error': "ERROR: " + e.args[0]})
+        else:
+            place = link.place
+            doRender(self,'place/editLink.html',{'link_form':form, 'place':place, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
+
