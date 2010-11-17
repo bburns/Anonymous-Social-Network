@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
-from utils.authenticate import authenticate
+from utils.authenticate import *
 from models import *
 
 # Internship
@@ -66,7 +66,7 @@ class EditInternship(webapp.RequestHandler):
         internship = Internship.get_by_id(id)
         doRender(self,'internship/edit.html',{'form':InternshipForm(instance=internship),'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
@@ -84,7 +84,7 @@ class DeleteInternship(webapp.RequestHandler):
         internship = Internship.get_by_id(id)
         doRender(self,'internship/delete.html',{'internship':internship,'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)

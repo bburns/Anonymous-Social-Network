@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
-from utils.authenticate import authenticate
+from utils.authenticate import *
 from models import *
 
 # Place
@@ -36,7 +36,7 @@ class EditPlace(webapp.RequestHandler):
         place = Place.get_by_id(id)
         doRender(self,'place/add.html',{'form':PlaceForm(instance=place),'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         place = Place.get_by_id(id)
@@ -85,7 +85,7 @@ class DeletePlace(webapp.RequestHandler):
         place = Place.get_by_id(id)
         doRender(self,'place/delete.html',{'place':place,'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         place = Place.get_by_id(id)

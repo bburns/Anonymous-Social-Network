@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
-from utils.authenticate import authenticate
+from utils.authenticate import *
 from models import *
 
 class ListBook(webapp.RequestHandler):
@@ -68,7 +68,7 @@ class EditBook(webapp.RequestHandler):
         book = Book.get_by_id(id)
         doRender(self,'book/edit.html',{'form':BookForm(instance=book),'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         self.session = Session()
         id = int(self.request.get('_id'))
@@ -86,7 +86,7 @@ class DeleteBook(webapp.RequestHandler):
         book = Book.get_by_id(id)
         doRender(self,'book/delete.html',{'book':book, 'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         self.session = Session()
         id = int(self.request.get('_id'))

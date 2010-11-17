@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
-from utils.authenticate import authenticate
+from utils.authenticate import *
 from models import *
 
 # Class
@@ -38,7 +38,7 @@ class EditClass(webapp.RequestHandler):
         cl = Class.get_by_id(id)
         doRender(self,'class/add.html',{'form':ClassForm(instance=cl),'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id)
@@ -58,7 +58,7 @@ class DeleteClass(webapp.RequestHandler):
         cl = Class.get_by_id(id)
         doRender(self,'class/delete.html',{'cl':cl,'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         cl = Class.get_by_id(id)

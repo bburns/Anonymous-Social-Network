@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
-from utils.authenticate import authenticate
+from utils.authenticate import *
 from models import *
 
 # Paper
@@ -34,7 +34,7 @@ class EditPaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         doRender(self,'paper/add.html',{'form':PaperForm(instance=paper),'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))  
         paper = Paper.get_by_id(id)
@@ -51,7 +51,7 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         doRender(self,'paper/delete.html',{'paper':paper,'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         paper = Paper.get_by_id(id)

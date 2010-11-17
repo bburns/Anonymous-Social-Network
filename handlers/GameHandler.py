@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
-from utils.authenticate import authenticate
+from utils.authenticate import *
 from models import *
 
 # Game
@@ -33,7 +33,7 @@ class EditGame(webapp.RequestHandler):
         game = Game.get_by_id(id)
         doRender(self,'game/add.html',{'form':GameForm(instance=game),'id':id})
 
-    @authenticate
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         game = Game.get_by_id(id)
@@ -81,6 +81,7 @@ class DeleteGame(webapp.RequestHandler):
         game = Game.get_by_id(id)
         doRender(self,'game/delete.html',{'game':game,'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         game = Game.get_by_id(id)
