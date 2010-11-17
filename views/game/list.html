@@ -30,12 +30,10 @@
     </tr>
   {% endfor %}
 </table>
-{% if username %}
-<p><a href="/game/add">Add a Game</a><p>
-{% endif %}
 <script type="text/javascript">
 $(function() {
-  $("#data").dataTable();
+  $("#data").dataTable({ "sPaginationType" : "full_numbers"});
 });
 </script>
+{% if username %}<p><a class="add_button round" href="/game/add">Add a Game</a><p>{% endif %}
 {% endblock %}
