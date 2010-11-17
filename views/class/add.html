@@ -7,14 +7,14 @@
 </div>
 {% endif %}
 
-<h3>Please complete the following form to add a class.</h3>
+<h3>Please complete the following form to {%if id%}edit{%else%}add{%endif%} a class.</h3>
 
-<form method="post" action="/class/add" >
+<form method="post" action={% if id %}"/class/edit"{%else%}"/class/add"{%endif%} >
   <table>
     {{ class_form.as_table }}
   </table>
   <input type="hidden" name="id" value="{{id}}"/>
-  <input type="submit" value="Add Class"/>
+  <input type="submit" value={% if id %}"Edit Class"{%else%}"Add Class"{%endif%}/>
 </form>
 
 {% endblock %}
