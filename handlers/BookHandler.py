@@ -51,41 +51,45 @@ class ViewBook(webapp.RequestHandler):
         #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/book/list")
 
+
 class AddBook(webapp.RequestHandler):
     def get(self):
-        doRender(self,'book/add.html',{'form':BookForm()})
+        form = BookForm()
+        doRender(self,'book/add.html',{'form':form})
 
     @authenticate
     def post(self):
-        self.session = Session()
-        form = BookForm(data=self.request.POST)
-        if form.is_valid():
-            try :
-                book = form.save()
-                id = book.key().id()
-                self.redirect('/book/view?id=%d' % id)
-            except db.BadValueError, e :
-                doRender(self,'book/add.html',{'form':form, 'error':"ERROR: " + e.args[0]})
+        form = BookForm(self.request.POST)
+        if form.is_valid(): # checks values with validation functions
+            try:
+                book = form.save() # this calls Book.put(), which checks for missing values
+                self.redirect("/book/view?id=%d" % book.key().id())
+            except db.BadValueError, e:
+                doRender(self,'book/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'book/add.html',{'form': form, 'error': 'ERROR: please check the following and try again'})
+            doRender(self,'book/add.html',{'form':form, \
+                'error':'ERROR: Please correct the following errors and try again.'})
 
 class EditBook(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         book = Book.get_by_id(id)
-        doRender(self,'book/edit.html',{'form':BookForm(instance=book),'id':id})
+        doRender(self,'book/add.html',{'form':BookForm(instance=book),'id':id})
 
     @authenticate_admin
     def post(self):
-        self.session = Session()
-        id = int(self.request.get('_id'))
+        id = int(self.request.get('id'))
         book = Book.get_by_id(id)   
         form = BookForm(data=self.request.POST, instance=book)
         if form.is_valid():
-            form.save
-            self.redirect('/book/view?id=%d' % id)
+            try:
+                form.save()
+                self.redirect("/book/list")
+            except db.BadValueError, e:
+                doRender(self, 'book/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'book/edit.html', {'form': form})
+            doRender(self,'book/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+
 
 class DeleteBook(webapp.RequestHandler):
     def get(self):

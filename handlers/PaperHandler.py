@@ -26,7 +26,9 @@ class AddPaper(webapp.RequestHandler):
             except db.BadValueError, e:
                 doRender(self,'paper/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'paper/add.html', {'form':form})
+            doRender(self,'paper/add.html',{'form':form, \
+                'error':'ERROR: Please correct the following errors and try again.'})
+
 
 class EditPaper(webapp.RequestHandler):
     def get(self):
@@ -36,14 +38,18 @@ class EditPaper(webapp.RequestHandler):
 
     @authenticate_admin
     def post(self):
-        id = int(self.request.get('_id'))  
+        id = int(self.request.get('id'))
         paper = Paper.get_by_id(id)
         form = PaperForm(data=self.request.POST, instance=paper)
         if form.is_valid():
-            paper = form.save()
-            self.redirect('/paper/list')
+            try:
+                form.save()
+                self.redirect("/paper/list")
+            except db.BadValueError, e:
+                doRender(self, 'paper/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'paper/add.html', form)
+            doRender(self,'paper/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+
 
 class DeletePaper(webapp.RequestHandler):
     def get(self):

@@ -7,14 +7,14 @@
 </div>
 {% endif %}
 
-<h3>Please complete the following form to add a paper.</h3>
+<h3>Please complete the following form to {%if id%}edit{%else%}add{%endif%} a paper.</h3>
 
 <form method="post" action={% if id %}"/paper/edit"{%else %}"/paper/add"{%endif%} >
   <table>
   {{ form.as_table }}
   </table>
-  <input type="hidden" name="_id" value="{{ id }}"/>
-  <input type="submit" value="Add Paper"/>
+  <input type="hidden" name="id" value="{{ id }}"/>
+  <input type="submit" value="{%if id%}Edit{%else%}Add{%endif%} Paper"/>
 </form>
 
 {% endblock %}

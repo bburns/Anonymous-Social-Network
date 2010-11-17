@@ -9,14 +9,14 @@
 </div>
 {% endif %}
 
-<h2>Please complete the following form to add a book.</h2>
+<h3>Please complete the following form to {%if id%}edit{%else%}add{%endif%} a book.</h3>
 
-<form method="post" action="/book/add">
+<form method="post" action={% if id %}"/book/edit"{%else%}"/book/add"{%endif%} >
   <table>
   {{ form.as_table }}
   </table>
-  <input type="hidden" name="_id" value="{{ id }}"/>
-  <input type="submit" value="Add Book"/>
+  <input type="hidden" name="id" value="{{ id }}"/>
+  <input type="submit" value={% if id %}"Edit Book"{%else%}"Add Book"{%endif%}/>
 </form>
 
 {% endblock %}
