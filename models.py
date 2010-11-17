@@ -154,7 +154,6 @@ class Class(db.Model):
     # store aggregate info here, so don't have to do expensive joins to get it.
     # updated in StudentClass.put method.
     ratingAvg = db.IntegerProperty() # 0 to 100
-    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     gradeAvg = db.StringProperty()
     refCount = db.IntegerProperty()
     
@@ -390,7 +389,6 @@ class StudentClass(db.Model):
         # if we've deleted all ratings, just store 0. 
         ratings = [int(link.rating) for link in links]
         nratings = len(ratings)
-        #ratingAvg = '' if nratings==0 else sum(ratings) / nratings
         ratingAvg = None if nratings==0 else sum(ratings) / nratings
         logging.info(ratings)
         logging.info(ratingAvg)
@@ -426,7 +424,6 @@ class Book(db.Model):
     author = db.StringProperty()
     isbn = db.StringProperty(validator=validate_isbn)
     ratingAvg = db.IntegerProperty() # 0 to 100
-    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()    
     edit_time = db.DateTimeProperty(auto_now=True)
 
@@ -521,7 +518,6 @@ class StudentBook(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        #ratingAvg = '' if n==0 else sum(ratings) / n
         ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
@@ -545,7 +541,6 @@ class Paper(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     ratingAvg = db.IntegerProperty() # 0 to 100
-    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
@@ -641,7 +636,6 @@ class StudentPaper(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        #ratingAvg = '' if n==0 else sum(ratings) / n
         ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
@@ -662,7 +656,6 @@ class Internship(db.Model):
     location = db.StringProperty()
     semester = db.StringProperty(validator=validate_semester)
     ratingAvg = db.IntegerProperty() # 0 to 100
-    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
@@ -741,7 +734,6 @@ class StudentInternship(db.Model):
         links = internship.studentinternship_set
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        #ratingAvg = '' if n==0 else sum(ratings) / n
         ratingAvg = None if n==0 else sum(ratings) / n
         internship.ratingAvg = ratingAvg
         internship.refCount = n
@@ -762,7 +754,6 @@ class Place(db.Model):
     location = db.StringProperty()
     semester = db.StringProperty(validator=validate_semester)
     ratingAvg = db.IntegerProperty() # 0 to 100
-    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
@@ -871,7 +862,6 @@ class StudentPlace(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        #ratingAvg = '' if n==0 else sum(ratings) / n
         ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
@@ -888,10 +878,9 @@ class StudentPlaceForm(djangoforms.ModelForm):
 
 
 class Game(db.Model):
-    os = db.StringProperty()
     title = db.StringProperty()
+    os = db.StringProperty()
     ratingAvg = db.IntegerProperty() # 0 to 100
-    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
@@ -975,7 +964,6 @@ class StudentGame(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        #ratingAvg = '' if n==0 else sum(ratings) / n
         ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book

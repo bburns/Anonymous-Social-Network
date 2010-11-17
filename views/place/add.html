@@ -7,13 +7,13 @@
 </div>
 {% endif %}
 
-<h3>Please complete the following form to add a place.</h3>
+<h3>Please complete the following form to {%if id%}edit{%else%}add{%endif%} a place.</h3>
 <form method="post" action={% if id %}"/place/edit"{%else %}"/place/add"{%endif%} >
   <table>
     {{ form.as_table }}
   </table>
-  <input type="hidden" name="_id" value="{{ id }}"/>
-  <input type="submit" value="Add Place"/>
+  <input type="hidden" name="id" value="{{ id }}"/>
+  <input type="submit" value="{%if id%}Edit{%else%}Add{%endif%} Place"/>
 </form>
 
 {% endblock %}

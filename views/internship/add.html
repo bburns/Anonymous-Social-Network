@@ -9,14 +9,14 @@
 </div>
 {% endif %}
 
-<h2>Please complete the following form to add an internship.</h2>
+<h2>Please complete the following form to {%if id%}edit{%else%}add{%endif%} an internship.</h2>
 
-<form method="post" action="/internship/add" >
+<form method="post" action={%if id%}"/internship/edit"{%else%}"/internship/add"{%endif%} >
   <table>
   {{ form.as_table }}
   </table>
-  <input type="hidden" name="_id" value="{{ id }}"/>
-  <input type="submit" value="Add Internship"/>
+  <input type="hidden" name="id" value="{{ id }}"/>
+  <input type="submit" value="{%if id%}Edit{%else%}Add{%endif%} Internship"/>
 </form>
 
 {% endblock %}

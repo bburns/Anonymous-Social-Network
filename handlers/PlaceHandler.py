@@ -36,14 +36,18 @@ class EditPlace(webapp.RequestHandler):
         doRender(self,'place/add.html',{'form':PlaceForm(instance=place),'id':id})
 
     def post(self):
-        id = int(self.request.get('_id'))
+        id = int(self.request.get('id'))
         place = Place.get_by_id(id)
         form = PlaceForm(data=self.request.POST, instance=place)
         if form.is_valid():
-            entity = form.save()  
-            self.redirect('/place/list')
+            try:
+                form.save()
+                self.redirect("/place/list")
+            except db.BadValueError, e:
+                doRender(self, 'place/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'place/add.html', form)
+            doRender(self,'place/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+
 
 class ViewPlace(webapp.RequestHandler):
     def get(self):

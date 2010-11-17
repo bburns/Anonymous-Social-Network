@@ -24,7 +24,29 @@ class AddGame(webapp.RequestHandler):
 	    except db.BadValueError, e:
 		doRender(self,'game/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'game/add.html', form)
+            doRender(self,'game/add.html',{'form':form, \
+                'error':'ERROR: Please correct the following errors and try again.'})
+
+class EditBook(webapp.RequestHandler):
+    def get(self):
+        id = int(self.request.get('id')) # get id from "?id=" in url
+        book = Book.get_by_id(id)
+        doRender(self,'book/add.html',{'form':BookForm(instance=book),'id':id})
+
+    def post(self):
+        id = int(self.request.get('id'))
+        book = Book.get_by_id(id)   
+        form = BookForm(data=self.request.POST, instance=book)
+        if form.is_valid():
+            try:
+                form.save()
+                self.redirect("/book/list")
+            except db.BadValueError, e:
+                doRender(self, 'book/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
+        else:
+            doRender(self,'book/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+
+
 
 class EditGame(webapp.RequestHandler):
     def get(self):
@@ -33,14 +55,19 @@ class EditGame(webapp.RequestHandler):
         doRender(self,'game/add.html',{'form':GameForm(instance=game),'id':id})
 
     def post(self):
-        id = int(self.request.get('_id'))
+        id = int(self.request.get('id'))
         game = Game.get_by_id(id)
         form = GameForm(data=self.request.POST, instance=game)
         if form.is_valid():
-            entity = form.save()
-            self.redirect('/game/list')
+            try:
+                form.save()
+                self.redirect("/game/list")
+            except db.BadValueError, e:
+                doRender(self, 'game/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'game/add.html', form)
+            doRender(self,'game/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+
+
 
 class ViewGame(webapp.RequestHandler):
     def get(self):

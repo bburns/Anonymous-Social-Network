@@ -57,24 +57,29 @@ class AddInternship(webapp.RequestHandler):
             except db.BadValueError, e :
                 doRender(self,'internship/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'internship/add.html',{'form':form})
+            doRender(self,'internship/add.html',{'form':form, \
+                'error':'ERROR: Please correct the following errors and try again.'})
+
 
 class EditInternship(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id')) # get id from "?id=" in url
         internship = Internship.get_by_id(id)
-        doRender(self,'internship/edit.html',{'form':InternshipForm(instance=internship),'id':id})
+        doRender(self,'internship/add.html',{'form':InternshipForm(instance=internship),'id':id})
 
     def post(self):
-        id = int(self.request.get('_id'))
+        id = int(self.request.get('id'))
         internship = Internship.get_by_id(id)
         form = InternshipForm(data=self.request.POST, instance=internship)
         if form.is_valid():
-            form.save()
-            #self.redirect('/internship/list')
-            self.redirect('/internship/view?id=%d' % id)
+            try:
+                form.save()
+                self.redirect("/internship/list")
+            except db.BadValueError, e:
+                doRender(self, 'internship/add.html', {'form':form, 'id':id, 'error': "ERROR: " + e.args[0]})
         else:
-            doRender(self,'internship/edit.html', form)
+            doRender(self,'internship/add.html',{'form':form, 'id':id, 'error':'ERROR: Please correct the following errors and try again.'})
+
 
 class DeleteInternship(webapp.RequestHandler):
     def get(self):  
