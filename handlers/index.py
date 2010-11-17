@@ -26,6 +26,7 @@ from handlers.PlaceHandler import *
 from handlers.InternshipHandler import *
 from handlers.GameHandler import *
 from handlers.StudentHandler import *
+from handlers.LinkHandler import *
 
 from google.appengine.ext.db import djangoforms
 
@@ -314,6 +315,9 @@ _URLS = (
      ('/game/editLink', EditGameLink),
      ('/game/delete', DeleteGame),
      ('/game/view', ViewGame),
+
+     ('/link/delete', DeleteLink),
+
      )
 
 def main():
