@@ -35,6 +35,7 @@
 		    <th>Grade</th>
 		    <th>Comment</th>
             <th/>
+            <th/>
 		  </thead>
 		  <tbody>
 
@@ -46,6 +47,7 @@
 		    <td>{{sclass.grade}}</td>
 		    <td>{{sclass.comment}}</td>
             <td><a href="/class/editLink?link_id={{sclass.key.id}}">Edit</a></td>
+            <td><a href="/link/delete?typename=StudentClass&link_id={{sclass.key.id}}">Delete</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -55,17 +57,19 @@
 		<table>
 		  <thead>
 		    <th>Title</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Comment</th>
+            <th/>
             <th/>
 		  </thead>
 		  <tbody>
 
 		  {%for sbook in sbooks%}
 		    <tr><td><a href="/book/view?id={{sbook.book.key.id}}">{{sbook.book.title}}</a></td>
-		    <td>{{sbook.comment}}</td>
 		    <td>{{sbook.rating}}</td>
+		    <td>{{sbook.comment}}</td>
             <td><a href="/book/editLink?link_id={{sbook.key.id}}">Edit</a></td>
+            <td><a href="/link/delete?typename=StudentBook&link_id={{sbook.key.id}}">Delete</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -77,8 +81,9 @@
 		    <th>Paper Type</th>
 		    <th>Title</th>
 		    <th>Author</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Comment</th>
+            <th/>
             <th/>
 		  </thead>
 		  <tbody>
@@ -87,9 +92,10 @@
 		    <tr><td>{{spaper.paper.paper_category}}</td>
 		    <td><a href="/paper/view?id={{spaper.paper.key.id}}">{{spaper.paper.title}}</a></td>
 		    <td>{{spaper.paper.author}}</td>
-		    <td>{{spaper.comment}}</td>
 		    <td>{{spaper.rating}}</td>
+		    <td>{{spaper.comment}}</td>
             <td><a href="/paper/editLink?link_id={{spaper.key.id}}">Edit</a></td>
+            <td><a href="/link/delete?typename=StudentPaper&link_id={{spaper.key.id}}">Delete</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -100,8 +106,9 @@
 		  <thead>
 		    <th>Place Name</th>
 		    <th>Location</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Comment</th>
+            <th/>
             <th/>
 		  </thead>
 		  <tbody>
@@ -109,9 +116,10 @@
 		  {%for sinternship in sinternships%}
 		    <tr><td><a href="/internship/view?id={{sinternship.internship.key.id}}">{{sinternship.internship.place_name}}</a></td>
 		    <td>{{sinternship.internship.location}}</td>
-		    <td>{{sinternship.comment}}</td>
 		    <td>{{sinternship.rating}}</td>
+		    <td>{{sinternship.comment}}</td>
             <td><a href="/internship/editLink?link_id={{sinternship.key.id}}">Edit</a></td>
+            <td><a href="/link/delete?typename=StudentInternship&link_id={{sinternship.key.id}}">Delete</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -123,8 +131,9 @@
 		    <th>Place Type</th>
 		    <th>Place Name</th>
 		    <th>Location</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Comment</th>
+            <th/>
             <th/>
 		  </thead>
 		  <tbody>
@@ -137,6 +146,7 @@
 		    <td>{{splace.comment}}</td>
 		    <td>{{splace.rating}}</td>
             <td><a href="/place/editLink?link_id={{splace.key.id}}">Edit</a></td>
+            <td><a href="/link/delete?typename=StudentPlace&link_id={{splace.key.id}}">Delete</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
@@ -147,8 +157,9 @@
 	<thead>
 		    <th>Operating System</th>
 		    <th>Title</th>
-		    <th>Comment</th>
 		    <th>Rating</th>
+		    <th>Comment</th>
+            <th/>
             <th/>
 		  </thead>
 		  <tbody>
@@ -156,9 +167,10 @@
 		  {%for sgame in sgames%}
 		    <tr><td>{{sgame.game.os}}</a></td>
 		    <td><a href="/game/view?id={{sgame.game.key.id}}">{{sgame.game.title}}</a></td>
-		    <td>{{sgame.comment}}</td>
 		    <td>{{sgame.rating}}</td>
+		    <td>{{sgame.comment}}</td>
             <td><a href="/game/editLink?link_id={{sgame.key.id}}">Edit</a></td>
+            <td><a href="/link/delete?typename=StudentGame&link_id={{sgame.key.id}}">Delete</a></td>
 		    </tr>
 		  {%endfor%}
 		</table>
