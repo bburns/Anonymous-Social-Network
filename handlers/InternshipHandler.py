@@ -1,7 +1,7 @@
-import os
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
+from utils.authenticate import *
 from models import *
 
 # Internship
@@ -18,9 +18,9 @@ class ViewInternship(webapp.RequestHandler):
         form = InternshipForm(instance=internship)
         assocs = internship.studentinternship_set
         doRender(self,'internship/view.html',{'form':form,'internship':internship,'assocs':assocs,'id':id})
-
+        
+    @authenticate
     def post(self):
-
         self.session = Session()
         student_id = self.session['student_id']
         student = Student.get_by_id(student_id)
@@ -47,6 +47,7 @@ class AddInternship(webapp.RequestHandler):
     def get(self):
         doRender(self,'internship/add.html',{'form':InternshipForm()})
 
+    @authenticate
     def post(self):
         form = InternshipForm(data=self.request.POST)
         if form.is_valid():
@@ -65,6 +66,7 @@ class EditInternship(webapp.RequestHandler):
         internship = Internship.get_by_id(id)
         doRender(self,'internship/edit.html',{'form':InternshipForm(instance=internship),'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
@@ -82,6 +84,7 @@ class DeleteInternship(webapp.RequestHandler):
         internship = Internship.get_by_id(id)
         doRender(self,'internship/delete.html',{'internship':internship,'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         internship = Internship.get_by_id(id)
@@ -90,10 +93,6 @@ class DeleteInternship(webapp.RequestHandler):
           student_internship.delete()
         internship.delete()
         self.redirect("/internship/list")
-
-
-
-
 
 class EditInternshipLink(webapp.RequestHandler):
     def get(self):
@@ -104,6 +103,7 @@ class EditInternshipLink(webapp.RequestHandler):
         internship = link.internship
         doRender(self,'internship/editLink.html',{'link_form':link_form, 'internship':internship, 'link_id':link_id})
 
+    @authenticate
     def post(self):
         link_id = int(self.request.get('link_id'))
         link = StudentInternship.get_by_id(link_id)

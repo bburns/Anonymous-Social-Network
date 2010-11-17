@@ -2,6 +2,7 @@ import os
 from google.appengine.ext import webapp
 from utils.doRender import doRender
 from utils.sessions import Session
+from utils.authenticate import *
 from models import *
 
 class StudentProfile(webapp.RequestHandler):
@@ -64,6 +65,7 @@ class DeleteStudent(webapp.RequestHandler):
         student = Student.get_by_id(id)
         doRender(self,'student/delete.html',{'student':student, 'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         student = Student.get_by_id(id)

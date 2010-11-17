@@ -1,7 +1,7 @@
-import os
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
+from utils.authenticate import *
 from models import *
 
 # Paper
@@ -15,6 +15,7 @@ class AddPaper(webapp.RequestHandler):
     def get(self):
         doRender(self,'paper/add.html',{'form':PaperForm()})
 
+    @authenticate
     def post(self):
         form = PaperForm(data=self.request.POST)
         if form.is_valid():
@@ -33,6 +34,7 @@ class EditPaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         doRender(self,'paper/add.html',{'form':PaperForm(instance=paper),'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))  
         paper = Paper.get_by_id(id)
@@ -49,6 +51,7 @@ class DeletePaper(webapp.RequestHandler):
         paper = Paper.get_by_id(id)
         doRender(self,'paper/delete.html',{'paper':paper,'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         paper = Paper.get_by_id(id)
@@ -66,9 +69,8 @@ class ViewPaper(webapp.RequestHandler):
         assocs = paper.studentpaper_set
         doRender(self,'paper/view.html',{'form':form,'paper':paper,'assocs':assocs,'id':id})
 
+    @authenticate
     def post(self):
-
-        #print self.request
         self.session = Session()
         student_id = self.session['student_id']
         student = Student.get_by_id(student_id)
@@ -80,8 +82,6 @@ class ViewPaper(webapp.RequestHandler):
         comment = self.request.get('comment')
 
         #print student, book, rating, comment
-        
-        # add the assocation object
         assoc = StudentPaper()
         assoc.student = student
         assoc.paper = paper
@@ -89,11 +89,7 @@ class ViewPaper(webapp.RequestHandler):
         assoc.comment = comment
         assoc.put() # this will update the average rating, etc
 
-        #self.redirect("/book/view?id=%d" % book_id)
         self.redirect("/paper/list")
-
-
-
 
 class EditPaperLink(webapp.RequestHandler):
     def get(self):
@@ -104,6 +100,7 @@ class EditPaperLink(webapp.RequestHandler):
         paper = link.paper
         doRender(self,'paper/editLink.html',{'link_form':link_form, 'paper':paper, 'link_id':link_id})
 
+    @authenticate
     def post(self):
         link_id = int(self.request.get('link_id'))
         link = StudentPaper.get_by_id(link_id)

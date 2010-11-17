@@ -1,7 +1,7 @@
-import os
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
+from utils.authenticate import *
 from models import *
 
 # Game
@@ -15,14 +15,15 @@ class AddGame(webapp.RequestHandler):
     def get(self):
         doRender(self,'game/add.html',{'form':GameForm()})
 
+    @authenticate
     def post(self):
         form = GameForm(data=self.request.POST)
         if form.is_valid():
-	    try :
-            	game = form.save()
-            	self.redirect('/game/view?id=%d' % game.key().id())
-	    except db.BadValueError, e:
-		doRender(self,'game/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
+            try :
+                game = form.save()
+                self.redirect('/game/view?id=%d' % game.key().id())
+            except db.BadValueError, e:
+                doRender(self,'game/add.html',{'form':form, 'error': "ERROR: " + e.args[0]})
         else:
             doRender(self,'game/add.html', form)
 
@@ -32,6 +33,7 @@ class EditGame(webapp.RequestHandler):
         game = Game.get_by_id(id)
         doRender(self,'game/add.html',{'form':GameForm(instance=game),'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         game = Game.get_by_id(id)
@@ -50,9 +52,8 @@ class ViewGame(webapp.RequestHandler):
         assocs = game.studentgame_set
         doRender(self,'game/view.html',{'form':form,'game':game,'assocs':assocs,'id':id})
 
+    @authenticate
     def post(self):
-
-        #print self.request
         self.session = Session()
         student_id = self.session['student_id']
         student = Student.get_by_id(student_id)
@@ -63,8 +64,6 @@ class ViewGame(webapp.RequestHandler):
         rating = self.request.get('rating') # 0-100
         comment = self.request.get('comment')
 
-        #print student, place, rating, comment
-        
         # add the assocation object
         assoc = StudentGame()
         assoc.student = student
@@ -82,6 +81,7 @@ class DeleteGame(webapp.RequestHandler):
         game = Game.get_by_id(id)
         doRender(self,'game/delete.html',{'game':game,'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         game = Game.get_by_id(id)
@@ -90,11 +90,6 @@ class DeleteGame(webapp.RequestHandler):
             student_game.delete()
         game.delete()
         self.redirect("/game/list")
-
-
-
-
-
 
 class EditGameLink(webapp.RequestHandler):
     def get(self):
@@ -105,6 +100,7 @@ class EditGameLink(webapp.RequestHandler):
         game = link.game
         doRender(self,'game/editLink.html',{'link_form':link_form, 'game':game, 'link_id':link_id})
 
+    @authenticate
     def post(self):
         link_id = int(self.request.get('link_id'))
         link = StudentGame.get_by_id(link_id)
@@ -119,5 +115,3 @@ class EditGameLink(webapp.RequestHandler):
         else:
             game = link.game
             doRender(self,'game/editLink.html',{'link_form':form, 'game':game, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
-
-

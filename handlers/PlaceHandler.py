@@ -1,7 +1,7 @@
-import os
 from google.appengine.ext import webapp
 from utils.sessions import Session
 from utils.doRender import doRender
+from utils.authenticate import *
 from models import *
 
 # Place
@@ -15,6 +15,7 @@ class AddPlace(webapp.RequestHandler):
     def get(self):
         doRender(self,'place/add.html',{'form':PlaceForm()})
 
+    @authenticate
     def post(self):
         place = Place(place_type=self.request.get("id_place_type"))
         form = PlaceForm(data=self.request.POST,instance=place)
@@ -35,6 +36,7 @@ class EditPlace(webapp.RequestHandler):
         place = Place.get_by_id(id)
         doRender(self,'place/add.html',{'form':PlaceForm(instance=place),'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         place = Place.get_by_id(id)
@@ -53,9 +55,8 @@ class ViewPlace(webapp.RequestHandler):
         assocs = place.studentplace_set
         doRender(self,'place/view.html',{'form':form,'place':place,'assocs':assocs,'id':id})
 
+    @authenticate
     def post(self):
-
-        #print self.request
         self.session = Session()
         student_id = self.session['student_id']
         student = Student.get_by_id(student_id)
@@ -78,13 +79,13 @@ class ViewPlace(webapp.RequestHandler):
 
         self.redirect("/place/list")
 
-
 class DeletePlace(webapp.RequestHandler):
     def get(self):
         id = int(self.request.get('id'))
         place = Place.get_by_id(id)
         doRender(self,'place/delete.html',{'place':place,'id':id})
 
+    @authenticate_admin
     def post(self):
         id = int(self.request.get('_id'))
         place = Place.get_by_id(id)
@@ -93,10 +94,6 @@ class DeletePlace(webapp.RequestHandler):
           student_place.delete()
         place.delete()
         self.redirect("/place/list")
-
-
-
-
 
 class EditPlaceLink(webapp.RequestHandler):
     def get(self):
@@ -107,6 +104,7 @@ class EditPlaceLink(webapp.RequestHandler):
         place = link.place
         doRender(self,'place/editLink.html',{'link_form':link_form, 'place':place, 'link_id':link_id})
 
+    @authenticate
     def post(self):
         link_id = int(self.request.get('link_id'))
         link = StudentPlace.get_by_id(link_id)
@@ -121,4 +119,3 @@ class EditPlaceLink(webapp.RequestHandler):
         else:
             place = link.place
             doRender(self,'place/editLink.html',{'link_form':form, 'place':place, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
-
