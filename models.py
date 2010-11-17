@@ -73,8 +73,6 @@ def validate_isbn(val):
         if re.match(regex, val)== None:
             raise db.BadValueError("Invalid value entered. Please enter 10 or 13 digit numbers only.")
 
-
-
 class Student(db.Model):
     
     id_ = db.StringProperty()   # id is reserved in python(?)
@@ -84,7 +82,7 @@ class Student(db.Model):
     dateTime = db.DateTimeProperty(auto_now=True)
 
     def setLastLogin(self, string) :
-	self.lastLogin = string
+	      self.lastLogin = string
 
     @staticmethod
     def get_by_username(id_):
@@ -154,6 +152,7 @@ class Class(db.Model):
     # store aggregate info here, so don't have to do expensive joins to get it.
     # updated in StudentClass.put method.
     ratingAvg = db.IntegerProperty() # 0 to 100
+    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     gradeAvg = db.StringProperty()
     refCount = db.IntegerProperty()
     
@@ -355,7 +354,23 @@ class StudentClass(db.Model):
         #   raise db.BadValueError("Semester is a required field.")
         # call superclass
         db.Model.put(self) 
-        
+
+        # update the average rating and grade
+        self.getAvg()
+
+
+    def delete(self):
+        "Override delete so we can update the average rating and grade"
+        db.Model.delete(self) # call superclass
+        self.getAvg() # update averages
+
+
+    def getAvg(self):
+        """
+        Calculate the average rating and grade for the associated class.
+        Called on put and delete.
+        """
+
         # get all the refs to this class - links is a list of assoc objects, 
         # each with a rating and comment and grade. 
         c = self.class_
@@ -366,9 +381,11 @@ class StudentClass(db.Model):
         #. get rid of int when convert from string
         #. also could do scaling here - eg convert to 0-5? 
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
+        # if we've deleted all ratings, just store 0. 
         ratings = [int(link.rating) for link in links]
         nratings = len(ratings)
-        ratingAvg = sum(ratings) / nratings
+        #ratingAvg = '' if nratings==0 else sum(ratings) / nratings
+        ratingAvg = None if nratings==0 else sum(ratings) / nratings
         logging.info(ratings)
         logging.info(ratingAvg)
         
@@ -402,7 +419,8 @@ class Book(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     isbn = db.StringProperty(validator=validate_isbn)
-    ratingAvg = db.IntegerProperty(validator=validate_rating) # 0 to 100
+    ratingAvg = db.IntegerProperty() # 0 to 100
+    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()    
     edit_time = db.DateTimeProperty(auto_now=True)
 
@@ -470,6 +488,21 @@ class StudentBook(db.Model):
         
         # call superclass
         db.Model.put(self) 
+
+        self.getAvg()
+
+
+    def delete(self):
+        "Override delete so we can update the average rating"
+        db.Model.delete(self) # call superclass
+        self.getAvg() # update averages
+
+
+    def getAvg(self):
+        """
+        Calculate the average rating for the associated book.
+        Called on put and delete.
+        """
         
         # get all the refs to this book - links is a list of assoc objects, 
         # each with a rating and comment. 
@@ -482,7 +515,8 @@ class StudentBook(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        ratingAvg = sum(ratings) / n
+        #ratingAvg = '' if n==0 else sum(ratings) / n
+        ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
         book.ratingAvg = ratingAvg
@@ -505,6 +539,7 @@ class Paper(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     ratingAvg = db.IntegerProperty() # 0 to 100
+    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
@@ -573,6 +608,21 @@ class StudentPaper(db.Model):
         
         # call superclass
         db.Model.put(self) 
+
+        self.getAvg()
+
+
+    def delete(self):
+        "Override delete so we can update the average rating"
+        db.Model.delete(self) # call superclass
+        self.getAvg() # update averages
+
+
+    def getAvg(self):
+        """
+        Calculate the average rating for the associated paper.
+        Called on put and delete.
+        """
         
         # get all the refs to this paper - links is a list of assoc objects, 
         # each with a rating and comment. 
@@ -585,7 +635,8 @@ class StudentPaper(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        ratingAvg = sum(ratings) / n
+        #ratingAvg = '' if n==0 else sum(ratings) / n
+        ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
         paper.ratingAvg = ratingAvg
@@ -605,6 +656,7 @@ class Internship(db.Model):
     location = db.StringProperty()
     semester = db.StringProperty(validator=validate_semester)
     ratingAvg = db.IntegerProperty() # 0 to 100
+    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
     
@@ -664,14 +716,31 @@ class StudentInternship(db.Model):
             raise db.BadValueError("Rating is a required field.")
         
         db.Model.put(self) # call superclass
+        self.getAvg()
+
+
+    def delete(self):
+        "Override delete so we can update the average rating"
+        db.Model.delete(self) # call superclass
+        self.getAvg() # update averages
+
+
+    def getAvg(self):
+        """
+        Calculate the average rating for the associated internship.
+        Called on put and delete.
+        """
+
         internship = self.internship
         links = internship.studentinternship_set
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        ratingAvg = sum(ratings) / n
+        #ratingAvg = '' if n==0 else sum(ratings) / n
+        ratingAvg = None if n==0 else sum(ratings) / n
         internship.ratingAvg = ratingAvg
         internship.refCount = n
         internship.put()
+
 
 class StudentInternshipForm(djangoforms.ModelForm):
     class Meta:
@@ -687,6 +756,7 @@ class Place(db.Model):
     location = db.StringProperty()
     semester = db.StringProperty(validator=validate_semester)
     ratingAvg = db.IntegerProperty() # 0 to 100
+    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
@@ -769,6 +839,21 @@ class StudentPlace(db.Model):
         # call superclass
         db.Model.put(self) 
         
+        self.getAvg()
+
+
+    def delete(self):
+        "Override delete so we can update the average rating"
+        db.Model.delete(self) # call superclass
+        self.getAvg() # update averages
+
+
+    def getAvg(self):
+        """
+        Calculate the average rating for the associated place.
+        Called on put and delete.
+        """
+        
         # get all the refs to this item - links is a list of assoc objects, 
         # each with a rating and comment. 
         place = self.place
@@ -780,7 +865,8 @@ class StudentPlace(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        ratingAvg = sum(ratings) / n
+        #ratingAvg = '' if n==0 else sum(ratings) / n
+        ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
         place.ratingAvg = ratingAvg
@@ -799,6 +885,7 @@ class Game(db.Model):
     os = db.StringProperty()
     title = db.StringProperty()
     ratingAvg = db.IntegerProperty() # 0 to 100
+    #ratingAvg = db.StringProperty() # 0 to 100 or ''
     refCount = db.IntegerProperty()
     edit_time = db.DateTimeProperty(auto_now=True)
 
@@ -855,6 +942,21 @@ class StudentGame(db.Model):
         
         # call superclass
         db.Model.put(self) 
+
+        self.getAvg()
+
+
+    def delete(self):
+        "Override delete so we can update the average rating"
+        db.Model.delete(self) # call superclass
+        self.getAvg() # update averages
+
+
+    def getAvg(self):
+        """
+        Calculate the average rating for the associated game.
+        Called on put and delete.
+        """       
         
         # get all the refs to this item - links is a list of assoc objects, 
         # each with a rating and comment. 
@@ -867,7 +969,8 @@ class StudentGame(db.Model):
         # but maybe clearer to keep it consistent with the rest of the model - let the ui scale it.
         ratings = [int(link.rating) for link in links]
         n = len(ratings)
-        ratingAvg = sum(ratings) / n
+        #ratingAvg = '' if n==0 else sum(ratings) / n
+        ratingAvg = None if n==0 else sum(ratings) / n
         
         # update the book
         game.ratingAvg = ratingAvg
