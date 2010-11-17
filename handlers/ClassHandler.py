@@ -14,20 +14,10 @@ class ListClass(webapp.RequestHandler):
         
 class AddClass(webapp.RequestHandler):
     def get(self):
-        #self.session = Session()
-        #student_id = self.session['student_id']
         form = ClassForm()
-        #doRender(self,'class/add.html',{'class_form':form, 'student_id':student_id})
         doRender(self,'class/add.html',{'class_form':form})
-        # values = {}
-        # values['form'] = form
-        # values['student_id'] = student_id
-        # values['atype'] = 'a class'
-        # values['typename'] = 'class'
-        # doRender(self,'item/add.html', values)
 
     def post(self):
-        #student_id = int(self.request.get('student_id'))
         form = ClassForm(self.request.POST)
         if form.is_valid(): # checks values with validation functions
             try:
@@ -40,7 +30,7 @@ class AddClass(webapp.RequestHandler):
         else :
             #doRender(self,'class/add.html',{'form':form, \
             #'student_id':student_id, 'error':'ERROR: Please correct the following errors and try again.'})
-            doRender(self,'class/add.html',{'form':form, \
+            doRender(self,'class/add.html',{'class_form':form, \
             'error':'ERROR: Please correct the following errors and try again.'})
 
 
