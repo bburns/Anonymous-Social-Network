@@ -277,17 +277,20 @@ _URLS = (
      ('/class/add', AddClass),
      ('/class/view', ViewClass),
      ('/class/edit', EditClass),
+     ('/class/editLink', EditClassLink),
      ('/class/delete', DeleteClass),
 
      ('/book/list', ListBook),
      ('/book/view', ViewBook),
      ('/book/add', AddBook),
      ('/book/edit', EditBook),
+     ('/book/editLink', EditBookLink),
      ('/book/delete', DeleteBook),
 
      ('/paper/list', ListPaper),
      ('/paper/add', AddPaper),
      ('/paper/edit', EditPaper),
+     ('/paper/editLink', EditPaperLink),
      ('/paper/delete', DeletePaper),
      ('/paper/view', ViewPaper),
 
@@ -295,17 +298,20 @@ _URLS = (
      ('/internship/view', ViewInternship),
      ('/internship/add', AddInternship),
      ('/internship/edit', EditInternship),
+     ('/internship/editLink', EditInternshipLink),
      ('/internship/delete', DeleteInternship),
 
      ('/place/list', ListPlace),
      ('/place/add', AddPlace),
      ('/place/edit', EditPlace),
+     ('/place/editLink', EditPlaceLink),
      ('/place/delete', DeletePlace),
      ('/place/view', ViewPlace),
 
      ('/game/list', ListGame),
      ('/game/add', AddGame),
      ('/game/edit', EditGame),
+     ('/game/editLink', EditGameLink),
      ('/game/delete', DeleteGame),
      ('/game/view', ViewGame),
      )

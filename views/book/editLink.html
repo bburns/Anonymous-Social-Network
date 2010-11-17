@@ -1,59 +1,31 @@
-<!-- view a class and associated ratings and comments -->
-
 {% extends "../_base.html" %}
 {% block content %}
 
-<a href="/class/list">Back to class listings</a>
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
 
-<h2>View Class</h2>
+<a href="/profile">Back to profile</a>
 
-<!-- no good way to make a form read-only?
-<form>
-<table>
-{{ form.as_table }}
-</table>
-</form>
--->
+<h2>Edit Rating</h2>
 
 <table>
   <tbody>
-  <tr><td>Course number: {{ class.course_num }} </td></tr>
-  <tr><td>Course name: {{ class.course_name }} </td></tr>
-  <tr><td>Instructor: {{ class.instructor }} </td></tr>
-  <tr><td>Average rating: {{ class.ratingAvg }} out of 100 (from {{ class.refCount }} rating(s))</td></tr>
-  <tr><td>Average grade: {{ class.gradeAvg }}</td></tr>
+  <tr><td>Title: {{ book.title }} </td></tr>
+  <tr><td>Author: {{ book.author }} </td></tr>
+  <tr><td>Isbn: {{ book.isbn }} </td></tr>
+  <tr><td>Average rating: {{ book.ratingAvg }} out of 100 (from {{ book.refCount }} rating(s))</td></tr>
   </tbody>
 </table>
 
-
-<table>
-  <thead>
-    <th>Semester</th>
-    <th>Unique</th>
-    <th>Rating</th>
-    <th>Grade</th>
-    <th>Comment</th>
-  </thead>
-  <tbody>
-  {% for link in links %}
-    <tr>
-      <td>{{ link.semester }} </td>
-      <td>{{ link.unique }} </td>
-      <td>{{ link.rating }}</td>
-      <td>{{ link.grade }}</td>
-      <td>{{ link.comment|escape|linebreaks }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
-{% if username %}
 
 <div class="rating">
 
-<h3>Add your rating and comments for this class</h3>
+<h3>Edit your rating and comments for this book</h3>
 
-<form method="post" action="/class/view">
+<form method="post" action="/book/editLink">
   <table>
     {{ link_form.as_table }}
 
@@ -102,17 +74,15 @@
 -->
 
   </table>
-  <input type="submit" value="Add Rating/Comment"/>
-  <input type="hidden" name="_id" value="{{ id }}"/>
+  <input type="submit" value="Edit Rating/Comment"/>
+  <input type="hidden" name="link_id" value="{{ link_id }}"/>
 </form>
 
 </div>
 
 <!--
-  <a href="/book/edit?id={{ book.key.id }}">Edit</a>
   <a href="/book/delete?id={{ book.key.id }}">Delete</a>
 -->
 
-{% endif %}
         
 {% endblock %}

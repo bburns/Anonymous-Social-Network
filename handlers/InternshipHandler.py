@@ -93,3 +93,29 @@ class DeleteInternship(webapp.RequestHandler):
 
 
 
+
+
+class EditInternshipLink(webapp.RequestHandler):
+    def get(self):
+        # get from ?link_id= in url, or hidden form field
+        link_id = int(self.request.get('link_id')) 
+        link = StudentInternship.get_by_id(link_id)
+        link_form = StudentInternshipForm(instance=link)
+        internship = link.internship
+        doRender(self,'internship/editLink.html',{'link_form':link_form, 'internship':internship, 'link_id':link_id})
+
+    def post(self):
+        link_id = int(self.request.get('link_id'))
+        link = StudentInternship.get_by_id(link_id)
+        form = StudentInternshipForm(data = self.request.POST, instance = link)
+        if form.is_valid(): # this checks values against validation functions
+            try: 
+                link = form.save() # this calls put, which checks for missing values
+                self.redirect("/profile")
+            except db.BadValueError, e:
+                internship = link.internship
+                doRender(self, 'internship/editLink.html', {'link_form':form, 'internship':internship, 'link_id':link_id, 'error': "ERROR: " + e.args[0]})
+        else:
+            internship = link.internship
+            doRender(self,'internship/editLink.html',{'link_form':form, 'internship':internship, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
+

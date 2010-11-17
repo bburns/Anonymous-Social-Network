@@ -1,0 +1,42 @@
+{% extends "../_base.html" %}
+{% block content %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<a href="/profile">Back to profile</a>
+
+<h2>Edit Rating</h2>
+
+<table>
+  <tbody>
+  <tr><td>Title: {{ game.title }} </td></tr>
+  <tr><td>OS: {{ game.os }} </td></tr>
+  <tr><td>Average rating: {{ game.ratingAvg }} out of 100 (from {{ game.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
+
+
+<div class="rating">
+
+<h3>Edit your rating and comments for this game</h3>
+
+<form method="post" action="/game/editLink">
+  <table>
+    {{ link_form.as_table }}
+  </table>
+  <input type="submit" value="Edit Rating/Comment"/>
+  <input type="hidden" name="link_id" value="{{ link_id }}"/>
+</form>
+
+</div>
+
+<!--
+  <a href="/game/delete?id={{ game.key.id }}">Delete</a>
+-->
+
+        
+{% endblock %}

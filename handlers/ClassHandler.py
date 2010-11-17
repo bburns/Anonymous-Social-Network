@@ -10,6 +10,7 @@ class ListClass(webapp.RequestHandler):
     def get(self):
         classes = Class.all()
         doRender(self,'class/list.html',{'classes':classes})
+
         
 class AddClass(webapp.RequestHandler):
     def get(self):
@@ -83,7 +84,7 @@ class ViewClass(webapp.RequestHandler):
         class_ = Class.get_by_id(class_id)
         link_form = StudentClassForm()
         links = class_.studentclass_set
-        doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':links,'id':class_id})
+        doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'links':links,'id':class_id})
 
     def post(self):
 
@@ -108,5 +109,32 @@ class ViewClass(webapp.RequestHandler):
         else :
             doRender(self,'class/view.html',{'link_form':link_form,'class':class_,'assocs':assocs,'id':class_id,\
                 'error':'ERROR: Please correct the following errors and try again.'})
+
+
+
+class EditClassLink(webapp.RequestHandler):
+    def get(self):
+        # get from ?link_id= in url, or hidden form field
+        link_id = int(self.request.get('link_id')) 
+        link = StudentClass.get_by_id(link_id)
+        link_form = StudentClassForm(instance=link)
+        class_ = link.class_
+        doRender(self,'class/editLink.html',{'link_form':link_form, 'class':class_, 'link_id':link_id})
+
+    def post(self):
+        link_id = int(self.request.get('link_id'))
+        link = StudentClass.get_by_id(link_id)
+        form = StudentClassForm(data = self.request.POST, instance = link)
+        if form.is_valid(): # this checks values against validation functions
+            try: 
+                link = form.save() # this calls put, which checks for missing values
+                self.redirect("/profile")
+            except db.BadValueError, e:
+                class_ = link.class_
+                doRender(self, 'class/editLink.html', {'link_form':form, 'class':class_, 'link_id':link_id, 'error': "ERROR: " + e.args[0]})
+        else:
+            class_ = link.class_
+            doRender(self,'class/editLink.html',{'link_form':form, 'class':class_, 'link_id':link_id, 'error':'ERROR: Please correct the following errors and try again.'})
+
 
 

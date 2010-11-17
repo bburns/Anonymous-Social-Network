@@ -1,0 +1,43 @@
+{% extends "../_base.html" %}
+{% block content %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<a href="/profile">Back to profile</a>
+
+<h2>Edit Rating</h2>
+
+<table>
+  <tbody>
+  <tr><td>Title: {{ paper.title }} </td></tr>
+  <tr><td>Author: {{ paper.author }} </td></tr>
+  <tr><td>Category: {{ paper.paper_category }} </td></tr>
+  <tr><td>Average rating: {{ paper.ratingAvg }} out of 100 (from {{ paper.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
+
+
+<div class="rating">
+
+<h3>Edit your rating and comments for this paper</h3>
+
+<form method="post" action="/paper/editLink">
+  <table>
+    {{ link_form.as_table }}
+  </table>
+  <input type="submit" value="Edit Rating/Comment"/>
+  <input type="hidden" name="link_id" value="{{ link_id }}"/>
+</form>
+
+</div>
+
+<!--
+  <a href="/paper/delete?id={{ paper.key.id }}">Delete</a>
+-->
+
+        
+{% endblock %}
