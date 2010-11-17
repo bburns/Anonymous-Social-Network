@@ -338,7 +338,7 @@ class StudentClass(db.Model):
     #rating = db.StringProperty(validator=validate_rating, choices=Rating.choices) # bad mojo
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
-    ratedThis = db.BooleanProperty()
+    #ratedThis = db.BooleanProperty()
 
     def put(self):
         """
