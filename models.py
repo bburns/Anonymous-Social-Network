@@ -43,13 +43,13 @@ def validate_rating(val):
    
 def validate_course_num(val):
     if val :    
-        regex = "[A-Z]([A-Z]|\s){0,3}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}"
+        regex = "[A-Z]([A-Z]|\s){0,3}\s?[f|s|w|n]?[0-9]{3}[A-Z]{0,2}$"
         if re.match(regex, val) == None:
             raise db.BadValueError("Invalid value entered. Should look like CS 341, or EE 316.")
 
 def validate_semester(semester):
     if semester :
-        regex = "(Fall|Spring|Summer)\s?[0-9]{4}"
+        regex = "(Fall|Spring|Summer)\s?[0-9]{4}$"
         if re.match(regex, semester) == None:
             raise db.BadValueError("Invalid value entered. Should look like Spring 2009, or Fall 2002.")
     
@@ -338,7 +338,7 @@ class StudentClass(db.Model):
     #rating = db.StringProperty(validator=validate_rating, choices=Rating.choices) # bad mojo
     rating = db.StringProperty(validator=validate_rating)
     comment = db.TextProperty()
-    ratedThis = db.BooleanProperty()
+    #ratedThis = db.BooleanProperty()
 
     def put(self):
         """
