@@ -58,15 +58,17 @@ class ViewPlace(webapp.RequestHandler):
         form = PlaceForm(instance=place)
         assocs = place.studentplace_set
 
-	self.session = Session()
-        student_id = self.session['student_id']
-        student = Student.get_by_id(student_id)
-        sc = StudentPlace.all().filter("student = ", student)
-	sc = sc.filter("place = ", place)
-	sc = sc.fetch(1) 
-	if sc :
-              sc = sc[0]        
-
+        self.session = Session()
+        if not 'student_id' in self.session:
+            sc = None
+        else:
+            student_id = self.session['student_id']
+            student = Student.get_by_id(student_id)
+            sc = StudentPlace.all().filter("student = ", student)
+            sc = sc.filter("place = ", place)
+            sc = sc.fetch(1) 
+            if sc :
+                      sc = sc[0]
         doRender(self,'place/view.html',{'form':form,'place':place,'assocs':assocs,'id':id, 'ratedThis' : sc})
 
     @authenticate

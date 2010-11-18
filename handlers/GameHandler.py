@@ -79,13 +79,16 @@ class ViewGame(webapp.RequestHandler):
         assocs = game.studentgame_set
 
         self.session = Session()
-        student_id = self.session['student_id']
-        student = Student.get_by_id(student_id)
-        sc = StudentGame.all().filter("student = ", student)
-	sc = sc.filter("game = ", game)
-	sc = sc.fetch(1) 
-	if sc :
-              sc = sc[0]        
+        if not 'student_id' in self.session:
+            sc = None
+        else:
+            student_id = self.session['student_id']
+            student = Student.get_by_id(student_id)
+            sc = StudentGame.all().filter("student = ", student)
+            sc = sc.filter("game = ", game)
+            sc = sc.fetch(1) 
+            if sc :
+                      sc = sc[0]        
         doRender(self,'game/view.html',{'form':form,'game':game,'assocs':assocs,'id':id, 'ratedThis' : sc})
 
     @authenticate
