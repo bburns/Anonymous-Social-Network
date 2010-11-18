@@ -255,7 +255,7 @@ class Grade:
     mapAdjust = {'+':0.3, '-':-0.3, '':0.0}
 
     # don't include these grades in the average calculation
-    skipGrades = set(['','P','CR','NC','Q','I','X'])
+    skipGrades = set(['','P','CR','NC','Q','I','X',None])
 
     # choices used in property definition (and hence dropdowns)
     choices = ['','A','A-','B+','B','B-','C+','C','C-','D+','D','D-','F','P','CR','NC','Q','I','X']

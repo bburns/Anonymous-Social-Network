@@ -16,16 +16,18 @@ class ViewBook(webapp.RequestHandler):
         form = BookForm(instance=book)
         assocs = book.studentbook_set
 
-	self.session = Session()
-        student_id = self.session['student_id']
-        student = Student.get_by_id(student_id)
-        sb = StudentBook.all().filter("student = ", student)
-	sb = sb.filter("book = ", book)
-	sb = sb.fetch(1) 
-	if sb :
-              sb = sb[0]        
+        self.session = Session()
+        if not 'student_id' in self.session:
+            sb = None
+        else:
+            student_id = self.session['student_id']
+            student = Student.get_by_id(student_id)
+            sb = StudentBook.all().filter("student = ", student)
+            sb = sb.filter("book = ", book)
+            sb = sb.fetch(1) 
+            if sb :
+                  sb = sb[0]        
         doRender(self,'book/view.html',{'form':form,'book':book,'assocs':assocs,'id':id, 'ratedThis' : sb})
-
 
     @authenticate
     def post(self):
