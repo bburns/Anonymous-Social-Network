@@ -5,8 +5,19 @@
 <h2>Help and Support</h2>
 <p>Well, you're here... so something must have gone wrong.  Right now we are still building the site, and there may be some problems here and there, so please bear with us. </p>
 
+<hr>
+
 <p>To test out the user functionality of the site, login with your userid and password as given in your XML instance. </p>
 <p>To test out the administrator functionality of the site, login with username <b>admin000</b> and password <b>admin</b>. You will also be a student user. </p>
+
+<hr>
+
+<p>Note that in order to test out the import functionality, we do a semi-fuzzy search on existing items, in order to get the aggregate ratings and grades. This is a bit artificial, as if all the data were generated from the site and then exported to XML, we could do exact matching. So in importing games, for instance, if a game with the same title already exists, it will use that, and ignore the operating system value. For classes, it matches on the course number exactly, then checks if the instructor has a partial match, ignoring the course name. </p>
+
+<p>We store Semester and Unique# in the rating object, so that the average rating and grade will be taken for a given course and instructor combination.</p>
+
+<p>For more information, see our Google Code site, with issue tracker, <a href="http://code.google.com/p/cs373-asn2-jkgrimes">here</a>.</p>
+
 
 <!--
 <p>Below is a list of common things that might be going wrong and a quick fix if one exists.</p>
