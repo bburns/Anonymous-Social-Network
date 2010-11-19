@@ -24,6 +24,8 @@ from models import *
 
 class testAuthent (unittest.TestCase) :
 
+
+    """
     def testGetUser(self):
         user = User()
         user.email = 'brian@brian.com'
@@ -32,7 +34,7 @@ class testAuthent (unittest.TestCase) :
         user2 = User.get_by_email('brian@brian.com')
         #self.assert_(user == user2) # fails - why?
         self.assert_(user.email == user2.email)
-
+    """
         
 
 
