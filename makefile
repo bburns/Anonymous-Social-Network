@@ -140,11 +140,10 @@ log:
 
 # zip up files for turnin
 zip:
-	zip -r ASN3.zip ASN3.log test/*.py test/twill index.py models.py utils/*.py html makefile testInConsole.py readme.txt app.yaml docs
-
+	zip -r ASN3.zip ASN3.xml ASN3.xsd ASN3-Report.pdf ASN3-Presentation.pdf
 
 
 # do turnin
 turnin:
-	turnin --submit alexloh cs373pj6 ASN3.zip
-	turnin --list alexloh cs373pj6
+	turnin --submit ilevy cs373pj7 ASN3.zip
+	turnin --list ilevy cs373pj7
