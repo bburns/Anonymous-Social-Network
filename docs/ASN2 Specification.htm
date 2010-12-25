@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="/users/downing/cs373/misc/favicon.ico" type="image/x-icon" />
+    <title>ASN2 | CS373: Software Engineering: Fall 2010</title>
+    <link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/modules/node/node.css?N" />
+<link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/modules/system/defaults.css?N" />
+<link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/modules/system/system.css?N" />
+<link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/modules/system/system-menus.css?N" />
+<link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/modules/user/user.css?N" />
+<link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/themes/garland/style.css?N" />
+<link type="text/css" rel="stylesheet" media="print" href="/users/downing/cs373/themes/garland/print.css?N" />
+        <!--[if lt IE 7]>
+      <link type="text/css" rel="stylesheet" media="all" href="/users/downing/cs373/themes/garland/fix-ie.css" />    <![endif]-->
+  </head>
+  <body class="sidebars">
+
+<!-- Layout -->
+  <div id="header-region" class="clear-block"></div>
+
+    <div id="wrapper">
+    <div id="container" class="clear-block">
+
+      <div id="header">
+        <div id="logo-floater">
+        <h1><a href="/users/downing/cs373/" title="CS373: Software Engineering: Fall 2010"><img src="/users/downing/cs373/themes/garland/logo.png" alt="CS373: Software Engineering: Fall 2010" id="logo" /><span>CS373: Software Engineering: Fall 2010</span></a></h1>        </div>
+
+                  <ul class="links primary-links"><li class="menu-115 first"><a href="/users/downing/cs373/?q=node/1" title="About">About</a></li>
+<li class="menu-116"><a href="/users/downing/cs373/?q=node/2" title="Evaluations">Evaluations</a></li>
+<li class="menu-117"><a href="/users/downing/cs373/?q=node/3" title="Grading">Grading</a></li>
+<li class="menu-118"><a href="/users/downing/cs373/?q=node/4" title="Schedule">Schedule</a></li>
+<li class="menu-166"><a href="/users/downing/cs373/?q=node/6" title="Topics">Topics</a></li>
+<li class="menu-167 last"><a href="/users/downing/cs373/?q=node/7" title="Turnin">Turnin</a></li>
+</ul>                                  
+      </div> <!-- /header -->
+
+              <div id="sidebar-left" class="sidebar">
+                    <div id="block-menu-menu-books" class="clear-block block block-menu">
+
+  <h2>Books</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.amazon.com/gp/product/0201708426/" title="">Extreme Programming</a></li>
+<li class="leaf"><a href="http://www.tomjewett.com/dbdesign/dbdesign.php" title="">Database Design</a></li>
+<li class="leaf"><a href="http://progit.org/book/" title="">Pro Git</a></li>
+<li class="leaf"><a href="http://www.amazon.com/gp/product/0201485672/" title="">Refactoring</a></li>
+<li class="leaf last"><a href="http://www.greenteapress.com/thinkpython/html/" title="">Think Python</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-gaes" class="clear-block block block-menu">
+
+  <h2>GAEs</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://cs373-asn2-nobleteam.appspot.com/" title="">11-01</a></li>
+<li class="leaf"><a href="http://cs373-asn2-awesome.appspot.com/" title="">11-02</a></li>
+<li class="leaf"><a href="http://UTAnonymous.com/" title="">11-03</a></li>
+<li class="leaf"><a href="http://cs373-asn-asmith89.appspot.com/" title="">11-04</a></li>
+<li class="leaf"><a href="http://cs373-asn2-pros.appspot.com/" title="">11-05</a></li>
+<li class="leaf"><a href="http://asn2-bubu.appspot.com/" title="">11-06</a></li>
+<li class="leaf"><a href="http://cs373-asn2-timmy.appspot.com/" title="">01-01</a></li>
+<li class="leaf"><a href="http://cs373-asn2-jkgrimes.appspot.com/" title="">01-02</a></li>
+<li class="leaf"><a href="http://cs373-asn2-a-team.appspot.com/" title="">01-03</a></li>
+<li class="leaf"><a href="http://cs373-asn2-p6.appspot.com/" title="">01-04</a></li>
+<li class="leaf last"><a href="http://cs373-asn2.appspot.com/" title="">01-05</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-lectures" class="clear-block block block-menu">
+
+  <h2>Lectures</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="/users/downing/cs373/?q=node/5" title="History A">History A</a></li>
+<li class="leaf"><a href="/users/downing/cs373/?q=node/10" title="History B">History B</a></li>
+<li class="leaf"><a href="/users/downing/cs373/?q=node/11" title="XP">XP</a></li>
+<li class="leaf last"><a href="/users/downing/cs373/?q=node/14" title="Containers">Containers</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-papers" class="clear-block block block-menu">
+
+  <h2>Papers</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.cs.utexas.edu/users/downing/papers/CollegeAdvice.pdf" title="">College Advice</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/PairProgrammingA.pdf" title="">Pair Programming A</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/PairProgrammingB.pdf" title="">Pair Programming B</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/TeachSoftware.pdf" title="">What Should We Teach</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/SCRUM.pdf" title="">SCRUM</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/ProgrammingLanguages.pdf" title="">Programming Languages</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/UML.pdf" title="">UML</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/RelationalDatabase1.pdf" title="">Relational Database 1</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/RelationalDatabase2.pdf" title="">Relational Database 2</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/RelationalDatabase3.pdf" title="">Relational Database 3</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/users/downing/papers/GenderDifferences.pdf" title="">Gender Differences</a></li>
+<li class="leaf last"><a href="http://www.cs.utexas.edu/users/downing/papers/JoelTest.pdf" title="">Joel Test</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-projects" class="clear-block block block-menu">
+
+  <h2>Projects</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="/users/downing/cs373/?q=node/8" title="Collatz">Collatz (Sun, 5 Sep, 10pm)</a></li>
+<li class="leaf"><a href="/users/downing/cs373/?q=node/9" title="Primes">Primes (Sun, 12 Sep, 10pm)</a></li>
+<li class="leaf"><a href="/users/downing/cs373/?q=node/12" title="Tasks">Tasks (Sun, 26 Sep, 10pm)</a></li>
+<li class="leaf"><a href="/users/downing/cs373/?q=node/13" title="Amort">Amort (Sun, 10 Oct, 10pm)</a></li>
+<li class="leaf"><a href="/users/downing/cs373/?q=node/15" title="ASN1">ASN1 (Sun, 24 Oct, 10pm)</a></li>
+<li class="leaf active-trail"><a href="/users/downing/cs373/?q=node/16" title="ASN2" class="active">ASN2 (Sun, 7 Nov, 10pm)</a></li>
+<li class="leaf last"><a href="/users/downing/cs373/?q=node/17" title="ASN3">ASN3 (Sun, 21 Nov, 10pm)</a></li>
+</ul></div>
+</div>
+        </div>
+      
+      <div id="center"><div id="squeeze"><div class="right-corner"><div class="left-corner">
+          <div class="breadcrumb"><a href="/users/downing/cs373/">Home</a></div>                              <h2>ASN2</h2>                                                  <div class="clear-block">
+            <div id="node-16" class="node">
+
+
+
+  
+  <div class="content clear-block">
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<body>
+<h3>Specification</h3>
+<hr />
+<p><b>ASN</b> is an attempt at an anonymous social network that tracks a student's academic interests and displays the academic interests of others.</p>
+
+<p>There are <b>three</b> types of users:</p>
+<ol>
+<li>administrators</li>
+<li>students</li>
+<li>browsers</li>
+</ol>
+
+<p><b>Administrators</b> can do the following:</p>
+<ul>
+<li>run unit tests</li>
+<li>import/export the data</li>
+<li>remove a user and its data</li>
+<li>reset the system</li>
+</ul>
+
+<p><b>Students</b> can do the following:</p>
+<ul>
+<li>create an account (ID and password randomly generated by the system)</li>
+<li>log in with randomly generated ID and password</li>
+<li>change password</li>
+<li>add/edit/remove classes (unique, course number, course name, semester, instructor, rating, grade)</li>
+<li>add/edit/remove books (isbn, title, author, rating)</li>
+<li>add/edit/remove papers (journal or conference, title, author, rating)</li>
+<li>add/edit/remove internships (company, location, semester, rating)</li>
+<li>add/edit/remove places to study (location, semester, rating)</li>
+<li>add/edit/remove places to live (location, semester, rating)</li>
+<li>add/edit/remove places to eat (location, semester, rating)</li>
+<li>add/edit/remove places to have fun (location, semester, rating)</li>
+<li>add/edit/remove games (os, title, rating)</li>
+</ul>
+
+<p><b>Browsers</b> can see lists of the following and for each, the number of ratings and the average rating:</p>
+<ul>
+<li>courses (average grade)</li>
+<li>books</li>
+<li>papers</li>
+<li>internships</li>
+<li>places to study</li>
+<li>places to live</li>
+<li>places to eat</li>
+<li>places to have fun</li>
+<li>games</li>
+</ul>
+
+<p>In this phase of the project your group needs to do the following:</p>
+<ul>
+<li>create a splash page with the following: access to the data for <b>browsers</b>, logins for <b>users</b> and <b>admins</b>, and a create account facility for <b>new users</b></li>
+<li>create a set of <b>forms</b> with <b>validation</b> for the various functionalities, above</li>
+<li>create a (Pages, Word, etc.) <b>document</b> that describes the following:
+<ul>
+<li>specification</li>
+<li>design</li>
+<li>XML/XSD representation</li>
+<li>Google App Engine datastore</li>
+<li>import/export</li>
+<li>forms</li>
+</ul>
+</li>
+<li>update the XML schema and instance, if necessary</li>
+<li>update the UML diagram, if necessary</li>
+</ul>
+
+<h3>Groups</h3>
+<hr />
+<p>Pick a member of the group to be <b>project leader</b>.
+A group member can only be project leader <b>once</b>.</p>
+
+<p>Once the TA has graded the project, that will be the <b>project grade</b>.</p>
+
+<p>The project leader will <b>always</b> receive the project grade.</p>
+
+<p>The project leader can add or subtract up to <b>10 points</b> to or from any member of the group in exchange for adding or subtracting the same amount of points from the other member(s) of the group.</p>
+
+<p>For example, the leader could add 10 points to person A, and subtract 5 points from person B and person C.</p>
+
+<p>The leader will report these adjustments in the <b>Google Form</b>.</p>
+
+<h3>Assembla IDs</h3>
+<hr />
+<p>
+Glenn: <b>gpdowning</b><br />
+Alex (CS373): <b>alexloh80</b><br />
+Isaac (CS373): <b>isaac.levy</b>
+</p>
+
+<h3>Assembla Repositories</h3>
+<hr />
+<p>
+Private Repository (CS373): cs373-asn2-<b>turnin-id</b><br />
+Public Repository (CS373): <a href="https://www.assembla.com/code/cs373-projects/git/nodes?rev=master">cs373-projects</a><br />
+Unit Tests (CS373): cs373-projects/project3/TestASN2-<b>turnin-id</b>.py
+</p>
+
+<h3>Google Forms</h3>
+<hr />
+<p>
+<a href="https://spreadsheets.google.com/embeddedform?formkey=dFVuRVlXUS1QaHdJNTB5MjloalNxemc6MA">Alex (CS373)</a>
+</p>
+
+<h3>Turnin IDs</h3>
+<hr />
+<p>
+Alex (cs373pj6): <b>alexloh</b><br />
+Filename: <b>ASN2.zip</b>
+</p>
+
+<h3>Issues and Submission</h3>
+<table border="1" cellspacing="0">
+<tr bgcolor="#dddddd">
+<th>Points</th>
+<th>Description</th>
+<th>Files</th>
+<th>Submission</th>
+</tr>
+
+<tr>
+<th align="center">5</th>
+<td>
+<b>issue tracking</b><br />
+Set up a <a href="http://code.google.com/hosting/">Google Project</a> repository for an <b>issue tracker</b> and a <b>wiki</b>.
+Track the following issues and any bugs in the <b>Google Project issue tracker</b>.
+Post the <b>URL</b> to <b>Blackboard</b>.
+</td>
+<td></td>
+<td>Google Project<br /><b>and</b><br />Blackboard</td>
+</tr>
+
+<tr>
+<th align="center">5</th>
+<td>
+<b>source control</b><br />
+Set up an <a href="http://www.assembla.com/">Assembla</a> <a href="http://www.git-scm.com/">Git</a> repository for a <b>source control system</b>.
+Create a <b>log</b> of the commits.
+There should be <b>several</b> commits.
+It is <b>your</b> responsibility to protect your code from the rest of the students in the class.
+If your code gets out, <b>you</b> are as guilty as the recipient of <b>academic dishonesty</b>.
+</td>
+<td>ASN2.log</td>
+<td>Turnin (zip)</td>
+</tr>
+
+<tr>
+<th align="center">15</th>
+<td>
+<b>unit tests</b><br />
+Create a set of <a href="http://code.google.com/p/gaeunit/">GAEunit</a> tests.
+Use <b>Assembla</b> to share and reach consensus on the <b>unit</b> tests.<br />
+<b>C++:</b> Use <b>Valgrind</b>.
+</td>
+<td>TestASN2.py</td>
+<td>Turnin (zip)<br /><b>and</b><br />Assembla</td>
+</tr>
+
+<tr>
+<th align="center">15</th>
+<td>
+<b>implementation</b><br />
+Use <b>assert</b> to check <b>pre-conditions</b>, <b>post-conditions</b>, <b>argument validity</b>, <b>return-value validity</b>, and <b>invariants</b>.
+Worry about this <b>last</b>, but your program should run as <b>fast</b> as possible and use as <b>little</b> memory as possible.
+</td>
+<td>
+ASN2.py<br />
+ASN2.xml<br />
+ASN2.xsd
+</td>
+<td>Turnin (zip)</td>
+</tr>
+
+<tr>
+<th align="center">10</th>
+<td>
+<b>documentation</b><br />
+<b>Python:</b> Use <b>pydoc</b> to document the <b>interfaces</b>.<br />
+The above documentation only needs to be generated from <b>ASN2.py</b>.
+Use comments <b>only</b> if you need to explain the <b>why</b> of a particular implementation.
+Choose a coding convention and be consistent.
+Use good variable names.
+Write readable code with good indentation, blank lines, and blank spaces.
+</td>
+<td>
+html/*<br />
+ASN2.uml<br />
+ASN2.doc
+</td>
+<td>Turnin (zip)</td>
+</tr>
+
+<tr>
+<th align="center">5</th>
+<td>
+<b>design</b><br />
+Describe the algorithm and any optimizations (e.g. cache).
+Post the <b>design</b> to the <b>Google Project wiki</b>.
+</td>
+<td></td>
+<td>Google Project</td>
+</tr>
+
+<tr>
+<th>5</th>
+<td>
+<b>overview</b><br />
+Fill out the overview.
+</td>
+<td></td>
+<td>Google Form</td>
+</tr>
+</table>
+</body>
+</html>
+  </div>
+
+  <div class="clear-block">
+    <div class="meta">
+        </div>
+
+      </div>
+
+</div>
+          </div>
+                    <div id="footer"><div id="block-system-0" class="clear-block block block-system">
+
+
+  <div class="content"><a href="http://drupal.org"><img src="/users/downing/cs373/misc/powered-blue-80x15.png" alt="Powered by Drupal, an open source content management system" title="Powered by Drupal, an open source content management system" width="80" height="15" /></a></div>
+</div>
+</div>
+      </div></div></div></div> <!-- /.left-corner, /.right-corner, /#squeeze, /#center -->
+
+              <div id="sidebar-right" class="sidebar">
+                    <div id="block-menu-menu-google" class="clear-block block block-menu">
+
+  <h2>Google Apple Engine</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://code.google.com/appengine/articles/djangoforms.html" title="">Django Forms</a></li>
+<li class="leaf"><a href="http://code.google.com/p/gaeunit/" title="">GAEUnit</a></li>
+<li class="leaf"><a href="http://code.google.com/appengine/" title="">Getting Started</a></li>
+<li class="leaf"><a href="http://code.google.com/appengine/docs/python/datastore/" title="">Python Datastore</a></li>
+<li class="leaf last"><a href="http://code.google.com/webtoolkit/" title="">Web Toolkit</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-libraries" class="clear-block block block-menu">
+
+  <h2>Libraries</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.haskell.org/ghc/docs/6.12-latest/html/libraries/index.html" title="">Haskell</a></li>
+<li class="leaf"><a href="http://download.oracle.com/javase/6/docs/api/" title="">Java</a></li>
+<li class="leaf last"><a href="http://docs.python.org/library/" title="">Python</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-programming" class="clear-block block block-menu">
+
+  <h2>Programming</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.facebook.com/careers/puzzles.php" title="">Facebook</a></li>
+<li class="leaf"><a href="http://google-styleguide.googlecode.com/svn/trunk/pyguide.html" title="">Google Python Style Guide</a></li>
+<li class="leaf"><a href="http://www.sourcemaking.com/" title="">SourceMaking</a></li>
+<li class="leaf"><a href="http://www.stackoverflow.com/" title="">Stack Overflow</a></li>
+<li class="leaf"><a href="http://uva.onlinejudge.org/" title="">UVa</a></li>
+<li class="leaf last"><a href="http://www.uvatoolkit.com/" title="">UVa Toolkit</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-repositories" class="clear-block block block-menu">
+
+  <h2>Repositories</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.assembla.com/" title="">Assembla</a></li>
+<li class="leaf"><a href="http://github.com/" title="">GitHub</a></li>
+<li class="leaf last"><a href="http://code.google.com/hosting/" title="">Google</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-tools" class="clear-block block block-menu">
+
+  <h2>Tools</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://epydoc.sourceforge.net/" title="">Epydoc</a></li>
+<li class="leaf"><a href="http://www.git-scm.com/" title="">Git</a></li>
+<li class="leaf"><a href="http://www.junit.org/" title="">JUnit</a></li>
+<li class="leaf"><a href="http://www.oracle.com/technetwork/java/" title="">Java</a></li>
+<li class="leaf"><a href="http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html" title="">Javadoc</a></li>
+<li class="leaf"><a href="http://www.planningpoker.com/" title="">Planning Poker</a></li>
+<li class="leaf"><a href="http://pydoc.org/" title="">Pydoc</a></li>
+<li class="leaf"><a href="http://www.python.org/" title="">Python</a></li>
+<li class="leaf"><a href="http://docs.python.org/library/unittest.html" title="">UnitTest</a></li>
+<li class="leaf last"><a href="http://www.yuml.me/" title="">yUML</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-ut" class="clear-block block block-menu">
+
+  <h2>UT</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.utacm.org/" title="">ACM</a></li>
+<li class="leaf"><a href="http://www.utexas.edu/its/bevoware/" title="">BevoWare</a></li>
+<li class="leaf"><a href="https://courses.utexas.edu/webapps/login/" title="">Blackboard</a></li>
+<li class="leaf"><a href="http://deanofstudents.utexas.edu/sald/studentorgs/vieworgs.php?org=2622" title="">SURGe</a></li>
+<li class="leaf last"><a href="http://deanofstudents.utexas.edu/sald/studentorgs/vieworgs.php?org=4336" title="">Software Engineering Club</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-utcs" class="clear-block block block-menu">
+
+  <h2>UTCS</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://userweb.cs.utexas.edu/users/ear/CodeOfConduct.html" title="">Code of Conduct</a></li>
+<li class="leaf"><a href="http://www.cs.utexas.edu/facilities/accommodations/public_labs/" title="">Labs</a></li>
+<li class="leaf last"><a href="http://userweb.cs.utexas.edu/users/wics/" title="">Women in CS</a></li>
+</ul></div>
+</div>
+<div id="block-menu-menu-xml" class="clear-block block block-menu">
+
+  <h2>XML</h2>
+
+  <div class="content"><ul class="menu"><li class="leaf first"><a href="http://www.crummy.com/software/BeautifulSoup/" title="">Beautiful Soup</a></li>
+<li class="leaf"><a href="http://docs.python.org/library/xml.dom.html" title="">Python xml.dom</a></li>
+<li class="leaf"><a href="http://docs.python.org/library/xml.dom.minidom.html" title="">Python xml.dom.minidom</a></li>
+<li class="leaf"><a href="http://www.w3schools.com/schema/schema_elements_ref.asp" title="">Schema Reference</a></li>
+<li class="leaf"><a href="http://tools.decisionsoft.com/schemaValidate/" title="">Schema Validator</a></li>
+<li class="leaf last"><a href="http://www.syntext.com/downloads/serna-free/" title="">Syntext Serna</a></li>
+</ul></div>
+</div>
+        </div>
+      
+    </div> <!-- /container -->
+  </div>
+<!-- /layout -->
+
+    </body>
+</html>
