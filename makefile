@@ -73,6 +73,9 @@ publish:
 	$(appcfg) update .
 
 
+clean:
+	rm -f *.pyc handlers/*.pyc utils/*.pyc test/*.pyc
+
 
 # need this for pydoc and pychecker
 export PYTHONPATH := ../google_appengine/:../google_appengine/lib/webob

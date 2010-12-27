@@ -69,19 +69,19 @@ class DeleteStudent(webapp.RequestHandler):
     def post(self):
         id = int(self.request.get('_id'))
         student = Student.get_by_id(id)
-	
-	sb = StudentBook.all()
+
+        sb = StudentBook.all()
         deleteAll(student, sb)
         sc = StudentClass.all()
         deleteAll(student, sc)
         sp = StudentPlace.all()
-	deleteAll(student, sp)
+        deleteAll(student, sp)
         si = StudentInternship.all()
-	deleteAll(student, si)
+        deleteAll(student, si)
         spa = StudentPaper.all()
         deleteAll(student, spa)
         sg = StudentGame.all()
-	deleteAll(student, sg)
+        deleteAll(student, sg)
         student.delete()
         self.redirect("/student/list")
 
@@ -91,17 +91,5 @@ def deleteAll(s, sObj) :
     sos = sos.fetch(9999)
     for x in sos :
         x.delete()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
