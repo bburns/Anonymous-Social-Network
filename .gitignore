@@ -6,3 +6,7 @@ tmp/*
 *.pyc
 .nfs*
 datastore
+docs/
+tree*
+xmodels/
+asn.out

@@ -1,0 +1,51 @@
+{% extends "../_base.html" %}
+{% block content %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<a href="/profile">Back to profile</a>
+
+<h2>Edit Rating</h2>
+
+<!--
+
+if could display a django form read-only, that would be nice here
+maybe with some javascript/jquery
+<table>
+    {{ form.as_table }}
+</table>
+
+<table>
+  <tbody>
+  <tr><td>Title: {{ book.title }} </td></tr>
+  <tr><td>Author: {{ book.author }} </td></tr>
+  <tr><td>Isbn: {{ book.isbn }} </td></tr>
+  <tr><td>Average rating: {{ book.ratingAvg }} out of 100 (from {{ book.refCount }} rating(s))</td></tr>
+  </tbody>
+</table>
+-->
+
+<div class="rating">
+
+<h3>Edit your rating and comments</h3>
+
+<form method="post" action="/link/edit">
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit" value="Edit Rating/Comment"/>
+  <input type="hidden" name="link_id" value="{{ link_id }}"/>
+</form>
+
+</div>
+
+<!--
+  <a href="/link/delete?id={{ link_id }}">Delete</a>
+-->
+
+        
+{% endblock %}
