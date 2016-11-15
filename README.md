@@ -1,9 +1,7 @@
 
 # ASN - Anonymous Social Network
 
-## About
-
-Four-person project to implement an anonymous social network using Python, Django, jQuery, and Google App Engine.
+This is a four-person project to implement an anonymous social network using Python, Django, jQuery, and Google App Engine.
 
 The site lets users enter and review Textbooks, Classes, Professors, Internships, and Places. 
 
